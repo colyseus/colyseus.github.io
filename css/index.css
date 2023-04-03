@@ -113,6 +113,23 @@ p { word-spacing: 0.05em; }
 }
 
 /**
+ * Banner/headline
+ */
+.banner { }
+.banner a {
+  display: block;
+  background: red;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  font-size: 0.7em;
+  padding: 0.5em;
+  font-family: "Roboto Mono", monospace;
+  text-decoration: none;
+}
+
+/**
  * Header / Hero
  */
 header {
@@ -122,6 +139,7 @@ header {
   height: 100vh;
   color: #fff;
   position: relative;
+  overflow: hidden;
 }
 
 header::before {
