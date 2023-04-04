@@ -45,7 +45,7 @@ img { border: none; }
 
 h1 {
   text-align: center;
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
 h1, h2, h3, h4 {
@@ -151,6 +151,10 @@ header.tmpheader {
   height: 56vh;
   /* padding: 0;
   height: 120px; */
+}
+
+header.tmpheader img {
+  margin-top: 2em;
 }
 
 header::before {
