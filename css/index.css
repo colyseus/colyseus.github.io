@@ -43,11 +43,15 @@ body {
 
 img { border: none; }
 
-h1 { font-size: 2.5em; }
+h1 {
+  text-align: center;
+  font-size: 2.5em;
+}
 
 h1, h2, h3, h4 {
   font-weight: 200;
-  line-height: 1em;
+  line-height: 1.3em;
+  letter-spacing: .055em;
 
   color: inherit;
   font-family: 'OptimusPrinceps', sans-serif;
@@ -139,7 +143,13 @@ header {
   height: 100vh;
   color: #fff;
   position: relative;
-  overflow: hidden;
+}
+
+header.tmpheader {
+  padding: 2vh 2vw 2vh 2vw;
+  height: 56vh;
+  /* padding: 0;
+  height: 120px; */
 }
 
 header::before {
@@ -430,6 +440,9 @@ footer {
   padding: 10vh 8vw 4vh 8vw;
   font-size: 0.8em;
 }
+footer .inner {
+  width: auto;
+}
 
 footer strong { text-transform: uppercase; }
 footer p { text-align: center; }
@@ -470,12 +483,13 @@ a:hover {
 }
 
 
-p { margin: 2vh 0 2vh 0; }
+/* p { margin: 2vh 0 2vh 0; } */
 p.small { font-size: 0.8em; }
 
 .inner {
   margin: 0 auto;
-  width: 900px;
+  /* width: 900px; */
+  width: 740px;
 }
 
 div.row { display: block; }
@@ -957,3 +971,83 @@ body.logos-and-trademark section a:hover img {
     transform: translateX(0);
   }
 }
+
+/*
+ * BEGIN announcement / post
+ */
+.inner.post {
+  text-align: left;
+  font-size: 21px;
+  line-height: 1.58em;
+  font-weight: 400;
+}
+
+.inner.post hr {
+  margin-top: 52px;
+  margin-bottom: 42px;
+  display: block;
+  border: 0;
+  text-align: center;
+  overflow: visible;
+  box-sizing: content-box;
+  height: 0;
+}
+
+.inner.post hr:before {
+  --x-height-multiplier: 0.342;
+  --baseline-multiplier: 0.22;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 30px;
+  letter-spacing: .6em;
+
+  content: '...';
+  display: inline-block;
+  margin-left: 0.6em;
+  color: rgba(0,0,0,.68);
+  position: relative;
+  top: -30px;
+}
+
+.inner.post ul {
+  margin-top: 29px;
+}
+
+.inner.post ul li {
+  margin-left: 1em;
+}
+
+.inner.post h1 {
+  font-weight: 700;
+}
+
+.inner.post h2 {
+  margin-top: 53px;
+  font-weight: 700;
+}
+
+.inner.post h3 {
+  margin-top: 30px;
+  font-weight: 700;
+}
+
+.inner.post p {
+  margin-top: 29px;
+}
+
+.inner.post p:first-of-type,
+.inner.post h2 + p,
+.inner.post h3 + p {
+  margin-top: 6px !important;
+}
+
+.inner.post blockquote {
+  border-left: 2px solid black;
+  padding-left: 29px;
+  margin-top: 29px;
+  font-style: italic;
+}
+
+/*
+ * END announcement / post
+ */
