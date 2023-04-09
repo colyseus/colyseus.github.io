@@ -2,7 +2,7 @@ body {
   /* font-family: 'Inter', sans-serif; */
   font-family: 'Source Sans Pro', sans-serif;
   /* font-family: 'Noto Serif JP', serif; */
-  /* font-family: 'OptimusPrinceps', 'Noto Serif JP', serif; */
+  /* font-family: 'Cinzel', serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* color: #787879; */
@@ -136,7 +136,7 @@ p { word-spacing: 0.05em; }
  * Header / Hero
  */
 header {
-  /* font-family: OptimusPrinceps, serif; */
+  /* font-family: 'Cinzel', serif; */
   /* background: url("../images/header.jpg"); */
   padding: 14vh 2vw 6vh 2vw;
   height: 100vh;
@@ -197,14 +197,20 @@ header ul.platforms li a {
 }
 
 header ul.platforms li a span {
-  color: #959595;
+  z-index: 1;
+  width: auto;
+  background: #000;
+  display: inline-block;
+  color: white;
   font-size: 0.8em;
   position: absolute;
-  bottom: -1.4em;
-  left: 0;
-  right: 0;
+  padding: 0.2em;
+  top: 0.6em;
+  /* bottom: -1.4em; */
+  left: 3.5em;
+  /* right: 0; */
   opacity: 0;
-  transform: translateY(-8px);
+  /* transform: translateY(-8px); */
   transition: opacity 0.15s, transform 0.15s;
 }
 
@@ -219,7 +225,7 @@ header ul.platforms li a:hover {
 
 header ul.platforms li a:hover span {
   opacity: 1;
-  transform: translateY(0);
+  /* transform: translateY(0); */
 }
 
 header ul.buttons {
@@ -245,6 +251,7 @@ header#cloud h1 {
   text-align: left;
 }
 
+header#cloud ul.platforms { margin-top: 0.15em; }
 header#cloud ul.platforms li a {
   width: 50px;
   height: 50px;
@@ -257,7 +264,7 @@ header#cloud blockquote {
   border: 1px solid rgb(221 214 254 / 0.1);
 }
 
-blockquote .gray { color: #959595; }
+.gray { color: #959595; }
 blockquote .green { color: rgb(34 197 94 / 50); }
 
 /*
@@ -282,7 +289,7 @@ ul.buttons li small {
 ul.buttons li a {
   position: relative;
   outline: none;
-  font-family: 'OptimusPrinceps';
+  font-family: 'Cinzel', serif;
   /* background: #000; */
   text-decoration: none;
   /* text-transform: uppercase; */
@@ -313,7 +320,7 @@ ul.buttons li a.contrast {
 
 #community ul.buttons { margin-top: 2em; }
 
-section.text-left {
+.text-left {
   text-align: left;
 }
 
@@ -579,7 +586,10 @@ section.headline {
 footer.high-contrast, section.high-contrast {
   /* background: #04ddd4; */
   color: #fff;
-  background: #5f2fce; /* #7540f0 */
+
+  /* background: #7540f0; */
+  /* background: #5f2fce; */
+  background: #5046e6;
 }
 
 section .projects {
@@ -838,7 +848,7 @@ h1 svg {
   outline: none;
 
   position: relative;
-  font-family: 'OptimusPrinceps';
+  font-family: 'Cinzel', serif;
   text-decoration: none;
   padding: 0.7em 1em;
   display: inline-block;
@@ -880,7 +890,7 @@ h1 svg {
   border: 0;
 
   position: relative;
-  font-family: 'OptimusPrinceps';
+  font-family: 'Cinzel', serif;
   /* background: #000; */
   text-decoration: none;
   /* text-transform: uppercase; */
