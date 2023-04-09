@@ -253,8 +253,8 @@ header#cloud h1 {
 
 header#cloud ul.platforms { margin-top: 0.15em; }
 header#cloud ul.platforms li a {
-  width: 50px;
-  height: 50px;
+  /* width: 50px;
+  height: 50px; */
 }
 
 header#cloud blockquote {
