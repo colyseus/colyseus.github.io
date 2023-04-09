@@ -74,6 +74,7 @@ h3 { line-height: 1.2em; }
   flex: 1;
 }
 
+#how-it-works .buttons { margin-top: 1em; }
 #how-it-works .code-blocks {
   margin: 0 auto;
   width: 80%;
@@ -145,17 +146,6 @@ header {
   overflow: hidden;
 }
 
-header.tmpheader {
-  padding: 2vh 2vw 2vh 2vw;
-  height: 56vh;
-  /* padding: 0;
-  height: 120px; */
-}
-
-header.tmpheader img {
-  margin-top: 2em;
-}
-
 header::before {
   content: ' ';
   position: absolute;
@@ -178,7 +168,7 @@ header h1 {
 }
 
 header .logo {
-  width: 280px;
+  width: 340px;
   margin: 1em 0 3em 0;
 }
 
@@ -200,7 +190,7 @@ header ul.platforms li a {
 header ul.platforms li a span {
   font-size: 0.8em;
   position: absolute;
-  bottom: -2em;
+  bottom: -1.7em;
   left: 0;
   right: 0;
   opacity: 0;
@@ -280,6 +270,13 @@ ul.buttons li {
 
 ul.buttons li small {
   font-size: 0.6em;
+}
+
+ul.buttons.light li a {
+  border: 2px solid #111;
+  -webkit-box-shadow: 0px 3px 1px 0 #111;
+  -moz-box-shadow: 0px 3px 1px 0 #111;
+  box-shadow: 0px 3px 1px 0 #111;
 }
 
 ul.buttons li a {
@@ -983,7 +980,7 @@ h1 svg {
 
 
 /**
- * MOGJ
+ * Logos and Trademark
  */
 body.logos-and-trademark section.header h1 {
   padding: 2em 0 0.2em 0;
@@ -993,10 +990,11 @@ body.logos-and-trademark section:not(.header) h1 {
   margin-bottom: 0.2em;
 }
 
+body.logos-and-trademark section a { display: inline-block; }
 body.logos-and-trademark section img {
   display: inline-block;
   height: 130px;
-  margin: 2em 1em;
+  margin: 1em;
   padding: 2em;
   border-radius: 0.3em;
 }
