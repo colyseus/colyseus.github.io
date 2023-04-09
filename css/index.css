@@ -193,25 +193,21 @@ header ul.platforms li a {
   width: 84px;
   height: 84px;
   opacity: 0.6;
+  text-align: center;
   transition: opacity 0.15s, transform 0.15s;
 }
 
 header ul.platforms li a span {
-  z-index: 1;
-  width: auto;
-  background: #000;
-  display: inline-block;
-  color: white;
   font-size: 0.8em;
   position: absolute;
-  padding: 0.2em;
-  top: 0.6em;
-  /* bottom: -1.4em; */
-  left: 3.5em;
-  /* right: 0; */
+  bottom: -2em;
+  left: 0;
+  right: 0;
   opacity: 0;
-  /* transform: translateY(-8px); */
+  transform: translateY(-8px);
   transition: opacity 0.15s, transform 0.15s;
+  width: 84px;
+  text-align: center;
 }
 
 header ul.platforms li a img {
@@ -309,7 +305,7 @@ ul.buttons li a {
 }
 
 ul.buttons li a.contrast {
-  color: inherit;
+  color: #fff;
   background: #7540f0;
   border-color: #7540f0;
 
