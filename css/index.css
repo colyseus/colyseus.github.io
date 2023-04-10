@@ -76,7 +76,7 @@ h3 { line-height: 1.2em; }
 
 #how-it-works { padding: 12vh 8vw; }
 #how-it-works .flex .left { margin-top: 0 !important;  text-align: left;}
-#how-it-works .flex .right em { color: inherit; opacity: 0.8; }
+#how-it-works .flex .right em { color: inherit; opacity: 0.85; }
 #how-it-works .buttons { margin-top: 1em; }
 #how-it-works .code-blocks {
   margin: 0 auto;
