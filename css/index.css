@@ -74,11 +74,41 @@ h3 { line-height: 1.2em; }
   flex: 1;
 }
 
+#how-it-works { padding: 12vh 8vw; }
+#how-it-works .flex .left { margin-top: 0 !important;  text-align: left;}
+#how-it-works .flex .right em { color: inherit; opacity: 0.8; }
 #how-it-works .buttons { margin-top: 1em; }
 #how-it-works .code-blocks {
   margin: 0 auto;
   width: 80%;
 }
+
+/* features on the side of the "how it works" page. */
+#how-it-works ul.features {
+  margin-top: 0;
+}
+#how-it-works ul.features > li {
+  text-align: left;
+  width: 320px;
+  padding: 0;
+  margin-bottom: 0.5em;
+  display: flex;
+  align-items: center;
+}
+#how-it-works ul.features > li svg {
+  color: inherit;
+  width: 17%;
+  display: inline-block;
+  margin-bottom: 0;
+}
+#how-it-works ul.features > li p {
+  font-size: 0.9em;
+  width: 79%;
+  padding-left: 1em;
+}
+
+#how-it-works ul.features > li p { display: inline-block; }
+
 @media only screen and (max-width: 768px) {
   #how-it-works .tns-nav > button { top: -1em; }
   #how-it-works .code-blocks { width: 100%; }
@@ -266,16 +296,16 @@ header#cloud blockquote {
   margin-bottom: 0.5em;
 }
 .copy-code .gray,
-.copy-code .fa-copy { color: #595959; }
-.copy-code .command { color: #959595; }
+.copy-code .fa-copy { color: #cbcbcb; }
+.copy-code .command { color: #dcdcdc; }
 .copy-code .fa-check { color: rgb(34 197 94 / 50); }
 .copy-code:hover .command,
 .copy-code:hover .fa-copy { color: #7540f0; }
 .copy-code:hover {
   transform: translateY(0) !important;
-  -webkit-box-shadow: 0px 3px 1px 0 #111 !important;
-  -moz-box-shadow: 0px 3px 1px 0 #111 !important;
-  box-shadow: 0px 3px 1px 0 #111 !important;
+  -webkit-box-shadow: 0px 3px 1px 0 #fff !important;
+  -moz-box-shadow: 0px 3px 1px 0 #fff !important;
+  box-shadow: 0px 3px 1px 0 #fff !important;
 }
 .copy-code:active {
   transform: translateY(3px) !important;
@@ -580,6 +610,12 @@ section.headline {
   color: #282828;
 }
 
+footer,
+section.contrast-2 {
+  color: #fff;
+  background: #5f2fce;
+}
+
 footer.high-contrast,
 section.high-contrast {
   /* background: #04ddd4; */
@@ -587,7 +623,10 @@ section.high-contrast {
 
   /* background: #7540f0; */
   /* background: #5f2fce; */
-  background: #5046e6;
+  /* background: #5046e6; */
+  background: rgb(80,70,230);
+  background: linear-gradient(315deg, rgba(80,70,230,1) 0%, rgba(160,44,228,1) 100%);
+
 }
 
 section .projects {
