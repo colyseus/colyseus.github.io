@@ -74,17 +74,17 @@ h3 { line-height: 1.2em; }
   flex: 1;
 }
 
-#how-it-works { padding: 12vh 8vw; }
-#how-it-works .flex .left { margin-top: 0 !important;  text-align: left;}
-#how-it-works .flex .right em { color: inherit; opacity: 0.85; }
-#how-it-works .buttons { margin-top: 1em; }
-#how-it-works .code-blocks {
+#features { padding: 12vh 8vw; }
+#features .flex .left { margin-top: 0 !important;  text-align: left;}
+#features .flex .right em { color: inherit; opacity: 0.85; }
+#features .buttons { margin-top: 1em; }
+#features .code-blocks {
   margin: 0 auto;
   width: 80%;
 }
 
 /* features on the side of the "how it works" page. */
-#how-it-works ul.features {
+#features ul.features {
   margin-top: -1.5em;
   padding-left: 1.5em;
   /* max-width: 30vw; */
@@ -92,7 +92,7 @@ h3 { line-height: 1.2em; }
   margin-right: auto;
   justify-content: inherit;
 }
-#how-it-works ul.features > li {
+#features ul.features > li {
   text-align: left;
   /* width: 300px; */
   max-width: 300px;
@@ -101,24 +101,24 @@ h3 { line-height: 1.2em; }
   display: flex;
   align-items: center;
 }
-#how-it-works ul.features > li svg {
+#features ul.features > li svg {
   color: inherit;
   width: 65px;
   display: inline-block;
   margin-bottom: 0;
 }
-#how-it-works ul.features > li p {
+#features ul.features > li p {
   font-size: 0.9em;
   /* width: 79%; */
   padding-left: 1em;
   display: inline-block;
 }
 
-#how-it-works ul.features > li p { display: inline-block; }
+#features ul.features > li p { display: inline-block; }
 
 @media only screen and (max-width: 768px) {
-  #how-it-works .tns-nav > button { top: -1em; }
-  #how-it-works .code-blocks { width: 100%; }
+  #features .tns-nav > button { top: -1em; }
+  #features .code-blocks { width: 100%; }
 }
 
 pre {
@@ -210,6 +210,12 @@ header .logo {
   margin: 1em 0 3em 0;
 }
 
+ul.list {
+  /* list-style: square; */
+  margin-top: 0.5em;
+  padding-left: 1em;
+}
+
 ul.platforms {
   list-style: none;
 }
@@ -273,6 +279,7 @@ ul.cards li a {
   font-size: 0.9em;
   text-decoration: none;
   overflow: hidden;
+  text-align: center;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -714,10 +721,10 @@ section .projects > a:hover {
 /*
  * Features
  */
-section#features h2 {
+section#features-old h2 {
   margin-top: 2em;
 }
-section#features .platforms {
+section#features-old .platforms {
   margin-top: 1.5em;
 }
 section iframe {
@@ -934,7 +941,7 @@ h1 svg {
 /**
  * Features
  */
-#features {
+#features-old {
   padding: 16vh 4vw;
   background: rgb(80,70,230);
   background: linear-gradient(315deg, rgba(80,70,230,1) 0%, rgba(160,44,228,1) 100%);
