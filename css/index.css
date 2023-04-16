@@ -75,9 +75,27 @@ h3 { line-height: 1.2em; }
 }
 
 #features { padding: 12vh 8vw; }
-#features .flex .left { margin-top: 0 !important;  text-align: left;}
+#features .flex { align-items: center; }
+#features .flex .left { margin-top: 0 !important;  text-align: left; }
+#features .flex .right { flex-grow: 2; }
 #features .flex .right em { color: inherit; opacity: 0.85; }
-#features .buttons { margin-top: 1em; }
+
+#features .buttons {
+  display: flex;
+  margin-top: 1em;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+#features .buttons li {
+  max-width: 100%;
+}
+#features .buttons li a {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+
 #features .code-blocks {
   margin: 0 auto;
   width: 80%;
@@ -833,7 +851,6 @@ section#showcase {
   color: #fff;
   border: 0;
   cursor: pointer;
-
   border-radius: 50%; */
 
   z-index: 999;
@@ -1084,6 +1101,11 @@ h1 svg {
 }
 
 @media only screen and (max-width: 768px) {
+  header#cloud { flex-direction: column; padding-top: 2vh; justify-content: space-evenly; }
+  header#cloud .left { max-width: 90vw;}
+  header#cloud .logo {margin-top: 3em; margin-bottom: 2em; width: 50vw;}
+  header#cloud ul.buttons {margin-bottom: 2em; font-size: 0.8em;}
+
   .flex { flex-direction: column; }
   ul.features > li { width: 40vw; }
 
@@ -1107,8 +1129,8 @@ h1 svg {
   .inner { width: 100%; }
 
   ul.platforms li a {
-    width: 60px !important;
-    height: 60px !important;
+    width: 50px !important;
+    height: 50px !important;
   }
 
   ul.features > li { width: 100% !important; }
