@@ -195,7 +195,7 @@ header {
   /* font-family: 'Cinzel', serif; */
   /* background: url("../images/header.jpg"); */
   padding: 14vh 2vw 6vh 2vw;
-  height: 100vh;
+  height: 99vh;
   color: #fff;
   position: relative;
   overflow: hidden;
@@ -207,7 +207,7 @@ header::before {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 99vh;
   background: url("../images/header-new.jpg");
   background-position: right;
   background-size: cover;
