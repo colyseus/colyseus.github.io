@@ -20,6 +20,16 @@ export default defineConfig({
     },
 
     {
+      title: '',
+      monthlyDollars: 30,
+      preset: presets.base,
+      // to insert custom elements after the tier block
+      // composeAfter: (composer, _tierSponsors, _config) => {
+      //   composer.addSpan(10)
+      // },
+    },
+
+    {
       title: 'Sponsors',
       monthlyDollars: 100,
       preset: presets.base,
