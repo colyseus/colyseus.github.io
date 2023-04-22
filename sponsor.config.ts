@@ -20,7 +20,7 @@ export default defineConfig({
     },
 
     {
-      title: '',
+      title: 'Generous Backers',
       monthlyDollars: 30,
       preset: presets.base,
       // to insert custom elements after the tier block
