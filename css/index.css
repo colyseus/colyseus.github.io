@@ -329,6 +329,10 @@ ul.cards li a span {
   padding: 0.5em;
 }
 
+@media only screen and (max-width: 768px) {
+  ul.cards li a { width: 150px; }
+  ul.cards li a img { height: 140px; }
+}
 
 section.learn h3 {
   margin: 1em 0 0.5em 0;
@@ -524,6 +528,11 @@ ul.buttons li a.contrast:hover {
   border-color: #581de2;
   color: #fff;
 }
+
+/* TODO: remove me   */
+ul.buttons li a span { transition: transform 0.15s cubic-bezier(0.33, 1, 0.68, 1); }
+ul.buttons li a:hover span { transform: translateY(-3px); }
+/* // end TODO */
 
 /**
  * Navigation
@@ -936,6 +945,7 @@ ul.showcase li span {
 
 ul.showcase li small {
   display: block;
+  padding-top: 0.4em;
   margin-top: 23px;
   font-size: 0.75em;
 }
