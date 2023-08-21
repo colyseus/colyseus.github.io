@@ -64,19 +64,19 @@ const showcase = [
 	</head>
 	<body>
 		<Header title={SITE_TITLE} />
-		<main class="">
+		<main>
       <!-- Hero -->
-      <section class="bg-black text-gray-200">
+      <section id="hero" class="text-gray-200">
         <div class="container container mx-auto flex items-center justify-between flex-col lg:flex-row relative py-10">
           <div>
             <div class="py-20">
-              <h1 class="text-3xl">Authoritative Game Servers Made Your Own</h1>
-              <p>Colyseus is a friendly open-source framework made for game devs.</p>
+              <h1 class="text-4xl mb-2">Authoritative Game Servers Made Your Own</h1>
+              <p>An extensible and friendly open-source framework made for game developers.</p>
             </div>
 
             <!-- Platforms -->
             <div>
-              <p><small class="text-gray-400">Client-side SDKs available for major platforms:</small></p>
+              <p class="text-gray-400 mb-2">Officially supported SDKs</p>
               <ul class="platforms">
                 {Object.values(platforms).map((platform) => (
                   <li>
@@ -172,6 +172,7 @@ const showcase = [
         </div>
       </section>
 		</main>
+
 		<Footer />
 	</body>
 </html>

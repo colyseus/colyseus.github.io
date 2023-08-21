@@ -1,3 +1,30 @@
+#hero {
+  position: relative;
+  overflow: hidden;
+}
+#hero::after {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: -2;
+}
+#hero::before {
+  content: ' ';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('./images/header-new.jpg');
+  background-position: right;
+  background-size: cover;
+  z-index: -1;
+  animation: fadeIn 4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
 
 /* Showcase grid */
 .showcase-items > a {
@@ -53,4 +80,17 @@ ul.platforms.open li a { opacity: 1; }
 ul.platforms.open li a:hover {
   transform: translateY(-4px);
   opacity: 0.9;
+}
+
+
+/** Animations **/
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(1em);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
