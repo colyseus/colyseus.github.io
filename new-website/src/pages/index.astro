@@ -1,0 +1,177 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const platforms = {
+  javascript: {
+    alias: "JavaScript",
+    name: "JavaScript/TypeScript",
+    image: "/images/sdks/javascript.png",
+    url: "https://docs.colyseus.io/getting-started/javascript-client/",
+  },
+  unity: {
+    name: "Unity",
+    image: "/images/sdks/unity.png",
+    url: "https://docs.colyseus.io/getting-started/unity-sdk/",
+  },
+  defold: {
+    name: "Defold Engine",
+    image: "/images/sdks/defold.png",
+    url: "https://docs.colyseus.io/getting-started/defold-client/",
+  },
+  construct3: {
+    name: "Construct 3",
+    image: "/images/sdks/construct3.png",
+    url: "https://docs.colyseus.io/getting-started/construct3-sdk/",
+  },
+  haxe: {
+    alias: "Haxe",
+    name: "Haxe 4",
+    image: "/images/sdks/haxe.png",
+    url: "https://docs.colyseus.io/getting-started/haxe-client/",
+  },
+  cocos: {
+    alias: "Cocos",
+    name: "Cocos Creator",
+    image: "/images/sdks/cocos.png",
+    url: "https://docs.colyseus.io/getting-started/cocos-creator/",
+  },
+};
+
+const showcase = [
+  { platform: "javascript", name: "Bloxd.io", image: "/images/showcase/bloxdio.jpeg", url: "https://bloxd.io/", author_link: "https://www.linkedin.com/in/arthurbbaker/", author: "Arthur Baker", },
+  { platform: "javascript", name: "Kirka.io", image: "/images/showcase/kirka-io.jpeg", url: "https://kirka.io/", author_link: "https://twitter.com/development", author: "xip", },
+  { platform: "javascript", name: "Exploder.io", image: "/images/showcase/masterexploder-exploder.jpeg", url: "https://exploder.io/", author_link: "https://github.com/pdaw", author: "Piotr Dawidiuk", },
+  { platform: "unity", name: "The Kraken Wakes", image: "/images/showcase/charismaai-the-kraken-wakes.png", url: "https://store.steampowered.com/app/2100380/The_Kraken_Wakes/", author_link: "https://charisma.ai/", author: "Charisma Entertainment", },
+  { platform: "unity", name: "Unboxing the Cryptic Killer", image: "/images/showcase/elevenpuzzles-unboxing-the-cryptic-killer.jpeg", url: "https://store.steampowered.com/app/2069040/Unboxing_the_Cryptic_Killer/", author_link: "https://elevenpuzzles.com/", author: "Eleven Puzzles", },
+  { platform: "defold", name: "Raft Wars Multiplayer", image: "images/projects/raftwars.png", url: "https://poki.com/en/g/raft-wars-multiplayer", author_link: "http://www.tinydobbins.com/", author: "TinyDobbins", },
+  { platform: "unity", name: "Exposed - Who's Most Likely To", image: "/images/showcase/vys-games-exposed.png", url: "https://apps.apple.com/us/app/exposed-whos-most-likely-to/id1553777064", author_link: "https://www.vysgames.com/", author: "VYS Games", },
+  { platform: "unity", name: "Seep King", image: "/images/showcase/seepking.png", url: "https://apps.apple.com/in/app/seep-king/id1603821493", author_link: "https://apps.apple.com/in/developer/jaspreet-singh/id1521881770", author: "Jaspreet Singh", },
+  { platform: "javascript", name: "Super Battle Legends", image: "/images/showcase/hammerplay-battle-legends.jpeg", url: "https://www.youtube.com/watch?v=W5I2ZbFJ8Pg", author_link: "https://hammerplay.com/", author: "Hammerplay", },
+  { platform: "javascript", name: "SongTrivia2", image: "/images/showcase/songtrivia2.jpeg", url: "https://songtrivia2.io/", author_link: "https://songtrivia2.io/", author: "SongTrivia", },
+  { platform: "unity", name: "Knight's Edge", image: "/images/showcase/lightfox-games-knights-edge.jpeg", url: "https://www.lightfoxgames.com/knights-edge", author_link: "https://www.lightfoxgames.com", author: "Lightfox Games", },
+  { platform: "javascript", name: "Make it Meme", image: "/images/showcase/makeitmeme.jpeg", url: "https://makeitmeme.com/", author_link: "https://prealpha.dev/", author: "prealpha", },
+  { platform: "javascript", name: "Wheat Farming", image: "/images/showcase/volem-games-wheat-farming.png", url: "https://poki.com/en/g/wheat-farming", author_link: "https://twitter.com/emre_sahinn35", author: "Emre Şahin", },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header title={SITE_TITLE} />
+		<main class="">
+      <!-- Hero -->
+      <section class="bg-black text-gray-200">
+        <div class="container container mx-auto flex items-center justify-between flex-col lg:flex-row relative py-10">
+          <div>
+            <div class="py-20">
+              <h1 class="text-3xl">Authoritative Game Servers Made Your Own</h1>
+              <p>Colyseus is a friendly open-source framework made for game devs.</p>
+            </div>
+
+            <!-- Platforms -->
+            <div>
+              <p><small class="text-gray-400">Client-side SDKs available for major platforms:</small></p>
+              <ul class="platforms">
+                {Object.values(platforms).map((platform) => (
+                  <li>
+                    <a href={platform.url} title={platform.name}>
+                      <img src={platform.image} alt={platform.name} />
+                      <span>{platform['alias'] || platform.name}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+          </div>
+
+          <div>
+            Right....
+          </div>
+        </div>
+      </section>
+
+
+      <section class="text-slate-900 text-center border-b border-solid border-gray-300">
+        <div class="container container mx-auto relative py-14">
+          <h1 class="text-2xl">Join our growing community</h1>
+
+          <div class="flex space-x-20 justify-center py-10">
+
+            <div class="flex space-x-5">
+              <span class="bg-green-500 text-white rounded-xl p-4 text-4xl">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg>
+              </span>
+              <span class="text-4xl text-left">
+                <span class="font-semibold">600K+</span>
+                <small class="block text-gray-500 text-base">Downloads</small>
+              </span>
+            </div>
+
+            <div class="flex space-x-5">
+              <span class="bg-yellow-500 text-white rounded-xl p-4 text-4xl">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+              </span>
+              <span class="text-4xl text-left">
+                <span class="font-semibold">5K+</span>
+                <small class="block text-gray-500 text-base">Stars on GitHub</small>
+              </span>
+            </div>
+
+            <div class="flex space-x-5">
+              <span class="bg-purple-500 text-white rounded-xl p-4 text-4xl">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" height="1em" viewBox="0 0 640 512"><path d="M72 88a56 56 0 1 1 112 0A56 56 0 1 1 72 88zM64 245.7C54 256.9 48 271.8 48 288s6 31.1 16 42.3V245.7zm144.4-49.3C178.7 222.7 160 261.2 160 304c0 34.3 12 65.8 32 90.5V416c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V389.2C26.2 371.2 0 332.7 0 288c0-61.9 50.1-112 112-112h32c24 0 46.2 7.5 64.4 20.3zM448 416V394.5c20-24.7 32-56.2 32-90.5c0-42.8-18.7-81.3-48.4-107.7C449.8 183.5 472 176 496 176h32c61.9 0 112 50.1 112 112c0 44.7-26.2 83.2-64 101.2V416c0 17.7-14.3 32-32 32H480c-17.7 0-32-14.3-32-32zm8-328a56 56 0 1 1 112 0A56 56 0 1 1 456 88zM576 245.7v84.7c10-11.3 16-26.1 16-42.3s-6-31.1-16-42.3zM320 32a64 64 0 1 1 0 128 64 64 0 1 1 0-128zM240 304c0 16.2 6 31 16 42.3V261.7c-10 11.3-16 26.1-16 42.3zm144-42.3v84.7c10-11.3 16-26.1 16-42.3s-6-31.1-16-42.3zM448 304c0 44.7-26.2 83.2-64 101.2V448c0 17.7-14.3 32-32 32H288c-17.7 0-32-14.3-32-32V405.2c-37.8-18-64-56.5-64-101.2c0-61.9 50.1-112 112-112h32c61.9 0 112 50.1 112 112z"/></svg>
+              </span>
+              <span class="text-4xl text-left">
+                <span class="font-semibold">29+</span>
+                <small class="block text-gray-500 text-base">Contributors</small>
+              </span>
+            </div>
+
+          </div>
+
+          <div class="flex space-x-8 justify-center">
+            <a href="https://github.com/colyseus" target="_blank" class="mt-2 group text-purple-500 font-semibold ">
+              Visit GitHub
+              <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+            </a>
+
+            <a href="/community" class="mt-2 group text-purple-500 font-semibold ">
+              Join Community
+              <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="text-slate-900">
+        <div class="container container mx-auto relative py-10">
+          <h1 class="text-2xl">Showcase</h1>
+          <p>A collection of production games made by <strong>happy developers</strong>.</p>
+
+          <div class="grid grid-cols-4 gap-4 showcase-items mt-6">
+            {showcase.map((item) => (
+              <a class="rounded h-48 relative transition-opacity hover:opacity-95" href={item.url} target="_blank" style={`background-image: url(${item.image});`}>
+                <span class="absolute bottom-0 p-4 w-full rounded text-slate-100">
+                  {item.name}
+                  <small class="block text-gray-300">by {item.author}</small>
+                  {/* <small class="block text-gray-300">by <a href={item.author_link} target="_blank">{item.author}</a></small> */}
+                </span>
+
+                <img class="absolute right-4 bottom-4 w-12" src={platforms[item.platform].image} alt={platforms[item.platform].name} />
+              </a>
+            ))}
+          </div>
+
+        </div>
+      </section>
+		</main>
+		<Footer />
+	</body>
+</html>
