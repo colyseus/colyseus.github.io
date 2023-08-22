@@ -1,0 +1,49 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import CommunityStats from '../components/CommunityStats.astro';
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header title={SITE_TITLE} />
+		<main>
+      <!-- Hero -->
+      <section id="hero" class="text-gray-200">
+        <div class="container mx-auto text-center py-10">
+          <div>
+
+            <div class="py-20">
+              <h1 class="text-4xl mb-2">Join the Colyseus Community!</h1>
+              <p>Get started, get support, and learn from others in the Colyseus Community.</p>
+            </div>
+
+            <div>
+              <CommunityStats />
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <section class="text-slate-900 text-center border-b border-solid border-gray-300">
+      </section>
+
+      <section class="text-slate-900">
+        <div class="container mx-auto py-10">
+          <h1 class="text-2xl">Another title...</h1>
+          <p>Hello world...</p>
+        </div>
+      </section>
+
+		</main>
+
+		<Footer />
+	</body>
+</html>

@@ -15,7 +15,7 @@ const posts = (await getCollection('blog')).sort(
 <html lang="en">
 	<head>
 		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-		<!-- <style>
+		<style>
 			main {
 				width: 960px;
 			}
@@ -83,12 +83,12 @@ const posts = (await getCollection('blog')).sort(
 					font-size: 1.563em;
 				}
 			}
-		</style> -->
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<section class="container mx-auto">
+			<section>
 				<ul>
 					{
 						posts.map((post) => (
