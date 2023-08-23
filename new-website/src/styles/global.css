@@ -1,3 +1,7 @@
+main {
+  padding-top: 5em;
+}
+
 #hero {
   position: relative;
   overflow: hidden;
@@ -30,9 +34,7 @@ h1, h2 { /*, h3, h4 */
   font-family: 'Cinzel', serif;
 }
 
-.bg-gradient-purple {
-  background: linear-gradient(315deg, rgba(80,70,230,1) 0%, rgba(160,44,228,1) 100%);
-}
+.bg-gradient-purple { background: linear-gradient(315deg, rgba(80,70,230,1) 0%, rgba(160,44,228,1) 100%); }
 
 /* Showcase grid */
 .showcase-items > a {
@@ -44,12 +46,8 @@ h1, h2 { /*, h3, h4 */
   background-position: center center;
 }
 
-.showcase-items > a > span {
-  background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,1) 100%);
-}
-.showcase-expand-list {
-  background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%);
-}
+/* .showcase-items > a > span { background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,1) 100%); } */
+.showcase-expand-list { background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%); }
 
 /** Animations **/
 @keyframes fadeIn {

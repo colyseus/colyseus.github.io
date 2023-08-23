@@ -2,9 +2,7 @@
 import HeaderLink from './HeaderLink.astro';
 import { SITE_TITLE } from '../consts';
 ---
-
-
-<header class="bg-black text-gray-200">
+<header class="fixed w-full z-50 bg-black text-gray-200">
   <nav class="container mx-auto flex items-center py-6">
     <HeaderLink href="/" class="pr-10"><img class="logo" width="200" src="/images/logos/logo-light.png" alt="Colyseus"></HeaderLink>
 
@@ -21,15 +19,15 @@ import { SITE_TITLE } from '../consts';
             <h3 class="text-lg">Colyseus Cloud</h3>
             <span class="text-slate-400">Managed Cloud Hosting Service</span>
 
-            <a href="/cloud-managed-hosting" class="mt-2 block group/link text-blue-500 font-semibold ">
+            <a href="/cloud-managed-hosting" class="mt-2 block group/link text-blue-500 font-medium ">
               Learn more
               <svg class="inline-block transition-transform ease-out relative group-hover/link:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
             </a>
 
             <div class="border-t border-solid border-gray-800 pt-4 mt-4">
-              <a href="/pricing" class="text-sm text-white font-semibold transition-opacity hover:opacity-80">Pricing</a>
+              <a href="/pricing" class="text-sm text-white font-medium transition-opacity hover:opacity-80">Pricing</a>
               ·
-              <a target={"_blank"} href="https://docs.colyseus.io/cloud/" class="text-sm text-white font-semibold transition-opacity hover:opacity-80">Documentation</a>
+              <a target={"_blank"} href="https://docs.colyseus.io/cloud/" class="text-sm text-white font-medium transition-opacity hover:opacity-80">Documentation</a>
             </div>
           </li>
 
@@ -42,17 +40,15 @@ import { SITE_TITLE } from '../consts';
             <h3 class="text-lg">Colyseus Framework</h3>
             <span class="text-slate-400">Open-source Multiplayer Framework</span>
 
-            <a href="/framework" class="mt-2 block group/link text-purple-500 font-semibold">
+            <a href="/framework" class="mt-2 block group/link text-purple-500 font-medium">
               Learn more
               <svg class="inline-block transition-transform ease-out relative group-hover/link:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
             </a>
 
             <div class="border-t border-solid border-gray-800 pt-4 mt-4">
-              <a target={"_blank"} href="https://docs.colyseus.io" class="text-sm text-white font-semibold transition-opacity hover:opacity-80">Documentation</a>
+              <a target={"_blank"} href="https://docs.colyseus.io" class="text-sm text-white font-medium transition-opacity hover:opacity-80">Documentation</a>
               ·
-              <a target={"_blank"} href="https://docs.colyseus.io" class="text-sm text-white font-semibold transition-opacity hover:opacity-80">Source-code</a>
-              ·
-              <a href="/community" class="text-sm text-white font-semibold transition-opacity hover:opacity-80">Community</a>
+              <a target={"_blank"} href="https://docs.colyseus.io" class="text-sm text-white font-medium transition-opacity hover:opacity-80">Source-code</a>
             </div>
 
           </li>
@@ -63,10 +59,12 @@ import { SITE_TITLE } from '../consts';
       <li class="group relative px-2">
         Learn <svg class="inline-block" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
         <ul class="hidden group-hover:inline-block absolute">
-          <li><HeaderLink href="/learn">Learn</HeaderLink></li>
-          <li><HeaderLink href="/learn#tutorials">Tutorials</HeaderLink></li>
-          <li><HeaderLink href="/learn#examples">Examples</HeaderLink></li>
-          <li><HeaderLink href="/learn#videos">Videos</HeaderLink></li>
+          <li><a href="/learn">Learn</a></li>
+          <li><a href="/learn#tutorials">Tutorials</a></li>
+          <li><a href="/learn#examples">Examples</a></li>
+          <li><a href="/learn#videos">Videos</a></li>
+          <a href="/community" class="text-sm text-white font-medium transition-opacity hover:opacity-80">Community</a>
+
         </ul>
         <!-- · -->
       </li>
@@ -91,3 +89,5 @@ import { SITE_TITLE } from '../consts';
     </ul>
   </nav>
 </header>
+
+<!-- <div class="pt-20"></div> -->

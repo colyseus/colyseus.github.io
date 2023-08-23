@@ -1,63 +1,16 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import CommunityStats from '../components/CommunityStats.astro';
+import { collections } from '../content/config';
+import FormattedDate from '../components/FormattedDate.astro';
 
-const platforms = {
-  javascript: {
-    // alias: "JavaScript",
-    name: "JavaScript/TypeScript",
-    image: "/images/sdks/javascript.png",
-    url: "https://docs.colyseus.io/getting-started/javascript-client/",
-  },
-  unity: {
-    name: "Unity",
-    image: "/images/sdks/unity.png",
-    url: "https://docs.colyseus.io/getting-started/unity-sdk/",
-  },
-  construct3: {
-    // alias: "Construct",
-    name: "Construct 3",
-    image: "/images/sdks/construct3.png",
-    url: "https://docs.colyseus.io/getting-started/construct3-sdk/",
-  },
-  defold: {
-    // alias: "Defold",
-    name: "Defold Engine",
-    image: "/images/sdks/defold.png",
-    url: "https://docs.colyseus.io/getting-started/defold-client/",
-  },
-  haxe: {
-    // alias: "Haxe",
-    name: "Haxe 4",
-    image: "/images/sdks/haxe.png",
-    url: "https://docs.colyseus.io/getting-started/haxe-client/",
-  },
-  cocos: {
-    // alias: "Cocos",
-    name: "Cocos Creator",
-    image: "/images/sdks/cocos.png",
-    url: "https://docs.colyseus.io/getting-started/cocos-creator/",
-  },
-};
-
-const showcase = [
-  { platform: "javascript", name: "Bloxd.io", image: "/images/showcase/bloxdio.jpeg", url: "https://bloxd.io/", author_link: "https://www.linkedin.com/in/arthurbbaker/", author: "Arthur Baker", },
-  { platform: "javascript", name: "Make it Meme", image: "/images/showcase/makeitmeme.jpeg", url: "https://makeitmeme.com/", author_link: "https://prealpha.dev/", author: "prealpha", },
-  { platform: "unity", name: "Unboxing the Cryptic Killer", image: "/images/showcase/elevenpuzzles-unboxing-the-cryptic-killer.jpeg", url: "https://store.steampowered.com/app/2069040/Unboxing_the_Cryptic_Killer/", author_link: "https://elevenpuzzles.com/", author: "Eleven Puzzles", },
-  { platform: "javascript", name: "SongTrivia2", image: "/images/showcase/songtrivia2.jpeg", url: "https://songtrivia2.io/", author_link: "https://songtrivia2.io/", author: "SongTrivia", },
-  { platform: "javascript", name: "Wheat Farming", image: "/images/showcase/volem-games-wheat-farming.png", url: "https://poki.com/en/g/wheat-farming", author_link: "https://twitter.com/emre_sahinn35", author: "Emre Şahin", },
-  { platform: "unity", name: "Knight's Edge", image: "/images/showcase/lightfox-games-knights-edge.jpeg", url: "https://www.lightfoxgames.com/knights-edge", author_link: "https://www.lightfoxgames.com", author: "Lightfox Games", },
-  { platform: "javascript", name: "Kirka.io", image: "/images/showcase/kirka-io.jpeg", url: "https://kirka.io/", author_link: "https://twitter.com/development", author: "xip", },
-  { platform: "defold", name: "Raft Wars Multiplayer", image: "images/projects/raftwars.png", url: "https://poki.com/en/g/raft-wars-multiplayer", author_link: "http://www.tinydobbins.com/", author: "TinyDobbins", },
-  { platform: "javascript", name: "Exploder.io", image: "/images/showcase/masterexploder-exploder.jpeg", url: "https://exploder.io/", author_link: "https://github.com/pdaw", author: "Piotr Dawidiuk", },
-  { platform: "unity", name: "Seep King", image: "/images/showcase/seepking.png", url: "https://apps.apple.com/in/app/seep-king/id1603821493", author_link: "https://apps.apple.com/in/developer/jaspreet-singh/id1521881770", author: "Jaspreet Singh", },
-  { platform: "unity", name: "The Kraken Wakes", image: "/images/showcase/charismaai-the-kraken-wakes.png", url: "https://store.steampowered.com/app/2100380/The_Kraken_Wakes/", author_link: "https://charisma.ai/", author: "Charisma Entertainment", },
-  { platform: "unity", name: "Exposed - Who's Most Likely To", image: "/images/showcase/vys-games-exposed.png", url: "https://apps.apple.com/us/app/exposed-whos-most-likely-to/id1553777064", author_link: "https://www.vysgames.com/", author: "VYS Games", },
-  { platform: "javascript", name: "Super Battle Legends", image: "/images/showcase/hammerplay-battle-legends.jpeg", url: "https://www.youtube.com/watch?v=W5I2ZbFJ8Pg", author_link: "https://hammerplay.com/", author: "Hammerplay", },
-];
+const successStories = (await getCollection('success-stories')).sort(
+	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+).slice(0, 3);
 ---
 
 <!DOCTYPE html>
@@ -73,8 +26,12 @@ const showcase = [
         <div class="container mx-auto flex items-center justify-between flex-col lg:flex-row relative py-10">
           <div>
             <div class="py-20">
-              <h1 class="text-4xl mb-2 font-semibold">Your Own Authoritative Game Servers</h1>
-              <p>An extensible and friendly open-source framework made for game developers.</p>
+              <h1 class="text-4xl mb-2 font-medium">Authoritative Online Multiplayer Games</h1>
+              <p>We're on a mission to make multiplayer game development easier to develop, iterate, ship, and operate!</p>
+            </div>
+
+            <div class="p-2">
+
             </div>
 
           </div>
@@ -85,9 +42,34 @@ const showcase = [
         </div>
       </section>
 
+      <section class="bg-gray-100 text-gray-700 text-center border-b border-solid border-gray-300">
+        <div class="container container mx-auto relative py-14">
+          <h2 class="text-xl font-medium text-gray-500 uppercase tracking-widest">Trusted and Loved by Indies and Studios Worldwide</h2>
+
+          <div class="flex justify-center items-center my-12 text-sm space-x-8">
+            {successStories.map((story) => (
+              <a class="flex space-x-4 transition-all shadow w-1/2 rounded p-4 items-center justify-center hover:shadow-lg" href={`/success-stories/${story.slug}/`}>
+                <img class="rounded-full w-24 shadow-lg" src={story.data.author_img} alt={story.data.author} />
+                <span>
+                  <span class="inline-block italic font-light">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Error eveniet eius voluptate laborum aspernatur voluptatem amet dolor explicabo obcaecati eaque. Molestiae modi officiis odio. Reiciendis velit minus maxime tempora vitae."</span>
+                  <span class="inline-block mt-2">{story.data.author} - {story.data.author_ref}</span>
+                </span>
+              </a>
+            ))}
+          </div>
+
+          <div class="flex space-x-8 justify-center">
+            <a href="/success-stories" class="group transition-all text-gray-500 hover:text-gray-600 font-semibold ">
+              View Success Stories
+              <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
       <section class=" bg-gradient-purple text-slate-100 text-center border-b border-solid border-gray-300">
         <div class="container container mx-auto relative py-16">
-          <h2 class="text-4xl font-semibold mb-4">Meet Colyseus Features</h2>
+          <h2 class="text-4xl font-medium mb-4">Meet Colyseus Features</h2>
           <!-- <p class="mt-2">Colyseus is a Node.js framework.</p> -->
 
           <ul class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-left justify-center items-center py-12">
@@ -128,7 +110,7 @@ const showcase = [
           <div class="flex flex-col items-center justify-center py-8 text-purple-300">
             <h2 class="mb-4">SDKs available for your favorite engine</h2>
             <ul class="flex space-x-6 align-items-center justify-start group/all">
-              {Object.values(platforms).map((platform) => (
+              {Object.values(collections.platforms).map((platform) => (
                 <li class="relative last:-top-2">
                   <a href={platform.url} title={platform.name} class="relative group flex flex-col justify-between text-left items-center">
                     <img src={platform.image} alt={platform.name} class="w-14 transition-all translate-y-0 opacity-80 group-hover:opacity-100 group-hover:-translate-y-1 " />
@@ -152,40 +134,40 @@ const showcase = [
 
       <section class="bg-gray-100 text-slate-900 text-center border-b border-solid border-gray-300">
         <div class="container container mx-auto relative py-14">
-          <h2 class="text-xl font-semibold text-gray-500 uppercase tracking-widest">Join our growing community</h2>
+          <h2 class="text-xl font-medium text-gray-500 uppercase tracking-widest">Join our growing community</h2>
 
           <CommunityStats />
 
           <div class="flex space-x-8 justify-center">
-            <a href="https://github.com/colyseus" target="_blank" class="mt-2 group text-purple-500 font-semibold ">
+            <a href="https://github.com/colyseus" target="_blank" class="mt-2 group transition-all text-gray-500 hover:text-gray-600 font-semibold ">
               Visit GitHub
               <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
             </a>
 
-            <a href="/community" class="mt-2 group text-purple-500 font-semibold ">
+            <a href="/community" class="mt-2 group transition-all text-gray-500 hover:text-gray-600 font-semibold ">
               Join Community
               <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
             </a>
           </div>
+
         </div>
       </section>
 
       <section class="text-slate-900">
         <div class="container mx-auto py-10">
-          <h2 class="text-2xl font-semibold">Successful games using Colyseus</h2>
+          <h2 class="text-2xl font-medium">Successful games using Colyseus</h2>
           <p>Made by happy developers.</p>
 
           <div id="showcase" class="h-96 transition-all overflow-hidden relative">
             <div class="grid gap-4 showcase-items mt-6 grid-cols-1 md:grid-cols-3">
-              {showcase.map((item) => (
+              {collections.showcase.map((item) => (
                 <a class="rounded h-60 relative transition-opacity hover:opacity-95 group overflow-hidden" href={item.url} target="_blank" style={`background-image: url(${item.image});`}>
-                  <span class="translate-y-full group-hover:translate-y-0 transition-transform absolute bottom-0 p-4 w-full rounded text-slate-100">
+                  <span class="bg-purple-700 translate-y-full group-hover:translate-y-0 transition-transform absolute bottom-0 p-4 w-full rounded text-white">
                     {item.name}
-                    <small class="block text-gray-300">by {item.author}</small>
+                    <small class="block text-purple-200">by {item.author}</small>
                     {/* <small class="block text-gray-300">by <a href={item.author_link} target="_blank">{item.author}</a></small> */}
-                    <img class="absolute right-4 bottom-4 w-12" src={platforms[item.platform].image} alt={platforms[item.platform].name} />
+                    <img class="absolute right-4 bottom-4 w-12" src={collections.platforms[item.platform].image} alt={collections.platforms[item.platform].name} />
                   </span>
-
                 </a>
               ))}
             </div>
@@ -196,6 +178,7 @@ const showcase = [
               Expand all
               <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
             </a>
+
           </div>
 
         </div>
@@ -203,13 +186,22 @@ const showcase = [
 
       <section class="border-t border-solid border-gray-300">
         <div class="container mx-auto py-20 text-center">
-          <h2 class="text-4xl font-semibold">Deploy your servers in minutes</h2>
-          <p class="mt-4">Ready to serve hundreds and thousands of CCU. No ops required.</p>
+          <h2 class="text-4xl font-medium">Deploy your servers in minutes</h2>
+          <p class="mt-4">
+            Colyseus Cloud is ready to serve hundreds and thousands of CCU. No ops required.
 
-          <div class="flex justify-center space-x-3 mt-8">
-            <a href="#" class="p-4 rounded border-solid border-white bg-purple-500 hover:bg-purple-600 text-white transition-all">Get started from $15/mo</a>
-            <a href="#" class="p-4 rounded border-solid border-2 border-purple-500 hover:border-purple-700 hover:text-purple-800 bg-white text-purple-600 transition-all">Speak with an expert</a>
+          </p>
+
+          <div class="flex justify-center space-x-3 my-8">
+            <a href="https://cloud.colyseus.io/" class="p-4 rounded border-solid border-white bg-purple-500 hover:bg-purple-600 text-white transition-all">Get started from $15/mo</a>
+            <a href="https://calendly.com/endel/intro" class="p-4 rounded border-solid border-2 border-purple-500 hover:border-purple-700 hover:text-purple-800 bg-white text-purple-600 transition-all">Speak with an expert</a>
           </div>
+
+          <a href="/cloud-managed-hosting" class="group transition-all text-purple-500 hover:text-purple-600 font-semibold ">
+            Learn more
+            <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+          </a>
+
         </div>
       </section>
 		</main>

@@ -1,8 +1,8 @@
 ---
-title: 'Bloxd.io'
-author: "Arthur Baker"
-author_ref: "Founder of Bloxd.io"
-author_img: "/success-stories/author-arthur-baker.jpeg"
+title: 'Unboxing the Cryptic Killer'
+author: "Adrian Olczyc"
+author_ref: "CEO at Eleven Puzzles"
+author_img: "/success-stories/author-adrian-olczyc.jpeg"
 description: 'Lorem ipsum dolor sit amet'
 pubDate: "Aug 22 2023"
 heroImage: '/blog-placeholder-4.jpg'
