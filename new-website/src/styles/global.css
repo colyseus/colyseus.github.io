@@ -26,6 +26,14 @@
   animation: fadeIn 4s cubic-bezier(0.33, 1, 0.68, 1) forwards;
 }
 
+h1, h2 { /*, h3, h4 */
+  font-family: 'Cinzel', serif;
+}
+
+.bg-gradient-purple {
+  background: linear-gradient(315deg, rgba(80,70,230,1) 0%, rgba(160,44,228,1) 100%);
+}
+
 /* Showcase grid */
 .showcase-items > a {
   background-size: cover;
@@ -42,54 +50,6 @@
 .showcase-expand-list {
   background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%);
 }
-
-/* Platform SDKs */
-ul.platforms { list-style: none; }
-ul.platforms li { display: inline-block; }
-ul.platforms li a {
-  position: relative;
-  display: inline-block;
-  padding: 0.5em;
-  width: 84px;
-  height: 84px;
-  opacity: 0.6;
-  text-align: center;
-  transition: opacity 0.15s, transform 0.15s;
-}
-
-ul.platforms li a span {
-  font-size: 0.8em;
-  position: absolute;
-  bottom: -1.7em;
-  left: 0;
-  right: 0;
-  opacity: 0;
-  transform: translateY(-8px);
-  transition: opacity 0.15s, transform 0.15s;
-  width: 84px;
-  text-align: center;
-}
-
-ul.platforms li a img {
-  height: 100%;
-}
-
-ul.platforms:not(.open) li a:hover {
-  opacity: 1;
-  transform: translateY(-2px);
-}
-
-ul.platforms.open li a span,
-ul.platforms:not(.open) li a:hover span {
-  opacity: 1;
-  /* transform: translateY(0); */
-}
-ul.platforms.open li a { opacity: 1; }
-ul.platforms.open li a:hover {
-  transform: translateY(-4px);
-  opacity: 0.9;
-}
-
 
 /** Animations **/
 @keyframes fadeIn {

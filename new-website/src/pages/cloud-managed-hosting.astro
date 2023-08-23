@@ -3,7 +3,6 @@ import BaseHead from '../components/BaseHead.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
-import CommunityStats from '../components/CommunityStats.astro';
 ---
 
 <!DOCTYPE html>
@@ -20,30 +19,28 @@ import CommunityStats from '../components/CommunityStats.astro';
           <div>
 
             <div class="py-20">
-              <h1 class="text-4xl font-bold">Join the Colyseus Community!</h1>
-              <p class="mt-4">Exchange ideas, share knowledge, connect and learn from like-minded people within the Colyseus Community.</p>
+              <h1 class="text-4xl">Deploy your multiplayer servers in minutes</h1>
+              <p class="mt-4">Ready to serve hundreds and thousands of CCU. No ops required.</p>
             </div>
 
-            <a class="p-4 text-xl font-semibold bg-blue-600 rounded transition-all hover:bg-blue-700" href="http://chat.colyseus.io" target="_blank">Join Discord</a>
-
-            <div class="mt-8">
-              <CommunityStats />
-            </div>
+            <p>
+              Starting at $15/mo.
+              <a href="/pricing" class="mt-2 group text-purple-500 font-semibold ">
+                View pricing
+                <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+              </a>
+            </p>
 
           </div>
         </div>
       </section>
 
       <section class="text-slate-900 text-center border-b border-solid border-gray-300">
-        <div class="container mx-auto p-16">
-          <h2 class="text-2xl font-semibold">Community Videos</h2>
-          <p class="mt-1">Videos</p>
-        </div>
       </section>
 
       <section class="text-slate-900">
         <div class="container mx-auto py-10">
-          <h1 class="text-2xl font-semibold">Another title...</h1>
+          <h1 class="text-2xl">Another title...</h1>
           <p>Hello world...</p>
         </div>
       </section>
