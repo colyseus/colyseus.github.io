@@ -6,11 +6,11 @@ import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import CommunityStats from '../components/CommunityStats.astro';
 import { collections } from '../content/config';
-import FormattedDate from '../components/FormattedDate.astro';
+// import FormattedDate from '../components/FormattedDate.astro';
 
 const successStories = (await getCollection('success-stories')).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
-).slice(0, 3);
+);
 ---
 
 <!DOCTYPE html>
@@ -26,7 +26,7 @@ const successStories = (await getCollection('success-stories')).sort(
         <div class="container mx-auto flex items-center justify-between flex-col lg:flex-row relative py-10">
           <div>
             <div class="py-20">
-              <h1 class="text-4xl mb-2 font-medium">Authoritative Online Multiplayer Games</h1>
+              <h1 class="text-4xl mb-2 font-medium">Own Your Authoritative Multiplayer Server</h1>
               <p>We're on a mission to make multiplayer game development easier to develop, iterate, ship, and operate!</p>
             </div>
 
@@ -47,8 +47,8 @@ const successStories = (await getCollection('success-stories')).sort(
           <h2 class="text-xl font-medium text-gray-500 uppercase tracking-widest">Trusted and Loved by Indies and Studios Worldwide</h2>
 
           <div class="flex justify-center items-center my-12 text-sm space-x-8">
-            {successStories.map((story) => (
-              <a class="flex space-x-4 transition-all shadow w-1/2 rounded p-4 items-center justify-center hover:shadow-lg" href={`/success-stories/${story.slug}/`}>
+            {successStories.filter((story) => story.data.author_img).map((story, i) => (
+              <a class={"animate-delay-" + i + " animate-from-bottom-fade flex space-x-4 transition-all shadow w-1/2 rounded p-4 items-center justify-center hover:shadow-lg"} href={`/success-stories/${story.slug}/`}>
                 <img class="rounded-full w-24 shadow-lg" src={story.data.author_img} alt={story.data.author} />
                 <span>
                   <span class="inline-block italic font-light">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Error eveniet eius voluptate laborum aspernatur voluptatem amet dolor explicabo obcaecati eaque. Molestiae modi officiis odio. Reiciendis velit minus maxime tempora vitae."</span>
@@ -86,12 +86,12 @@ const successStories = (await getCollection('success-stories')).sort(
 
             <li class="flex space-x-4 items-center">
               <svg class="w-32 max-h-12 md:max-h-none" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M.2 468.9C2.7 493.1 23.1 512 48 512l96 0 320 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-48 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-48c0-26.5-21.5-48-48-48L48 0C21.5 0 0 21.5 0 48L0 368l0 96c0 1.7 .1 3.3 .2 4.9z"/></svg>
-              <p>Ready to <strong>scale</strong> to millions across different <strong>game rooms</strong>.</p>
+              <p>Architecture ready to <strong>scale</strong> to millions across different <strong>game rooms</strong>.</p>
             </li>
 
             <li class="flex space-x-4 items-center">
               <svg class="w-32 max-h-12 md:max-h-none" viewBox="0 0 16 16" stroke="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg"> <path d="M14.2139 2.6168L8.21387 0.116799C8.0311 0.0409798 7.83517 0.00195313 7.6373 0.00195312C7.43944 0.00195313 7.24351 0.0409798 7.06074 0.116799L1.06074 2.6168C0.501367 2.84805 0.135742 3.39492 0.135742 4.00117C0.135742 10.2043 3.71387 14.4918 7.05762 15.8855C7.42637 16.0387 7.84199 16.0387 8.21074 15.8855C10.8889 14.7699 15.1357 10.9168 15.1357 4.00117C15.1357 3.39492 14.7701 2.84805 14.2139 2.6168ZM7.82949 14.9637C7.70449 15.0137 7.56699 15.0137 7.44512 14.9637C4.38574 13.7512 1.13574 9.50117 1.13574 4.00117C1.13574 3.79805 1.25762 3.6168 1.44199 3.53867L7.44199 1.03867C7.56387 0.988674 7.70449 0.988674 7.82637 1.03867L13.8264 3.53867C14.0139 3.6168 14.1357 3.79805 14.1326 4.00117C14.1357 9.50117 10.8857 13.7512 7.82949 14.9637ZM12.0857 4.80742C11.9389 4.66055 11.7014 4.66055 11.5545 4.8043L6.44824 9.86992L4.29199 7.69805C4.14512 7.55117 3.90762 7.55117 3.76074 7.69492L3.49512 7.96055C3.34824 8.10742 3.34824 8.34492 3.49199 8.4918L6.17637 11.198C6.32324 11.3449 6.56074 11.3449 6.70762 11.2012L12.3482 5.60742C12.4951 5.46055 12.4951 5.22305 12.3514 5.07617L12.0857 4.80742Z"></path> </svg>
-              <p>An authoritative server to <strong>prevent hacks</strong> on the client.</p>
+              <p>Authoritative server to <strong>prevent hacks</strong> on the client.</p>
             </li>
 
             <li class="flex space-x-4 items-center">
@@ -108,13 +108,13 @@ const successStories = (await getCollection('success-stories')).sort(
 
           <!-- Platforms -->
           <div class="flex flex-col items-center justify-center py-8 text-purple-300">
-            <h2 class="mb-4">SDKs available for your favorite engine</h2>
+            <h2 class="mb-4">Supports your favorite engine & platform</h2>
             <ul class="flex space-x-6 align-items-center justify-start group/all">
               {Object.values(collections.platforms).map((platform) => (
                 <li class="relative last:-top-2">
                   <a href={platform.url} title={platform.name} class="relative group flex flex-col justify-between text-left items-center">
                     <img src={platform.image} alt={platform.name} class="w-14 transition-all translate-y-0 opacity-80 group-hover:opacity-100 group-hover:-translate-y-1 " />
-                    <span class="absolute -bottom-5 text-sm transition-all whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-1">{platform['alias'] || platform.name}</span>
+                    <span class="text-semibold absolute -bottom-5 text-sm transition-all whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-1">{platform['alias'] || platform.name}</span>
                   </a>
                 </li>
               ))}

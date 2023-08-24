@@ -8,9 +8,14 @@ import { SITE_TITLE } from '../consts';
 
     <ul class="flex space-x-1 items-center">
       <li class="group relative px-2">
-        Products <svg class="inline-block" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        <span class="relative">
+          Products
+          <span class="absolute transition-all scale-x-0 group-hover:scale-x-100 group-hover:animate-scale-x-100 inset-x-0 -bottom-1 h-0.5 bg-white"></span>
+        </span>
 
-        <ul class="hidden z-30 bg-black group-hover:flex space-x-8 absolute -left-24 top-6 p-6 rounded-lg">
+        <svg class="inline-block" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+
+        <ul class="hidden z-30 bg-black group-hover:flex animate-from-top-fade  space-x-8 absolute -left-24 top-8 p-6 rounded-lg">
           <li class="w-80">
             <a href="/cloud-managed-hosting">
               <img class="my-8" src="/images/logos/colyseus-cloud-white.png" alt="Colyseus Cloud" />
@@ -57,14 +62,30 @@ import { SITE_TITLE } from '../consts';
       </li>
 
       <li class="group relative px-2">
-        Learn <svg class="inline-block" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-        <ul class="hidden group-hover:inline-block absolute">
-          <li><a href="/learn">Learn</a></li>
-          <li><a href="/learn#tutorials">Tutorials</a></li>
-          <li><a href="/learn#examples">Examples</a></li>
-          <li><a href="/learn#videos">Videos</a></li>
-          <a href="/community" class="text-sm text-white font-medium transition-opacity hover:opacity-80">Community</a>
 
+        <span class="relative">
+          Learn
+          <span class="absolute transition-all scale-x-0 group-hover:scale-x-100 group-hover:animate-scale-x-100 inset-x-0 -bottom-1 h-0.5 bg-white"></span>
+        </span>
+         <svg class="inline-block" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+
+        <ul class="hidden z-30 bg-black group-hover:flex animate-from-top-fade  space-x-8 absolute -left-24 top-8 p-6 rounded-lg">
+          <li class="w-80">
+            <ul>
+              <li><a href="/learn">Learn</a></li>
+              <li><a href="/learn#tutorials">Tutorials</a></li>
+              <li><a href="/learn#examples">Examples</a></li>
+              <li><a href="/learn#videos">Videos</a></li>
+            </ul>
+          </li>
+
+          <li class="border-l border-solid border-gray-800">&nbsp;</li>
+          <li class="w-80">
+            <ul>
+              <li><a href="/community" class="text-sm text-white font-medium transition-opacity hover:opacity-80">Community</a></li>
+            </ul>
+
+          </li>
         </ul>
         <!-- · -->
       </li>
