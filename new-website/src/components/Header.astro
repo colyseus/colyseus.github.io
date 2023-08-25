@@ -1,14 +1,13 @@
 ---
 import HeaderLink from './HeaderLink.astro';
-import { SITE_TITLE } from '../consts';
 
-interface Props { isExpanded: boolean; }
+interface Props { isExpanded?: boolean; }
 const { isExpanded = true } = Astro.props;
 ---
 <header class={`
-    fixed w-full transition-all z-50 text-gray-200 h-48 flex center-items
+    fixed w-full transition-all z-50 text-gray-200 flex center-items
     ${(!isExpanded)
-      ? " bg-black/0 data-[expanded=yes]:bg-black data-[expanded=yes]:h-20 data-[expanded=yes]:shadow"
+      ? " h-48 bg-black/0 data-[expanded=yes]:bg-black data-[expanded=yes]:h-20 data-[expanded=yes]:shadow"
       : " bg-black h-20 shadow"}`}
   data-expanded="no"
 >
@@ -114,8 +113,8 @@ const { isExpanded = true } = Astro.props;
       </li>
 
       <li class="font-semibold">
-        <HeaderLink href="/blog" class="relative group py-6">
-          Blog
+        <HeaderLink href="https://docs.colyseus.io/" class="relative group py-6">
+          Documentation
           <span class="absolute transition-all scale-x-0 group-hover:scale-x-100 group-hover:animate-scale-x-100 inset-x-0 bottom-0 h-0.5 bg-white"></span>
         </HeaderLink>
       </li>
