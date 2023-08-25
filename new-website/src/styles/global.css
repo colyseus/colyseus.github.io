@@ -2,6 +2,10 @@
   background: rgba(0,0,0, 0.7);
   background: radial-gradient(circle, rgba(0,0,0,0.7) 0%, rgba(0,0,0,1) 100%);
 }
+/* .bg-gradient-purple-vertical {
+  background: #a855f7;
+  background: linear-gradient(180deg, #e9d5ff 0%, #6b21a8 50%, #3b0764 100%);
+} */
 .gradient-text {
   background: -webkit-linear-gradient(90deg, #faf5ff, #a855f7 60%);
   /* background: -webkit-linear-gradient(90deg, #bfdbfe, #60a5fa 70%); */
@@ -46,14 +50,8 @@ h1, h2 { /*, h3, h4 */
 .bg-gradient-purple { background: linear-gradient(315deg, rgba(80,70,230,1) 0%, rgba(160,44,228,1) 100%); }
 
 /* Showcase grid */
-.showcase-items > a {
-  background-size: cover;
-  background-position: center center;
-}
-.showcase-items > a:hover {
-  background-size: cover;
-  background-position: center center;
-}
+.showcase-items > a { background-size: cover; background-position: center center; }
+.showcase-items > a:hover { background-size: cover; background-position: center center; }
 
 /* .showcase-items > a > span { background: linear-gradient(180deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,1) 100%); } */
 .showcase-expand-list { background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%); }

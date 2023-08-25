@@ -1,8 +1,15 @@
 ---
 import HeaderLink from './HeaderLink.astro';
 
-interface Props { isExpanded?: boolean; }
-const { isExpanded = true } = Astro.props;
+interface Props {
+  isExpanded?: boolean;
+  isBlue?: boolean;
+}
+
+const {
+  isExpanded = true,
+  isBlue = false,
+} = Astro.props;
 ---
 <header class={`
     fixed w-full transition-all z-50 text-gray-200 flex center-items
@@ -120,7 +127,14 @@ const { isExpanded = true } = Astro.props;
       </li>
 
       <li class="grow text-right font-semibold">
-        <a href="https://cloud.colyseus.io/" class="p-3 mr-5 rounded border-solid border-white bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white transition-all">Login</a>
+        <a
+          href="https://cloud.colyseus.io/"
+          class=`p-3 mr-5 rounded border-solid border-white text-white transition-all
+            ${(isBlue)
+              ? "bg-blue-600 hover:bg-blue-700 active:bg-blue-800"
+              : "bg-purple-600 hover:bg-purple-700 active:bg-purple-800"}`>
+          Access Colyseus Cloud
+        </a>
 
         <a class="py-6" href="https://github.com/colyseus" target="_blank">
           <span class="pr-2">GitHub</span>

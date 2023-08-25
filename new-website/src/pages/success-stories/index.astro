@@ -5,6 +5,7 @@ import Footer from '../../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
+import TitleSection from '../../components/TitleSection.astro';
 
 const successStories = (await getCollection('success-stories')).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
@@ -19,15 +20,7 @@ const successStories = (await getCollection('success-stories')).sort(
 	<body>
 		<Header />
 		<main>
-      <!-- Hero -->
-      <section class="text-gray-700">
-        <div class="container mx-auto text-center flex items-center justify-center lg:flex-row relative py-10">
-          <h1 class="text-4xl mb-2 font-medium py-8 relative">
-            Success Stories
-            <span class="absolute transition-all animate-scale-x-100 inset-x-0 bottom-5 h-1 bg-black"></span>
-          </h1>
-        </div>
-      </section>
+      <TitleSection>Success Stories</TitleSection>
 
 			<section class="container m-auto mb-6 animate-from-bottom-fade">
 				<ul class="grid grid-cols-2 gap-6"> <!-- grid grid-cols-2 gap-8 -->

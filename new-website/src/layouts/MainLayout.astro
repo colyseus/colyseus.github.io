@@ -1,0 +1,31 @@
+---
+import { SITE_DESCRIPTION, SITE_TITLE } from "../consts";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  isHeaderExpanded?: boolean;
+  isBlue?: boolean;
+}
+const {
+  isHeaderExpanded = true,
+  isBlue = false,
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header isExpanded={isHeaderExpanded} isBlue={isBlue} />
+
+		<main>
+      <slot />
+		</main>
+
+		<Footer />
+	</body>
+</html>
