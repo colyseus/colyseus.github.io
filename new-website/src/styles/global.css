@@ -1,14 +1,15 @@
 .bg-gradient-black {
   background: rgba(0,0,0, 0.7);
-  background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,1) 100%);
+  background: radial-gradient(circle, rgba(0,0,0,0.7) 0%, rgba(0,0,0,1) 100%);
 }
 .gradient-text {
-  background: -webkit-linear-gradient(45deg, #9333ea, #a855f7 80%);
+  background: -webkit-linear-gradient(90deg, #faf5ff, #a855f7 60%);
+  /* background: -webkit-linear-gradient(90deg, #bfdbfe, #60a5fa 70%); */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-/* a:hover { text-decoration: underline; } */
+footer a:hover { text-decoration: underline; }
 
 #hero {
   position: relative;

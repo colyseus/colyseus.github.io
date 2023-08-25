@@ -30,25 +30,31 @@ const successStories = (await getCollection('success-stories')).sort(
           <div class="container mx-auto flex items-center flex-col lg:flex-row relative py-28">
             <div class="w-full text-center">
               <div class="py-28">
-                <h1 class="text-6xl mb-2 font-medium drop-shadow-[0px_2px_1px_rgba(0,0,0,1)] ">
-                  <span class="text-5xl tracking-tight">A Free and Open-source</span> <br/><span class="gradient-text">Multiplayer Framework</span>
+                <h1 class="text-7xl mb-2 font-medium drop-shadow-[0px_2px_1px_rgba(0,0,0,1)] ">
+                  <span class="text-4xl tracking-tight text-gray-300">A Free and Open-source</span> <br/><span class="gradient-text">Multiplayer Framework</span>
                 </h1>
                 <p class="text-base">Write authoritative game servers in TypeScript.</p>
               </div>
 
-              <div class="p-2 relative">
-                <span
-                  onclick="navigator.clipboard.writeText('npm create colyseus-app@latest ./my-server');"
-                  class="font-mono bg-gray-100 p-5 rounded cursor-pointer border-2 group border-black hover:border-purple-600 active:border-purple-900 relative active:top-0.5">
-                  <span class="text-gray-500 mr-2">
-                    <svg class="inline-block relative w-3 -rotate-90 " data-hk="0-0" width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 11L21 1" stroke="currentColor" stroke-width="2"></path></svg>
+              <div class="p-2 relative flex flex-row w-full justify-center">
+                <div>
+                  <a href="/learn" class="rounded-full bg-purple-600 text-white py-4 px-6 text-lg mr-4 transition-all hover:bg-purple-800 hover:shadow-inner">Get Started</a>
+                </div>
+                <div>
+                  <span
+                    onclick="navigator.clipboard.writeText('npm create colyseus-app@latest ./my-server');"
+                    class="font-mono bg-gray-100 p-5 rounded cursor-pointer border-2 group border-black hover:border-purple-600 active:border-purple-900 relative active:top-0.5">
+                    <span class="text-gray-500 mr-2">
+                      <svg class="inline-block relative w-3 -rotate-90 " data-hk="0-0" width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 11L21 1" stroke="currentColor" stroke-width="2"></path></svg>
+                    </span>
+                    <span class="text-gray-900 mr-2 group-hover:text-purple-500 group-active:text-purple-700">npm create colyseus-app@latest ./my-server</span>
+                    <svg class="inline-block group-active:hidden w-4 text-gray-700 group-hover:text-purple-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg>
+                    <!-- <svg class="inline-block w-5 text-gray-700 group-hover:text-purple-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg> -->
+                    <svg class="hidden w-4 group-active:inline-block text-purple-700 " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
                   </span>
-                  <span class="text-gray-900 mr-2 group-hover:text-purple-500 group-active:text-purple-700">npm create colyseus-app@latest ./my-server</span>
-                  <svg class="inline-block group-active:hidden w-4 text-gray-700 group-hover:text-purple-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg>
-                  <svg class="hidden w-4 group-active:inline-block text-purple-700 " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                </span>
 
-                <p class="text-sm text-gray-300 mt-11">* <a href="https://nodejs.org/en" target="_blank" class="transition-opacity hover:opacity-80">Requires Node.js installed</a>.</p>
+                  <p class="text-sm text-gray-300 mt-11">* <a href="https://nodejs.org/en" target="_blank" class="transition-opacity hover:opacity-80">Requires Node.js installed</a>.</p>
+                </div>
               </div>
 
 
