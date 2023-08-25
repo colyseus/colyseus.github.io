@@ -22,33 +22,37 @@ const successStories = (await getCollection('success-stories')).sort(
 		<Header title={SITE_TITLE} />
 		<main>
       <!-- Hero -->
-      <section id="hero" class="text-gray-200">
-        <div class="container mx-auto flex items-center justify-between flex-col lg:flex-row relative py-28">
-          <div>
-            <div class="py-20">
-              <h1 class="text-4xl mb-2 font-medium">Write Your Authoritative Multiplayer Servers with JavaScript</h1>
-              <p>We're on a mission to make multiplayer game development easier to develop, iterate, ship, and operate!</p>
+      <!-- id="hero"  -->
+      <section class="text-gray-200 relative ">
+        <video autoplay muted loop class="absolute h-screen w-full m-auto top-0 bottom-0 -z-10">
+          <source src="/images/background/video.mp4" type="video/mp4">
+        </video>
+
+        <div class="bg-black/50 z-10">
+          <div class="container mx-auto flex items-center justify-between flex-col lg:flex-row relative py-28">
+            <div>
+              <div class="py-28">
+                <h1 class="text-4xl mb-2 font-medium gradient-text drop-shadow-[0px_2px_1px_rgba(0,0,0,0.25)]">Authoritative Game Servers In JavaScript.</h1>
+                <p>We're on a mission to make multiplayer game development easier to develop, iterate, ship, and operate!</p>
+              </div>
+
+              <div class="p-2 relative">
+                <span
+                  onclick="navigator.clipboard.writeText('npm create colyseus-app@latest');"
+                  class="font-mono bg-gray-100 p-5 rounded cursor-pointer border-2 group border-black hover:border-purple-600 active:border-purple-900 relative active:top-0.5">
+                  <span class="text-gray-500 mr-2">$</span>
+                  <span class="text-gray-900 mr-2 group-hover:text-purple-500 group-active:text-purple-700">npm create colyseus-app@latest</span>
+                  <svg class="inline-block group-active:hidden w-4 text-gray-700 group-hover:text-purple-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg>
+                  <svg class="hidden w-4 group-active:inline-block text-purple-700 " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+                </span>
+
+                <p class="text-xs text-gray-300 absolute -bottom-11 text-right">* <a href="https://nodejs.org/en" target="_blank" class="transition-opacity hover:opacity-80">Requires Node.js installed</a>.</p>
+              </div>
+
+
             </div>
-
-            <div class="p-2 relative">
-              <span
-                onclick="navigator.clipboard.writeText('npm create colyseus-app@latest');"
-                class="font-mono bg-gray-100 p-5 rounded cursor-pointer border-2 group border-black hover:border-purple-700 active:border-purple-900 relative active:top-0.5">
-                <span class="text-gray-500 mr-2">$</span>
-                <span class="text-gray-900 mr-2 group-hover:text-purple-500 group-active:text-purple-700">npm create colyseus-app@latest</span>
-                <svg class="inline-block group-active:hidden w-4 text-purple-700 transition-all opacity-0 translate-y-1 group-hover:translate-y-0 group-hover:opacity-100" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M384 336H192c-8.8 0-16-7.2-16-16V64c0-8.8 7.2-16 16-16l140.1 0L400 115.9V320c0 8.8-7.2 16-16 16zM192 384H384c35.3 0 64-28.7 64-64V115.9c0-12.7-5.1-24.9-14.1-33.9L366.1 14.1c-9-9-21.2-14.1-33.9-14.1H192c-35.3 0-64 28.7-64 64V320c0 35.3 28.7 64 64 64zM64 128c-35.3 0-64 28.7-64 64V448c0 35.3 28.7 64 64 64H256c35.3 0 64-28.7 64-64V416H272v32c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V192c0-8.8 7.2-16 16-16H96V128H64z"/></svg>
-                <svg class="hidden w-4 group-active:inline-block text-purple-700 " fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-              </span>
-
-              <p class="text-xs text-gray-300 absolute -bottom-10 text-right">* <a href="https://nodejs.org/en" target="_blank">System requirement: Node.js</a>.</p>
-            </div>
-
-
           </div>
 
-          <div>
-
-          </div>
         </div>
       </section>
 
