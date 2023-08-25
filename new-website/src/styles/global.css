@@ -77,6 +77,18 @@ h1, h2 { /*, h3, h4 */
 .animate-delay-14 { animation-delay: 1.4s; }
 .animate-delay-15 { animation-delay: 1.5s; }
 
+.animate-delay-005 { animation-delay: 0.05s; }
+.animate-delay-010 { animation-delay: 0.1s; }
+.animate-delay-015 { animation-delay: 0.15s; }
+.animate-delay-020 { animation-delay: 0.2s; }
+.animate-delay-025 { animation-delay: 0.25s; }
+.animate-delay-030 { animation-delay: 0.3s; }
+.animate-delay-035 { animation-delay: 0.35s; }
+.animate-delay-040 { animation-delay: 0.4s; }
+.animate-delay-045 { animation-delay: 0.45s; }
+.animate-delay-050 { animation-delay: 0.5s; }
+.animate-delay-055 { animation-delay: 0.55s; }
+
 /** Animations **/
 @keyframes fade-in-and-translate-x {
   0% { opacity: 0; transform: translateX(1em); }
