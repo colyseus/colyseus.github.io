@@ -10,9 +10,9 @@ const successStories = (await getCollection('success-stories')).sort(
   <div class="container container mx-auto relative py-14">
     <h2 class="text-xl font-medium text-gray-500 uppercase tracking-widest">Trusted and Loved by Indies and Studios Worldwide</h2>
 
-    <div class="flex justify-center items-center my-12 text-sm space-x-8">
-      {successStories.filter((story) => story.data.author_img).map((story, i) => (
-        <a class={"animate-delay-" + i + " animate-from-bottom-fade flex space-x-4 transition-all shadow w-1/2 rounded p-4 items-center justify-center hover:shadow-lg"} href={`/success-stories/${story.slug}/`}>
+    <div class="grid grid-cols-3 gap-4 justify-center items-center my-12 text-sm">
+      {[...successStories, ...successStories, ...successStories].filter((story) => story.data.author_img).map((story, i) => (
+        <a class={"animate-delay-" + i + " animate-from-bottom-fade flex space-x-4 transition-all shadow w-full rounded p-4 items-center justify-center hover:shadow-lg"} href={`/success-stories/${story.slug}/`}>
           <img class="rounded-full w-24 shadow-lg" src={story.data.author_img} alt={story.data.author} />
           <span>
             <span class="inline-block italic font-light">"Lorem ipsum dolor sit amet consectetur adipisicing elit. Error eveniet eius voluptate laborum aspernatur voluptatem amet dolor explicabo obcaecati eaque. Molestiae modi officiis odio. Reiciendis velit minus maxime tempora vitae."</span>
