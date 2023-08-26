@@ -1,51 +1,34 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
-import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
+import ColyseusCloudSection from '../../components/ColyseusCloudSection.astro';
+import TitleSection from '../../components/TitleSection.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
+import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
 ---
+<MainLayout>
+  <TitleSection>Blog</TitleSection>
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-      <section class="text-gray-700">
-        <div class="container mx-auto text-center flex items-center justify-center lg:flex-row relative py-10">
-          <h1 class="text-4xl mb-2 font-medium py-8 relative">
-            Blog
-            <span class="absolute transition-all animate-scale-x-100 inset-x-0 bottom-5 h-1 bg-black"></span>
-          </h1>
-        </div>
-      </section>
+    <section class="container mx-auto">
+      <ul class="grid grid-cols-2 gap-4">
+        {
+          posts.map((post, i) => (
+            <li class={"flex animate-from-bottom-fade " + "animate-delay-" + i}>
+              <a href={`/blog/${post.slug}/`}  class="bg-gray-100 rounded-lg transition-all shadow hover:shadow-lg">
+                <img class="rounded" width={720} height={360} src={post.data.heroImage} alt="" />
+                <span class="p-4 inline-block">
+                  <h4 class="title">{post.data.title}</h4>
+                  <p><FormattedDate date={post.data.pubDate} /></p>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
 
-			<section class="container mx-auto">
-				<ul>
-					{
-						posts.map((post) => (
-							<li>
-								<a href={`/blog/${post.slug}/`}>
-									<img width={720} height={360} src={post.data.heroImage} alt="" />
-									<h4 class="title">{post.data.title}</h4>
-									<p class="date">
-										<FormattedDate date={post.data.pubDate} />
-									</p>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+  <ColyseusCloudSection bgGray={true} />
+</MainLayout>
