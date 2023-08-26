@@ -1,5 +1,5 @@
 ---
-title: "🚀 Colyseus is fully independent again!"
+title: "Colyseus is fully independent again! 🚀"
 description: "It's a new and exciting chapter for Colyseus!"
 pubDate: "May 04 2023"
 author: "Endel Dreyer"
@@ -10,10 +10,10 @@ heroImage: "/blog/open-letter.png"
 
 > "Colyseus Arena" was a managed hosting service developed and provided by the company Lucid Sight, Inc. My relationship with the company was limited to a consulting contract that has also been terminated on 31 March 2023.
 
-- Colyseus Cloud is the replacement for "Colyseus Arena"
-- Colyseus will continue to be MIT Licensed
-- My GitHub Sponsors is now open for anyone who would like to contribute financially to my open-source work
-- Colyseus 0.15 has been released!
+- **Colyseus Cloud** is the replacement for _"Colyseus Arena"_
+- Colyseus will continue to be **MIT Licensed**
+- My **[GitHub Sponsors](https://github.com/sponsors/endel)** is now open for anyone who would like to contribute financially to my open-source work
+- **[Colyseus 0.15 has been released!](https://github.com/colyseus/colyseus/releases/tag/0.15.0)**
 
 ---
 

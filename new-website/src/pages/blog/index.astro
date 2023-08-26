@@ -12,7 +12,7 @@ const posts = (await getCollection('blog')).sort(
 <MainLayout>
   <TitleSection>Blog</TitleSection>
 
-    <section class="container mx-auto">
+    <section class="container mx-auto pb-32">
       <ul class="grid grid-cols-2 gap-4">
         {
           posts.map((post, i) => (

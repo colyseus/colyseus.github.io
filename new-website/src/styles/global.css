@@ -90,6 +90,7 @@ h1, h2 { /*, h3, h4 */
 .animate-delay-055 { animation-delay: 0.55s; }
 
 /* Blog posts */
+article { @apply mb-12; }
 article * { @apply leading-loose; }
 article h1 { @apply font-semibold text-4xl mb-4; }
 article h2 { @apply font-semibold text-3xl mt-8 mb-4; }
