@@ -89,6 +89,21 @@ h1, h2 { /*, h3, h4 */
 .animate-delay-050 { animation-delay: 0.5s; }
 .animate-delay-055 { animation-delay: 0.55s; }
 
+/* Blog posts */
+article * { @apply leading-loose; }
+article h1 { @apply font-semibold text-4xl mb-4; }
+article h2 { @apply font-semibold text-3xl mt-8 mb-4; }
+article h3 { @apply font-semibold text-2xl mt-8 mb-4; }
+article h4 { @apply text-gray-500 font-medium text-xl mb-8; }
+article p { @apply text-gray-700 text-lg pb-4; }
+article p:last-child { @apply pb-0; }
+article ul { @apply list-disc list-inside pb-4 text-lg; }
+article a { @apply text-purple-600; }
+article a:hover { @apply text-purple-700 underline; }
+article a:active {  @apply text-purple-800;}
+article hr { @apply my-8; }
+article blockquote { @apply text-lg border-l-4 border-gray-800 bg-gray-50 px-4 py-2 my-4 italic; }
+
 /** Animations **/
 @keyframes fade-in-and-translate-x {
   0% { opacity: 0; transform: translateX(1em); }

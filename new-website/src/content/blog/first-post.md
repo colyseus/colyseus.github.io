@@ -2,6 +2,7 @@
 title: "🚀 Colyseus is fully independent again!"
 description: "It's a new and exciting chapter for Colyseus!"
 pubDate: "May 04 2023"
+author: "Endel Dreyer"
 heroImage: "/blog/open-letter.png"
 ---
 
