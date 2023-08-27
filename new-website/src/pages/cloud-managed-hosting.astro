@@ -1,6 +1,7 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import TitleSection from '../components/TitleSection.astro';
+import PricingComponent from "./pricing/PricingComponent";
 
 const testimonials = [
   {
@@ -111,6 +112,15 @@ const testimonials = [
     </div>
   </section>
 
+
+  <section class="border-b border-solid border-gray-300">
+    <div class="container container mx-auto relative py-14">
+
+      <div class="max-w-xl mx-auto bg-gray-50 p-8 rounded-lg border shadow">
+        <PricingComponent client:only />
+      </div>
+    </div>
+  </section>
 
   <TitleSection>
     FAQ
