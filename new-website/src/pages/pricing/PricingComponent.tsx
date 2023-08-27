@@ -16,7 +16,7 @@ function DeploymentLocation(props: AddedLocation) {
       </div>
       <div>
         <h4>{props.location.description}</h4>
-        <p>{props.numInstances}x {props.plan.description}</p>
+        <p>{(props.numInstances > 1) ? <span className="text-semibold">{props.numInstances}x </span> : ""}{props.plan.description}</p>
       </div>
     </div>
   );
