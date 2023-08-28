@@ -2,6 +2,7 @@
 import Platforms from '../components/Platforms.astro';
 import MainLayout from '../layouts/MainLayout.astro';
 import CommunityStats from '../components/CommunityStats.astro';
+import ViewMore from '../components/ViewMore.astro';
 ---
 
 <MainLayout isHeaderExpanded={false} isBlue={false}>
@@ -16,12 +17,38 @@ import CommunityStats from '../components/CommunityStats.astro';
             <h1 class="text-5xl mt-8">Multiplayer Framework</h1>
             <p class="mt-4 text-xl">Free and Open-source. Built on Node.js.</p>
           </div>
-          <div class="flex space-x-6 my-8 items-center animate-from-bottom-fade">
-            <a href="https://cloud.colyseus.io/" class="p-4 rounded border-solid border-white bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white transition-all text-xl font-semibold">Get started</a>
-            <a href="https://docs.colyseus.io/" class="mt-1 group font-medium transition-all text-purple-400 hover:text-purple-500 active:text-purple-600">
-              View documentation
-              <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
-            </a>
+          <div class="flex space-x-6 my-8 items-center animate-from-bottom-fade flex-col lg:flex-row">
+            <span class="flex bg-gradient-purple p-1 rounded">
+              <span
+                onclick="navigator.clipboard.writeText('npm create colyseus-app@latest ./my-server');"
+                class="font-mono bg-gray-950 pl-5 rounded relative"
+                >
+                <!-- caret -->
+                <svg class="inline-block relative w-3 -rotate-90 text-gray-300 mr-2" stroke="currentColor" data-hk="0-0" width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 11L21 1" stroke-width="2"></path></svg>
+                <span class="text-gray-300">npm create colyseus-app@latest ./my-server</span>
+                <button class="group inline-block cursor-pointer p-5 relative" id="clipboard-click">
+                  <svg class="inline-block w-5 text-gray-400 transition-all group-hover:scale-125 group-active:scale-75 group-active:text-purple-300  group-hover:text-gray-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                  <span
+                    class="absolute pointer-events-none hidden bg-black data-[clicked=yes]:inline-block text-purple-200 text-sm bg-purple-600 rounded py-2 px-3 -translate-x-12 translate-y-10"
+                    data-clicked="no"
+                  >
+                    Copied!
+                  </span>
+                </button>
+
+                <script>
+                  const button = document.getElementById('clipboard-click');
+                  const icon = button.querySelector('span');
+                  let timeout = null;
+                  var hello = "100";
+                  button.addEventListener('click', () => {
+                    clearTimeout(timeout);
+                    icon.dataset.clicked = 'yes';
+                    timeout = setTimeout(() => icon.dataset.clicked = 'no', 1000);
+                  });
+                </script>
+              </span>
+            </span>
           </div>
 
           <div class="flex flex-col py-8 text-gray-400">
@@ -88,12 +115,65 @@ import CommunityStats from '../components/CommunityStats.astro';
 
   <section class="border-b border-solid border-gray-300">
     <div class="container container mx-auto relative py-20">
-      <h1 class="text-5xl text-center mb-8">Architecture / Stack</h1>
-      <p>Explain WebSockets</p>
-      <p>Game Rooms</p>
-      <p>Explain State Sync</p>
-      <p>Explain Scalability </p>
-      <p>...</p>
+
+      <div class="text-center mb-8">
+        <h1 class="text-5xl">Architecture / Stack</h1>
+        <p>Colyseus comes with optimized defaults. Focus on your game features instead of networking decisions.</p>
+      </div>
+
+      <div class="flex flex-col space-y-8 w-full justify-between">
+        <div>
+          <h2>Node.js Runtime</h2>
+          <p>Node.js is an asynchronous event-driven JavaScript runtime, designed to build scalable network applications.</p>
+
+          <ViewMore href="https://nodejs.org/en/about">See about Node.js</ViewMore>
+        </div>
+
+        <div>
+          <h2>Transport layer</h2>
+          <p>
+            WebSockets
+            ·
+            µWebSockets.js
+            ·
+            WebTransport (on roadmap)
+          </p>
+
+          <ViewMore href="https://docs.colyseus.io/server/transport/">
+            See Transport options
+          </ViewMore>
+        </div>
+
+        <div>
+          <h2>Web / API Routes</h2>
+          <p>
+            Express
+            ·
+            µWebSockets.js
+          </p>
+        </div>
+
+        <div>
+          <h2>Message serialization</h2>
+          <p>
+            MessagePack
+            ·
+            Raw Bytes
+          </p>
+        </div>
+
+        <div>
+          <h2>Authentication</h2>
+          <p>Bring your own!</p>
+        </div>
+
+        <div>
+          <h2>Storage/Database</h2>
+          <p>Bring your own!</p>
+        </div>
+
+      </div>
+
     </div>
   </section>
 
@@ -123,10 +203,10 @@ import CommunityStats from '../components/CommunityStats.astro';
   <section class="border-t border-solid border-gray-300 bg-gray-100">
     <div class="container mx-auto py-20 text-center">
       <h2 class="text-4xl font-medium">Become a Sponsor</h2>
-      <p class="mt-4">
+      <p class="mt-4 leading-relaxed">
         The sustainability of Colyseus relies on <a href="/cloud-managed-hosting" class="text-purple-600 hover:text-purple-700 active:text-purple-800">Colyseus Cloud</a> subscriptions and sponsorships.
         <br />
-        If you benefit from the project but are not yet using Colyseus Cloud, consider sponsoring it.
+        If you benefit from the project but are not yet using Colyseus Cloud, please consider sponsoring it.
       </p>
       <div class="flex justify-center space-x-3 my-8">
         <a href="https://github.com/sponsors/endel" class="p-4 rounded border-solid border-white bg-purple-500 hover:bg-purple-600 active:bg-purple-700 text-white transition-all">GitHub Sponsors</a>

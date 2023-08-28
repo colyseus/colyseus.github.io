@@ -1,0 +1,17 @@
+---
+interface Props  {
+  href: string;
+  class?: string;
+  color?: string;
+}
+const href = Astro.props.href;
+const color = Astro.props.color || "gray-500";
+
+const colorNum = color.substring(color.length - 3);
+const hoverColor = color.replace(/\-([0-9]+)/, "-" + (parseInt(colorNum) + 100));
+const activeColor = color.replace(/\-([0-9]+)/, "-" + (parseInt(colorNum) + 200));
+---
+<a href={href} class={`mt-2 group transition-all font-semibold text-${color} hover:text-${hoverColor} active:text-${activeColor} ${Astro.props.class || ""}`}>
+  <slot />
+  <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+</a>
