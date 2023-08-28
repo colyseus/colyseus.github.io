@@ -4,7 +4,7 @@ import TitleSection from '../components/TitleSection.astro';
 import Layout from '../layouts/BlogPost.astro';
 import MainLayout from '../layouts/MainLayout.astro';
 
-import PricingComponent from "./pricing/PricingComponent";
+import SimulatePriceComponent from "./pricing/SimulatePriceComponent";
 ---
 
 <MainLayout>
@@ -37,7 +37,7 @@ import PricingComponent from "./pricing/PricingComponent";
               </li>
             </ul>
             <a class="block rounded p-3 text-center text-purple-600 transition-all border-2 border-purple-500 hover:border-purple-600 active:border-purple-700" href="https://github.com/sponsors/endel">
-              Sponsor / Donate
+              Sponsor
             </a>
             <a href="/framework" class="mt-4 block group/link text-purple-500 text-center text-sm">
               Learn more
@@ -86,7 +86,7 @@ import PricingComponent from "./pricing/PricingComponent";
 
     <div>
       <div class="max-w-xl mx-auto bg-gray-50 p-8 rounded-lg border shadow">
-        <PricingComponent client:only />
+        <SimulatePriceComponent client:only />
       </div>
     </div>
   </section>

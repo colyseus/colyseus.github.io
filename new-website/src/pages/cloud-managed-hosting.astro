@@ -1,7 +1,7 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
 import TitleSection from '../components/TitleSection.astro';
-import PricingComponent from "./pricing/PricingComponent";
+import SimulatePriceComponent from "./pricing/SimulatePriceComponent";
 
 const testimonials = [
   {
@@ -37,19 +37,19 @@ const testimonials = [
 <!-- <h1 class="text-6xl">Colyseus Cloud</h1> -->
 <MainLayout isHeaderExpanded={false} isBlue={true}>
   <section id="hero" class="text-gray-200 min-h-screen flex">
-    <div class="container mx-auto py-10 flex items-center ">
-      <div class="flex justify-between">
+    <div class="container mx-auto py-10 flex items-center">
+      <div class="flex justify-between space-x-8 w-full">
 
         <!-- Left -->
-        <div class="">
+        <div>
           <div class="py-8 animate-from-top-fade">
             <svg class="w-16 text-blue-500" fill="currentColor" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2412.65 1617.19"> <g> <path d="m1915.36,385.08C1827.83,154.77,1607.34,0,1354.77,0c-156.52,0-304.53,61.78-414.55,166.78l82.52,245.37c67.02-118.54,194.72-193.85,332.03-193.85,177.7,0,330.51,120.5,371.33,292.96l19.21,80.55,82.73,3.28c205.42,8.08,366.31,175.51,366.31,381.15s-171.15,381.59-381.59,381.59h-471.74l73.57,218.3h398.18c330.72,0,599.89-268.94,599.89-599.89,0-296.67-212.84-542.69-497.29-591.16Zm-992.75,54.22l37.95,145.85c-424.87-55.42-575.65,134.42-614.83,209.98-53.3-25.98-97.4-54.97-133.82-84.61,31.34-68.02,183.03-316.49,710.7-271.22ZM23.46,479.51C289.6,134.03,817.4,195.21,817.4,195.21l64.65,159.03c-503.37-48.49-705.57,171.56-764.7,278.88-58.81-65.75-84.35-125.83-93.89-153.62Zm1264.98,1114.98C41.56,1719.17,0,1289.69,0,1289.69v-664c96.93,144.03,324.37,345.89,838.16,345.89,72.75,0,151.5-4.21,236.19-13.05l214.09,635.96Z"></path> </g> </svg>
             <h1 class="text-5xl mt-8">Deploy and scale your servers in minutes</h1>
             <p class="mt-4 text-xl">Ready to serve hundreds and thousands of CCU. No ops required.</p>
           </div>
           <div class="flex space-x-6 my-8 items-center animate-from-bottom-fade">
-            <a href="https://cloud.colyseus.io/" class="p-4 rounded border-solid border-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white transition-all text-lg font-semibold">Get started from $15/mo</a>
-            <a href="/pricing" class="mt-1 group text-blue-400 font-medium ">
+            <a href="https://cloud.colyseus.io/" class="p-4 rounded border-solid border-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white transition-all text-xl font-semibold">Get started from $15/mo</a>
+            <a href="/pricing" class="mt-1 group font-medium transition-all text-blue-400 hover:text-blue-500 active:text-blue-600">
               View pricing
               <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
             </a>
@@ -58,7 +58,7 @@ const testimonials = [
 
         <!-- Right -->
         <div class="justify-center items-center text-lg flex grow">
-          <ul class="space-y-4 text-xl self-center rounded-lg whitespace-nowrap p-16 bg-black/40">
+          <ul class="space-y-4 text-xl self-center rounded-lg whitespace-nowrap p-8 bg-black/40">
             <li class="animate-from-bottom-fade animate-delay-005">
               <svg class="inline mr-1 text-green-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
               Deployments from CLI
@@ -117,7 +117,7 @@ const testimonials = [
     <div class="container container mx-auto relative py-14">
 
       <div class="max-w-xl mx-auto bg-gray-50 p-8 rounded-lg border shadow">
-        <PricingComponent client:only />
+        <SimulatePriceComponent client:only />
       </div>
     </div>
   </section>

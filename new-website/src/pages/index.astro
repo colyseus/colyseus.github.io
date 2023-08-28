@@ -6,6 +6,7 @@ import { collections } from '../content/config';
 import CommunityStats from '../components/CommunityStats.astro';
 import ColyseusCloudSection from '../components/ColyseusCloudSection.astro';
 import SuccessStoriesSection from '../components/SuccessStoriesSection.astro';
+import Platforms, { platforms } from '../components/Platforms.astro';
 ---
 
 <MainLayout isHeaderExpanded={false}>
@@ -110,20 +111,11 @@ import SuccessStoriesSection from '../components/SuccessStoriesSection.astro';
           <p>Open-source, under the most permissive <strong>MIT License</strong>.</p>
         </li>
       </ul>
-      <!-- Platforms -->
+
       <div class="flex flex-col items-center justify-center py-8 text-purple-300">
-        <h2 class="mb-4">Supports your favorite engine & platform</h2>
-        <ul class="flex space-x-6 align-items-center justify-start group/all">
-          {Object.values(collections.platforms).map((platform) => (
-            <li class="relative last:-top-2">
-              <a href={platform.url} title={platform.name} class="relative group flex flex-col justify-between text-left items-center">
-                <img src={platform.image} alt={platform.name} class="w-14 transition-all translate-y-0 opacity-80 group-hover:opacity-100 group-hover:-translate-y-1 " />
-                <span class="text-semibold absolute -bottom-5 text-sm transition-all whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-1">{platform['alias'] || platform.name}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <Platforms />
       </div>
+
       <div class="flex space-x-8 justify-center">
         <a href="/framework" class="mt-2 group transition-all text-purple-200 font-semibold hover:text-purple-100 ">
           Discover The Colyseus Framework
@@ -152,8 +144,10 @@ import SuccessStoriesSection from '../components/SuccessStoriesSection.astro';
 
   <section class="text-slate-900">
     <div class="container mx-auto py-16">
-      <h2 class="text-3xl font-medium">Games using Colyseus</h2>
-      <p>Made by happy developers.</p>
+      <div class="text-center">
+        <h2 class="text-4xl font-medium">Games using Colyseus</h2>
+        <p>A selection of multiplayer games made by happy developers.</p>
+      </div>
 
       <div id="showcase" class="h-96 transition-all overflow-hidden relative">
         <div class="grid gap-4 showcase-items mt-6 grid-cols-1 md:grid-cols-3">
@@ -163,7 +157,7 @@ import SuccessStoriesSection from '../components/SuccessStoriesSection.astro';
                 {item.name}
                 <small class="block text-purple-200">by {item.author}</small>
                 {/* <small class="block text-gray-300">by <a href={item.author_link} target="_blank">{item.author}</a></small> */}
-                <img class="absolute right-4 bottom-4 w-12" src={collections.platforms[item.platform].image} alt={collections.platforms[item.platform].name} />
+                <img class="absolute right-4 bottom-4 w-12" src={platforms[item.platform].image} alt={platforms[item.platform].name} />
               </span>
             </a>
           ))}
@@ -181,5 +175,5 @@ import SuccessStoriesSection from '../components/SuccessStoriesSection.astro';
     </div>
   </section>
 
-  <ColyseusCloudSection />
+  <ColyseusCloudSection bgGray={true} />
 </MainLayout>

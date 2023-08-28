@@ -22,7 +22,7 @@ function DeploymentLocation(props: AddedLocation) {
   );
 }
 
-export default function PricingComponent() {
+export default function SimulatePriceComponent() {
   const [tierNames, setTierNames] = useState<any>([]);
   const [plans, setPlans] = useState<any>([]);
 
@@ -130,7 +130,7 @@ export default function PricingComponent() {
 
   return (
     <div>
-      <h1 className="text-3xl text-center">Simulate</h1>
+      <h1 className="text-3xl text-center">Pricing Simulator</h1>
 
       <div className="flex flex-col mt-4 space-y-4">
         <div className="space-y-1">

@@ -1,0 +1,21 @@
+---
+export const platforms = {
+  javascript: { name: "JavaScript/TypeScript", image: "/images/sdks/javascript.png", url: "https://docs.colyseus.io/getting-started/javascript-client/", },
+  unity: { name: "Unity", image: "/images/sdks/unity.png", url: "https://docs.colyseus.io/getting-started/unity-sdk/", },
+  construct3: { name: "Construct 3", image: "/images/sdks/construct3.png", url: "https://docs.colyseus.io/getting-started/construct3-sdk/", },
+  defold: { name: "Defold Engine", image: "/images/sdks/defold.png", url: "https://docs.colyseus.io/getting-started/defold-client/", },
+  haxe: { name: "Haxe 4", image: "/images/sdks/haxe.png", url: "https://docs.colyseus.io/getting-started/haxe-client/", },
+  cocos: { name: "Cocos Creator", image: "/images/sdks/cocos.png", url: "https://docs.colyseus.io/getting-started/cocos-creator/", },
+};
+---
+<h2 class="mb-4">Supports your favorite engine & platform</h2>
+<ul class="flex space-x-6 align-items-center justify-start group/all">
+  {Object.values(platforms).map((platform) => (
+    <li class="relative last:-top-2">
+      <a href={platform.url} title={platform.name} class="relative group flex flex-col justify-between text-left items-center">
+        <img src={platform.image} alt={platform.name} class="w-14 transition-all translate-y-0 opacity-80 group-hover:opacity-100 group-hover:-translate-y-1 " />
+        <span class="text-semibold absolute -bottom-5 text-sm transition-all whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-1">{platform['alias'] || platform.name}</span>
+      </a>
+    </li>
+  ))}
+</ul>
