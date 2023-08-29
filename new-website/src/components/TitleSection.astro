@@ -5,9 +5,9 @@ interface Props {
 
 const separator = Astro.props.separator;
 ---
-<section class="animate-from-top-fade">
-  <div class={`container mx-auto text-center flex items-center justify-center lg:flex-row relative py-10 ${(separator) ? "border-b border-gray-300" : ""}`}>
-    <h1 class="py-8 text-6xl font-semibold text-gray-900">
+<section>
+  <div class={`container mx-auto text-center flex items-center justify-center lg:flex-row relative py-10 ${(separator) ? "border-b border-gray-200" : ""}`}>
+    <h1 class="py-8 text-6xl font-semibold text-gray-900 animate-from-top-fade">
       <slot />
     </h1>
   </div>
