@@ -126,39 +126,42 @@ const testimonials = [
     FAQ
   </TitleSection>
 
-  <section class="container m-auto mb-24 animate-from-bottom-fade space-y-4">
-    <div>
-      <p><strong>Q: Does Colyseus Cloud offer a free tier?</strong> </p>
-      <p>A: Not at this moment.</p>
+
+
+  <section class="grid-container relative mx-auto max-w-screen-lg md:z-10 text-lg text-gray-800">
+    <div class="mx-auto w-fit max-w-full md:px-10 lg:px-12 xl:px-16 space-y-4 mb-32">
+      <div>
+        <p><strong>Q: Does Colyseus Cloud offer a free tier?</strong> </p>
+        <p>A: Not at this moment.</p>
+      </div>
+
+      <div>
+        <p><strong>Q: What happens if I delete the application I've already paid for?</strong> </p>
+        <p>A: When deleting an application, your account will be credited with the remaining unused time from that application. The credits will be used on the next new application</p>
+      </div>
+
+      <div>
+        <p><strong>Q: Does it Colyseus Cloud handle auto-scaling?</strong> </p>
+        <p>A: Not at this moment. If you identify the need to handle heavier workloads, it is required to upgrade your deployment's resources through the Colyseus Cloud dashboard. We plan on adding support to auto-scaling on "horizontal scalability" deployments in the future.</p>
+      </div>
+
+      <div>
+        <p><strong>Q: How many CCU can Colyseus Cloud handle?</strong> </p>
+        <p>A: The capacity of your servers will depend on how optimized is your application's code, and the amount of networked messages exchanged between server and clients. There is a capacity estimator in the <a href="/pricing">pricing simulator</a>, but take it as a grain of salt, as every application has its particular requirements. It is required to loadtest your application to identify its real limitations.</p>
+      </div>
+
+      <div>
+        <p><strong>Q: What does it mean to "scale vertically"?</strong> </p>
+        <p>A: Vertical scalability is the term used when you have a single server instance, and you add more resources (CPU/Memory) to increase its capacity.</p>
+      </div>
+
+      <div>
+        <p><strong>Q: What does it mean to "scale horizontally"?</strong> </p>
+        <p>A: Horizontal scalability is the term used when you distribute the load of your application across multiple server instances.</p>
+      </div>
+
+      <p>Couldn't find the answer you're looking for? <a href="mailto:support@colyseus.io?subject=Inquiry%2FQuestion%3A%20...&body=Hi">Contact support</a>.</p>
     </div>
-
-    <div>
-      <p><strong>Q: What happens if I delete the application I've already paid for?</strong> </p>
-      <p>A: When deleting an application, your account will be credited with the remaining unused time from that application. The credits will be used on the next new application</p>
-    </div>
-
-    <div>
-      <p><strong>Q: Does it Colyseus Cloud handle auto-scaling?</strong> </p>
-      <p>A: Not at this moment. If you identify the need to handle heavier workloads, it is required to upgrade your deployment's resources through the Colyseus Cloud dashboard. We plan on adding support to auto-scaling on "horizontal scalability" deployments in the future.</p>
-    </div>
-
-    <div>
-      <p><strong>Q: How many CCU can Colyseus Cloud handle?</strong> </p>
-      <p>A: The capacity of your servers will depend on how optimized is your application's code, and the amount of networked messages exchanged between server and clients. There is a capacity estimator in the <a href="/pricing">pricing simulator</a>, but take it as a grain of salt, as every application has its particular requirements. It is required to loadtest your application to identify its real limitations.</p>
-    </div>
-
-    <div>
-      <p><strong>Q: What does it mean to "scale vertically"?</strong> </p>
-      <p>A: Vertical scalability is the term used when you have a single server instance, and you add more resources (CPU/Memory) to increase its capacity.</p>
-    </div>
-
-    <div>
-      <p><strong>Q: What does it mean to "scale horizontally"?</strong> </p>
-      <p>A: Horizontal scalability is the term used when you distribute the load of your application across multiple server instances.</p>
-    </div>
-
-    <p>Couldn't find the answer you're looking for? <a href="mailto:support@colyseus.io?subject=Inquiry%2FQuestion%3A%20...&body=Hi">Contact support</a>.</p>
-
   </section>
 
 </MainLayout>
