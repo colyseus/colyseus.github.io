@@ -104,11 +104,15 @@ article h4 { @apply text-gray-500 font-medium text-xl mb-8; }
 article p { @apply text-gray-700 text-lg pb-4; }
 article p:last-child { @apply pb-0; }
 article ul { @apply list-disc list-inside pb-4 text-lg; }
-article a { @apply text-purple-600; }
-article a:hover { @apply text-purple-700 underline; }
-article a:active {  @apply text-purple-800;}
+article a,
+p a { @apply text-purple-600; }
+article a:hover,
+p a:hover { @apply text-purple-700 underline; }
+article a:active,
+p a:active {  @apply text-purple-800;}
 article hr { @apply my-8; }
 article blockquote { @apply text-lg border-l-4 border-gray-800 bg-gray-50 px-4 py-2 my-4 italic; }
+
 
 /** Animations **/
 @keyframes fade-in-and-translate-x {

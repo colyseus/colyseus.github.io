@@ -11,18 +11,41 @@ import CommunityStats from '../components/CommunityStats.astro';
 
   <section>
     <div class="container container mx-auto relative py-14">
+      <div class="flex justify-between">
+        <div class="w-1/2">
+          <h2 class="text-3xl font-medium">Tutorials</h2>
+          <p class="mb-4 text-gray-700">Learn how to use Colyseus with your favorite game engine or framework.</p>
+
+          <div class="flex flex-col mb-8">
+            <a href="https://developer.playcanvas.com/en/tutorials/real-time-multiplayer-colyseus/">PlayCanvas</a>
+            <a href="https://doc.babylonjs.com/guidedLearning/networking/Colyseus">BabylonJS</a>
+            <a href="https://learn.colyseus.io/phaser/">Phaser</a>
+          </div>
+
+          <h2 class="text-3xl font-medium">How-to</h2>
+          <p class="mb-4 text-gray-700">How to approach most common multiplayer use-cases.</p>
 
   Tutorials
   Examples
   Videos
 
-  GitHub Discussions
-  Discord
+        </div>
+        <div class="w-1/2">
+          <h2 class="text-3xl font-medium">Framework Overview </h2>
+          <p class="mb-4 text-gray-700">Endel's talk for JS GameDev Summit 2022, organized by <a href="https://gitnation.org/" target="_blank">GitNation</a>.</p>
 
+          <iframe class="w-full h-72" src="https://www.youtube.com/embed/KnN6nRtfL44?start=260" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
       </div>
 
+    </div>
   </section>
 
+  <section>
+    <div class="container container mx-auto relative py-14">
+      <TitleSection>Sample Projects</TitleSection>
+    </div>
+  </section>
 
   <section class="bg-gray-100 text-slate-900 text-center border-b border-solid border-gray-300">
     <div class="container container mx-auto relative py-14">
