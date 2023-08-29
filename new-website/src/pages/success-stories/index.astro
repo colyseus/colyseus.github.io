@@ -1,45 +1,31 @@
 ---
-import BaseHead from '../../components/BaseHead.astro';
-import Header from '../../components/Header.astro';
-import Footer from '../../components/Footer.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../../consts';
 import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
+import MainLayout from '../../layouts/MainLayout.astro';
 import TitleSection from '../../components/TitleSection.astro';
+import FormattedDate from '../../components/FormattedDate.astro';
 
 const successStories = (await getCollection('success-stories')).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
 ---
+<MainLayout>
+  <TitleSection>Success Stories</TitleSection>
 
-<!DOCTYPE html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-      <TitleSection>Success Stories</TitleSection>
-
-			<section class="container m-auto mb-6 animate-from-bottom-fade">
-				<ul class="grid grid-cols-2 gap-6"> <!-- grid grid-cols-2 gap-8 -->
-					{
-						successStories.map((post, i) => (
-							<li class={"flex first:col-span-2 first:w-full first:justify-center animate-from-bottom-fade " + "animate-delay-" + i}>
-								<a href={`/success-stories/${post.slug}/`} class="bg-gray-100 rounded-lg transition-all shadow hover:shadow-lg">
-									<img class="rounded" width={720} height={360} src={post.data.heroImage} alt="" />
-                  <span class="p-4 inline-block">
-                    <h4 class="title">{post.data.title}</h4>
-                    <p><FormattedDate date={post.data.pubDate} /></p>
-                  </span>
-								</a>
-							</li>
-						))
-					}
-				</ul>
-			</section>
-		</main>
-		<Footer />
-	</body>
-</html>
+  <section class="container m-auto mb-6 animate-from-bottom-fade">
+    <ul class="grid grid-cols-2 gap-6">
+      {
+        successStories.map((post, i) => (
+          <li class={"flex first:col-span-2 first:w-full first:justify-center animate-from-bottom-fade " + "animate-delay-" + i}>
+            <a href={`/success-stories/${post.slug}/`} class="bg-gray-100 rounded-lg transition-all shadow hover:shadow-lg">
+              <img class="rounded" width={720} height={360} src={post.data.heroImage} alt="" />
+              <span class="p-4 inline-block">
+                <h4 class="title">{post.data.title}</h4>
+                <p><FormattedDate date={post.data.pubDate} /></p>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</MainLayout>

@@ -1,8 +1,9 @@
 ---
 import Platforms from '../components/Platforms.astro';
 import MainLayout from '../layouts/MainLayout.astro';
-import CommunityStats from '../components/CommunityStats.astro';
 import ViewMore from '../components/ViewMore.astro';
+import SponsorsSection from '../components/SponsorsSection.astro';
+import CommunityStats from '../components/CommunityStats.astro';
 ---
 
 <MainLayout isHeaderExpanded={false} isBlue={false}>
@@ -14,8 +15,8 @@ import ViewMore from '../components/ViewMore.astro';
         <div class="">
           <div class="pt-20 pb-4 animate-from-top-fade">
             <svg class="w-16 text-purple-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 122 133.24"> <defs> <style> .herocf1 { fill: url(#linear-gradient-2); } .herocf2 { fill: #000; } .herocf3 { fill: url(#linear-gradient-3); } .herocf4 { fill: url(#linear-gradient); } </style> <linearGradient id="linear-gradient" x1="13.09" y1="4.21" x2="132.62" y2="99.02" gradientUnits="userSpaceOnUse"> <stop offset="0" stop-color="#a32fe0"/> <stop offset="1" stop-color="#5945e3"/> </linearGradient> <linearGradient id="linear-gradient-2" x1="16.8" y1="-.46" x2="136.33" y2="94.34" xlink:href="#linear-gradient"/> <linearGradient id="linear-gradient-3" x1="-14.54" y1="39.05" x2="104.99" y2="133.85" xlink:href="#linear-gradient"/> </defs> <g> <g> <path class="herocf4" d="m19.8,48.53c3.4,2.77,7.52,5.48,12.5,7.91,3.66-7.06,17.75-24.8,57.44-19.62l-3.55-13.63c-49.3-4.23-63.47,18.99-66.4,25.34Z"/> <path class="herocf1" d="m10.96,41.3c5.52-10.03,24.41-30.58,71.44-26.05L76.37.39S27.06-5.33,2.19,26.95c.89,2.6,3.28,8.21,8.77,14.35Z"/> <path class="herocf3" d="m100.37,71.71c-7.91.83-15.27,1.22-22.07,1.22C30.31,72.92,9.06,54.07,0,40.61v62.04s3.88,40.13,120.38,28.48l-20-59.42Z"/> </g> </g> </svg>
-            <h1 class="text-5xl mt-8">Multiplayer Framework</h1>
-            <p class="mt-4 text-xl">Free and Open-source. Built on Node.js.</p>
+            <h1 class="text-5xl mt-8 text-semibold gradient-text-black">Multiplayer Framework</h1>
+            <p class="mt-4 text-xl text-slate-300">Free and Open-source. Built on Node.js.</p>
           </div>
           <div class="flex space-x-6 my-8 items-center animate-from-bottom-fade flex-col lg:flex-row">
             <span class="flex bg-gradient-purple p-1 rounded">
@@ -81,7 +82,7 @@ import ViewMore from '../components/ViewMore.astro';
             </li>
 
             <li class="animate-from-bottom-fade animate-delay-025">
-              <svg class="inline mr-1 text-green-600" height="1em" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M.2 468.9C2.7 493.1 23.1 512 48 512l96 0 320 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-48 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-48c0-26.5-21.5-48-48-48L48 0C21.5 0 0 21.5 0 48L0 368l0 96c0 1.7 .1 3.3 .2 4.9z"/></svg>
+              <svg class="inline mr-1 text-green-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M177.9 494.1c-18.7 18.7-49.1 18.7-67.9 0L17.9 401.9c-18.7-18.7-18.7-49.1 0-67.9l50.7-50.7 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 50.7-50.7c18.7-18.7 49.1-18.7 67.9 0l92.1 92.1c18.7 18.7 18.7 49.1 0 67.9L177.9 494.1z"/></svg>
               <span>Scale horizontally or vertically</span>
             </li>
 
@@ -102,16 +103,7 @@ import ViewMore from '../components/ViewMore.astro';
     </div>
   </section>
 
-  <section class="border-b border-solid border-gray-300">
-    <div class="container container mx-auto relative py-20">
-      <h1 class="text-3xl text-center mb-8 italic">Handle up to 3k connections per Node.js process</h1>
-      <p>Explain WebSockets</p>
-      <p>Game Rooms</p>
-      <p>Explain State Sync</p>
-      <p>Explain Scalability </p>
-      <p>...</p>
-    </div>
-  </section>
+  <SponsorsSection />
 
   <section class="border-b border-solid border-gray-300">
     <div class="container container mx-auto relative py-20">
@@ -177,26 +169,19 @@ import ViewMore from '../components/ViewMore.astro';
     </div>
   </section>
 
-  <section class="bg-gray-100 text-slate-900 text-center border-b border-solid border-gray-300">
-    <div class="container container mx-auto relative py-14">
-      <h2 class="text-xl font-medium text-gray-500 uppercase tracking-widest">Join our growing community</h2>
-      <CommunityStats />
-      <div class="flex space-x-8 justify-center">
-        <a href="https://github.com/colyseus" target="_blank" class="mt-2 group transition-all text-gray-500 hover:text-gray-600 font-semibold ">
-          Visit GitHub
-          <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
-        </a>
-        <a href="/community" class="mt-2 group transition-all text-gray-500 hover:text-gray-600 font-semibold ">
-          Join Community
-          <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
-        </a>
-      </div>
+  <section class="border-b border-solid border-gray-300">
+    <div class="container container mx-auto relative py-20">
+      <h1 class="text-3xl text-center mb-8">Room State Synchronization</h1>
+      <p>Explain State Sync</p>
+      <p>...</p>
     </div>
   </section>
 
-  <section>
-    <div class="container container mx-auto relative py-14">
-      Hello world
+  <section class="border-b border-solid border-gray-300">
+    <div class="container container mx-auto relative py-20">
+      <h1 class="text-3xl text-center mb-8">Scalability</h1>
+      <p>Explain how scalability works vertically and horizontally</p>
+      <p>...</p>
     </div>
   </section>
 

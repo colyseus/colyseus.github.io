@@ -12,6 +12,11 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
+.gradient-text-black {
+  background: -webkit-linear-gradient(90deg, #fff, #c3c3c3 60%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
 
 footer a:hover { text-decoration: underline; }
 
