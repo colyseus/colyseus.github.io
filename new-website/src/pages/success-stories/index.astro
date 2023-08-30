@@ -3,24 +3,42 @@ import { getCollection } from 'astro:content';
 import MainLayout from '../../layouts/MainLayout.astro';
 import TitleSection from '../../components/TitleSection.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
+import { Image, getImage } from 'astro:assets';
+import SponsorsSection from '../../components/SponsorsSection.astro';
 
 const successStories = (await getCollection('success-stories')).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
 );
 ---
 <MainLayout>
-  <TitleSection>Success Stories</TitleSection>
+  <TitleSection>
+    Success Stories
+    <p class="font-sans text-lg font-normal text-gray-500 mt-2">Inspirational interviews with people thriving with Colyseus</p>
+  </TitleSection>
 
-  <section class="container m-auto mb-6 animate-from-bottom-fade">
-    <ul class="grid grid-cols-2 gap-6">
+  <section class="container m-auto mb-24 animate-from-bottom-fade">
+    <ul class="flex space-x-6 justify-center">
       {
-        successStories.map((post, i) => (
-          <li class={"flex first:col-span-2 first:w-full first:justify-center animate-from-bottom-fade " + "animate-delay-" + i}>
-            <a href={`/success-stories/${post.slug}/`} class="bg-gray-100 rounded-lg transition-all shadow hover:shadow-lg">
-              <img class="rounded" width={720} height={360} src={post.data.heroImage} alt="" />
-              <span class="p-4 inline-block">
-                <h4 class="title">{post.data.title}</h4>
-                <p><FormattedDate date={post.data.pubDate} /></p>
+        successStories.filter(post => post.data.published).map((post, i) => (
+          <li class={"w-80 flex animate-from-bottom-fade " + "animate-delay-" + i}>
+            <a href={`/success-stories/${post.slug}/`} class="bg-gray-100 block w-full rounded-lg transition-all shadow hover:shadow-lg">
+              <span class="w-full block h-44 bg-cover bg-center rounded-t-lg" style={`background-image: url(${(post.data.heroImage)});`}>
+              </span>
+              <span class="p-4 inline-block w-full">
+                <span class="text-lg">{post.data.title}</span>
+
+                <span class="mt-2 flex text-xs justify-between items-center">
+                  <span><FormattedDate date={post.data.pubDate} /></span>
+                  {(post.data.author) &&
+                    <span class="inline-block">
+                      By
+                      <span class="inline-block">
+                          {(post.data.author_img) && <img class="inline w-6 rounded-full border border-gray-500 mr-1" src={post.data.author_img} alt={post.data.author}>}
+                          {post.data.author}
+                        </span>
+                    </span>}
+                </span>
+
               </span>
             </a>
           </li>
@@ -28,4 +46,7 @@ const successStories = (await getCollection('success-stories')).sort(
       }
     </ul>
   </section>
+
+  <SponsorsSection />
+
 </MainLayout>

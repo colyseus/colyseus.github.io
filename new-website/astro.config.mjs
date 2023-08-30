@@ -11,4 +11,6 @@ export default defineConfig({
   compressHTML: true,
   integrations: [mdx(), sitemap(), tailwind(), react()],
   // adapter: netlify(),
+
+  experimental: { assets: true },
 });

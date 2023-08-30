@@ -1,4 +1,5 @@
 ---
+# published: true
 title: 'Unboxing the Cryptic Killer'
 author: "Adrian Olczyc"
 author_ref: "CEO at Eleven Puzzles"
