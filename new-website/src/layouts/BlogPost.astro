@@ -56,11 +56,11 @@ const footerSection = props.footerSection || "colyseus-cloud";
 
             {(props.author) &&
               <div class="font-mono text-gray-500 font-medium">
-                By <span class="inline-block">
-                    {(props.author_img) &&
-                      <img class="inline w-8 rounded-full border border-gray-500 mr-2" src={props.author_img} alt={props.author}>}
-                    {props.author}
-                  </span>
+                By
+                <a class="inline-block text-gray-500" href={props.author_link}>
+                  {(props.author_img) && <img class="inline w-8 rounded-full border border-gray-500 mr-2" src={props.author_img} alt={props.author}>}
+                  {props.author}
+                </a>
               </div>}
 
             <hr class="-mx-16 my-16">
