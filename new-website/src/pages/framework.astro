@@ -109,59 +109,82 @@ import CommunityStats from '../components/CommunityStats.astro';
     <div class="container container mx-auto relative py-20">
 
       <div class="text-center mb-8">
+        <h1 class="text-5xl">Colyseus at a glance</h1>
+        <p class="mt-1 text-gray-700">
+          For in-depth content, please check
+          <ViewMore href="/learn">Learn Colyseus</ViewMore>
+        </p>
+
+        <p>TODO: room definition, room lifecycle, room state, room methods, etc</p>
+
+      </div>
+    </div>
+
+  </section>
+
+  <section class="border-b border-solid border-gray-300">
+    <div class="container container mx-auto relative py-20">
+
+      <div class="text-center mb-8">
         <h1 class="text-5xl">Architecture / Stack</h1>
-        <p>Colyseus comes with optimized defaults. Focus on your game features instead of networking decisions.</p>
+        <p class="mt-1 text-gray-700">Optimized defaults. Focus on your game features instead of networking decisions.</p>
       </div>
 
-      <div class="flex flex-col space-y-8 w-full justify-between">
-        <div>
-          <h2>Node.js Runtime</h2>
-          <p>Node.js is an asynchronous event-driven JavaScript runtime, designed to build scalable network applications.</p>
-
-          <ViewMore href="https://nodejs.org/en/about">See about Node.js</ViewMore>
+      <div class="grid grid-cols-3 grid-rows-2 gap-6 w-full justify-between">
+        <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
+          <h3 class="font-medium mb-1 text-lg">Node.js Runtime</h3>
+          <div class="text-gray-700">
+            <p>Node.js is an asynchronous event-driven JavaScript runtime, designed to build scalable network applications.</p>
+            <ViewMore href="https://nodejs.org/en/about">Learn about Node.js</ViewMore>
+          </div>
         </div>
 
-        <div>
-          <h2>Transport layer</h2>
-          <p>
-            WebSockets
-            ·
-            µWebSockets.js
-            ·
-            WebTransport (on roadmap)
-          </p>
-
-          <ViewMore href="https://docs.colyseus.io/server/transport/">
-            See Transport options
-          </ViewMore>
+        <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
+          <h3 class="font-medium mb-1 text-lg">Networking Transport</h3>
+          <div class="text-gray-700">
+            <p>
+              Uses WebSockets as transport layer by default.
+              <ViewMore class="inline" href="https://docs.colyseus.io/server/transport/">
+                See options
+              </ViewMore>
+            </p>
+            <p class="mt-2 text-sm"><em>Support for WebTransport is in our <a href="https://github.com/colyseus/colyseus/wiki/Public-Roadmap">public roadmap</a>.</em></p>
+          </div>
         </div>
 
-        <div>
-          <h2>Web / API Routes</h2>
-          <p>
-            Express
-            ·
-            µWebSockets.js
-          </p>
+        <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
+          <h3 class="font-medium mb-1 text-lg">Room-based system</h3>
+          <div class="text-gray-700">
+            <p>From a single room definition, a single Node.js process is capable of spawning and managing multiple game rooms simultaneously.</p>
+            <ViewMore href="https://docs.colyseus.io/server/room/">
+              See more
+            </ViewMore>
+          </div>
         </div>
 
-        <div>
-          <h2>Message serialization</h2>
-          <p>
-            MessagePack
-            ·
-            Raw Bytes
-          </p>
+        <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
+          <h3 class="font-medium mb-1 text-lg">Message Serialization</h3>
+          <div class="text-gray-700">
+            <p>
+              For state sync, we use <a href="https://github.com/colyseus/schema">our own binary delta serializer</a>.
+              For every other message, we use the fastest <a href="https://msgpack.org/">MessagePack</a> serializer available for JavaScript.
+            </p>
+          </div>
         </div>
 
-        <div>
-          <h2>Authentication</h2>
-          <p>Bring your own!</p>
+        <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
+          <h3 class="font-medium mb-1 text-lg">Web / API Routes</h3>
+          <div class="text-gray-700">
+            <p>Define your own custom API routes via Express or µWebSockets.js</p>
+          </div>
         </div>
 
-        <div>
-          <h2>Storage/Database</h2>
-          <p>Bring your own!</p>
+        <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
+          <h3 class="font-medium mb-1 text-lg">Database / Storage / Authentication</h3>
+          <div class="text-gray-700">
+            <p>Bring your favorite Node.js tool here. You are free to choose which database or authentication provider to use.</p>
+            <p class="mt-2 text-sm"><em>(An official recommendation is <a href="https://github.com/colyseus/colyseus/issues/594">coming soon</a>).</em></p>
+          </div>
         </div>
 
       </div>
@@ -171,7 +194,7 @@ import CommunityStats from '../components/CommunityStats.astro';
 
   <section class="border-b border-solid border-gray-300">
     <div class="container container mx-auto relative py-20">
-      <h1 class="text-3xl text-center mb-8">Room State Synchronization</h1>
+      <h1 class="text-3xl text-center mb-8" id="state-sync">Room State Synchronization</h1>
       <p>Explain State Sync</p>
       <p>...</p>
     </div>
