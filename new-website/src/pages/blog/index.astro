@@ -4,6 +4,7 @@ import ColyseusCloudSection from '../../components/ColyseusCloudSection.astro';
 import TitleSection from '../../components/TitleSection.astro';
 import MainLayout from '../../layouts/MainLayout.astro';
 import { getCollection } from 'astro:content';
+import PostItem from '../../components/PostItem.astro';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
@@ -13,20 +14,13 @@ const posts = (await getCollection('blog')).sort(
   <TitleSection>Blog</TitleSection>
 
     <section class="container mx-auto pb-32">
-      <ul class="grid grid-cols-2 gap-4">
-        {
-          posts.map((post, i) => (
-            <li class={"flex animate-from-bottom-fade " + "animate-delay-" + i}>
-              <a href={`/blog/${post.slug}/`}  class="bg-gray-100 rounded-lg transition-all shadow hover:shadow-lg">
-                <img class="rounded" width={720} height={360} src={post.data.heroImage} alt="" />
-                <span class="p-4 inline-block">
-                  <h4 class="title">{post.data.title}</h4>
-                  <p><FormattedDate date={post.data.pubDate} /></p>
-                </span>
-              </a>
-            </li>
-          ))
-        }
+      <ul class="flex space-x-6 justify-center">
+        {posts.map((post, i) => (
+          <PostItem
+            href={`/blog/${post.slug}/`}
+            class={"animate-delay-" + i}
+            {...post.data} />
+        ))}
       </ul>
     </section>
 

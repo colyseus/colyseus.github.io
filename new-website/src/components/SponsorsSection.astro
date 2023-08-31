@@ -1,6 +1,15 @@
-<section class="bg-gray-100 text-slate-900 text-center border-t border-b border-solid border-gray-300">
+---
+interface Props {
+  class?: string;
+}
+
+const props = Astro.props;
+const addClass = props.class ?? "bg-gray-100 text-gray-500";
+---
+
+<section class={"text-center border-t border-b border-solid border-gray-300 " + addClass}>
   <div class="container container mx-auto relative py-14">
-    <h2 class="text-xl font-medium text-gray-500 uppercase tracking-widest">Sponsors</h2>
+    <h2 class="text-xl font-medium uppercase tracking-widest">Sponsors</h2>
     <img class="mx-auto" src="https://colyseus.io/sponsorkit/sponsors.part1.svg" alt="Colyseus Sponsors" />
     <img class="mx-auto" src="https://colyseus.io/sponsorkit/sponsors.part2.svg" alt="Colyseus Sponsors" />
   </div>

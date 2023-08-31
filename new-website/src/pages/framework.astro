@@ -103,19 +103,15 @@ import CommunityStats from '../components/CommunityStats.astro';
     </div>
   </section>
 
-  <SponsorsSection />
-
   <section class="border-b border-solid border-gray-300">
     <div class="container container mx-auto relative py-20">
 
       <div class="text-center mb-8">
-        <h1 class="text-5xl">Colyseus at a glance</h1>
-        <p class="mt-1 text-gray-700">
-          For in-depth content, please check
-          <ViewMore href="/learn">Learn Colyseus</ViewMore>
-        </p>
+        <h1 class="text-5xl">At a glance</h1>
 
-        <p>TODO: room definition, room lifecycle, room state, room methods, etc</p>
+        <iframe class="w-full my-8 h-[80vh] max-h-screen" src="https://stackblitz.com/edit/colyseus?embed=1&file=src%2Frooms%2FMyRoom.ts"></iframe>
+
+        <ViewMore href="/learn">Learn Colyseus</ViewMore>
 
       </div>
     </div>
@@ -143,9 +139,9 @@ import CommunityStats from '../components/CommunityStats.astro';
           <h3 class="font-medium mb-1 text-lg">Networking Transport</h3>
           <div class="text-gray-700">
             <p>
-              Uses WebSockets as transport layer by default.
+              WebSockets is used as transport layer.
               <ViewMore class="inline" href="https://docs.colyseus.io/server/transport/">
-                See options
+                Documentation
               </ViewMore>
             </p>
             <p class="mt-2 text-sm"><em>Support for WebTransport is in our <a href="https://github.com/colyseus/colyseus/wiki/Public-Roadmap">public roadmap</a>.</em></p>
@@ -207,6 +203,8 @@ import CommunityStats from '../components/CommunityStats.astro';
       <p>...</p>
     </div>
   </section>
+
+  <SponsorsSection />
 
   <section class="border-t border-solid border-gray-300 bg-gray-100">
     <div class="container mx-auto py-20 text-center">

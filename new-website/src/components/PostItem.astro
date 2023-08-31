@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import FormattedDate from './FormattedDate.astro';
+
+type Props = CollectionEntry<'blog'>['data'] & {
+  href: string;
+  class?: string;
+};
+
+const props = Astro.props;
+const author_img = props.author_img || (props.author === "Endel Dreyer" && "https://avatars.githubusercontent.com/u/130494?v=4");
+---
+
+<li class={"w-80 flex animate-from-bottom-fade " + (props.class || "")}>
+  <a href={props.href} class="bg-gray-100 block w-full rounded-lg transition-all shadow hover:shadow-lg">
+    <span class="w-full block h-44 bg-cover bg-center rounded-t-lg" style={`background-image: url(${(props.heroImage)});`}>
+    </span>
+    <span class="p-4 inline-block w-full">
+      <span class="text-lg">{props.title}</span>
+
+      <span class="mt-2 flex text-xs justify-between items-center">
+        <span><FormattedDate date={props.pubDate} /></span>
+        {(props.author) &&
+          <span class="inline-block">
+            By
+            <span class="inline-block">
+                {(author_img) && <img class="inline w-6 rounded-full border border-gray-500 mr-1" src={author_img} alt={props.author}>}
+                {props.author}
+              </span>
+          </span>}
+      </span>
+
+    </span>
+  </a>
+</li>
