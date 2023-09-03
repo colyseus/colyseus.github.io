@@ -16,6 +16,9 @@ type Props = CollectionEntry<'blog'>['data'] & {
 const props = Astro.props;
 const { title, description, pubDate, updatedDate, heroImage } = props;
 const footerSection = props.footerSection || "colyseus-cloud";
+
+const author_img = props.author_img || (props.author === "Endel Dreyer" && "https://avatars.githubusercontent.com/u/130494?v=4");
+const author_link = props.author_link || (props.author === "Endel Dreyer" && "https://github.com/endel");
 ---
 
 <html lang="en">
@@ -57,8 +60,8 @@ const footerSection = props.footerSection || "colyseus-cloud";
             {(props.author) &&
               <div class="font-mono text-gray-500 font-medium">
                 By
-                <a class="inline-block text-gray-500" href={props.author_link}>
-                  {(props.author_img) && <img class="inline w-8 rounded-full border border-gray-500 mr-2" src={props.author_img} alt={props.author}>}
+                <a class="inline-block text-gray-500" href={author_link}>
+                  {(author_img) && <img class="inline w-8 rounded-full border border-gray-500 mr-2" src={author_img} alt={props.author}>}
                   {props.author}
                 </a>
               </div>}

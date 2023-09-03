@@ -107,22 +107,7 @@ import CommunityStats from '../components/CommunityStats.astro';
     <div class="container container mx-auto relative py-20">
 
       <div class="text-center mb-8">
-        <h1 class="text-5xl">At a glance</h1>
-
-        <iframe class="w-full my-8 h-[80vh] max-h-screen" src="https://stackblitz.com/edit/colyseus?embed=1&file=src%2Frooms%2FMyRoom.ts"></iframe>
-
-        <ViewMore href="/learn">Learn Colyseus</ViewMore>
-
-      </div>
-    </div>
-
-  </section>
-
-  <section class="border-b border-solid border-gray-300">
-    <div class="container container mx-auto relative py-20">
-
-      <div class="text-center mb-8">
-        <h1 class="text-5xl">Architecture / Stack</h1>
+        <h1 class="text-5xl font-medium ">Architecture / Stack</h1>
         <p class="mt-1 text-gray-700">Optimized defaults. Focus on your game features instead of networking decisions.</p>
       </div>
 
@@ -182,7 +167,10 @@ import CommunityStats from '../components/CommunityStats.astro';
             <p class="mt-2 text-sm"><em>(An official recommendation is <a href="https://github.com/colyseus/colyseus/issues/594">coming soon</a>).</em></p>
           </div>
         </div>
+      </div>
 
+      <div class="text-center mt-8">
+        <ViewMore href="/learn">Learn Colyseus</ViewMore>
       </div>
 
     </div>
@@ -190,7 +178,7 @@ import CommunityStats from '../components/CommunityStats.astro';
 
   <section class="border-b border-solid border-gray-300">
     <div class="container container mx-auto relative py-20">
-      <h1 class="text-3xl text-center mb-8" id="state-sync">Room State Synchronization</h1>
+      <h1 class="text-4xl font-medium text-center mb-8" id="state-sync">Room State Synchronization</h1>
       <p>Explain State Sync</p>
       <p>...</p>
     </div>
@@ -198,9 +186,21 @@ import CommunityStats from '../components/CommunityStats.astro';
 
   <section class="border-b border-solid border-gray-300">
     <div class="container container mx-auto relative py-20">
-      <h1 class="text-3xl text-center mb-8">Scalability</h1>
+      <h1 class="text-4xl font-medium text-center mb-8">Scalability</h1>
       <p>Explain how scalability works vertically and horizontally</p>
       <p>...</p>
+    </div>
+  </section>
+
+  <section class="border-b border-solid border-gray-300">
+    <div class="container container mx-auto relative py-20">
+      <div class="text-center mb-8">
+        <h1 class="text-5xl">See it in action</h1>
+
+        <!-- TODO: only load iframe when reached this section -->
+        <iframe class="w-full my-8 h-[80vh] max-h-screen" src="https://stackblitz.com/edit/colyseus?embed=1&file=src%2Frooms%2FMyRoom.ts"></iframe>
+
+      </div>
     </div>
   </section>
 
