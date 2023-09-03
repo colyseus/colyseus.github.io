@@ -2,6 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import TitleSection from '../components/TitleSection.astro';
 import SimulatePriceComponent from "../components/SimulatePriceComponent";
+import { Code } from 'astro:components';
 
 const testimonials = [
   {
@@ -110,11 +111,50 @@ const testimonials = [
     </div>
   </section>
 
+  <section class="border-b border-solid border-gray-300 bg-gray-800 text-slate-100">
+    <div class="container container mx-auto relative py-20">
+      <h2 class="text-5xl text-center mb-1">Deploying to Colyseus Cloud</h2>
+      <p class="text-center mb-12 text-slate-300">Steps required to deploy your Colyseus app to Colyseus Cloud.</p>
+      <div class="text-xl leading-relaxed">
+        <div class="flex flex-row gap-8">
+
+          <div class="w-1/2">
+            <h3>Create a Colyseus app</h3>
+            <div class="bg-[#24292f] border border-slate-600 shadow-lg rounded p-2 mb-6 mt-2">
+              <Code lang="bash" code={`npm create colyseus-app ./my-colyseus-server\ncd ./my-colyseus-server`} />
+            </div>
+
+            <h3>Push your sources to a Git repository</h3>
+            <div class="bg-[#24292f] border border-slate-600 shadow-lg rounded p-2 mb-6 mt-2">
+              <Code lang="bash" code={`git remote add origin git@github.com:you/repo.git\ngit add .\ngit push origin main`} />
+            </div>
+          </div>
+
+          <div class="w-1/2">
+            <h3>Deploy it!</h3>
+            <div class="bg-[#24292f] border border-slate-600 shadow-lg rounded p-2 mb-6 mt-2">
+              <Code lang="bash" code={`npm install @colyseus/cloud\nnpx @colyseus/cloud deploy`} />
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center text-lg mt-12">
+          <a href="https://docs.colyseus.io/cloud/" class="group transition-all text-slate-200 font-semibold hover:text-slate-100">
+            Learn more
+            <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+          </a>
+        </div>
+
+      </div>
+
+
+    </div>
+  </section>
+
+
   <TitleSection>
     FAQ
   </TitleSection>
-
-
 
   <section class="grid-container relative mx-auto max-w-screen-lg md:z-10 text-lg text-gray-800">
     <div class="mx-auto w-fit max-w-full md:px-10 lg:px-12 xl:px-16 space-y-4 mb-32">
