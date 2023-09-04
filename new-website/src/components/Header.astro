@@ -11,7 +11,7 @@ const {
   isBlue = false,
 } = Astro.props;
 ---
-<header class={`
+<header transition:name="nav-header" class={`
     fixed w-full transition-all z-50 text-gray-200 flex center-items
     ${(!isExpanded)
       ? " h-48 bg-black/0 data-[expanded=yes]:bg-black data-[expanded=yes]:h-20 data-[expanded=yes]:shadow"

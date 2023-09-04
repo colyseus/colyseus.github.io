@@ -31,13 +31,13 @@ const author_link = props.author_link || (props.author === "Endel Dreyer" && "ht
 		<main class="relative z-10 flex flex-1 flex-col">
 
       {(heroImage) &&
-        <div class="mx-auto w-full max-w-screen-lg md:-mb-10 lg:-mb-12 xl:-mb-16">
+        <div class="mx-auto w-full max-w-screen-lg md:-mb-20 lg:-mb-24 xl:-mb-32 -z-1">
             <img class="rounded-b-2xl" width="1500" src={heroImage} transition:name={`${slug}-hero`} />
           </div>}
 
-			<article class="grid-container relative mx-auto max-w-screen-lg md:z-10">
-				<div class="mx-auto w-fit max-w-full py-5 sm:py-8 md:px-10 md:py-12 lg:p-12 lg:py-16 xl:p-16 xl:py-20">
-					<header class="animate-from-bottom-fade animate-delay-1 text-center -mt-16 pt-16 bg-white rounded-lg z-20">
+			<article class="grid-container relative mx-auto max-w-screen-lg z-10">
+				<div class="mx-auto w-fit max-w-full py-5 sm:py-8 md:px-10 md:py-12 lg:p-12 lg:py-16 xl:p-16 xl:py-20 "> <!-- -mt-16 -->
+					<header class="animate-from-bottom-fade text-center pt-16 bg-white rounded-lg z-20">
 
             {(pubDate) &&
               <span class="inline-block font-mono text-gray-500" ><FormattedDate date={pubDate} /></span>}

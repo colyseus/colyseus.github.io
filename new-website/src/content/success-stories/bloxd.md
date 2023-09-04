@@ -1,5 +1,5 @@
 ---
-published: true
+# published: true
 title: 'Bloxd.io'
 author: "Arthur Baker"
 author_ref: "Founder of Bloxd.io"

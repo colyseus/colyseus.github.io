@@ -31,7 +31,9 @@ const { title, description, image = '/blog-placeholder-1.jpg' } = Astro.props;
 <meta name="description" content={description} />
 
 <GoogleAnalytics id="G-JC2SXHE7WL" />
-<ViewTransitions />
+
+<!-- Transitions are causing the main header not to shrink/grow properly -->
+<!-- <ViewTransitions /> -->
 
 <!-- Open Graph / Facebook -->
 <meta property="og:type" content="website" />

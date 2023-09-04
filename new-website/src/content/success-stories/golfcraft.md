@@ -1,5 +1,5 @@
 ---
-published: true
+# published: true
 title: 'Golfcraft'
 author: "Eibriel and Pablo"
 description: 'Lorem ipsum dolor sit amet'
