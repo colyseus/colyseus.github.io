@@ -14,7 +14,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
 };
 
 const props = Astro.props;
-const { title, description, pubDate, updatedDate, heroImage } = props;
+const { title, description, pubDate, updatedDate, heroImage, slug } = props;
 const footerSection = props.footerSection || "colyseus-cloud";
 
 const author_img = props.author_img || (props.author === "Endel Dreyer" && "https://avatars.githubusercontent.com/u/130494?v=4");
@@ -32,15 +32,15 @@ const author_link = props.author_link || (props.author === "Endel Dreyer" && "ht
 
       {(heroImage) &&
         <div class="mx-auto w-full max-w-screen-lg md:-mb-10 lg:-mb-12 xl:-mb-16">
-            <img class="rounded-b-2xl" width="1500" src={heroImage} />
+            <img class="rounded-b-2xl" width="1500" src={heroImage} transition:name={`${slug}-hero`} />
           </div>}
 
 			<article class="grid-container relative mx-auto max-w-screen-lg md:z-10">
 				<div class="mx-auto w-fit max-w-full py-5 sm:py-8 md:px-10 md:py-12 lg:p-12 lg:py-16 xl:p-16 xl:py-20">
-					<header class="text-center -mt-16 pt-16 bg-white rounded-lg z-20">
+					<header class="animate-from-bottom-fade animate-delay-1 text-center -mt-16 pt-16 bg-white rounded-lg z-20">
 
             {(pubDate) &&
-              <span class="inline-block font-mono text-gray-500"><FormattedDate date={pubDate} /></span>}
+              <span class="inline-block font-mono text-gray-500" ><FormattedDate date={pubDate} /></span>}
 
             {updatedDate && (
               <span class="last-updated-on">
@@ -58,7 +58,7 @@ const author_link = props.author_link || (props.author === "Endel Dreyer" && "ht
               <h4 class="mt-4">{description}</h4>}
 
             {(props.author) &&
-              <div class="font-mono text-gray-500 font-medium">
+              <div class="font-mono text-gray-500 font-medium" >
                 By
                 <a class="inline-block text-gray-500" href={author_link}>
                   {(author_img) && <img class="inline w-8 rounded-full border border-gray-500 mr-2" src={author_img} alt={props.author}>}

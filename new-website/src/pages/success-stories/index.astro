@@ -21,6 +21,7 @@ const successStories = (await getCollection('success-stories')).sort(
     <ul class="flex space-x-6 justify-center">
       {successStories.filter(post => post.data.published).map((post, i) => (
         <PostItem
+          slug={post.slug}
           href={`/success-stories/${post.slug}/`}
           class={"animate-delay-" + i}
           {...post.data} />
