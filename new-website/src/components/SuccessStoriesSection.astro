@@ -12,7 +12,10 @@ const successStories = (await getCollection('success-stories')).sort(
 
     <div class="grid grid-cols-3 gap-6 justify-center items-center my-12 text-sm">
       {successStories.filter((story) => story.data.author_img && story.data.quote).map((story, i) => (
-        <a class={"animate-delay-" + i + " animate-from-bottom-fade flex space-x-4 transition-all shadow w-full rounded p-4 items-center justify-center hover:shadow-lg"} href={`/success-stories/${story.slug}/`}>
+        <a
+          class={"animate-delay-" + i + " animate-from-bottom-fade flex space-x-4 transition-all shadow w-full rounded p-4 items-center justify-center hover:shadow-lg"}
+          href={(story.data.published) ? `/success-stories/${story.slug}/` : "/success-stories"}
+        >
           <img class="rounded-full w-24 shadow-lg" src={story.data.author_img} alt={story.data.author} />
           <span>
             <span class="block italic font-light">"{story.data.quote}"</span>

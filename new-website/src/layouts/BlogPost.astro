@@ -54,7 +54,7 @@ const author_link = props.author_link || (props.author === "Endel Dreyer" && "ht
 
 						<h1 class="text-6xl mt-6">{title}</h1>
 
-            {(description) &&
+            {(!props.isSuccessStories && description) &&
               <h4 class="mt-4">{description}</h4>}
 
             {(props.author) &&

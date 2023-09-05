@@ -17,7 +17,9 @@ const author_img = props.author_img || (props.author === "Endel Dreyer" && "http
     <span class="w-full block h-44 bg-cover bg-center rounded-t-lg" style={`background-image: url(${(props.heroImage)});`} transition:name={`${props.slug}-hero`} >
     </span>
     <span class="p-4 inline-block w-full">
-      <span class="text-lg">{props.title}</span>
+      <span class="text-lg text-gray-700 font-medium">{props.title}</span>
+      {(props.description) && <p class="text-sm text-gray-500">{props.description}</p>}
+
 
       <span class="mt-2 flex text-xs justify-between items-center">
         <span><FormattedDate date={props.pubDate} /></span>

@@ -1,0 +1,75 @@
+---
+# published: true
+title: 'Golfcraft'
+description: 'A mini-golf game inside the Decentraland virtual world.'
+author: "Pablo and Eibriel"
+author_img: '/success-stories/golfcraft-pablo.png'
+author_ref: 'Creators of GolfCraft'
+author_link: 'https://twitter.com/Pablo_es'
+quote: "We have been in love with Colyseus since the first moment we discovered it. The integration with Decentraland is straightforward. It is amazing to have such an extraordinary product available for free and as open source."
+pubDate: "Sep 5 2023"
+heroImage: '/success-stories/golfcraft-screenshot-1.png'
+logoImage: '/success-stories/golfcraft-logo.png'
+---
+import ViewMore from '../../components/ViewMore.astro';
+import { Image } from 'astro:assets';
+import teamImage from "../../../public/success-stories/golfcraft-team.png";
+import logoImage from "../../../public/success-stories/golfcraft-logo.png";
+import screenshot2 from "../../../public/success-stories/golfcraft-screenshot-2.png";
+import screenshot3 from "../../../public/success-stories/golfcraft-screenshot-3.png";
+
+<a href="https://golfcraftgame.com/">
+  <Image class="rounded inline-block mx-auto w-1/2 float-right md:w-1/4 ml-8" src={logoImage} alt="Make it Meme Logo" />
+</a>
+
+### What is **Golfcraft** and what makes it special?
+
+Golfcraft is a minigolf game in Decentraland where players can gather materials to craft items and earn resources. The game has three player profiles (competitor, builder and tournament organizer). Players can also make use of an in-game level editor.
+
+<ViewMore href="https://unve.rs/readGolfCraft">Read more</ViewMore>
+
+<div class="mx-auto mt-6 mb-12 w-sm w-full md:w-2/3 text-center text-gray-600 ">
+  <Image class="rounded" src={screenshot3} alt="Gameplay" />
+  <p class="text-sm p-3 italic">Gameplay Screenshot</p>
+</div>
+
+### Who is behind **Golfcraft**?
+
+Behind Golfcraft is a team of coders, designers and gamers that enjoy building in the metaverse. <a href="https://twitter.com/Pablo_es">Pablo</a> and <a href="https://twitter.com/Eibrielbot">Eibriel</a> started experimenting with Decentraland in 2019 participating in game jams organized for the platform. In 2021 they decided to focus full-time on the platform. They gathered more people to work on the project and got funding from <a href="https://governance.decentraland.org/proposal/?id=f7459b10-46e2-11ec-be0c-afec86cba5e5">Decentraland DAO</a>.
+
+<Image src={teamImage} alt="Golfcraft Team" />
+
+
+### How has Colyseus helped you in your journey from developing to releasing **Golfcraft**?
+
+Firstly, when doing a play2Earn game, it is almost mandatory to have some authoritative server to verify the gameplay. In addition, state management and syncing in multiplayer games can be a source of bugs, Colyseus not only optimizes the Netcode, but also defines a solid pattern and straightforward way to make it work.
+
+### How many concurrent connections do you currently have in peak times?
+
+20 CCU aprox.
+
+### How is your backend infrastructure?
+
+We have one central server with REST endpoints for requests that doesn’t need a real time connection, we use the PlayFab platform to store player data. And finally we set up servers running Colyseus on different world zones (Europe, US and Australia) to handle the state of each match in real time, including game logic and 3D physics simulation.
+
+### What was the highest lifetime CCU peak, and how many servers you had when it happened?
+
+1 server 200 CCU.
+
+### How are you currently distributing your game?
+
+Our game is hosted on the <a href="https://decentraland.org/">Decentraland</a> platform. A virtual open world similar to Roblox where developers can publish all kinds of experiences. While the platform is new and doesn't enjoy a big audience, we have the advantage of being one of the firsts big games inside the platform, a new field of opportunities.
+
+### Is **Golfcraft** currently profitable? Are you comfortable sharing some numbers?
+
+Golfcraft is free for everyone, and we don’t have sources of income, however it was funded by the <a href="https://governance.decentraland.org/proposal/?id=f7459b10-46e2-11ec-be0c-afec86cba5e5">Decentraland DAO</a>. The Decentraland DAO is the self-governing entity overseeing the development and management of the decentralized virtual world called Decentraland, it has its own funds to do so and all its citizens can vote on all matters.
+
+We are exploring different ways of monetization, creating sponsored content, advertisements, and selling items. But for now we are focused on growing the user base.
+
+### How much are you spending monthly on your server infrastructure?
+
+We are spending around 60€ monthly on the different servers on several zones.
+
+### Anything else you’d like to share? The stage is yours!
+
+We have been in love with Colyseus since the first moment we discovered it. The integration with Decentraland is straightforward. It is amazing to have such an extraordinary product available for free and as open source.
