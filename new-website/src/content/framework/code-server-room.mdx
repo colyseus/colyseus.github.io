@@ -1,0 +1,13 @@
+```typescript
+// MyRoom.ts
+import { Room } from "colyseus";
+
+class MyRoom extends Room {
+  maxClients = 4;
+  onCreate(options) {/* your code */}
+  onAuth(client, options) {/* your code */}
+  onJoin(client, options) {/* your code */}
+  onLeave(client) {/* your code */}
+  onDispose() {/* your code */}
+}
+```

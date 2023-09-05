@@ -1,0 +1,15 @@
+```typescript
+// MyState.ts
+import { type, Schema, MapSchema, ArraySchema } from "@colyseus/schema";
+
+export class Player extends Schema {
+  @type("string") name: string;
+  @type("number") position: number;
+}
+
+export class MyState extends Schema {
+  @type({map: Player}) players = new MapSchema<Player>();
+  @type(["number"]) board = new ArraySchema<number>([0, 0, 0, 0, 0, 0, 0, 0, 0]);
+  @type("string") currentTurn: string;
+}
+```

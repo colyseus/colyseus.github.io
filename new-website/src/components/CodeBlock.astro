@@ -1,0 +1,14 @@
+---
+import type * as shiki from 'shiki';
+import { Code } from 'astro:components';
+
+interface Props {
+  code: string;
+  lang: shiki.Lang;
+}
+const props = Astro.props;
+---
+
+<div class="bg-[#24292f] border border-slate-600 shadow-lg rounded mb-6 mt-2 p-4">
+  <Code lang={props.lang} code={props.code} />
+</div>

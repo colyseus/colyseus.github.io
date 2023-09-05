@@ -2,7 +2,7 @@
 import MainLayout from '../layouts/MainLayout.astro';
 import TitleSection from '../components/TitleSection.astro';
 import SimulatePriceComponent from "../components/SimulatePriceComponent";
-import { Code } from 'astro:components';
+import CodeBlock from '../components/CodeBlock.astro';
 
 const testimonials = [
   {
@@ -120,21 +120,15 @@ const testimonials = [
 
           <div class="w-1/2">
             <h3>Create a Colyseus app</h3>
-            <div class="bg-[#24292f] border border-slate-600 shadow-lg rounded mb-6 mt-2 p-4">
-              <Code lang="bash" code={`npm create colyseus-app ./my-colyseus-server\ncd ./my-colyseus-server`} />
-            </div>
+            <CodeBlock lang="bash" code={`npm create colyseus-app ./my-colyseus-server\ncd ./my-colyseus-server`} />
 
             <h3>Push your sources to a Git repository</h3>
-            <div class="bg-[#24292f] border border-slate-600 shadow-lg rounded mb-6 mt-2 p-4">
-              <Code lang="bash" code={`git remote add origin git@github.com:you/repo.git\ngit add .\ngit push origin main`} />
-            </div>
+            <CodeBlock lang="bash" code={`git remote add origin git@github.com:you/repo.git\ngit add .\ngit push origin main`} />
           </div>
 
           <div class="w-1/2">
             <h3>Deploy it!</h3>
-            <div class="bg-[#24292f] border border-slate-600 shadow-lg rounded mb-6 mt-2 p-4">
-              <Code lang="bash" code={`npm install @colyseus/cloud\nnpx @colyseus/cloud deploy`} />
-            </div>
+            <CodeBlock lang="bash" code={`npm install @colyseus/cloud\nnpx @colyseus/cloud deploy`} />
           </div>
         </div>
 

@@ -1,9 +1,21 @@
 ---
+import { Image } from 'astro:assets';
+
 import Platforms from '../components/Platforms.astro';
 import MainLayout from '../layouts/MainLayout.astro';
 import ViewMore from '../components/ViewMore.astro';
 import SponsorsSection from '../components/SponsorsSection.astro';
 import CommunityStats from '../components/CommunityStats.astro';
+
+import CodeServerRoom from "../content/framework/code-server-room.mdx";
+import CodeServerMatchmaking from "../content/framework/code-server-matchmaking.mdx";
+import CodeClientJoinRoom from "../content/framework/code-client-join-room.mdx";
+
+import CodeStateServer  from "../content/framework/code-statesync-server.mdx";
+import CodeStateServerMutate  from "../content/framework/code-statesync-mutate-server.mdx";
+import CodeStateSyncClient  from "../content/framework/code-statesync-client.mdx";
+
+import scalabilityImage from "../../public/diagrams/scalability.png";
 ---
 
 <MainLayout isHeaderExpanded={false} isBlue={false}>
@@ -50,11 +62,21 @@ import CommunityStats from '../components/CommunityStats.astro';
                 </script>
               </span>
             </span>
+
+            <a
+              class="hidden xl:inline-block m-auto text-lg rounded-full bg-purple-600 text-white font-semibold py-4 px-8 mr-4 transition-all hover:bg-purple-700 active:bg-purple-800 hover:shadow-inner"
+              target="_blank"
+              href="https://stackblitz.com/edit/colyseus?embed=1&file=src%2Frooms%2FMyRoom.ts"
+            >
+              See in action ⚡️
+            </a>
+
           </div>
 
           <div class="flex flex-col py-8 text-gray-400">
             <Platforms />
           </div>
+
         </div>
 
         <!-- Right -->
@@ -68,12 +90,12 @@ import CommunityStats from '../components/CommunityStats.astro';
 
             <li class="animate-from-bottom-fade animate-delay-010">
               <svg class="inline mr-1 text-green-600" height="1em" viewBox="0 0 576 512" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M320 32c0-9.9-4.5-19.2-12.3-25.2S289.8-1.4 280.2 1l-179.9 45C79 51.3 64 70.5 64 92.5V448H32c-17.7 0-32 14.3-32 32s14.3 32 32 32H96 288h32V480 32zM256 256c0 17.7-10.7 32-24 32s-24-14.3-24-32s10.7-32 24-32s24 14.3 24 32zm96-128h96V480c0 17.7 14.3 32 32 32h64c17.7 0 32-14.3 32-32s-14.3-32-32-32H512V128c0-35.3-28.7-64-64-64H352v64z"/></svg>
-              <span>Room-based system</span>
+              <a href="#match-making">Room-based system</a>
             </li>
 
             <li class="animate-from-bottom-fade animate-delay-015">
               <svg class="inline mr-1 text-green-600" fill="currentColor" height="1em" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M142.9 142.9c62.2-62.2 162.7-62.5 225.3-1L327 183c-6.9 6.9-8.9 17.2-5.2 26.2s12.5 14.8 22.2 14.8H463.5c0 0 0 0 0 0H472c13.3 0 24-10.7 24-24V72c0-9.7-5.8-18.5-14.8-22.2s-19.3-1.7-26.2 5.2L413.4 96.6c-87.6-86.5-228.7-86.2-315.8 1C73.2 122 55.6 150.7 44.8 181.4c-5.9 16.7 2.9 34.9 19.5 40.8s34.9-2.9 40.8-19.5c7.7-21.8 20.2-42.3 37.8-59.8zM16 312v7.6 .7V440c0 9.7 5.8 18.5 14.8 22.2s19.3 1.7 26.2-5.2l41.6-41.6c87.6 86.5 228.7 86.2 315.8-1c24.4-24.4 42.1-53.1 52.9-83.7c5.9-16.7-2.9-34.9-19.5-40.8s-34.9 2.9-40.8 19.5c-7.7 21.8-20.2 42.3-37.8 59.8c-62.2 62.2-162.7 62.5-225.3 1L185 329c6.9-6.9 8.9-17.2 5.2-26.2s-12.5-14.8-22.2-14.8H48.4h-.7H40c-13.3 0-24 10.7-24 24z"/></svg>
-              <span>State synchronization</span>
+              <a href="#state-sync">State synchronization</a>
             </li>
 
             <li class="animate-from-bottom-fade animate-delay-020">
@@ -83,7 +105,7 @@ import CommunityStats from '../components/CommunityStats.astro';
 
             <li class="animate-from-bottom-fade animate-delay-025">
               <svg class="inline mr-1 text-green-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M177.9 494.1c-18.7 18.7-49.1 18.7-67.9 0L17.9 401.9c-18.7-18.7-18.7-49.1 0-67.9l50.7-50.7 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 50.7-50.7c18.7-18.7 49.1-18.7 67.9 0l92.1 92.1c18.7 18.7 18.7 49.1 0 67.9L177.9 494.1z"/></svg>
-              <span>Scale horizontally or vertically</span>
+              <a href="#scalability">Scale horizontally or vertically</a>
             </li>
 
             <li class="animate-from-bottom-fade animate-delay-030">
@@ -93,9 +115,8 @@ import CommunityStats from '../components/CommunityStats.astro';
 
             <li class="animate-from-bottom-fade animate-delay-035">
               <svg class="inline mr-1 text-green-600" fill="currentColor" height="1em" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><g><path id="path2996" d="m16 0.4c-8.8 0-16 7.2-16 16 0 7 4.4 12.9 10.6 15.1l4-10.4c-2-0.7-3.5-2.5-3.5-4.7 0-2.7 2.2-4.8 4.9-4.8 2.7 0 4.9 2.1 4.9 4.8 0 2.2-1.5 4.1-3.5 4.7l4 10.4c6.2-2.2 10.6-8.1 10.6-15.1 0-8.8-7.2-16-16-16z"/></g></svg>
-              <span>MIT License</span>
+              <a href="https://github.com/colyseus/colyseus">MIT License</a>
             </li>
-
           </ul>
         </div>
 
@@ -108,7 +129,7 @@ import CommunityStats from '../components/CommunityStats.astro';
 
       <div class="text-center mb-8">
         <h1 class="text-5xl font-medium ">Architecture / Stack</h1>
-        <p class="mt-1 text-gray-700">Optimized defaults. Focus on your game features instead of networking stack.</p>
+        <p class="mt-1 text-slate-700">Optimized defaults. Focus on your game features instead of networking stack.</p>
       </div>
 
       <div class="grid grid-cols-3 grid-rows-2 gap-6 w-full justify-between">
@@ -136,7 +157,7 @@ import CommunityStats from '../components/CommunityStats.astro';
         <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
           <h3 class="font-medium mb-1 text-lg">Room-based system</h3>
           <div class="text-gray-700">
-            <p>From a single room definition, a single Node.js process is capable of spawning and managing multiple game rooms simultaneously.</p>
+            <p>On-demand stateful rooms can be spawned multiple times across multiple processes, from a single room definition.</p>
             <ViewMore href="https://docs.colyseus.io/server/room/">
               See more
             </ViewMore>
@@ -147,7 +168,7 @@ import CommunityStats from '../components/CommunityStats.astro';
           <h3 class="font-medium mb-1 text-lg">Message Serialization</h3>
           <div class="text-gray-700">
             <p>
-              For state sync, we use <a href="https://github.com/colyseus/schema">our own binary delta serializer</a>.
+              For state sync, we use <a href="#state-sync">our own binary delta serializer</a>.
               For every other message, we use the fastest <a href="https://msgpack.org/">MessagePack</a> serializer available for JavaScript.
             </p>
           </div>
@@ -157,6 +178,7 @@ import CommunityStats from '../components/CommunityStats.astro';
           <h3 class="font-medium mb-1 text-lg">Web / API Routes</h3>
           <div class="text-gray-700">
             <p>Define your own custom API routes via Express or µWebSockets.js</p>
+            <ViewMore href="https://docs.colyseus.io/server/custom-http-routes/">See more</ViewMore>
           </div>
         </div>
 
@@ -176,31 +198,81 @@ import CommunityStats from '../components/CommunityStats.astro';
     </div>
   </section>
 
-  <section class="border-b border-solid border-gray-300">
-    <div class="container container mx-auto relative py-20">
-      <h1 class="text-4xl font-medium text-center mb-8" id="state-sync">Room State Synchronization</h1>
-      <p>Explain State Sync</p>
-      <p>...</p>
-    </div>
-  </section>
+  <section id="match-making" class="border-b border-solid border-gray-300">
+    <div class="container container mx-auto relative py-20  text-center mb-8">
+      <h1 class="text-4xl font-medium">Rooms & Match-making</h1>
+      <p class="mt-1 text-slate-700">Spawn multiple room sessions from a single room definition.</p>
 
-  <section class="border-b border-solid border-gray-300">
-    <div class="container container mx-auto relative py-20">
-      <h1 class="text-4xl font-medium text-center mb-8">Scalability</h1>
-      <p>Explain how scalability works vertically and horizontally</p>
-      <p>...</p>
-    </div>
-  </section>
+      <div class="flex gap-10 items-center">
+        <div class="text-left mt-8 w-1/2">
+          <h3 class="text-2xl">Server-side</h3>
+          <p class="mt-4 my-2 text-slate-700">Create your room implementation:</p>
+          <CodeServerRoom />
 
-  <section class="border-b border-solid border-gray-300">
-    <div class="container container mx-auto relative py-20">
-      <div class="text-center mb-8">
-        <h1 class="text-5xl">See it in action</h1>
+          <p class="mt-4 my-2 text-slate-700">Expose the room for match-making:</p>
+          <CodeServerMatchmaking />
+        </div>
 
-        <!-- TODO: only load iframe when reached this section -->
-        <iframe class="w-full my-8 h-[80vh] max-h-screen" src="https://stackblitz.com/edit/colyseus?embed=1&file=src%2Frooms%2FMyRoom.ts"></iframe>
-
+        <div class="text-left mt-8 w-1/2">
+          <h3 class="text-2xl">Client-side</h3>
+          <p class="mt-4 my-2 text-slate-700">Join client into a room</p>
+          <CodeClientJoinRoom />
+        </div>
       </div>
+
+      <div class="text-center mt-8">
+        <ViewMore href="https://docs.colyseus.io/server/room/">Learn more</ViewMore>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="state-sync" class="border-b border-solid border-gray-300">
+    <div class="container container mx-auto relative py-20  text-center mb-8">
+      <h1 class="text-4xl font-medium">Room State Synchronization</h1>
+      <p class="mt-1 text-slate-700">An unique approach to state sync. </p>
+
+      <div class="flex gap-10 items-center">
+        <div class="text-left mt-8 w-1/2">
+          <h3 class="text-2xl">Server-side</h3>
+          <p class="mt-4 my-2 text-slate-700">Define your synchronizable state structures:</p>
+          <CodeStateServer />
+
+          <p class="mt-4 my-2 text-slate-700">Mutate the state on the server-side:</p>
+          <CodeStateServerMutate />
+        </div>
+
+        <div class="text-left mt-8 w-1/2">
+          <h3 class="text-2xl">Client-side</h3>
+          <p class="mt-4 my-2 text-slate-700">Listen to changes coming from the server:</p>
+          <CodeStateSyncClient />
+        </div>
+      </div>
+
+      <div class="text-center mt-8">
+        <ViewMore href="https://docs.colyseus.io/state/">Learn more</ViewMore>
+      </div>
+    </div>
+  </section>
+
+  <section id="scalability" class="border-b border-solid border-gray-300 bg-gray-900">
+    <div class="container container mx-auto relative py-20 text-center mb-8">
+      <h1 class="text-4xl text-white font-medium">Scalability</h1>
+      <p class="mt-1 text-gray-400">Colyseus' scalable architecture allows you to add more nodes to handle more game rooms.</p>
+      <p>...</p>
+
+      <Image class="mt-8 w-full lg:w-1/2 mx-auto"  src={scalabilityImage} alt="Scalability" />
+
+
+    </div>
+  </section>
+
+  <section id="tools" class="border-b border-solid border-gray-300">
+    <div class="container mx-auto relative py-20 text-center mb-8">
+      <h1 class="text-4xl font-medium">Tooling</h1>
+      <p class="mt-1 text-slate-700">Comes with tools to assist </p>
+      <p>...</p>
+
     </div>
   </section>
 

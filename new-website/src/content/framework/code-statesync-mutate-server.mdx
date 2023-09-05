@@ -1,0 +1,23 @@
+```typescript
+// MyRoom.ts
+import { Room } from "colyseus";
+import { MyState } from "./MyState";
+
+export class MyRoom extends Room<MyState> {
+  onCreate() {
+    // Room has been created
+    this.setState(new MyState());
+  }
+
+  onJoin(client, options) {
+    // A client joined the room
+    this.state.players.set(client.sessionId, new Player());
+    this.state.currentTurn = client.sessionId;
+  }
+
+  onLeave() {
+    // A client left the room
+    this.state.players.delete(client.sessionId);
+  }
+}
+```
