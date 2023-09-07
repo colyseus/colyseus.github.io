@@ -234,7 +234,7 @@ import logoSupabase from "../../public/framework/logo-supabase.png";
         </div>
       </div>
 
-      <div class="text-center mt-8">
+      <div class="text-center mt-10">
         <ViewMore href="https://docs.colyseus.io/server/room/">Learn more</ViewMore>
       </div>
 
@@ -286,7 +286,7 @@ import logoSupabase from "../../public/framework/logo-supabase.png";
         </div>
       </div>
 
-      <div class="text-center mt-8">
+      <div class="text-center mt-10">
         <ViewMore href="https://docs.colyseus.io/state/">Learn more</ViewMore>
       </div>
     </div>
@@ -295,26 +295,47 @@ import logoSupabase from "../../public/framework/logo-supabase.png";
   <section id="scalability" class="border-b border-solid border-gray-300 bg-gray-900">
     <div class="container container mx-auto relative py-20 text-center mb-8">
       <h1 class="text-4xl text-white font-medium">Scalability</h1>
-      <p class="mt-1 text-gray-400 leading-relaxed w-full lg:w-1/2 mx-auto">Allow to increase the number of nodes in order to handle a higher number of spawned game rooms.</p>
+      <p class="mt-1 text-gray-400 leading-relaxed w-full lg:w-1/2 mx-auto">Simple yet powerful scaling strategies</p>
 
-      <!-- <div class="flex mt-12 mb-4 gap-4 justify-center items-center text-lg">
-        <div class="flex gap-2 bg-green-600 rounded p-3 text-white">
-          <svg class="w-6 text-white inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-          <span>Stateful Nodes</span>
+      <div class="flex justify-center items-center">
+        <div class="w-1/2 text-slate-300 text-left text-xl">
+          <ul class="space-y-4">
+
+            <li>
+              <svg class="w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+              Distribute rooms across servers and/or processes
+            </li>
+
+            <li>
+              <svg class="w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+              Allow cluster-wide match-making
+            </li>
+
+            <li>
+              <svg class="w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+              Leverage all your available CPUs
+            </li>
+
+            <li>
+              <svg class="w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+              Connect clients <strong>directly</strong> into their requested rooms
+            </li>
+
+            <li>
+              <svg class="w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+              Processes communicate via Redis for match-making
+            </li>
+
+          </ul>
         </div>
 
-        <div class="flex gap-2 bg-green-600 rounded p-3 text-white">
-          <svg class="w-6 text-white inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-          <span>Redis as shared database</span>
+        <div class="w-1/2">
+          <Image class="mt-8 w-full" src={scalabilityImage} alt="Scalability" />
         </div>
+      </div>
 
-        <div class="flex gap-2 bg-green-600 rounded p-3 text-white">
-          <svg class="w-6 text-white inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-          <span>Clients connect <strong>directly</strong> to final Node</span>
-        </div>
-      </div> -->
+      <!-- <Image class="mt-8 w-full lg:w-1/2 mx-auto" src={scalabilityImage} alt="Scalability" /> -->
 
-      <Image class="mt-8 w-full lg:w-1/2 mx-auto" src={scalabilityImage} alt="Scalability" />
 
       <div class="text-center mt-8">
         <ViewMore href="https://docs.colyseus.io/scalability/">Read more about scalability</ViewMore>
