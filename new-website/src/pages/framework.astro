@@ -15,7 +15,21 @@ import CodeStateServer  from "../content/framework/code-statesync-server.mdx";
 import CodeStateServerMutate  from "../content/framework/code-statesync-mutate-server.mdx";
 import CodeStateSyncClient  from "../content/framework/code-statesync-client.mdx";
 
+import CodeUnitTest from "../content/framework/code-unit-test.mdx";
+
 import scalabilityImage from "../../public/diagrams/scalability.png";
+import logoDiscordjs from "../../public/framework/logo-discordjs.png";
+import logoPlayfab from "../../public/framework/logo-playfab.png";
+import logoPrisma from "../../public/framework/logo-prisma.png";
+import logoFirebase from "../../public/framework/logo-firebase.png";
+import logoMongodb from "../../public/framework/logo-mongodb.png";
+import logoPostgres from "../../public/framework/logo-postgres.png";
+import logoPassport from "../../public/framework/logo-passport.png";
+import logoXsolla from "../../public/framework/logo-xsolla.png";
+import logoThirdweb from "../../public/framework/logo-thirdweb.png";
+import logoMoralis from "../../public/framework/logo-moralis.png";
+import logoSupabase from "../../public/framework/logo-supabase.png";
+
 ---
 
 <MainLayout isHeaderExpanded={false} isBlue={false}>
@@ -110,7 +124,7 @@ import scalabilityImage from "../../public/diagrams/scalability.png";
 
             <li class="animate-from-bottom-fade animate-delay-030">
               <svg class="inline mr-1 text-green-600" height="1em" stroke="currentColor" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 32v448h448V32H0zm243.8 349.4c0 43.6-25.6 63.5-62.9 63.5-33.7 0-53.2-17.4-63.2-38.5l34.3-20.7c6.6 11.7 12.6 21.6 27.1 21.6 13.8 0 22.6-5.4 22.6-26.5V237.7h42.1v143.7zm99.6 63.5c-39.1 0-64.4-18.6-76.7-43l34.3-19.8c9 14.7 20.8 25.6 41.5 25.6 17.4 0 28.6-8.7 28.6-20.8 0-14.4-11.4-19.5-30.7-28l-10.5-4.5c-30.4-12.9-50.5-29.2-50.5-63.5 0-31.6 24.1-55.6 61.6-55.6 26.8 0 46 9.3 59.8 33.7L368 290c-7.2-12.9-15-18-27.1-18-12.3 0-20.1 7.8-20.1 18 0 12.6 7.8 17.7 25.9 25.6l10.5 4.5c35.8 15.3 55.9 31 55.9 66.2 0 37.8-29.8 58.6-69.7 58.6z"></path></svg>
-              <span>JavaScript/Node.js ecosystem</p>
+              <a href="#ecosystem">JavaScript/Node.js ecosystem</a>
             </li>
 
             <li class="animate-from-bottom-fade animate-delay-035">
@@ -129,7 +143,7 @@ import scalabilityImage from "../../public/diagrams/scalability.png";
 
       <div class="text-center mb-8">
         <h1 class="text-5xl font-medium ">Architecture / Stack</h1>
-        <p class="mt-1 text-slate-700">Optimized defaults. Focus on your game features instead of networking stack.</p>
+        <p class="mt-1 text-slate-600">A solid stack so you can focus on your game instead of re-inventing the wheel.</p>
       </div>
 
       <div class="grid grid-cols-3 grid-rows-2 gap-6 w-full justify-between">
@@ -201,21 +215,21 @@ import scalabilityImage from "../../public/diagrams/scalability.png";
   <section id="match-making" class="border-b border-solid border-gray-300">
     <div class="container container mx-auto relative py-20  text-center mb-8">
       <h1 class="text-4xl font-medium">Rooms & Match-making</h1>
-      <p class="mt-1 text-slate-700">Spawn multiple room sessions from a single room definition.</p>
+      <p class="mt-1 text-slate-600">Let clients spawn multiple room sessions from a single room definition.</p>
 
       <div class="flex gap-10 items-center">
         <div class="text-left mt-8 w-1/2">
           <h3 class="text-2xl">Server-side</h3>
-          <p class="mt-4 my-2 text-slate-700">Create your room implementation:</p>
+          <p class="mt-4 my-2 text-slate-600">Create your room implementation:</p>
           <CodeServerRoom />
 
-          <p class="mt-4 my-2 text-slate-700">Expose the room for match-making:</p>
+          <p class="mt-4 my-2 text-slate-600">Expose the room for match-making:</p>
           <CodeServerMatchmaking />
         </div>
 
         <div class="text-left mt-8 w-1/2">
           <h3 class="text-2xl">Client-side</h3>
-          <p class="mt-4 my-2 text-slate-700">Join client into a room</p>
+          <p class="mt-4 my-2 text-slate-600">Join client into a room</p>
           <CodeClientJoinRoom />
         </div>
       </div>
@@ -229,22 +243,45 @@ import scalabilityImage from "../../public/diagrams/scalability.png";
 
   <section id="state-sync" class="border-b border-solid border-gray-300">
     <div class="container container mx-auto relative py-20  text-center mb-8">
-      <h1 class="text-4xl font-medium">Room State Synchronization</h1>
-      <p class="mt-1 text-slate-700">An unique approach to state sync. </p>
+      <h1 class="text-4xl font-medium">State Synchronization</h1>
+      <p class="mt-1 text-slate-600">An unique approach to room state synchronization.</p>
+
+      <div class="flex flex-wrap mt-12 mb-4 gap-4 justify-center items-center text-lg">
+        <div class="flex gap-2 bg-green-600 rounded p-3 text-white">
+          <svg class="w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+          <span>Automatically synchronized</span>
+        </div>
+
+        <div class="flex gap-2 bg-green-600 rounded p-3 text-white">
+          <svg class="w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+          <span>Delta compressed</span>
+        </div>
+
+        <div class="flex gap-2 bg-green-600 rounded p-3 text-white">
+          <svg class="w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+          <span>Client-side callbacks</span>
+        </div>
+
+        <div class="flex gap-2 bg-green-600 rounded p-3 text-white">
+          <svg class="w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+          <span>Optimized for speed & bandwidth</span>
+        </div>
+      </div>
 
       <div class="flex gap-10 items-center">
         <div class="text-left mt-8 w-1/2">
-          <h3 class="text-2xl">Server-side</h3>
-          <p class="mt-4 my-2 text-slate-700">Define your synchronizable state structures:</p>
+          <h3 class="text-2xl mb-1">Server-side</h3>
+
+          <p class="mb-4 text-slate-600">Define your synchronizable state structures</p>
           <CodeStateServer />
 
-          <p class="mt-4 my-2 text-slate-700">Mutate the state on the server-side:</p>
+          <p class="mt-4 my-2 text-slate-600">Mutate the state on the server-side:</p>
           <CodeStateServerMutate />
         </div>
 
         <div class="text-left mt-8 w-1/2">
           <h3 class="text-2xl">Client-side</h3>
-          <p class="mt-4 my-2 text-slate-700">Listen to changes coming from the server:</p>
+          <p class="mt-4 my-2 text-slate-600">Listen to the changes coming from the server:</p>
           <CodeStateSyncClient />
         </div>
       </div>
@@ -258,21 +295,95 @@ import scalabilityImage from "../../public/diagrams/scalability.png";
   <section id="scalability" class="border-b border-solid border-gray-300 bg-gray-900">
     <div class="container container mx-auto relative py-20 text-center mb-8">
       <h1 class="text-4xl text-white font-medium">Scalability</h1>
-      <p class="mt-1 text-gray-400 leading-relaxed">
-        Colyseus' architecture allows you to increase the number of nodes to<br />handle higher amount of game rooms.
-      </p>
+      <p class="mt-1 text-gray-400 leading-relaxed w-full lg:w-1/2 mx-auto">Allow to increase the number of nodes in order to handle a higher number of spawned game rooms.</p>
+
+      <!-- <div class="flex mt-12 mb-4 gap-4 justify-center items-center text-lg">
+        <div class="flex gap-2 bg-green-600 rounded p-3 text-white">
+          <svg class="w-6 text-white inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+          <span>Stateful Nodes</span>
+        </div>
+
+        <div class="flex gap-2 bg-green-600 rounded p-3 text-white">
+          <svg class="w-6 text-white inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+          <span>Redis as shared database</span>
+        </div>
+
+        <div class="flex gap-2 bg-green-600 rounded p-3 text-white">
+          <svg class="w-6 text-white inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
+          <span>Clients connect <strong>directly</strong> to final Node</span>
+        </div>
+      </div> -->
 
       <Image class="mt-8 w-full lg:w-1/2 mx-auto" src={scalabilityImage} alt="Scalability" />
 
+      <div class="text-center mt-8">
+        <ViewMore href="https://docs.colyseus.io/scalability/">Read more about scalability</ViewMore>
+      </div>
 
     </div>
   </section>
 
-  <section id="tools" class="border-b border-solid border-gray-300">
+  <section id="ecosystem" class="border-b border-solid border-gray-300">
     <div class="container mx-auto relative py-20 text-center mb-8">
       <h1 class="text-4xl font-medium">Tooling</h1>
-      <p class="mt-1 text-slate-700">Comes with tools to assist </p>
-      <p>...</p>
+      <p class="mt-1 text-slate-600 mb-6">Built-in tools that accompany you from development to production.</p>
+
+      <div class="grid grid-cols-4 gap-6 w-full justify-between text-left mb-16">
+
+        <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
+          <h3 class="font-medium mb-1 text-lg">Client-side Playground</h3>
+          <div class="text-gray-700">
+            <p>Easily create client connections and inspect how they are exchanging data with the server</p>
+            <ViewMore href="https://docs.colyseus.io/tools/playground/">Read documentation</ViewMore>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
+          <h3 class="font-medium mb-1 text-lg">Realtime Room Inspector</h3>
+          <div class="text-gray-700">
+            <p>View and inspect the list of rooms spawned by the server.</p>
+            <ViewMore href="https://docs.colyseus.io/tools/monitor/">Read documentation</ViewMore>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
+          <h3 class="font-medium mb-1 text-lg">Unit Testing</h3>
+          <div class="text-gray-700">
+            <p>Utility methods for testing your rooms with your favorite testing framework</p>
+            <ViewMore href="https://docs.colyseus.io/tools/unit-testing/">Read documentation</ViewMore>
+          </div>
+        </div>
+
+        <div class="rounded-lg bg-gray-50 p-6 shadow-inner shadow border border-gray-300">
+          <h3 class="font-medium mb-1 text-lg">Load Testing</h3>
+          <div class="text-gray-700">
+            <p>Evaluate how your server behaves under high traffic.</p>
+            <ViewMore href="https://docs.colyseus.io/tools/loadtest/">Read documentation</ViewMore>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <h2 class="text-3xl font-medium mt-16">
+        Node.js ecosystem
+        <svg class="inline-block" stroke="currentColor" height="1em" viewBox="0 0 448 512"><path d="M224 508c-6.7 0-13.5-1.8-19.4-5.2l-61.7-36.5c-9.2-5.2-4.7-7-1.7-8 12.3-4.3 14.8-5.2 27.9-12.7 1.4-.8 3.2-.5 4.6.4l47.4 28.1c1.7 1 4.1 1 5.7 0l184.7-106.6c1.7-1 2.8-3 2.8-5V149.3c0-2.1-1.1-4-2.9-5.1L226.8 37.7c-1.7-1-4-1-5.7 0L36.6 144.3c-1.8 1-2.9 3-2.9 5.1v213.1c0 2 1.1 4 2.9 4.9l50.6 29.2c27.5 13.7 44.3-2.4 44.3-18.7V167.5c0-3 2.4-5.3 5.4-5.3h23.4c2.9 0 5.4 2.3 5.4 5.3V378c0 36.6-20 57.6-54.7 57.6-10.7 0-19.1 0-42.5-11.6l-48.4-27.9C8.1 389.2.7 376.3.7 362.4V149.3c0-13.8 7.4-26.8 19.4-33.7L204.6 9c11.7-6.6 27.2-6.6 38.8 0l184.7 106.7c12 6.9 19.4 19.8 19.4 33.7v213.1c0 13.8-7.4 26.7-19.4 33.7L243.4 502.8c-5.9 3.4-12.6 5.2-19.4 5.2zm149.1-210.1c0-39.9-27-50.5-83.7-58-57.4-7.6-63.2-11.5-63.2-24.9 0-11.1 4.9-25.9 47.4-25.9 37.9 0 51.9 8.2 57.7 33.8.5 2.4 2.7 4.2 5.2 4.2h24c1.5 0 2.9-.6 3.9-1.7s1.5-2.6 1.4-4.1c-3.7-44.1-33-64.6-92.2-64.6-52.7 0-84.1 22.2-84.1 59.5 0 40.4 31.3 51.6 81.8 56.6 60.5 5.9 65.2 14.8 65.2 26.7 0 20.6-16.6 29.4-55.5 29.4-48.9 0-59.6-12.3-63.2-36.6-.4-2.6-2.6-4.5-5.3-4.5h-23.9c-3 0-5.3 2.4-5.3 5.3 0 31.1 16.9 68.2 97.8 68.2 58.4-.1 92-23.2 92-63.4z"/></svg>
+      </h2>
+      <p class="mt-1 text-slate-600">Bring your favorite tools to your Colyseus server.</p>
+
+      <div class="flex flex-row flex-wrap justify-center items-center gap-10 p-8 mx-auto">
+        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/xsolla"><Image class="w-48 inline-block" src={logoXsolla} alt="Xsolla" /></a>
+        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/prisma"><Image class="w-48 inline-block" src={logoPrisma} alt="Prisma" /></a>
+        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/mongodb"><Image class="w-48 inline-block" src={logoMongodb} alt="MongoDB" /></a>
+        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/pg"><Image class="w-48 inline-block" src={logoPostgres} alt="PostgreSQL" /></a>
+        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/discordjs"><Image class="w-48 inline-block" src={logoDiscordjs} alt="Discord.js" /></a>
+        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/@thirdweb-dev/sdk"><Image class="w-48 inline-block" src={logoThirdweb} alt="Thirdweb" /></a>
+        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/moralis"><Image class="w-48 inline-block" src={logoMoralis} alt="Moralis" /></a>
+        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/passport"><Image class="w-48 inline-block" src={logoPassport} alt="PassportJS" /></a>
+        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/firebase-admin"><Image class="w-48 inline-block" src={logoFirebase} alt="Firebase" /></a>
+        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/playfab-sdk"><Image class="w-48 inline-block" src={logoPlayfab} alt="PlayFab" /></a>
+        <!-- <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/@supabase/supabase-js"><Image class="w-48 inline-block" src={logoSupabase} alt="Firebase" /></a> -->
+      </div>
 
     </div>
   </section>
