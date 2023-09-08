@@ -11,7 +11,7 @@ export default defineConfig({
 
     {
       title: 'Backers',
-      preset: presets.small,
+      preset: presets.base,
       // to replace the entire tier rendering
       // compose: (composer, tierSponsors, config) => {
       //   composer.addRaw(
