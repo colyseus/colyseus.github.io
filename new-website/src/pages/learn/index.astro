@@ -1,5 +1,6 @@
 ---
 import { Image, getImage } from 'astro:assets';
+import { getOpenGraph } from "../../utils/getOpenGraphImage";
 
 import ColyseusCloudSection from '../../components/ColyseusCloudSection.astro';
 import TitleSection from '../../components/TitleSection.astro';
@@ -14,6 +15,47 @@ import phaserImage from "../../../public/learn/phaser.png";
 const playcanvas = await getImage({src: playcanvasImage, formats: ['avif']});
 const babylonjs = await getImage({src: babylonjsImage, formats: ['avif']});
 const phaser = await getImage({src: phaserImage, formats: ['avif']});
+
+const sampleProjects = [
+  await getOpenGraph("https://github.com/colyseus/colyseus-examples", {
+    title: "Basic Examples"
+  }),
+
+  await getOpenGraph("https://github.com/endel/colyseus-tic-tac-toe", {
+    title: "Tic-Tac-Toe",
+    description: "Multiplayer Tic-Tac-Toe demonstrating state synchronization. Client-side using PixiJS or Defold."
+  }),
+
+  await getOpenGraph("https://github.com/colyseus/demo-firebase-authentication", {
+    title: "Firebase Auth Demo",
+    description: "Authentication demonstration using Firebase"
+  }),
+
+  await getOpenGraph("https://github.com/colyseus/decentraland", {
+    title: "Decentraland Scene"
+  }),
+
+  await getOpenGraph("https://github.com/endel/colyseus-0.15-protocol-buffers", {
+    title: "Protocol Buffers Message Exchange",
+    description: "Demonstrating Raw Binary Message Exchange"
+  }),
+
+  await getOpenGraph("https://github.com/colyseus/demo-push-to-talk", {
+    title: "Push to Talk",
+    description: `Simple "Push To Talk" proof of concept / example.`
+  }),
+
+  await getOpenGraph("https://github.com/endel/mazmorra", {
+    title: "Full game: Mazmorra.io",
+    description: "Online Multiplayer Dungeon Crawler / RPG"
+  }),
+
+  await getOpenGraph("https://github.com/colyseus/babylonjs-hide-and-seek", {
+    title: "BabylonJS: Hide and Seek Demo",
+    description: "Classic Hide and Seek multiplayer game with BabylonJS and the Graveyard asset pack from BabylonJS/Assets."
+  }),
+
+];
 
 ---
 
@@ -79,19 +121,33 @@ const phaser = await getImage({src: phaserImage, formats: ['avif']});
     <hr/>
   </div>
 
-  <section>
+  <section class="mb-12">
     <div class="container container mx-auto relative py-14">
       <TitleSection>Sample Projects</TitleSection>
 
-      https://github.com/colyseus/colyseus-examples
-      https://github.com/colyseus/demo-push-to-talk
-      https://github.com/colyseus/demo-firebase-authentication
-      https://github.com/colyseus/babylonjs-hide-and-seek
-      https://github.com/endel/mazmorra
-      https://github.com/endel/colyseus-tic-tac-toe
-      https://github.com/endel/colyseus-0.15-protocol-buffers
-      https://github.com/colyseus/decentraland
-
+      <div class="grid grid-cols-2 grid-row-2 gap-4 mx-auto"> <!-- w-full lg:w-2/3 -->
+        {(sampleProjects || []).map((project) => (
+          <div class="w-full">
+            <a
+              class="w-full h-36 flex rounded-lg bg-gray-100 border transition-all hover:bg-gray-200 hover:border-gray-400 active:bg-gray-300 active:border-gray-500 "
+              target="_blank"
+              href={project.url}
+            >
+              <span class="rounded-l-lg w-1/3 bg-cover bg-center" style={`background-image: url(${project.image})`}></span>
+              <span class="p-4 w-2/3 relative ">
+                <h3 class="text-lg font-medium text-gray-800">{project.title}</h3>
+                <span class="text-gray-700">{project.description}</span>
+                <span class="absolute bottom-4 right-4">
+                  <span class="rounded bg-gray-500 text-gray-100 p-1 text-xs">
+                    GitHub
+                    <svg class="ml-1 inline-block" fill="currentColor" height="1em" viewBox="0 0 512 512"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg>
+                  </span>
+                </span>
+              </span>
+            </a>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
