@@ -11,6 +11,7 @@ export default defineConfig({
 
     {
       title: 'Backers',
+      preset: presets.small,
       // to replace the entire tier rendering
       // compose: (composer, tierSponsors, config) => {
       //   composer.addRaw(
@@ -32,7 +33,7 @@ export default defineConfig({
     {
       title: 'Sponsors',
       monthlyDollars: 100,
-      preset: presets.base,
+      preset: presets.medium,
       // to insert custom elements after the tier block
       composeAfter: (composer, _tierSponsors, _config) => {
         composer.addSpan(10)
