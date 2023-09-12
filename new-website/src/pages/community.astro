@@ -3,6 +3,10 @@ import Platforms from '../components/Platforms.astro';
 import MainLayout from '../layouts/MainLayout.astro';
 import CommunityStats from '../components/CommunityStats.astro';
 import SponsorsSection from '../components/SponsorsSection.astro';
+
+import { communityLibrary } from '../indexes/community';
+import TitleSection from '../components/TitleSection.astro';
+import ContentItems from '../components/ContentItems.astro';
 ---
 
 <MainLayout isHeaderExpanded={true} isBlue={true}>
@@ -36,10 +40,13 @@ import SponsorsSection from '../components/SponsorsSection.astro';
 
   <section id="content" class="text-slate-900 text-center border-b border-solid border-gray-300">
     <div class="container mx-auto p-24">
-      <h2 class="text-5xl font-medium">Community Library</h2>
-      <p class="mt-1">
-        TODO: Cards with videos, examples, tutorials, etc.
-      </p>
+      <TitleSection>Community Library</TitleSection>
+
+      <!-- w-full lg:w-2/3 -->
+      <div class="grid grid-cols-2 grid-row-2 gap-4 mx-auto text-left">
+        <ContentItems items={(communityLibrary || [])} />
+      </div>
+
     </div>
   </section>
 
@@ -110,3 +117,4 @@ import SponsorsSection from '../components/SponsorsSection.astro';
   </section>
 
 </MainLayout>
+../indexes/community
