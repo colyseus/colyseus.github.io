@@ -14,14 +14,14 @@ const {
 <header transition:name="nav-header" class={`
     fixed w-full transition-all z-50 text-gray-200 flex center-items
     ${(!isExpanded)
-      ? " h-48 bg-black/0 data-[expanded=yes]:bg-black data-[expanded=yes]:h-20 data-[expanded=yes]:shadow"
+      ? " h-28 md:h-48 bg-black/0 data-[expanded=yes]:bg-black data-[expanded=yes]:h-16 data-[expanded=yes]:md:h-20 data-[expanded=yes]:shadow"
       : " bg-black h-20 shadow"}`}
   data-expanded="no"
 >
-  <nav class="container mx-auto flex items-center">
-    <HeaderLink href="/" class="pr-10"><img class="logo" width="200" src="/images/logos/logo-light.png" alt="Colyseus"></HeaderLink>
+  <nav class="container mx-auto px-6 flex items-center">
+    <HeaderLink href="/" class="pr-10"><img class="logo w-40 md:w-52" src="/images/logos/logo-light.png" alt="Colyseus"></HeaderLink>
 
-    <ul class="flex grow space-x-4 items-center">
+    <ul class="hidden md:flex grow space-x-4 items-center">
       <li class="group relative px-2 cursor-default">
         <span class="relative font-semibold py-6">
           Products
@@ -100,7 +100,7 @@ const {
         </HeaderLink>
       </li>
 
-      <li class="grow text-right font-semibold">
+      <li class="grow text-right font-medium">
         <a
           href="https://cloud.colyseus.io/"
           class=`p-3 mr-5 rounded border-solid border-white text-white transition-all

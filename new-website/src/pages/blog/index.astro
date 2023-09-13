@@ -13,7 +13,7 @@ const posts = (await getCollection('blog')).sort(
 <MainLayout>
   <TitleSection>Blog</TitleSection>
 
-    <section class="container mx-auto pb-32">
+    <section class="container mx-auto px-6 pb-32">
       <ul class="flex space-x-6 justify-center">
         {posts.map((post, i) => (
           <PostItem

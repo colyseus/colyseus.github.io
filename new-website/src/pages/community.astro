@@ -11,7 +11,7 @@ import ContentItems from '../components/ContentItems.astro';
 
 <MainLayout isHeaderExpanded={true} isBlue={true}>
   <section id="hero" class="text-gray-200">
-    <div class="container mx-auto text-center py-10">
+    <div class="container mx-auto px-6 text-center py-10">
       <div>
 
         <div class="py-20 animate-from-top-fade">
@@ -39,10 +39,12 @@ import ContentItems from '../components/ContentItems.astro';
   </section>
 
   <section id="content" class="text-slate-900 text-center border-b border-solid border-gray-300">
-    <div class="container mx-auto p-24">
-      <TitleSection>Community Library</TitleSection>
+    <div class="container mx-auto px-6 p-24">
+      <div class="container mx-auto px-6 text-center lg:flex-row relative py-10">
+        <h1 class="mt-8 text-6xl font-semibold text-gray-900 ">Community Library</h1>
+        <p class="my-3 text-slate-500 text-xl">Learn from projects & content made by the Colyseus community</p>
+      </div>
 
-      <!-- w-full lg:w-2/3 -->
       <div class="grid grid-cols-2 grid-row-2 gap-4 mx-auto text-left">
         <ContentItems items={(communityLibrary || [])} />
       </div>
@@ -51,7 +53,7 @@ import ContentItems from '../components/ContentItems.astro';
   </section>
 
   <section class="text-slate-200 bg-gray-800 shadow-inner-xl">
-    <div class="container mx-auto p-24">
+    <div class="container mx-auto px-6 p-24">
       <div class="flex">
         <div class="w-1/2 self-center">
           <h1 class="text-4xl mb-3">Join the conversation</h1>
@@ -103,7 +105,7 @@ import ContentItems from '../components/ContentItems.astro';
   <SponsorsSection />
 
   <section class="border-t border-solid">
-    <div class="container mx-auto py-20 text-center">
+    <div class="container mx-auto px-6 py-20 text-center">
       <h2 class="text-4xl font-medium">Become a Sponsor</h2>
       <p class="mt-4 leading-relaxed">
         The sustainability of Colyseus relies on <a href="/cloud-managed-hosting" class="text-purple-600 hover:text-purple-700 active:text-purple-800">Colyseus Cloud</a> subscriptions and sponsorships.
