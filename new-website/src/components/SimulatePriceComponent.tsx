@@ -185,7 +185,7 @@ export default function SimulatePriceComponent() {
 
           <div>
             <input type="radio" onChange={onChangeScaleStrategy} checked={selectedScaleStrategy === "horizontal"} name="scale_strategy" id="scale_horizontal" value="horizontal" className="mr-2" />
-            <label htmlFor="scale_horizontal">Cluster - Scale horizontally <span className="text-blue-600">(+$100<small>/mo</small>)</span></label>
+            <label htmlFor="scale_horizontal"><span class="bg-blue-600 text-white p-1 text-xs rounded shadow">Coming soon</span> Cluster - Scale horizontally <span className="text-blue-600">(+$100<small>/mo</small>)</span></label>
 
             <div className={`scaling-num-instances col-span-2 pb-4 my-4 ${(selectedScaleStrategy !== "horizontal") ?  "hidden" : ""}`}>
                 <label className="font-semibold block">Number of instances</label>
