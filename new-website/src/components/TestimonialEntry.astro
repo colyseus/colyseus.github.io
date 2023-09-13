@@ -1,0 +1,17 @@
+---
+const props: any = Astro.props;
+---
+<a
+  class="animate-from-bottom-fade flex space-x-4 transition-all shadow w-full rounded p-4 items-center justify-center hover:shadow-lg"
+  href={props.href || "#"}
+>
+  <img class="hidden md:flex rounded-full w-12 md:w-24 shadow-lg" src={props.author_img} alt={props.author} />
+  <span>
+    <span class="block italic font-light">"{props.quote}"</span>
+
+    <span class="flex mt-2 gap-4 justify-center items-center">
+      <img class="inline-block md:hidden rounded-full w-12 md:w-24 shadow-lg" src={props.author_img} alt={props.author} />
+      <span>{props.author} - {props.author_ref}</span>
+    </span>
+  </span>
+</a>

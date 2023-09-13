@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import TestimonialEntry from './TestimonialEntry.astro';
 
 const successStories = (await getCollection('success-stories')).sort(
 	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
@@ -10,18 +11,9 @@ const successStories = (await getCollection('success-stories')).sort(
   <div class="container mx-auto px-6 relative py-14 px-4 md:px-0">
     <h2 class="text-lg md:text-xl font-medium text-gray-500 uppercase tracking-widest">Trusted and Loved by Indies and Studios Worldwide</h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-6 justify-center items-center my-12 text-sm">
+    <div class="text-left md:text-center grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-6 justify-center items-center my-12 text-sm">
       {successStories.filter((story) => story.data.author_img && story.data.quote).map((story, i) => (
-        <a
-          class={"animate-delay-" + i + " animate-from-bottom-fade flex space-x-4 transition-all shadow w-full rounded p-4 items-center justify-center hover:shadow-lg"}
-          href={(story.data.published) ? `/success-stories/${story.slug}/` : "/success-stories"}
-        >
-          <img class="rounded-full w-12 md:w-24 shadow-lg" src={story.data.author_img} alt={story.data.author} />
-          <span>
-            <span class="block italic font-light">"{story.data.quote}"</span>
-            <span class="inline-block mt-2">{story.data.author} - {story.data.author_ref}</span>
-          </span>
-        </a>
+        <TestimonialEntry {...story.data} href={(story.data.published) ? `/success-stories/${story.slug}/` : "/success-stories"} />
       ))}
     </div>
 

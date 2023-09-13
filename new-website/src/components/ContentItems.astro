@@ -13,23 +13,21 @@ const items = Astro.props.items;
 ---
 
 {(items || []).map((item) => (
-  <div class="w-full">
-    <a
-      class="w-full h-36 flex rounded-lg bg-gray-100 border transition-all hover:bg-gray-200 hover:border-gray-400 active:bg-gray-300 active:border-gray-500 "
-      target="_blank"
-      href={item.url}
-    >
-      <span class="rounded-l-lg w-1/3 bg-cover bg-center" style={`background-image: url(${item.image})`}></span>
-      <span class="p-4 w-2/3 relative overflow-hidden">
-        <h3 class="text-lg font-medium text-gray-800">{item.title}</h3>
-        <span class="text-gray-700 text-ellipsis overflow-hidden">{item.description}</span>
-        <span class="absolute bottom-4 right-4">
-          <span class="rounded bg-gray-500 text-gray-100 p-1 text-xs">
-            { item.siteName || (new URL(item.url)).hostname }
-            <svg class="ml-1 inline-block" fill="currentColor" height="1em" viewBox="0 0 512 512"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg>
-          </span>
+  <a
+    class="w-full h-36 flex rounded-lg bg-gray-100 border transition-all hover:bg-gray-200 hover:border-gray-400 active:bg-gray-300 active:border-gray-500 "
+    target="_blank"
+    href={item.url}
+  >
+    <span class="rounded-l-lg w-1/3 bg-cover bg-center" style={`background-image: url(${item.image})`}></span>
+    <span class="p-4 w-2/3 relative overflow-hidden">
+      <h3 class="text-base md:text-lg font-medium text-gray-800">{item.title}</h3>
+      <span class="text-sm md:text-base text-gray-700 text-ellipsis overflow-hidden">{item.description}</span>
+      <span class="absolute bottom-4 right-4">
+        <span class="rounded bg-gray-500 text-gray-100 p-1 text-xs">
+          { item.siteName || (new URL(item.url)).hostname }
+          <svg class="ml-1 inline-block" fill="currentColor" height="1em" viewBox="0 0 512 512"><path d="M320 0c-17.7 0-32 14.3-32 32s14.3 32 32 32h82.7L201.4 265.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L448 109.3V192c0 17.7 14.3 32 32 32s32-14.3 32-32V32c0-17.7-14.3-32-32-32H320zM80 32C35.8 32 0 67.8 0 112V432c0 44.2 35.8 80 80 80H400c44.2 0 80-35.8 80-80V320c0-17.7-14.3-32-32-32s-32 14.3-32 32V432c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V112c0-8.8 7.2-16 16-16H192c17.7 0 32-14.3 32-32s-14.3-32-32-32H80z"/></svg>
         </span>
       </span>
-    </a>
-  </div>
+    </span>
+  </a>
 ))}
