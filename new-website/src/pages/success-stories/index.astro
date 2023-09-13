@@ -17,8 +17,8 @@ const successStories = (await getCollection('success-stories')).sort(
     <p class="font-sans text-lg font-normal text-gray-500 mt-2">Inspirational interviews with people thriving with Colyseus</p>
   </TitleSection>
 
-  <section class="container m-auto mb-24 animate-from-bottom-fade">
-    <ul class="flex space-x-6 justify-center">
+  <section class="container m-auto px-6 pb-32 animate-from-bottom-fade">
+    <ul class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center">
       {successStories.filter(post => post.data.published).map((post, i) => (
         <PostItem
           slug={post.slug}

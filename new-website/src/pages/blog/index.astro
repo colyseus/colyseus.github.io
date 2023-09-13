@@ -11,10 +11,13 @@ const posts = (await getCollection('blog')).sort(
 );
 ---
 <MainLayout>
-  <TitleSection>Blog</TitleSection>
+  <TitleSection>
+    Blog
+    <!-- <p class="font-sans text-lg font-normal text-gray-500 mt-2">xxx</p> -->
+  </TitleSection>
 
     <section class="container mx-auto px-6 pb-32">
-      <ul class="flex space-x-6 justify-center">
+      <ul class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center">
         {posts.map((post, i) => (
           <PostItem
             href={`/blog/${post.slug}/`}

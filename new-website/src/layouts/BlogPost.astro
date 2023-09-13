@@ -35,9 +35,9 @@ const author_link = props.author_link || (props.author === "Endel Dreyer" && "ht
           <img class="rounded-b-2xl" width="1500" src={heroImage} transition:name={`${slug}-hero`} />
         </div>}
 
-			<article class="grid-container relative mx-auto max-w-screen-lg z-10">
+			<article class="grid-container px-6 relative sm:text-sm text-base mx-auto max-w-screen-lg z-10">
 				<div class="mx-auto w-fit max-w-full py-5 sm:py-8 md:px-10 md:py-12 lg:p-12 lg:py-16 xl:p-16 xl:py-20 "> <!-- -mt-16 -->
-					<header class="animate-from-bottom-fade text-center pt-16 bg-white rounded-lg z-20">
+					<header class="overflow-hidden animate-from-bottom-fade text-center pt-16 bg-white rounded-lg z-20">
 
             {(pubDate) &&
               <span class="inline-block font-mono text-gray-500" ><FormattedDate date={pubDate} /></span>}
@@ -52,7 +52,7 @@ const author_link = props.author_link || (props.author === "Endel Dreyer" && "ht
             {(props.isSuccessStories) &&
               <h2 class="mt-10 -mb-6 text-gray-500 text-2xl">Success Story</h2>}
 
-						<h1 class="text-6xl mt-6">{title}</h1>
+						<h1 class="text-4xl md:text-6xl mt-6">{title}</h1>
 
             {(!props.isSuccessStories && description) &&
               <h4 class="mt-4">{description}</h4>}
