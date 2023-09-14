@@ -64,6 +64,7 @@ h1, h2 { /*, h3, h4 */
 .animate-scale-x-100 { animation: scale-x-from-o-to-100 0.3s cubic-bezier(0.33, 1, 0.68, 1) forwards; }
 .animate-from-bottom-fade { animation: from-bottom 0.3s both ease-out, fade-in 0.3s both ease-out; }
 .animate-from-top-fade { animation: from-top 0.1s both ease-out, fade-in 0.1s both ease-out; }
+.animate-from-right-fade { animation: from-right 0.1s both ease-out, fade-in 0.1s both ease-out; }
 
 .animate-delay-0 { animation-delay: 0s; }
 .animate-delay-1 { animation-delay: 0.1s; }
@@ -133,6 +134,11 @@ article blockquote { @apply text-lg border-l-4 border-gray-800 bg-gray-50 px-4 p
 @keyframes from-top {
   0% { transform: translateY(-1em); }
   100% { transform: translateY(0); }
+}
+
+@keyframes from-right {
+  0% { transform: translateX(1em); }
+  100% { transform: translateX(0); }
 }
 
 @keyframes fade-in {
