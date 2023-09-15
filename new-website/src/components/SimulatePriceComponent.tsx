@@ -38,7 +38,8 @@ export default function SimulatePriceComponent() {
   const [addedLocationIds, setAddedLocationIds] = useState<string[]>([]);
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/prices").then((res) => {
+    // fetch("http://localhost:8000/api/prices").then((res) => {
+    fetch("https://cloud-prod.colyseus.io/api/prices").then((res) => {
       res.json().then((data) => {
         setPlans(data.plans);
         setLocations(data.locations);
