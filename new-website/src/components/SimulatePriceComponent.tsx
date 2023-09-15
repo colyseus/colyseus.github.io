@@ -22,7 +22,7 @@ function DeploymentLocation(props: AddedLocation) {
   );
 }
 
-export default function SimulatePriceComponent() {
+export default function SimulatePriceComponent({title = "Pricing Simulator"}) {
   const [tierNames, setTierNames] = useState<any>([]);
   const [plans, setPlans] = useState<any>([]);
 
@@ -131,7 +131,7 @@ export default function SimulatePriceComponent() {
 
   return (
     <div>
-      <h1 className="text-3xl text-center">Pricing Simulator</h1>
+      <h1 className="text-3xl text-center">{title}</h1>
 
       <div className="flex flex-col mt-4 space-y-4">
         <div className="space-y-1">
@@ -176,7 +176,7 @@ export default function SimulatePriceComponent() {
           </select>
         </div>
 
-        <div className="space-y-1">
+        <div className="space-y-1 text-sm md:text-base">
           <span className="font-semibold block">Scale strategy</span>
 
           <div>
@@ -218,7 +218,7 @@ export default function SimulatePriceComponent() {
 
       {(selectedPlan)
         ? <div className="pt-2">
-            <div className="col-span-2 text-sm text-slate-100 bg-gray-600 rounded-xl p-4 ">
+            <div className="text-xs md:text-base col-span-2 text-sm text-slate-100 bg-gray-600 rounded-xl p-4 ">
               <label className="inline-block text-white font-medium mb-1">Capacity estimation</label>
               <p className="capacity-estimation" data-template="">
 
