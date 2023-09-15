@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import TestimonialEntry from './TestimonialEntry.astro';
 
 const successStories = (await getCollection('success-stories')).sort(
-	(a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+	(a, b) => new Date(a.data.pubDate) - new Date(b.data.pubDate)
 );
 ---
 
