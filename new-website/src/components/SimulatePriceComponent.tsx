@@ -209,36 +209,37 @@ export default function SimulatePriceComponent() {
             </div>
           </div>
 
-          {(selectedPlan)
-            ? <div className="pt-2">
-                <div className="col-span-2 text-sm text-white bg-purple-600 rounded-xl p-4 ">
-                  <label className="inline-block text-white font-semibold mb-1">Capacity estimation</label>
-                  <p className="capacity-estimation" data-template="">
-
-                    <span className="font-medium text-red-400">High CPU Usage</span>
-                    <span> · {getEstimation(80)}</span>
-                    <br />
-
-                    <span className="font-medium text-yellow-400">Moderate CPU Usage</span>
-                    <span> · {getEstimation(500)}</span>
-                    <br />
-
-                    <span className="font-medium text-green-400">Minimal CPU Usage</span>
-                    <span> · {getEstimation(3000)}</span>
-
-                  </p>
-                  <p className="text-xs mt-1 opacity-80">
-                      * The actual capacity may be higher or lower than estimated, depending on the actual CPU usage of your room's code.
-                  </p>
-                </div>
-              </div>
-            : null }
         </div>
       </div>
 
       <button onClick={onAddLocation} disabled={!selectedPlan} className="block mt-4 w-full rounded p-4 text-white bg-blue-600 transition-all hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-400">
         Add location: ${getPrice()}<small>/mo</small>
       </button>
+
+      {(selectedPlan)
+        ? <div className="pt-2">
+            <div className="col-span-2 text-sm text-slate-100 bg-gray-600 rounded-xl p-4 ">
+              <label className="inline-block text-white font-medium mb-1">Capacity estimation</label>
+              <p className="capacity-estimation" data-template="">
+
+                <span className="font-medium text-red-500">High CPU Usage</span>
+                <span> · {getEstimation(80)}</span>
+                <br />
+
+                <span className="font-medium text-yellow-500">Moderate CPU Usage</span>
+                <span> · {getEstimation(500)}</span>
+                <br />
+
+                <span className="font-medium text-green-500">Minimal CPU Usage</span>
+                <span> · {getEstimation(3000)}</span>
+
+              </p>
+              <p className="text-xs mt-1 text-slate-300">
+                  * The actual capacity may be higher or lower than estimated, depending on the actual CPU usage of your room's code.
+              </p>
+            </div>
+          </div>
+        : null }
 
       {(addedLocations.length > 0)
         ?
