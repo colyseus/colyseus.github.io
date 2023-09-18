@@ -44,7 +44,7 @@ import Platforms, { platforms } from '../components/Platforms.astro';
                     </span>
                   </button>
 
-                  <script>
+                  <script is:inline>
                     const button = document.getElementById('clipboard-click');
                     const icon = button.querySelector('span');
                     let timeout = null;
