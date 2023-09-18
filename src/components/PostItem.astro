@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { getImage } from "astro:assets";
+import FormattedDate from './FormattedDate.astro';
+import { Image } from 'astro:assets';
+
+type Props = CollectionEntry<'blog'>['data'] & {
+  href: string;
+  class?: string;
+};
+
+const props = Astro.props;
+const author_img = props.author_img || (props.author === "Endel Dreyer" && "https://avatars.githubusercontent.com/u/130494?v=4");
+
+// workaround https://github.com/withastro/astro/issues/3373#issuecomment-1214245870
+const allImages = import.meta.glob("../../assets/**/**");
+const heroImage = (await allImages[props.heroImage.replace("../", "")]()).default;
+const optimizedHeroImage = await getImage({ width: 500, src: heroImage, format: 'webp'});
+---
+
+<li class={"grid-cols-1 md:w-78 lg:w-84 flex animate-from-bottom-fade " + (props.class || "")}>
+  <a href={props.href} class="bg-gray-100 block w-full rounded-lg transition-all shadow hover:shadow-lg">
+    <span class="w-full block h-44 bg-cover bg-center rounded-t-lg" style={`background-image: url(${(optimizedHeroImage.src)});`} transition:name={`${props.slug}-hero`} >
+    </span>
+    <span class="p-4 inline-block w-full">
+      <span class="text-lg text-gray-700 font-medium">{props.title}</span>
+      {(props.description) && <p class="text-sm text-gray-500">{props.description}</p>}
+
+
+      <span class="mt-2 flex text-xs justify-between items-center">
+        <span><FormattedDate date={props.pubDate} /></span>
+        {(props.author) &&
+          <span class="inline-block">
+            By
+            <span class="inline-block">
+                {(author_img) && <img class="inline w-6 rounded-full border border-gray-500 mr-1" src={author_img} alt={props.author}>}
+                {props.author}
+              </span>
+          </span>}
+      </span>
+
+    </span>
+  </a>
+</li>

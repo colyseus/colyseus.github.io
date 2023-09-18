@@ -1,0 +1,165 @@
+---
+import MainLayout from '../layouts/MainLayout.astro';
+
+import { collections } from '../content/config';
+
+import ColyseusCloudSection from '../components/ColyseusCloudSection.astro';
+import SuccessStoriesSection from '../components/SuccessStoriesSection.astro';
+import JoinCommunitySection from '../components/JoinCommunitySection.astro';
+import Platforms, { platforms } from '../components/Platforms.astro';
+---
+
+<MainLayout isHeaderExpanded={false}>
+  <section class="text-gray-200 relative">
+    <video autoplay muted loop class="absolute h-[50vh] md:h-[98vh] w-full m-auto top-0 bottom-0 -z-10 bg-gray-400">
+      <source src="/images/background/video.mp4" type="video/mp4">
+    </video>
+
+    <div class="bg-gradient-black z-10 min-h-[50vh] md:min-h-[99vh] flex">
+      <div class="container mx-auto px-6 flex items-center flex-col lg:flex-row relative py-16 md:py-20">
+        <div class="w-full text-center ">
+          <div class="py-16 md:py-20 animate-from-top-fade">
+            <h1 class="text-5xl md:text-7xl mb-2 font-medium drop-shadow-[0px_2px_1px_rgba(0,0,0,1)] ">
+              <span class="text-lg md:text-4xl tracking-tight text-gray-300 inline-block mb-2 md:mb-0">Free and Open-source</span> <br/>
+              <span class="gradient-text">Multiplayer Framework</span>
+            </h1>
+            <p class="text-base md:text-xl inline-block mt-1 md:mt-0">Own your authoritative game servers. Versatile for any genre or platform.</p>
+          </div>
+
+          <div class="p-1 relative flex flex-row w-full justify-center animate-from-bottom-fade">
+
+            <div>
+              <span class="flex bg-gradient-purple p-0.5 md:p-1 rounded w-2/3 mx-auto md:w-full text-sm md:text-base">
+                <span class="font-mono bg-gray-950 pl-1 md:pl-5 rounded relative flex items-center justify-start md:justify-center overflow-hidden md:overflow-visible">
+                  <!-- caret -->
+                  <svg class="inline-block relative w-3 -rotate-90 text-gray-300 mr-2" stroke="currentColor" data-hk="0-0" width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 11L21 1" stroke-width="2"></path></svg>
+                  <span class="text-gray-300 whitespace-nowrap text-ellipsis md:w-full overflow-hidden">npm create colyseus-app@latest ./my-server</span>
+                  <button class="group inline-block cursor-pointer p-2 md:p-5 relative" id="clipboard-click">
+                    <svg class="inline-block w-5 text-gray-400 transition-all group-hover:scale-125 group-active:scale-75 group-active:text-purple-300  group-hover:text-gray-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    <span
+                      class="absolute pointer-events-none hidden bg-black data-[clicked=yes]:inline-block text-purple-200 text-sm bg-purple-600 rounded py-2 px-3 -translate-x-12 translate-y-10"
+                      data-clicked="no"
+                    >
+                      Copied!
+                    </span>
+                  </button>
+
+                  <script>
+                    const button = document.getElementById('clipboard-click');
+                    const icon = button.querySelector('span');
+                    let timeout = null;
+                    button.addEventListener('click', () => {
+                      navigator.clipboard.writeText('npm create colyseus-app@latest ./my-server');
+                      clearTimeout(timeout);
+                      icon.dataset.clicked = 'yes';
+                      timeout = setTimeout(() => icon.dataset.clicked = 'no', 1000);
+                    });
+                  </script>
+                </span>
+              </span>
+
+              <div class="text-sm text-gray-300 mt-6">
+                <a href="https://nodejs.org/en" target="_blank" class="transition-opacity hover:opacity-80 p-1">* Requires Node.js installed.</a>
+              </div>
+            </div>
+
+          </div>
+
+          <!--div class="mt-16 text-sm animate-delay-3 hidden md:block animate-from-bottom-fade ">
+            <a target="_blank" href="https://stackblitz.com/edit/colyseus?embed=1&file=src%2Frooms%2FMyRoom.ts" class="m-auto rounded-full border-4 border-purple-600 text-white font-semibold py-2 px-4 mr-4 transition-all hover:bg-purple-600 active:bg-purple-700 hover:shadow-inner">See in action ⚡️</a>
+          </div-->
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="bg-gradient-purple text-slate-100 text-center border-b border-solid border-gray-300">
+    <div class="container mx-auto px-6 relative py-16 md:py-24">
+      <h2 class="text-2xl md:text-5xl font-medium mb-6 md:mb-10 text-white">
+        <span class="relative">
+          <a href="/framework">Meet Colyseus Features</a>
+          <span class="absolute transition-all animate-scale-x-100 inset-x-0 -bottom-0.5 h-0.5 bg-white"></span>
+        </span>
+      </h2>
+
+      <ul class="max-w-6xl mx-auto text-purple-100 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 text-base md:text-xl text-left justify-center items-center py-6">
+        <li class="flex space-x-4 items-center group">
+          <svg class="w-12 md:w-24 max-h-12 md:max-h-none opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 21 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_5_340)"> <path d="M16.5798 6.3375L15.9798 5.5375L14.4798 6.6625L15.0798 7.4625L16.5798 6.3375ZM18.5298 6C18.9454 6 19.3298 5.875 19.6485 5.65938C19.861 5.51562 20.0454 5.33125 20.1892 5.11875C20.4048 4.8 20.5298 4.41563 20.5298 4C20.5298 3.58437 20.4048 3.2 20.1892 2.88125C20.1173 2.775 20.036 2.675 19.9454 2.58437C19.8548 2.49375 19.7548 2.4125 19.6485 2.34063C19.3298 2.125 18.9454 2 18.5298 2C18.1142 2 17.7298 2.125 17.411 2.34063C17.1985 2.48438 17.0142 2.66875 16.8704 2.88125C16.6548 3.2 16.5298 3.58437 16.5298 4C16.5298 5.10313 17.4267 6 18.5298 6ZM18.5298 3C19.0798 3 19.5298 3.45 19.5298 4C19.5298 4.55 19.0798 5 18.5298 5C17.9798 5 17.5298 4.55 17.5298 4C17.5298 3.45 17.9798 3 18.5298 3ZM3.64854 7.84062C3.32979 7.625 2.94541 7.5 2.52979 7.5C2.11416 7.5 1.72979 7.625 1.41104 7.84062C1.19854 7.98438 1.01416 8.16875 0.87041 8.38125C0.654785 8.7 0.529785 9.08438 0.529785 9.5C0.529785 10.6031 1.42666 11.5 2.52979 11.5C3.63291 11.5 4.52979 10.6031 4.52979 9.5C4.52979 9.08438 4.40479 8.7 4.18916 8.38125C4.04541 8.16875 3.86104 7.98438 3.64854 7.84062ZM2.52979 10.5C1.97979 10.5 1.52979 10.05 1.52979 9.5C1.52979 8.95 1.97979 8.5 2.52979 8.5C3.07979 8.5 3.52979 8.95 3.52979 9.5C3.52979 10.05 3.07979 10.5 2.52979 10.5ZM5.27979 10H6.77979V9H5.27979V10ZM19.9454 12.5844C19.8548 12.4938 19.7548 12.4125 19.6485 12.3406C19.3298 12.125 18.9454 12 18.5298 12C18.1142 12 17.7298 12.125 17.411 12.3406C17.3079 12.4094 17.2142 12.4875 17.1267 12.575L14.2579 10.8531C14.4329 10.4375 14.5298 9.97812 14.5298 9.5C14.5298 7.56563 12.9642 6 11.0298 6C10.6767 6 10.3454 6.06875 10.0235 6.1625L8.79541 3.53437C9.24228 3.16875 9.52979 2.62188 9.52979 2C9.52979 1.58438 9.40479 1.2 9.18916 0.88125C9.04541 0.66875 8.86103 0.484375 8.64853 0.340625C8.32978 0.125 7.94541 0 7.52979 0C7.11416 0 6.72978 0.125 6.41104 0.340625C6.19853 0.484375 6.01416 0.66875 5.87041 0.88125C5.65479 1.2 5.52979 1.58438 5.52979 2C5.52979 3.10313 6.42666 4 7.52979 4C7.65479 4 7.77666 3.98438 7.89541 3.9625L9.11416 6.575C8.16104 7.2 7.52979 8.275 7.52979 9.5C7.52979 11.4344 9.09541 13 11.0298 13C12.1235 13 13.086 12.4875 13.7298 11.7031L16.6173 13.4344C16.5642 13.6156 16.5329 13.8031 16.5329 14C16.5329 15.1031 17.4298 16 18.5329 16C18.9485 16 19.3329 15.875 19.6517 15.6594C19.8642 15.5156 20.0485 15.3312 20.1923 15.1187C20.4048 14.8 20.5298 14.4156 20.5298 14C20.5298 13.5844 20.4048 13.2 20.1892 12.8813C20.1173 12.775 20.0329 12.675 19.9454 12.5844ZM7.52979 3C6.97978 3 6.52979 2.55 6.52979 2C6.52979 1.45 6.97978 1 7.52979 1C8.07979 1 8.52979 1.45 8.52979 2C8.52979 2.55 8.07979 3 7.52979 3ZM11.0298 12C9.65166 12 8.52979 10.8781 8.52979 9.5C8.52979 8.12187 9.65166 7 11.0298 7C12.4079 7 13.5298 8.12187 13.5298 9.5C13.5298 10.8781 12.4079 12 11.0298 12ZM18.5298 15C17.9798 15 17.5298 14.55 17.5298 14C17.5298 13.45 17.9798 13 18.5298 13C19.0798 13 19.5298 13.45 19.5298 14C19.5298 14.55 19.0798 15 18.5298 15Z"></path> </g> <defs> <clipPath id="clip0_5_340"> <rect width="20" height="16" fill="white" transform="translate(0.529785)"></rect> </clipPath> </defs> </svg>
+          <p class="group-hover:text-white transition-all">Automatic <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">state synchronization</strong>.</p>
+        </li>
+        <li class="flex space-x-4 items-center group">
+          <svg class="w-12 md:w-24 max-h-12 md:max-h-none opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 17 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"> <path d="M16.3827 13.8556L14.6364 12.1094L15.717 10.3116C15.7811 10.2154 15.8099 10.1 15.7985 9.98495C15.7871 9.86993 15.7362 9.7624 15.6545 9.68065L14.567 8.59315C14.373 8.39909 14.0561 8.3969 13.8598 8.59315L12.9902 9.46315L4.02953 0.50221L1.10047 0.00752224C0.750156 -0.0434153 0.490469 0.263772 0.534844 0.573147L1.02953 3.50221L9.99047 12.4631L9.12047 13.3328C8.92516 13.5281 8.92516 13.8447 9.12047 14.04L10.208 15.1272C10.3767 15.296 10.6411 15.3216 10.8389 15.1897L12.6364 14.1091L14.3827 15.8553C14.578 16.0506 14.8945 16.0506 15.0898 15.8553L16.3827 14.5625C16.578 14.3675 16.578 14.0506 16.3827 13.8556ZM1.96234 3.02096L1.64016 1.11252L3.54828 1.43533L12.2836 10.1706L10.698 11.7563L1.96234 3.02096ZM14.7364 14.7947L12.7642 12.8222L10.6255 14.1303L10.1814 13.6863L14.2139 9.65408L14.658 10.0981L13.3502 12.2369L15.3223 14.2091L14.7364 14.7947ZM13.5105 1.43471L15.4189 1.11252L15.0961 3.02065L11.5292 6.58752L12.2364 7.29471L16.0292 3.5019L16.5239 0.572835C16.5748 0.222522 16.2677 -0.0371653 15.9583 0.00720974L13.0292 0.501897L9.23641 4.29471L9.94328 5.0019L13.5105 1.43471ZM7.93797 13.3325L7.06797 12.4628L7.82172 11.7091L7.11484 11.0019L6.36109 11.7556L4.77547 10.17L5.52953 9.41596L4.82234 8.70877L4.06828 9.46283L3.19859 8.59283C3.00328 8.39752 2.68672 8.39752 2.49141 8.59283L1.40422 9.68033C1.23547 9.84908 1.20984 10.1135 1.34172 10.3113L2.42234 12.1088L0.675781 13.8553C0.480469 14.0506 0.480469 14.3672 0.675781 14.5625L1.96859 15.8553C2.16391 16.0506 2.48047 16.0506 2.67578 15.8553L4.42203 14.1091L6.21984 15.1897C6.31604 15.2538 6.43146 15.2826 6.54648 15.2712C6.6615 15.2598 6.76903 15.2089 6.85078 15.1272L7.93828 14.0397C7.96547 14.0125 7.98016 13.9785 7.99984 13.9469C7.98484 13.8616 7.97453 13.775 7.97453 13.6866C7.97453 13.5981 7.98516 13.5113 7.99984 13.4256C7.98016 13.3941 7.96547 13.36 7.93797 13.3325ZM6.43328 14.13L4.29453 12.8222L2.32234 14.7944L1.73641 14.2085L3.70891 12.2363L2.40078 10.0975L2.84484 9.65346L6.87734 13.6863L6.43328 14.13Z"></path> </svg>
+          <p class="group-hover:text-white transition-all">Match-make clients into game <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">rooms on demand</strong>.</p>
+        </li>
+        <li class="flex space-x-4 items-center group">
+          <svg class="w-12 md:w-24 max-h-12 md:max-h-none opacity-60 group-hover:opacity-100 transition-opacity" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M.2 468.9C2.7 493.1 23.1 512 48 512l96 0 320 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-48 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-48c0-26.5-21.5-48-48-48L48 0C21.5 0 0 21.5 0 48L0 368l0 96c0 1.7 .1 3.3 .2 4.9z"/></svg>
+          <p class="group-hover:text-white transition-all"><strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">Scale</strong> to millions across different <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">game rooms</strong>.</p>
+        </li>
+        <li class="flex space-x-4 items-center group">
+          <svg class="w-12 md:w-24 max-h-12 md:max-h-none opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 16 16" stroke="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg"> <path d="M14.2139 2.6168L8.21387 0.116799C8.0311 0.0409798 7.83517 0.00195313 7.6373 0.00195312C7.43944 0.00195313 7.24351 0.0409798 7.06074 0.116799L1.06074 2.6168C0.501367 2.84805 0.135742 3.39492 0.135742 4.00117C0.135742 10.2043 3.71387 14.4918 7.05762 15.8855C7.42637 16.0387 7.84199 16.0387 8.21074 15.8855C10.8889 14.7699 15.1357 10.9168 15.1357 4.00117C15.1357 3.39492 14.7701 2.84805 14.2139 2.6168ZM7.82949 14.9637C7.70449 15.0137 7.56699 15.0137 7.44512 14.9637C4.38574 13.7512 1.13574 9.50117 1.13574 4.00117C1.13574 3.79805 1.25762 3.6168 1.44199 3.53867L7.44199 1.03867C7.56387 0.988674 7.70449 0.988674 7.82637 1.03867L13.8264 3.53867C14.0139 3.6168 14.1357 3.79805 14.1326 4.00117C14.1357 9.50117 10.8857 13.7512 7.82949 14.9637ZM12.0857 4.80742C11.9389 4.66055 11.7014 4.66055 11.5545 4.8043L6.44824 9.86992L4.29199 7.69805C4.14512 7.55117 3.90762 7.55117 3.76074 7.69492L3.49512 7.96055C3.34824 8.10742 3.34824 8.34492 3.49199 8.4918L6.17637 11.198C6.32324 11.3449 6.56074 11.3449 6.70762 11.2012L12.3482 5.60742C12.4951 5.46055 12.4951 5.22305 12.3514 5.07617L12.0857 4.80742Z"></path> </svg>
+          <p class="group-hover:text-white transition-all"><strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">Authoritative</strong> server to <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">prevent hacks</strong> on the client.</p>
+        </li>
+        <li class="flex space-x-4 items-center group">
+          <svg class="w-12 md:w-24 max-h-12 md:max-h-none opacity-60 group-hover:opacity-100 transition-opacity" stroke="currentColor" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 32v448h448V32H0zm243.8 349.4c0 43.6-25.6 63.5-62.9 63.5-33.7 0-53.2-17.4-63.2-38.5l34.3-20.7c6.6 11.7 12.6 21.6 27.1 21.6 13.8 0 22.6-5.4 22.6-26.5V237.7h42.1v143.7zm99.6 63.5c-39.1 0-64.4-18.6-76.7-43l34.3-19.8c9 14.7 20.8 25.6 41.5 25.6 17.4 0 28.6-8.7 28.6-20.8 0-14.4-11.4-19.5-30.7-28l-10.5-4.5c-30.4-12.9-50.5-29.2-50.5-63.5 0-31.6 24.1-55.6 61.6-55.6 26.8 0 46 9.3 59.8 33.7L368 290c-7.2-12.9-15-18-27.1-18-12.3 0-20.1 7.8-20.1 18 0 12.6 7.8 17.7 25.9 25.6l10.5 4.5c35.8 15.3 55.9 31 55.9 66.2 0 37.8-29.8 58.6-69.7 58.6z"></path></svg>
+          <p class="group-hover:text-white transition-all">Leverage the ever-growing <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">JavaScript ecosystem</strong>.</p>
+        </li>
+        <li class="flex space-x-4 items-center group">
+          <svg class="w-12 md:w-24 opacity-60 group-hover:opacity-100 transition-opacity" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M-.102 12.53C.01 5.956 4.613 1.277 10.248.52c6.718-.9 12.371 3.67 13.456 9.735 1.03 5.75-2.13 11.133-7.339 13.263-.45.184-.697.082-.87-.373l-2.587-6.728c-.15-.392-.048-.64.34-.814 1.17-.532 1.901-1.423 2.095-2.7a3.46 3.46 0 0 0-3.122-3.98 3.463 3.463 0 0 0-3.75 2.89c-.253 1.598.536 3.084 2.027 3.76.464.214.556.418.377.892l-2.6 6.772c-.125.334-.4.45-.75.315a11.98 11.98 0 0 1-6.33-5.76c-1.206-2.383-1.22-4.247-1.297-5.263zm1.012-.092c.02.32.03.692.063 1.07.305 3.48 2.4 6.946 6.34 8.862.156.073.214.04.272-.11q1.082-2.84 2.178-5.68c.063-.16.03-.231-.116-.323-1.53-.963-2.29-2.348-2.207-4.163.048-1.045.45-1.96 1.152-2.725 1.452-1.583 3.727-1.927 5.59-.852a4.436 4.436 0 0 1 2.188 4.376c-.174 1.48-.934 2.609-2.212 3.378-.13.078-.17.14-.11.29q1.102 2.847 2.187 5.698c.058.15.116.184.27.11 1.72-.802 3.157-1.95 4.265-3.484 1.685-2.333 2.377-4.932 2.048-7.793-.663-5.687-5.78-10.397-12.368-9.584-5.135.63-9.453 4.96-9.54 10.93z"></path></svg>
+          <p class="group-hover:text-white transition-all">Open-source, under the most permissive <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">MIT License</strong>.</p>
+        </li>
+      </ul>
+
+      <div class="flex flex-col items-center justify-center py-8 text-purple-300">
+        <Platforms />
+      </div>
+
+      <div class="flex space-x-8 justify-center">
+        <a href="/framework" class="mt-2 group transition-all text-purple-200 font-semibold hover:text-purple-100 ">
+          Discover The Colyseus Framework
+          <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <SuccessStoriesSection />
+
+  <section class="text-slate-900">
+    <div class="container mx-auto px-6 py-16 md:py-24">
+      <div class="text-center">
+        <h2 class="text-2xl md:text-5xl font-medium">Games using Colyseus</h2>
+        <p class="text-sm md:text-base text-gray-600 py-2">A selection of multiplayer games made by happy developers.</p>
+      </div>
+
+      <div id="showcase" class="h-96 transition-all overflow-hidden relative">
+        <div class="grid gap-2 md:gap-4 showcase-items mt-6 grid-cols-2 md:grid-cols-3">
+          {collections.showcase.map((item) => (
+            <a class="text-xs md:text-base group rounded h-24 md:h-60 relative transition-all shadow hover:shadow-lg overflow-hidden" href={item.url} target="_blank" style={`background-image: url(${item.image});`}>
+              <span class="shadow-inner bg-purple-700 group-active:bg-purple-800 translate-y-full group-hover:translate-y-0 transition-transform absolute bottom-0 p-4 w-full rounded text-white">
+                {item.name}
+                <small class="block text-purple-200">by {item.author}</small>
+                {/* <small class="block text-gray-300">by <a href={item.author_link} target="_blank">{item.author}</a></small> */}
+                <img class="absolute right-4 bottom-4 w-6 md:w-12" src={platforms[item.platform].image} alt={platforms[item.platform].name} />
+              </span>
+            </a>
+          ))}
+        </div>
+
+        <a
+          href="javascript:void(0)" onclick="document.getElementById('showcase').classList.remove('h-96');this.remove();"
+          class="showcase-expand-list pt-8 flex h-28 justify-center items-end block w-full absolute bottom-0 mt-2 group text-purple-500 font-semibold">
+          Expand all
+          <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+  <JoinCommunitySection />
+
+  <ColyseusCloudSection bgGray={false} />
+</MainLayout>

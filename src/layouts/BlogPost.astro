@@ -1,0 +1,95 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { Image, getImage } from 'astro:assets';
+import BaseHead from '../components/BaseHead.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import SuccessStoriesSection from '../components/SuccessStoriesSection.astro';
+import ColyseusCloudSection from '../components/ColyseusCloudSection.astro';
+import JoinCommunitySection from '../components/JoinCommunitySection.astro';
+
+type Props = CollectionEntry<'blog'>['data'] & {
+  footerSection?: "colyseus-cloud" | "community" | "success-stories"
+  isSuccessStories?: boolean;
+};
+
+const props = Astro.props;
+const { title, description, pubDate, updatedDate, slug } = props;
+const footerSection = props.footerSection || "colyseus-cloud";
+
+const author_img = props.author_img || (props.author === "Endel Dreyer" && "https://avatars.githubusercontent.com/u/130494?v=4");
+const author_link = props.author_link || (props.author === "Endel Dreyer" && "https://github.com/endel");
+
+// workaround https://github.com/withastro/astro/issues/3373#issuecomment-1214245870
+const allImages = import.meta.glob("../../assets/**/**");
+const heroImage = props.heroImage && (await allImages[props.heroImage.replace("../", "")]()).default;
+const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: heroImage, format: 'webp'});
+---
+
+<html lang="en">
+	<head>
+		<BaseHead title={title} description={description} />
+	</head>
+
+	<body>
+		<Header />
+		<main class="relative z-10 flex flex-1 flex-col">
+
+      {(optimizedHeroImage) &&
+        <div class="mx-auto w-full max-w-screen-lg md:-mb-20 lg:-mb-24 xl:-mb-32 -z-1">
+          <img class="rounded-b-2xl" width="1500" src={optimizedHeroImage.src} transition:name={`${slug}-hero`} />
+        </div>}
+
+			<article class="grid-container px-6 relative sm:text-sm text-base mx-auto max-w-screen-lg z-10">
+				<div class="mx-auto w-fit max-w-full py-5 sm:py-8 md:px-10 md:py-12 lg:p-12 lg:py-16 xl:p-16 xl:py-20 "> <!-- -mt-16 -->
+					<header class="overflow-hidden animate-from-bottom-fade text-center pt-16 bg-white rounded-lg z-20">
+
+            {(pubDate) &&
+              <span class="inline-block font-mono text-gray-500" ><FormattedDate date={pubDate} /></span>}
+
+            {updatedDate && (
+              <span class="last-updated-on">
+                Last updated on <FormattedDate date={updatedDate} />
+              </span>
+            )}
+
+            <!-- "Success Stories" title -->
+            {(props.isSuccessStories) &&
+              <h2 class="mt-10 -mb-6 text-gray-500 text-2xl">Success Story</h2>}
+
+            <h1 class="text-4xl md:text-6xl mt-6">{title}</h1>
+
+            {(!props.isSuccessStories && description) &&
+              <h4 class="mt-4">{description}</h4>}
+
+            {(props.author) &&
+              <div class="font-mono text-gray-500 font-medium" >
+                By
+                <a class="inline-block text-gray-500" href={author_link}>
+                  {(author_img) && <img class="inline w-8 rounded-full border border-gray-500 mr-2" src={author_img} alt={props.author}>}
+                  {props.author}
+                </a>
+              </div>}
+
+            <hr class="-mx-16 mt-16 md:my-16">
+					</header>
+
+					<slot />
+
+				</div>
+			</article>
+
+      {(footerSection === "success-stories") &&
+        <SuccessStoriesSection />}
+
+      {(footerSection === "community") &&
+        <JoinCommunitySection />}
+
+      {(footerSection === "colyseus-cloud") &&
+        <ColyseusCloudSection bgGray={true} />}
+
+		</main>
+		<Footer />
+	</body>
+</html>

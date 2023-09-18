@@ -1,0 +1,28 @@
+---
+import CommunityStats from '../components/CommunityStats.astro';
+interface Props {
+  class?: string;
+}
+
+const props = Astro.props;
+const addClass = props.class ?? "bg-gray-100 ";
+---
+
+<section class={"text-center border-t border-b border-solid border-gray-300 text-gray-500 " + addClass}>
+  <div class="container container mx-auto px-6 relative py-14">
+    <h2 class="text-base md:text-xl font-medium uppercase tracking-widest">Join our growing community</h2>
+    <div class="text-slate-900 py-4">
+      <CommunityStats />
+    </div>
+    <div class="flex space-x-8 justify-center">
+      <!--a href="https://github.com/colyseus" target="_blank" class="group transition-all hover:text-gray-600 font-semibold ">
+        Visit GitHub
+        <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+        </a-->
+      <a href="/community" class="group transition-all hover:text-gray-600 font-semibold ">
+        Join Community
+        <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+      </a>
+    </div>
+  </div>
+</section>

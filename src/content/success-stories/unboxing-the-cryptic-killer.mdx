@@ -1,0 +1,88 @@
+---
+published: true
+title: 'Unboxing the Cryptic Killer'
+author: "Adrian Olczyc"
+author_ref: "CEO at Eleven Puzzles"
+author_img: "/success-stories/author-adrian-olczyc.jpeg"
+author_link: "https://www.linkedin.com/in/adrianolczyk/"
+quote: "...the operational cost associated with running a Colyseus server is substantially lower than alternatives we tried."
+description: 'An exciting 2-player cooperative escape-room-like puzzle game.'
+pubDate: "Sep 18 2023"
+heroImage: '../../../assets/success-stories/elevenpuzzles-screenshot.png'
+---
+import { Image } from 'astro:assets';
+import logoImage from "../../../assets/success-stories/elevenpuzzles-logo.png";
+import teamImage from "../../../assets/success-stories/elevenpuzzles-team.png";
+import screenshotImage from "../../../assets/success-stories/elevenpuzzles-screenshot.png";
+
+### What is **Unboxing the Cryptic Killer** and what makes it special?
+
+<a href="https://store.steampowered.com/app/2069040/Unboxing_the_Cryptic_Killer/">
+  <Image class="rounded inline-block mx-auto w-1/2 float-right md:w-1/4 ml-8" src={logoImage} alt="Unboxing the Cryptic Killer" />
+</a>
+
+"Unboxing the Cryptic Killer" is an exciting 2-player cooperative escape-room-like puzzle game where two detectives find themselves trapped by the Cryptic Killer’s plot. These detectives are tasked with figuring out a complex box of puzzles to rescue not just themselves, but two other captives as well. As they work against the clock, they'll find that teamwork and clear communication are their best tools.
+
+This game stands out because players have to work closely together, even though they're separated in the game. They'll face a series of challenging puzzles that require both to think, act, and communicate in real-time. And to make things even more interesting, the game has a cool comic book art style that players will love.
+
+
+### Who is behind **Unboxing the Cryptic Killer**?
+
+We began as a tight-knit group and have since grown into a team of five — and we're hiring! This journey is one we thoroughly enjoy. Escape rooms have always been our passion, and during the pandemic, we were inspired to build games that we ourselves would love to play. What started as a side-project soon revealed a large community that shared our love for puzzles, escape rooms, and the world of comic books.
+
+To us, escape rooms have always symbolized collaboration and fun-filled times with friends. We aimed to capture this essence and transition it into the digital realm, making multiplayer interaction the heart of our games. Now, with "Unboxing the Cryptic Killer" marking our fourth game launch, we're enthusiastically preparing for our next big release!
+
+<div class="mx-auto mt-6 mb-12 w-sm w-full md:w-2/3 text-center text-gray-600 ">
+  <Image class="rounded" src={teamImage} alt="ElevenPuzzles Team" />
+  <p class="text-sm p-3 italic">ElevenPuzzles Team</p>
+</div>
+
+### How has Colyseus helped you in your journey from developing to releasing **Unboxing the Cryptic Killer**?
+
+We integrated Colyseus into our development pipeline in the later stages. Initially, we used Mirror Networking, another open-source solution for Unity, but confronted several challenges related to stability and maintainability. Upon evaluating Colyseus, we quickly recognized its potential and initiated a switch.
+
+Colyseus streamlined the difficult task of implementing multiplayer support in our game. Its feature set aligned perfectly with our specific requirements. Notably, Colyseus facilitated the decoupling of game logic from server-side code. This modular approach significantly enhanced code readability, maintainability, and stability. Furthermore, our server-side code is now unit-tested to the extreme, reinforcing the reliability of our multiplayer backend.
+
+From a financial perspective, the operational cost associated with running a Colyseus server is substantially lower than alternatives we tried. For an emerging company as ours, this cost efficiency directly impacted our path to profitability.
+
+### How many concurrent connections do you currently have in peak times?
+
+Depends on the game, but up to 400.
+
+### How is your backend infrastructure?
+
+From an infrastructure perspective, the backend for "Unboxing the Cryptic Killer" is optimized for efficiency. While it's possible to operate it on a single, entry-level Digital Ocean VM instance, we wanted a more robust setup. We deploy multiple instances to ensure redundancy and to support a reasonable global distribution. Additionally, we utilize a dedicated instance for our custom-made matchmaker service, which is responsible for traffic routing and autoscaling. For all these deployments, we rely on the most cost-effective VM offerings from Digital Ocean. Additionally, we maintain a standby server for each game on Google Cloud.
+
+Typically, our architecture comprises 3-4 servers per game. Our tests indicated that a single server can comfortably support up to 5,000 concurrent users (CCUs). However, to ensure optimal user experience, we cap the traffic such that each server doesn't exceed 500 CCUs.
+
+### What was the highest lifetime CCU peak, and how many servers you had when it happened?
+
+Unboxing the Cryptic Killer didn’t exceed 500 CCU, so it’s mostly run by a single game server.  Our free prequel “Unsolved Case”, peaked over 2000 CCUs, which required 5 game servers.
+
+### How are you currently distributing your game?
+
+Our games are accessible on a range of platforms, including Steam, the App Store, and the Google Play Store. Multiplayer games have a higher entry barrier compared to single-player games. That’s why we aimed to include as many platforms as reasonably possible and enable cross-play between them.
+
+### Is **Unboxing the Cryptic Killer** currently profitable? Are you comfortable sharing some numbers?
+
+Achieving profitability has been a challenging journey, with many twists, turns, and hurdles. Right from the beginning, our commitment was to self-publish, prioritizing creative autonomy and setting a foundation for sustainable future profits. While partnering with a publisher could offer financial support, it often comes at the cost.
+
+During our initial phase, we launched two titles while juggling full-time jobs. It was only after these releases that we took the bold step to fully commit to our gaming venture. Achieving profitability demanded significant sacrifices, extended work hours, multitasking, and making the difficult decision to scale back the game's scope more than we initially envisioned. Yet, our strategic choices worked out, and we're now in a position to expand our team and self-fund our upcoming projects.
+
+While Steam has been our most lucrative platform, I believe that introducing the free prequel "Unsolved Case" played a pivotal role in our success, as it provided a marketing push, and an accessible gateway to experience our games without any upfront cost.
+
+### How much are you spending monthly on your server infrastructure?
+
+It varies, but not more than $200.
+
+### Anything else you’d like to share? The stage is yours!
+
+As we wrap up, I'd love to send a message to all fellow game developers out there: enjoy what you’re doing! Yes, game development comes with its challenges and hurdles, but remember, it's one of the most rewarding adventures you can embark on. Have fun! Because when you're having a blast, that energy is contagious, and your players will feel it too!
+
+---
+
+**Links:**
+
+- [ElevenPuzzles](https://elevenpuzzles.com/) is the company behind **Unboxing the Cryptic Killer**.
+- ElevenPuzzles is hiring!
+- [Unboxing the Cryptic Killer](https://store.steampowered.com/app/2069040/Unboxing_the_Cryptic_Killer/) is available on Steam.

@@ -2,3 +2,5 @@
 
 Colyseus' static landing page.
 
+Uses [astro.build](https://astro.build/).
+
