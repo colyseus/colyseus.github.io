@@ -30,7 +30,7 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
 
 <html lang="en">
 	<head>
-		<BaseHead title={(preTitle) ? `${preTitle}${title}` : title} description={description} image={optimizedHeroImage.src} />
+		<BaseHead title={(preTitle) ? `${preTitle}${title}` : title} description={description} image={props.heroImage && optimizedHeroImage.src} />
 	</head>
 
 	<body>
