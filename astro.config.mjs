@@ -7,7 +7,6 @@ import expressiveCode from "astro-expressive-code";
 
 // https://astro.build/config
 export default defineConfig({
-  outDir: "./docs",
   site: 'https://colyseus.io',
   compressHTML: true,
   integrations: [expressiveCode(), mdx(), sitemap(), tailwind(), react()],
