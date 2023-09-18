@@ -15,6 +15,6 @@ const post = Astro.props;
 const { Content } = await post.render();
 ---
 
-<BlogPost slug={post.slug} {...post.data} isSuccessStories={true} footerSection="success-stories">
+<BlogPost preTitle="Sucess Stories: " slug={post.slug} {...post.data} isSuccessStories={true} footerSection="success-stories">
 	<Content />
 </BlogPost>

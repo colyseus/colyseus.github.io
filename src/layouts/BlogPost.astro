@@ -10,12 +10,13 @@ import ColyseusCloudSection from '../components/ColyseusCloudSection.astro';
 import JoinCommunitySection from '../components/JoinCommunitySection.astro';
 
 type Props = CollectionEntry<'blog'>['data'] & {
+  preTitle?: string;
   footerSection?: "colyseus-cloud" | "community" | "success-stories"
   isSuccessStories?: boolean;
 };
 
 const props = Astro.props;
-const { title, description, pubDate, updatedDate, slug } = props;
+const { preTitle, title, description, pubDate, updatedDate, slug } = props;
 const footerSection = props.footerSection || "colyseus-cloud";
 
 const author_img = props.author_img || (props.author === "Endel Dreyer" && "https://avatars.githubusercontent.com/u/130494?v=4");
@@ -29,7 +30,7 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
 
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+		<BaseHead title={(preTitle) ? `${preTitle}${title}` : title} description={description} image={optimizedHeroImage.src} />
 	</head>
 
 	<body>

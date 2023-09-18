@@ -7,16 +7,18 @@ import SponsorsSection from '../components/SponsorsSection.astro';
 import { communityLibrary } from '../indexes/community';
 import TitleSection from '../components/TitleSection.astro';
 import ContentItems from '../components/ContentItems.astro';
+
+const subtitle = "Exchange ideas, share knowledge, connect and learn from like-minded people within the Colyseus Community.";
 ---
 
-<MainLayout isHeaderExpanded={true} isBlue={true}>
+<MainLayout title="Community" description={subtitle} isHeaderExpanded={true} isBlue={true}>
   <section id="hero" class="text-gray-200">
     <div class="container mx-auto px-6 text-center py-10">
       <div>
 
         <div class="py-14 md:py-20 animate-from-top-fade">
           <h1 class="text-5xl font-medium">Join the Colyseus Community!</h1>
-          <p class="mt-4 text-slate-300">Exchange ideas, share knowledge, connect and learn from like-minded people within the Colyseus Community.</p>
+          <p class="mt-4 text-slate-300">{subtitle}</p>
         </div>
 
         <div class="space-x-2 md:space-x-4 text-center">

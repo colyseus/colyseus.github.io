@@ -7,9 +7,11 @@ import ColyseusCloudSection from '../components/ColyseusCloudSection.astro';
 import SuccessStoriesSection from '../components/SuccessStoriesSection.astro';
 import JoinCommunitySection from '../components/JoinCommunitySection.astro';
 import Platforms, { platforms } from '../components/Platforms.astro';
+
+const subtitle = "Own your authoritative game servers. Versatile for any genre or platform.";
 ---
 
-<MainLayout isHeaderExpanded={false}>
+<MainLayout title="Free and Open-source Multiplayer Framework" description={subtitle} isHeaderExpanded={false}>
   <section class="text-gray-200 relative">
     <video autoplay muted loop class="absolute h-[50vh] md:h-[98vh] w-full m-auto top-0 bottom-0 -z-10 bg-gray-400">
       <source src="/images/background/video.mp4" type="video/mp4">
@@ -23,7 +25,7 @@ import Platforms, { platforms } from '../components/Platforms.astro';
               <span class="text-lg md:text-4xl tracking-tight text-gray-300 inline-block mb-2 md:mb-0">Free and Open-source</span> <br/>
               <span class="gradient-text">Multiplayer Framework</span>
             </h1>
-            <p class="text-base md:text-xl inline-block mt-1 md:mt-0">Own your authoritative game servers. Versatile for any genre or platform.</p>
+            <p class="text-base md:text-xl inline-block mt-1 md:mt-0">{subtitle}</p>
           </div>
 
           <div class="p-1 relative flex flex-row w-full justify-center animate-from-bottom-fade">

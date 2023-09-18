@@ -10,7 +10,7 @@ const posts = (await getCollection('blog')).sort(
 	(a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate)
 );
 ---
-<MainLayout>
+<MainLayout title="Blog">
   <TitleSection>
     Blog
     <!-- <p class="font-sans text-lg font-normal text-gray-500 mt-2">xxx</p> -->

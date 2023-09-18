@@ -10,11 +10,13 @@ import JoinCommunitySection from '../../components/JoinCommunitySection.astro';
 const successStories = (await getCollection('success-stories')).sort(
 	(a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate)
 );
+
+const subtitle = "Inspirational interviews with people thriving with Colyseus";
 ---
-<MainLayout>
+<MainLayout title="Success stories" description={subtitle}>
   <TitleSection>
     Success Stories
-    <p class="font-sans text-lg font-normal text-gray-500 mt-2">Weekly inspirational interviews with people thriving with Colyseus</p>
+    <p class="font-sans text-lg font-normal text-gray-500 mt-2">{subtitle}</p>
   </TitleSection>
 
   <section class="container m-auto px-6 pb-32 animate-from-bottom-fade">
