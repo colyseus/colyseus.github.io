@@ -36,6 +36,10 @@ jobs:
         run: |
           npm run build
           npm run build-sponsors
+        env:
+          SPONSORKIT_GITHUB_TOKEN: ${{ secrets.SPONSORS_TOKEN }}
+          SPONSORKIT_GITHUB_LOGIN: endel
+          SPONSORKIT_PATREON_TOKEN: ${{ secrets.SPONSORKIT_PATREON_TOKEN }}
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v1
