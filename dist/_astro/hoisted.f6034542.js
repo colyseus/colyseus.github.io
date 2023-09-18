@@ -1,0 +1,1 @@
+import"./hoisted.11586799.js";const c=document.getElementById("clipboard-click"),e=c.querySelector("span");let t=null;c.addEventListener("click",()=>{navigator.clipboard.writeText("npm create colyseus-app@latest ./my-server"),clearTimeout(t),e.dataset.clicked="yes",t=setTimeout(()=>e.dataset.clicked="no",1e3)});
