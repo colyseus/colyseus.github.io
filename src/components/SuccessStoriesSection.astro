@@ -8,10 +8,10 @@ const successStories = (await getCollection('success-stories')).sort(
 ---
 
 <section class="bg-gray-100 text-gray-700 text-center border-b border-solid border-gray-300">
-  <div class="container mx-auto px-6 relative py-14 px-4 md:px-0">
-    <h2 class="text-lg md:text-xl font-medium text-gray-500 uppercase tracking-widest">Trusted and Loved by Indies and Studios Worldwide</h2>
+  <div class="container mx-auto px-6 relative py-14 px-4 lg:px-0">
+    <h2 class="text-lg lg:text-xl font-medium text-gray-500 uppercase tracking-widest">Trusted and Loved by Indies and Studios Worldwide</h2>
 
-    <div class="text-left md:text-center grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-6 justify-center items-center my-12 text-sm">
+    <div class="text-left lg:text-center grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-6 justify-center items-center my-12 text-sm">
       {successStories.filter((story) => story.data.author_img && story.data.quote).map((story, i) => (
         <TestimonialEntry {...story.data} href={(story.data.published) ? `/success-stories/${story.slug}/` : "/success-stories"} />
       ))}

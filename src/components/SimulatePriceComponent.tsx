@@ -176,7 +176,7 @@ export default function SimulatePriceComponent({title = "Pricing Simulator"}) {
           </select>
         </div>
 
-        <div className="space-y-1 text-sm md:text-base">
+        <div className="space-y-1 text-sm lg:text-base">
           <span className="font-semibold block">Scale strategy</span>
 
           <div>
@@ -218,7 +218,7 @@ export default function SimulatePriceComponent({title = "Pricing Simulator"}) {
 
       {(selectedPlan)
         ? <div className="pt-2">
-            <div className="text-xs md:text-base col-span-2 text-sm text-slate-100 bg-gray-600 rounded-xl p-4 ">
+            <div className="text-xs lg:text-base col-span-2 text-sm text-slate-100 bg-gray-600 rounded-xl p-4 ">
               <label className="inline-block text-white font-medium mb-1">Capacity estimation</label>
               <p className="capacity-estimation" data-template="">
 
