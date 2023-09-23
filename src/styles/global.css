@@ -112,7 +112,6 @@ p a:hover { @apply text-purple-700 underline; }
 article a:active,
 p a:active {  @apply text-purple-800;}
 article hr { @apply my-8; }
-article iframe { @apply my-4; }
 article blockquote { @apply text-lg border-l-4 border-gray-800 bg-gray-50 px-4 py-2 my-4 italic; }
 
 /** Animations **/
