@@ -2,6 +2,8 @@
 import { getOpenGraph } from "../utils/getOpenGraphImage";
 
 export const communityLibrary = [
+  await getOpenGraph("https://github.com/sunflower-land/sunflower-land", {}),
+
   await getOpenGraph("https://github.com/keldaanCommunity/pokemonAutoChess", {
     // title: "Protocol Buffers Message Exchange",
     // description: "Demonstrating Raw Binary Message Exchange"
