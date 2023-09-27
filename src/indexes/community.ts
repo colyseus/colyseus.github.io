@@ -6,6 +6,7 @@ export const communityLibrary = [
   await getOpenGraph("https://github.com/sunflower-land/sunflower-land", {}),
   await getOpenGraph("https://github.com/keldaanCommunity/pokemonAutoChess", { }),
   await getOpenGraph("https://github.com/orion3dgames/t5c", { }),
+  await getOpenGraph("https://github.com/posixpascal/geofind", { }),
   await getOpenGraph("https://github.com/halftheopposite/TOSIOS", { }),
   await getOpenGraph("https://github.com/damian-pastorini/reldens", { }),
   await getOpenGraph("https://github.com/stopnoanime/21-online", { }),
