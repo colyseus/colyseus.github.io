@@ -1,0 +1,59 @@
+---
+title: "Product update: Horizontal Scalability (beta)"
+description: "Introducing horizontal scalability and custom domain names."
+pubDate: "Oct 30 2023"
+author: "Endel Dreyer"
+heroImage: "../../../assets/blog/003-colyseus-cloud-october-update/hero.png"
+---
+import { Image } from 'astro:assets';
+import customDomainScreenshot from "../../../assets/blog/003-colyseus-cloud-october-update/custom-domain-name.png";
+import horizontalScalabilityScreenshot from "../../../assets/blog/003-colyseus-cloud-october-update/horizontal-scalability.png";
+import colyseusCloudSubscribers from "../../../assets/blog/003-colyseus-cloud-october-update/colyseus-cloud-subscribers.png";
+
+Today I'm excited to announce two new features of Colyseus Cloud: **horizontal scalability** and **custom domain names**!
+
+## Horizontal Scalability
+
+Introduced the option to switch the "scale mode" between **single instance** and **cluster** when creating or upgrading a deployment location.
+
+In **cluster** mode, you can specify the number of instances that will manage the location's load.
+
+<div class="mt-2 mb-6">
+  <Image class="rounded block" src={horizontalScalabilityScreenshot} alt="Horizontal Scalability Screenshot" />
+</div>
+
+In this initial version, the addition and removal of instances must be performed manually.
+
+We will be improving this feature over time. The plan is to enable automatic addition and removal of instances based on custom criteria, such as the number of spawned rooms, connected clients, CPU usage percentage, and more.
+
+## Custom Domain Names
+
+Introduced the option for you to use your own domain name when creating a new application on Colyseus Cloud.
+
+<div class="mt-2 mb-6">
+  <Image class="rounded" src={customDomainScreenshot} alt="Custom Domain Screenshot" />
+</div>
+
+Currently, this feature is only compatible with domains managed by [Cloudflare](https://www.cloudflare.com/application-services/products/dns/), which offers a generous free tier.
+
+### Other updates worth mentioning
+
+- Introduced an experimental <span class="bg-gray-100 p-1.5 rounded">`npx @colyseus/cloud logs`</span> command, which allows you to tail the logs of your live application from the command line.
+- Allow to re-generate the "deploy key" from the application's settings.
+- Allow to manually restart your instances from the "logs" page.
+- Allow to switch the git remote of your deployments.
+- Fixed issue when trying to deploy after a "force push" to git.
+
+---
+
+## We're slowly growing towards sustainability!
+
+I would like to express my gratitude to all the early subscribers who placed their trust in Colyseus Cloud, as well as to the individuals sponsoring the project on GitHub. 💖
+
+<Image class="rounded" src={colyseusCloudSubscribers} alt="Colyseus Cloud Active Subscribers" />
+
+I'm very hopeful for the future. Despite the framework's many years of existence, it feels like we're just getting started!
+
+---
+
+The priorities of the project are available in the [public roadmap](https://github.com/colyseus/colyseus/wiki/Public-Roadmap). If you have any feedback or suggestion, please feel free to reach out to me on [endel@colyseus.io](mailto:endel@colyseus.io), [Discord](http://chat.colyseus.io/) or [X/Twitter](https://twitter.com/endel).
