@@ -2,6 +2,7 @@
 import { getOpenGraph } from "../utils/getOpenGraphImage";
 
 export const communityLibrary = [
+  await getOpenGraph("https://github.com/deniztraka/dtworldz.multiplayer-turn-based-strategy", {}),
   await getOpenGraph("https://portal.gitnation.org/contents/building-team-thinking-games-at-synthesis", {}),
   await getOpenGraph("https://www.youtube.com/watch?v=9QtQ5iXj2U0", {}),
   await getOpenGraph("https://github.com/sunflower-land/sunflower-land", {}),
