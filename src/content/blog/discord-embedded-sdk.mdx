@@ -1,0 +1,83 @@
+---
+title: "Discord's new Embedded App SDK - How Colyseus fits in?"
+description: "Discord is expanding its gaming capabilities"
+pubDate: "Mar 25 2024"
+author: "Endel Dreyer"
+heroImage: "../../../assets/blog/discord-embedded-sdk.png"
+---
+import { Image } from 'astro:assets';
+import videoPreview from "../../../assets/blog/discord-embedded-sdk-video.png";
+import reactColyseus from "../../../assets/blog/discord-embedded-sdk-react-colyseus.gif";
+import webgameTemplate from "../../../assets/blog/discord-embedded-sdk-webgame-template.png";
+import urlMappings from "../../../assets/blog/discord-embedded-sdk-url-mappings.png";
+
+### Discord & The Embedded App SDK
+
+Discord has long been the go-to platform for communication and community building among game developers & players.
+
+Now, with the introduction of the [Embedded App SDK](https://discord.com/build/embedded-app-sdk), Discord is taking its gaming capabilities to the next level by allowing developers to create multiplayer activities (HTML5 games) that can be played directly within the Discord interface, via an iframe.
+
+<div class="mx-auto mt-6 mb-12 w-sm w-full lg:w-2/3 text-center text-gray-600 ">
+  <a href="https://youtu.be/YJyX6L93nB0?si=cYO0YSWXuSIKLL2C&t=197">
+    <Image src={videoPreview} class="rounded" alt="Matt Hova and Colin Loretz" />
+  </a>
+  <p class="text-sm p-3 italic">Watch in full **Introducing the Embedded App SDK** presentation with Matt Hova and Colin Loretz</p>
+</div>
+
+---
+
+### Example: React Colyseus
+
+The [_"React Colyseus Example"_](https://github.com/discord/embedded-app-sdk/tree/main/examples/react-colyseus) project made by the Discord team showcases how Colyseus can be used to power multiplayer games within a Discord Activity.
+
+In this demo, the Embedded App SDK is used to detect whether the user starts talking, or stops talking, and the game state is updated accordingly.
+
+<div class="mx-auto mt-6 mb-12 w-sm w-full lg:w-2/3 text-center text-gray-600 ">
+  <a href="https://github.com/discord/embedded-app-sdk/tree/main/examples/react-colyseus">
+    <Image src={reactColyseus} class="rounded" alt="React Colyseus Demonstration Project" />
+  </a>
+  <p class="text-sm p-3 italic">See the [React Colyseus Example Project](https://github.com/discord/embedded-app-sdk/tree/main/examples/react-colyseus)</p>
+</div>
+
+In short, in this demo, Colyseus make it seamless to:
+
+- Group players together in a game room, based on the `channelId` they are in.
+- Synchronize the game state between all players in real-time
+
+---
+
+### Example: Webgame Template
+
+The [Colyseus Webgame Template](https://github.com/colyseus/webgame-template) has been updated to support the Embedded App SDK.
+
+When launched via a Discord Activity, this demo will sign-in the user with Discord to identify its username and be able to store their score in the leaderboard.
+
+Users that join [directly from the website](https://us-lax-af65ebed.colyseus.dev/) are matched together in the same game room.
+
+<div class="mx-auto mt-6 mb-12 w-sm w-full lg:w-2/3 text-center text-gray-600 ">
+  <a href="https://github.com/colyseus/webgame-template">
+    <Image src={webgameTemplate} class="rounded b-1" alt="React Colyseus Demonstration Project" />
+  </a>
+  <p class="text-sm p-3 italic">Colyseus [Webgame Template](https://github.com/colyseus/webgame-template) project</p>
+</div>
+
+---
+
+### iframes, Content Security Policies and URL Mappings
+
+One of the key highlights of the Embedded App SDK is its sandboxed environment - your app resides within a designated _"discordsays.com"_ URL and is loaded via an iframe.
+
+If your game requires access to external URLs or services, configuring ["URL Mappings"](https://discord.com/developers/docs/activities/development-guides#url-mapping) via the app's developer portal is a must:
+
+<div class="mx-auto mt-6 mb-12 w-sm w-full lg:w-2/3 text-center text-gray-600 ">
+  <a href="https://github.com/colyseus/webgame-template">
+    <Image src={urlMappings} class="rounded b-1" alt="Discord Developer Portal: URL Mappings" />
+  </a>
+  <p class="text-sm p-3 italic">Discord Developer Portal → "Your App Name" → Activities → URL Mappings</p>
+</div>
+
+Discord will act as a proxy for all requests made from your app, ensuring that the Content Security Policy (CSP) is enforced and that your app is secure.
+
+---
+
+_The Embedded App SDK is currently in developer preview and has a few limitations. Soon Discord is going to introduce Discovery and Monetization options as well._
