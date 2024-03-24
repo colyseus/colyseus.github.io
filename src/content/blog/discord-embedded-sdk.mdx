@@ -15,7 +15,7 @@ import urlMappings from "../../../assets/blog/discord-embedded-sdk-url-mappings.
 
 Discord has long been the go-to platform for communication and community building among game developers & players. It provides the social layer where people hang out before, during, and after games.
 
-Now, with the introduction of the [Embedded App SDK](https://discord.com/build/embedded-app-sdk), Discord is soon becoming a publishing option by allowing developers to create multiplayer activities (HTML5 games) that can be played directly within the Discord interface, via an iframe.
+Now, with the introduction of the [Embedded App SDK](https://discord.com/build/embedded-app-sdk), Discord has the potential to become a viable publishing platform for your HTML5 multiplayer games. This SDK enables developers to seamlessly integrate their experiences directly within the Discord app via an iframe.
 
 <div class="mx-auto mt-6 mb-12 w-sm w-full lg:w-2/3 text-center text-gray-600 ">
   <a href="https://youtu.be/YJyX6L93nB0?si=cYO0YSWXuSIKLL2C&t=197">
@@ -30,7 +30,7 @@ Now, with the introduction of the [Embedded App SDK](https://discord.com/build/e
 
 The [_"React Colyseus Example"_](https://github.com/discord/embedded-app-sdk/tree/main/examples/react-colyseus) project made by the Discord team showcases how Colyseus can be used to power multiplayer games within a Discord Activity.
 
-In this demo, the Embedded App SDK is used to detect whether the user starts talking, or stops talking, and the game state is updated accordingly.
+In this demo, the Embedded App SDK is used to detect whether the user starts or stops talking, and the game state is updated accordingly.
 
 <div class="mx-auto mt-6 mb-12 w-sm w-full lg:w-2/3 text-center text-gray-600 ">
   <a href="https://github.com/discord/embedded-app-sdk/tree/main/examples/react-colyseus">
@@ -65,7 +65,7 @@ Users that join [directly from the website](https://us-lax-af65ebed.colyseus.dev
 
 ### iframes, Content Security Policies and URL Mappings
 
-One of the key highlights of the Embedded App SDK is its sandboxed environment - your app resides within a designated _"discordsays.com"_ URL and is loaded via an iframe.
+One of the key highlights of the Discord Activities is its sandboxed environment - your app resides within a designated _"discordsays.com"_ URL and is loaded via an iframe.
 
 If your game requires access to external URLs or services, configuring ["URL Mappings"](https://discord.com/developers/docs/activities/development-guides#url-mapping) via the app's developer portal is a must:
 
