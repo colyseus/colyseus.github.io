@@ -1,7 +1,7 @@
-
 import { getOpenGraph } from "../utils/getOpenGraphImage";
 
 export const communityLibrary = [
+  await getOpenGraph("https://github.com/tejaboy/discord-kaboom-colyseus", {}),
   await getOpenGraph("https://github.com/sominator/HackerBattles", {}),
   await getOpenGraph("https://github.com/deniztraka/dtworldz.multiplayer-turn-based-strategy", {}),
   await getOpenGraph("https://portal.gitnation.org/contents/building-team-thinking-games-at-synthesis", {}),
