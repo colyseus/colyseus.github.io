@@ -28,4 +28,6 @@ export const allContributors: string[] = Array(80);
 export const today = new Date().toISOString().split("T")[0];
 export const npmDownloadCount = await fetch(`https://npm-stat.com/api/download-counts?package=colyseus&from=2015-11-22&until=${today}`)
   .then(res => res.json())
-  .then((data) => Object.values<number>(data.colyseus).reduce((a, b) => a + b, 0));
+  .then((data) => Object.values<number>(data.colyseus).reduce((a, b) => a + b, 0))
+  .catch((e) => console.error(e))
+  .then(() => 759000);

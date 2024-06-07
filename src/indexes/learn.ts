@@ -1,6 +1,11 @@
 import { getOpenGraph } from "../utils/getOpenGraphImage";
 
 export const sampleProjects = [
+
+  await getOpenGraph("https://github.com/colyseus/discord-embedded-app-sdk", {
+    title: "Discord Activity Template"
+  }),
+
   await getOpenGraph("https://github.com/colyseus/colyseus-examples", {
     title: "Basic Examples"
   }),

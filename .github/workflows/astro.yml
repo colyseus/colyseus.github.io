@@ -31,10 +31,15 @@ jobs:
         run: |
           npm install
 
-      - name: Build
+      - name: Astro Build
         shell: "bash"
         run: |
           npm run build
+
+      - name: Build Tutorials (tutomd)
+        shell: "bash"
+        run: |
+          npm run build:tutorials
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v1
