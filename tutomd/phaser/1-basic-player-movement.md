@@ -213,7 +213,7 @@ export class GameScene extends Phaser.Scene {
       console.log("Joining room...");
 
       try {
-        this.room = await client.joinOrCreate("my_room");
+        this.room = await this.client.joinOrCreate("my_room");
         console.log("Joined successfully!");
 
       } catch (e) {
