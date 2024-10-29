@@ -2,12 +2,12 @@ import { getOpenGraph } from "../utils/getOpenGraphImage";
 
 export const sampleProjects = [
 
-  await getOpenGraph("https://github.com/colyseus/discord-embedded-app-sdk", {
-    title: "Discord Activity Template"
-  }),
-
   await getOpenGraph("https://github.com/colyseus/colyseus-examples", {
     title: "Basic Examples"
+  }),
+
+  await getOpenGraph("https://github.com/colyseus/discord-embedded-app-sdk", {
+    title: "Discord Activity Template"
   }),
 
   await getOpenGraph("https://github.com/endel/colyseus-tic-tac-toe", {
@@ -28,6 +28,10 @@ export const sampleProjects = [
   await getOpenGraph("https://github.com/endel/colyseus-0.15-protocol-buffers", {
     title: "Protocol Buffers Message Exchange",
     description: "Demonstrating Raw Binary Message Exchange"
+  }),
+
+  await getOpenGraph("https://github.com/colyseus/kaplay", {
+    title: "KAPLAY + Colyseus - Sample App"
   }),
 
   await getOpenGraph("https://github.com/colyseus/decentraland", {
