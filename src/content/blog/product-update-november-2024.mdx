@@ -1,0 +1,115 @@
+---
+title: "Product Update: Colyseus Cloud 2024"
+description: "Improved alerting & monitoring system, rolling updates, and more!"
+pubDate: "Nov 14 2024"
+author: "Endel Dreyer"
+heroImage: "../../../assets/blog/004-product-update-2024/hero.png"
+---
+import { Image } from 'astro:assets';
+import alertingMonitoring from "../../../assets/blog/004-product-update-2024/alerting-monitoring.png";
+import slackAlertDeploy from "../../../assets/blog/004-product-update-2024/slack-alert-deploy.png";
+import slackAlertCPU from "../../../assets/blog/004-product-update-2024/slack-alert-cpu.png";
+import slackAlertShutdown from "../../../assets/blog/004-product-update-2024/slack-alert-shutdown.png";
+import deployGraphs from "../../../assets/blog/004-product-update-2024/deploy-graphs.png";
+import processShutDown from "../../../assets/blog/004-product-update-2024/process-shutdown.gif";
+import mascots from "../../../assets/blog/004-product-update-2024/mascots.png";
+
+We've been hard at work this year to improve both the Colyseus Framework and Colyseus Cloud platform. Here are some of the highlights of the latest updates:
+
+## Alerting & Monitoring System
+
+Now you can set up alerts for your applications and receive notifications via **Email**, **Discord** or **Slack** when something goes off. The monitoring system has been improved to provide more insights into your application's performance.
+
+<div class="mt-2 mb-6">
+  <Image class="rounded block" src={alertingMonitoring} alt="Monitoring and Alerting" />
+</div>
+
+The alert types currently available are:
+
+- Deployment success / failure
+- Ungraceful restart (e.g. when the server crashes)
+- CPU or Memory Threshold Exceeded
+- Failure to Health Check (e.g. when the server is not responding)
+
+<div class="mx-auto mt-6 mb-12 w-sm w-full lg:w-5/6 text-center text-gray-600">
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full  justify-between">
+    <div class="my-auto">
+      <a href={slackAlertDeploy.src} target="_blank"><Image class="rounded" src={slackAlertDeploy} alt="Alert on new deployments" /></a>
+    </div>
+    <div class="my-auto">
+      <a href={slackAlertShutdown.src} target="_blank"><Image class="rounded" src={slackAlertShutdown} alt="Alert on Ungraceful Shutdown" /></a>
+    </div>
+    <div class="my-auto">
+      <a href={slackAlertCPU.src} target="_blank"><Image class="rounded" src={slackAlertCPU} alt="Alert on CPU Threshold" /></a>
+    </div>
+  </div>
+  <p class="text-sm p-3 italic">Examples of alerts delivered via **Slack**.</p>
+</div>
+
+## Rolling updates & Graceful Shutdown
+
+With the recent improvement on [Graceful Shutdown](https://docs.colyseus.io/server/graceful-shutdown/) process with the introduction of [`room.onBeforeShutdown()`](https://docs.colyseus.io/server/room/#onbeforeshutdown) - you can now deploy new versions of your application without disconnecting your players.
+
+```typescript
+onBeforeShutdown() {
+    //
+    // Notify users that process is shutting down, they may need to save their
+    // progress and join a new room
+    //
+    this.broadcast("going-down", "Server will shut down!");
+
+    //
+    // Disconnect all clients after 5 minutes
+    //
+    this.clock.setTimeout(() => this.disconnect(), 5 * 60 * 1000);
+}
+```
+
+{/* TODO: REMOVE THIS */}<div>&nbsp;</div>
+
+This change brings several advantages to your application:
+
+- Ensure that all clients can safely finish their sessions.
+- No downtime during deployments.
+
+<div class="mx-auto mt-6 mb-12 w-sm w-full lg:w-5/6 text-center text-gray-600">
+  <Image class="rounded mx-auto" src={processShutDown} alt="Alert on CPU Threshold" />
+  <p class="text-sm p-3 italic">Shutting-down processes are displayed blinking in red on the Stats and Logs page.</p>
+</div>
+
+> This feature is not enabled by default as we're still gathering feedback for potential improvement. If you're interested in trying it out, please reach out to enable in your Colyseus Cloud application.
+
+## Stats Page Improvements
+
+- New deployments are now displayed as a green annotation on the graphs.
+- The frequency of updates on the Stats page has been increased to **every minute**.
+
+<div class="mt-2 mb-6">
+  <Image class="rounded" src={deployGraphs} alt="Deployment on graphs" />
+</div>
+
+## Meet Valerya and Gladius!
+
+We've got brand-new mascots for Colyseus! Meet Valerya and Gladius, the guardians of your multiplayer games.
+
+<div class="mt-2 mb-6">
+  <Image class="rounded" src={mascots} alt="Valerya & Gladius" />
+</div>
+
+Aren't they cute? 😍
+
+---
+
+### Version 0.16 is coming soon!
+
+Version `0.16` is [around the corner](https://github.com/colyseus/colyseus/pull/745), and is going to bring several improvements to the framework - the highlights are:
+
+- Introduction of the **`StateView`** - allowing to filter out portions of the state per client.
+- Improvements to **`@colyseus/schema`** - making it more composable and easier to use.
+- Experimental WebTransport support.
+
+---
+
+The Colyseus Framework aims to reach version `1.0` in 2026. The priorities of the project are available in the [public roadmap](https://github.com/colyseus/colyseus/wiki/Public-Roadmap).
+
+If you have any feedback or suggestion, please feel free to reach out to me on [endel@colyseus.io](mailto:endel@colyseus.io), [Discord](http://chat.colyseus.io/) or [X/Twitter](https://twitter.com/endel).
