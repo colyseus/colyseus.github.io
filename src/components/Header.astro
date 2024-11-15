@@ -158,6 +158,13 @@ const { isExpanded = true, isBlue = false, } = Astro.props;
   </nav>
 </header>
 
+<script is:inline>
+  const mobileMenu = document.getElementById('mobile-menu');
+  const mobileMenuOpen = document.getElementById('mobile-menu-open');
+  const mobileMenuClose = document.getElementById('mobile-menu-close');
+  mobileMenuOpen.addEventListener('click', () => { mobileMenu.classList.remove('hidden'); });
+  mobileMenuClose.addEventListener('click', () => { mobileMenu.classList.add('hidden'); });
+</script>
 
 {(isExpanded)
   ? <div class="block pb-20"></div>
@@ -174,10 +181,4 @@ const { isExpanded = true, isBlue = false, } = Astro.props;
       }
       window.addEventListener('scroll', onScroll);
       onScroll();
-
-      const mobileMenu = document.getElementById('mobile-menu');
-      const mobileMenuOpen = document.getElementById('mobile-menu-open');
-      const mobileMenuClose = document.getElementById('mobile-menu-close');
-      mobileMenuOpen.addEventListener('click', () => { mobileMenu.classList.remove('hidden'); });
-      mobileMenuClose.addEventListener('click', () => { mobileMenu.classList.add('hidden'); });
     </script> }
