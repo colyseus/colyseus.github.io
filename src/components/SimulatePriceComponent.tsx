@@ -22,7 +22,7 @@ function DeploymentLocation(props: AddedLocation) {
   );
 }
 
-export default function SimulatePriceComponent({title = "Pricing Simulator"}) {
+export default function SimulatePriceComponent({ title = "Pricing Simulator" }) {
   const [tierNames, setTierNames] = useState<any>([]);
   const [plans, setPlans] = useState<any>([]);
 
@@ -131,12 +131,12 @@ export default function SimulatePriceComponent({title = "Pricing Simulator"}) {
 
   return (
     <div>
-      <h1 className="text-3xl text-center">{title}</h1>
+      {(title && <h1 className="text-3xl text-center">{title}</h1>)}
 
       <div className="flex flex-col mt-4 space-y-4">
         <div className="space-y-1">
           <span className="font-semibold block">Location</span>
-          <select className="border p-3 rounded" onChange={onChangeLocation} placeholder="Select a location" value={selectedLocation}>
+          <select className="border p-3 rounded text-slate-900" onChange={onChangeLocation} placeholder="Select a location" value={selectedLocation}>
             <option className="hidden" value="">Select a location</option>
             {Object.keys(regions).map((region_code: any) => (
               <optgroup key={region_code} label={regions[region_code]} >
@@ -154,7 +154,7 @@ export default function SimulatePriceComponent({title = "Pricing Simulator"}) {
 
         <div className="space-y-1">
           <span className="font-semibold block">Plan</span>
-          <select disabled={!selectedLocation} className="border p-3 rounded disabled:bg-gray-100" onChange={onChangePlan} value={selectedPlan} placeholder="Select plan">
+          <select disabled={!selectedLocation} className="border p-3 rounded disabled:bg-gray-100 text-slate-900" onChange={onChangePlan} value={selectedPlan} placeholder="Select plan">
             {(selectedLocation)
               ? Object.keys(tierNames).map((tierName: any) => (
                   <optgroup key={tierName} label={tierName}>
