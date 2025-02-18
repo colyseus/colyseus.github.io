@@ -1,0 +1,97 @@
+---
+title: "Colyseus 0.16 is here!"
+description: "Introducing StateView. Experimental WebTransport support, and more."
+pubDate: "Feb 18 2025"
+author: "Endel Dreyer"
+heroImage: "../../../assets/blog/pattern-bg.png"
+---
+import { Image } from 'astro:assets';
+import newDocsImg from "../../../assets/blog/0.16/docs.png";
+
+I'm thrilled to share version 0.16 of Colyseus is here! 🎉
+
+This version brings a new iteration of the `@colyseus/schema` library, introducing the `StateView` API, deprecating `@filter()`, and providing quality of life improvements to the framework.
+
+### Introducing `StateView` ✨
+
+The `StateView` is the new way to filter data per client. It replaces the `@filter()` and `@filterChildren()` decorators, allowing you to create a "view" that can be used to manually add or remove items visible only to a particular client.
+
+It is still not recommended to rely on `StateView` for big datasets, as it is not optimized for that yet. However, it is a great way to filter data per client, such as "private fields" per schema instance, "level of detail", area-based, team-owned data, and more.
+
+See [`StateView` 📚](https://docs.colyseus.io/state/view) for more.
+
+### Documentation has been reworked 🎉
+
+The documentation got a brand new look, and got restructured, which is now easier to extend and navigate.
+
+<div class="mt-2 mb-6">
+  <a href="https://docs.colyseus.io/">
+    <Image src={newDocsImg} class="rounded b-1" alt="New Documentation Website" />
+  </a>
+</div>
+
+> Shout out to a special page dedicated to the [Community 📚](https://docs.colyseus.io/community), where you can find open-source projects and content created by the community.
+
+### Experimental `WebTransport` support 🔌
+
+**WebTransport** is a really exciting new technology. It is built on top of the **QUIC** protocol, which uses **UDP** instead of **TCP**, and in practical terms, it allows for **unreliable delivery of messages** — which is a great fit for real-time multiplayer games.
+
+It is important for Colyseus to incorporate the new concepts that `WebTransport` brings, so we can improve its internal and external APIs to support both WebTransport and WebSockets using the same API. In this initial iteration, unreliable delivery is only supported when using `WebTransport` via the `client.sendUnreliable()` method from the client-side. We'd love to support more features in the future, such as unreliable portions of the state, even when using WebSockets.
+
+See [WebTransport 📚](https://docs.colyseus.io/server/transport/webtransport) for more.
+
+### Quality of life improvements 🛠
+
+**1.** You can now set the `state` and `patchRate` directly on the `Room` class definition, along with `maxClients` and `autoDispose` properties:
+
+```typescript
+class MyRoom extends Room {
+  state = new MyState();
+  autoDispose = false;
+  maxClients = 20;
+  patchRate = 1000 / 10; // 10 times per second
+}
+```
+
+**2.** The `onAuth` method now receives a `context` argument instead of `req`:
+
+```typescript
+class MyRoom extends Room {
+  async onAuth(client, options, context) {
+    // - context.token contains the auth token sent by the client
+    // - context.headers contains the request headers
+    // - context.ip contains the client's IP address
+  }
+}
+```
+
+Both `static` and instance `onAuth` methods are supported and receive 3 arguments. See the differences in [Room Authentication 📚](https://docs.colyseus.io/auth/room#server-side-onauth-method).
+
+**...** and more! Check out the full [0.16 Release Notes](https://github.com/colyseus/colyseus/releases/tag/0.16.0).
+
+### New, experimental encoding/decoding APIs 🔢
+
+In order to allow more flexibility and customization, new APIs have been exposed to allow you to encode/decode arbitrary structures without the need to inherit from the `Schema` class. This also allows you to customize the change tracking, encoding, and decoding at the byte level.
+
+See [Advanced Usage 📚](https://docs.colyseus.io/state/advanced-usage) for more.
+
+### Breaking changes 🚨
+
+Migrating from version `0.15` to `0.16` shouldn't take long. Here's an overview of the breaking changes:
+
+- `@filter()` and `@filterChildren()` have been removed.
+- `client.getAvailableRooms()` has been removed.
+- `matchMaker.getRoomById()` behaviour has changed.
+- Sending schema-encoded messages is now deprecated
+
+See [Upgrading to 0.16 📚](https://docs.colyseus.io/upgrading/0.16) for more details.
+
+---
+
+### The Future: Version 1.0 and Beyond 🚀
+
+I'm dedicated to keeping Colyseus **independent** and **open-source**. We're on track to [version 1.0 with a roadmap](https://docs.colyseus.io/roadmap) shaped by community feedback, addressing key issues and outlining our vision for the framework's future.
+
+A huge thank you to our vibrant community, sponsors, and Colyseus Cloud users for making this journey possible!
+
+💖 Special shoutout to [Poki](https://developers.poki.com/?utm_source=colyseus&utm_content=blog), [Pixels.xyz](https://pixels.xyz/?utm_source=colyseus&utm_content=blog), [Bloxd](https://bloxd.io/?utm_source=colyseus&utm_content=blog), [0x&](https://0xand.com/?utm_source=colyseus&utm_content=blog), and [all our supporters](https://docs.colyseus.io/sponsors) 💖
