@@ -1,6 +1,6 @@
 ```typescript
 // client.ts
-import { Client } from "colyseus.js";
+import { Client, getStateCallbacks } from "colyseus.js";
 // (...)
 
 const client = new Client("https://0.0.0.0:2567");
@@ -8,8 +8,10 @@ const room = await client.joinOrCreate("my_room", {
   /* client options */
 });
 
+const $ = getStateCallbacks(room);
+
 // on player added/join
-room.state.players.onAdd((player, sessionId) => {
+$(room.state).players.onAdd((player, sessionId) => {
   console.log("Player added!", player, sessionId);
   // on player "position" change
   player.listen("position", (position, previousPosition) => {
@@ -18,17 +20,17 @@ room.state.players.onAdd((player, sessionId) => {
 });
 
 // on player removed/left
-room.state.players.onRemove((player, sessionId) => {
+$(room.state).players.onRemove((player, sessionId) => {
   console.log("Player removed!", player, sessionId);
 });
 
 // on "board" change
-room.state.board.onChange((value, index) => {
+$(room.state.board).onChange((value, index) => {
   console.log("board item changed to", value, "at", index);
 });
 
 // on "currentTurn" change
-room.state.listen("currentTurn", (currentTurn, previousValue) => {
+$(room.state).listen("currentTurn", (currentTurn, previousValue) => {
   console.log("currentTurn:", currentTurn);
   console.log("currentPlayer:", room.state.players.get(currentTurn));
 });

@@ -4,19 +4,20 @@ import { Room } from "colyseus";
 import { MyState } from "./MyState";
 
 export class MyRoom extends Room<MyState> {
+  state = new MyState();
+
   onCreate() {
-    // Room has been created
-    this.setState(new MyState());
+    // room has been created
   }
 
   onJoin(client, options) {
-    // A client joined the room
+    // new client joined the room
     this.state.players.set(client.sessionId, new Player());
     this.state.currentTurn = client.sessionId;
   }
 
   onLeave() {
-    // A client left the room
+    // client left the room
     this.state.players.delete(client.sessionId);
   }
 }
