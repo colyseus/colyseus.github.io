@@ -47,9 +47,9 @@ See [WebTransport 📚](https://docs.colyseus.io/server/transport/webtransport) 
 ```typescript
 class MyRoom extends Room {
   state = new MyState();
+  patchRate = 1000 / 10;
   autoDispose = false;
   maxClients = 20;
-  patchRate = 1000 / 10; // 10 times per second
 }
 ```
 
