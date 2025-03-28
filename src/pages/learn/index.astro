@@ -10,6 +10,7 @@ import JoinCommunitySection from '../../components/JoinCommunitySection.astro';
 import playcanvasImage from "../../../assets/learn/playcanvas.png";
 import babylonjsImage from "../../../assets/learn/babylonjs.png";
 import phaserImage from "../../../assets/learn/phaser.png";
+import kaplayImage from "../../../assets/learn/kaplay.webp";
 
 import { sampleProjects } from '../../indexes/learn';
 import ContentItems from '../../components/ContentItems.astro';
@@ -17,6 +18,7 @@ import ContentItems from '../../components/ContentItems.astro';
 const playcanvas = await getImage({src: playcanvasImage, formats: ['webp']});
 const babylonjs = await getImage({src: babylonjsImage, formats: ['webp']});
 const phaser = await getImage({src: phaserImage, formats: ['webp']});
+const kaplay = await getImage({src: kaplayImage, formats: ['webp']});
 ---
 
 <MainLayout title="Learn">
@@ -54,6 +56,14 @@ const phaser = await getImage({src: phaserImage, formats: ['webp']});
               <span class="p-4 w-2/3">
                 <h3 class="text-lg font-medium text-gray-800">BabylonJS</h3>
                 <span class="text-gray-700">Setting up client-server communication</span>
+              </span>
+            </a>
+
+            <a class="w-full flex rounded-lg bg-gray-100 border transition-all hover:bg-gray-200 hover:border-gray-400 active:bg-gray-300 active:border-gray-500 " target="_blank" href="https://kaplayjs.com/guides/how-to-make-a-multiplayer-game-with-colyseus-and-kaplay/">
+              <span class="rounded-l-lg w-1/3 bg-cover bg-center" style=`background-image: url(${kaplay.src})`></span>
+              <span class="p-4 w-2/3">
+                <h3 class="text-lg font-medium text-gray-800">KAPLAY</h3>
+                <span class="text-gray-700">Creating an air-hockey game with KAPLAY + Colyseus</span>
               </span>
             </a>
 
