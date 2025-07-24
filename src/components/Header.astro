@@ -9,11 +9,13 @@ interface Props {
 const { isExpanded = true, isBlue = false, } = Astro.props;
 ---
 
-<div class="absolute z-[100] w-full">
-  <a href="https://youtu.be/3EEw5Sl93KE" class="block text-white bg-red-500 text-center py-2 text-sm font-medium hover:underline">
-    Watch the ✨ Colyseus Reel 2025 ✨ 
-  </a>
-</div>
+{!isExpanded && (
+  <div class="absolute z-[100] w-full">
+    <a href="https://youtu.be/3EEw5Sl93KE" class="block text-white bg-red-500 text-center py-2 text-sm font-medium hover:underline">
+      Watch the ✨ Colyseus Reel 2025 ✨
+    </a>
+  </div>
+)}
 
 <header transition:name="nav-header" class={`
     fixed w-full transition-all z-50 text-gray-200 flex center-items

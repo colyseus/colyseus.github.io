@@ -235,7 +235,7 @@ export default function SimulatePriceComponent({ title = "Pricing Simulator" }) 
 
               </p>
               <p className="text-xs mt-1 text-slate-300">
-                  * The actual capacity may be higher or lower than estimated, depending on the actual CPU usage of your room's code.
+                * Actual capacity varies based on your room's CPU usage
               </p>
             </div>
           </div>
