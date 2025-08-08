@@ -222,15 +222,15 @@ export default function SimulatePriceComponent({ title = "Pricing Simulator" }) 
               <label className="inline-block text-white font-medium mb-1">Capacity estimation</label>
               <p className="capacity-estimation" data-template="">
 
-                <span className="font-medium text-red-500">High CPU Usage</span>
+                <span className="font-medium text-red-500">Resource-Intensive App</span>
                 <span> · {getEstimation(80)}</span>
                 <br />
 
-                <span className="font-medium text-yellow-500">Moderate CPU Usage</span>
+                <span className="font-medium text-yellow-500">Moderate App</span>
                 <span> · {getEstimation(500)}</span>
                 <br />
 
-                <span className="font-medium text-green-500">Minimal CPU Usage</span>
+                <span className="font-medium text-green-500">Lightweight App</span>
                 <span> · {getEstimation(3000)}</span>
 
               </p>
