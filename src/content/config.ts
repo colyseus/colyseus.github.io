@@ -24,7 +24,7 @@ const showcase = [
   { platform: "javascript", name: "Sword Masters", image: "/images/showcase/swordmasters.png", url: "https://swordmasters.io/", author_link: "https://emolingo.games/", author: "Emolingo Games", },
 
   { platform: "javascript", name: "Cryzen.io", image: "/images/showcase/cryzen-io.jpeg", url: "https://cryzen.io/", author_link: "https://twitter.com/norberg_adel", author: "Adel Norberg" },
-  { platform: "javascript", name: "Make it Meme", image: "/images/showcase/makeitmeme.jpeg", url: "https://makeitmeme.com/", author_link: "https://prealpha.dev/", author: "prealpha", },
+  { platform: "javascript", name: "Make it Meme", image: "/images/showcase/makeitmeme.webp", url: "https://makeitmeme.com/", author_link: "https://prealpha.dev/", author: "prealpha", },
   { platform: "javascript", name: "SongTrivia2", image: "/images/showcase/songtrivia2.jpeg", url: "https://songtrivia2.io/", author_link: "https://songtrivia2.io/", author: "SongTrivia", },
 
   { platform: "javascript", name: "Kirka.io", image: "/images/showcase/kirka-io.jpeg", url: "https://kirka.io/", author_link: "https://twitter.com/development", author: "xip", },
