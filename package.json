@@ -27,6 +27,7 @@
     "astro-expressive-code": "^0.38.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0",
     "tailwindcss": "^3.3.3",
     "tutomd": "^1.0.7"
   },
