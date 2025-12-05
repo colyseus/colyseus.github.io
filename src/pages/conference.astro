@@ -1,8 +1,8 @@
 ---
 import MainLayout from '../layouts/MainLayout.astro';
-import { HiVideoCamera, HiGlobeAlt, HiChatBubbleLeftRight, HiMicrophone, HiTicket} from 'react-icons/hi2';
+import { HiVideoCamera, HiGlobeAlt, HiChatBubbleLeftRight, HiMicrophone, HiTicket, HiCube, HiRocketLaunch, HiWrenchScrewdriver, HiArrowTrendingUp, HiLightBulb } from 'react-icons/hi2';
 
-const subtitle = "A community celebration of builders and their stories.";
+const subtitle = "For the curious, and those building, releasing & operating online multiplayer games";
 ---
 
 <MainLayout title="Remote Colyseus Conference 2026" description={subtitle} image="/images/conference/fb-share.png" isHeaderExpanded={true}>
@@ -99,8 +99,8 @@ const subtitle = "A community celebration of builders and their stories.";
           {subtitle}
         </p>
 
-        <p class="text-gray-500 mt-4 max-w-xl mx-auto">
-          We're planning our first-ever online conference! Help us make it happen by signing up below.
+        <p class="text-gray-500 mt-6 max-w-2xl mx-auto leading-relaxed">
+          Whether you're already shipping games with Colyseus or exploring multiplayer development for the first time — this conference is for you. Learn from real-world case studies, discover best practices, and connect with the community.
         </p>
 
       </div>
@@ -176,6 +176,49 @@ const subtitle = "A community celebration of builders and their stories.";
     </div>
   </section>
 
+  <!-- Topics Section -->
+  <section class="bg-slate-950 text-gray-200 py-20 border-t border-slate-800/50">
+    <div class="container mx-auto px-6">
+      <h2 class="text-3xl lg:text-4xl font-semibold text-center mb-4 text-white">
+        Topics We'll Cover
+      </h2>
+      <p class="text-gray-400 text-center mb-12 max-w-2xl mx-auto">
+        Practical knowledge for building and running multiplayer games
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+        <div class="bg-slate-800/40 rounded-xl px-6 py-4 border border-slate-700/30 hover:border-violet-500/30 transition-colors flex items-center gap-2">
+          <HiCube className="text-violet-300 text-xl flex-shrink-0" />
+          <span class="text-violet-300 font-medium">Game Architecture</span>
+        </div>
+        <div class="bg-slate-800/40 rounded-xl px-6 py-4 border border-slate-700/30 hover:border-cyan-500/30 transition-colors flex items-center gap-2">
+          <HiGlobeAlt className="text-cyan-300 text-xl flex-shrink-0" />
+          <span class="text-cyan-300 font-medium">Networking & Real-time Sync</span>
+        </div>
+        <div class="bg-slate-800/40 rounded-xl px-6 py-4 border border-slate-700/30 hover:border-fuchsia-500/30 transition-colors flex items-center gap-2">
+          <HiRocketLaunch className="text-fuchsia-300 text-xl flex-shrink-0" />
+          <span class="text-fuchsia-300 font-medium">Scaling & Performance</span>
+        </div>
+        <div class="bg-slate-800/40 rounded-xl px-6 py-4 border border-slate-700/30 hover:border-amber-500/30 transition-colors flex items-center gap-2">
+          <HiWrenchScrewdriver className="text-amber-300 text-xl flex-shrink-0" />
+          <span class="text-amber-300 font-medium">DevOps & Deployment</span>
+        </div>
+        <div class="bg-slate-800/40 rounded-xl px-6 py-4 border border-slate-700/30 hover:border-green-500/30 transition-colors flex items-center gap-2">
+          <HiArrowTrendingUp className="text-green-300 text-xl flex-shrink-0" />
+          <span class="text-green-300 font-medium">Launching & Growing Your Game</span>
+        </div>
+        <div class="bg-slate-800/40 rounded-xl px-6 py-4 border border-slate-700/30 hover:border-rose-500/30 transition-colors flex items-center gap-2">
+          <HiLightBulb className="text-rose-300 text-xl flex-shrink-0" />
+          <span class="text-rose-300 font-medium">Lessons Learned & Postmortems</span>
+        </div>
+      </div>
+
+      <p class="text-gray-500 text-center mt-8 max-w-xl mx-auto">
+        Talks will focus on the <span class="text-violet-400">Colyseus Framework</span> and its ecosystem, but the insights apply to multiplayer game development in general.
+      </p>
+    </div>
+  </section>
+
   <!-- For Speakers Section -->
   <section class="bg-gradient-to-b from-slate-900 to-slate-950 text-gray-200 py-20">
     <div class="container mx-auto px-6">
@@ -187,7 +230,7 @@ const subtitle = "A community celebration of builders and their stories.";
           Share Your Story!
         </h2>
         <p class="text-gray-400 mb-8">
-          Built something awesome with Colyseus? We'd love to hear about it! Share your journey, technical breakthroughs, or lessons learned with the community.
+          Built or shipped a multiplayer game? We'd love to hear about it! Share your journey, technical breakthroughs, or lessons learned with the community — whether you used Colyseus, are exploring it, or have insights that would benefit multiplayer developers.
         </p>
 
         <div class="bg-slate-800/50 rounded-2xl p-8 border border-slate-700/50 text-left mb-8">
