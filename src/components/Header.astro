@@ -4,12 +4,15 @@ import HeaderLink from './HeaderLink.astro';
 interface Props {
   isExpanded?: boolean;
   isBlue?: boolean;
+  hasBanner?: boolean;
 }
 
-const { isExpanded = true, isBlue = false, } = Astro.props;
+const { isExpanded = true, isBlue = false } = Astro.props;
+
+const hasBanner = false;
 ---
 
-{!isExpanded && (
+{!isExpanded && hasBanner && (
   <div class="absolute z-[100] w-full">
     <a href="/gamejam" class="block text-white bg-red-500 text-center py-2 text-sm font-medium hover:underline">
       You are invited to join ✨ Colyseus Holyjam 2025 ✨
@@ -24,7 +27,9 @@ const { isExpanded = true, isBlue = false, } = Astro.props;
 <header transition:name="nav-header" class={`
     fixed w-full transition-all z-50 text-gray-200 flex center-items
     ${(!isExpanded)
-      ? " h-28 lg:h-48 bg-black/0 data-[expanded=yes]:bg-black data-[expanded=yes]:h-16 data-[expanded=yes]:lg:h-20 data-[expanded=yes]:shadow"
+      ? hasBanner
+        ? " h-28 lg:h-48 bg-black/0 data-[expanded=yes]:bg-black data-[expanded=yes]:h-16 data-[expanded=yes]:lg:h-20 data-[expanded=yes]:shadow"
+        : " h-16 lg:h-20 bg-black/0 data-[expanded=yes]:bg-black data-[expanded=yes]:h-16 data-[expanded=yes]:lg:h-20 data-[expanded=yes]:shadow"
       : " bg-black h-20 shadow"}`}
   data-expanded="no"
 >
