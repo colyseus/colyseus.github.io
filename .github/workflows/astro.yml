@@ -36,6 +36,17 @@ jobs:
         run: |
           npm run build
 
+      - name: Rename learn/phaser numbered directories to .html files
+        shell: "bash"
+        run: |
+          for dir in ./dist/learn/phaser/[0-9]-*/; do
+            if [ -d "$dir" ]; then
+              dirname=$(basename "$dir")
+              mv "$dir/index.html" "./dist/learn/phaser/${dirname}.html"
+              rm -rf "$dir"
+            fi
+          done
+
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
         with:
