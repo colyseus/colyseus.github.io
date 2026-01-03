@@ -7,11 +7,7 @@
     "start": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "build:tutorials": "npm run build:tutorial:phaser && npm run build:tutorial:babylonjs && npm run build:tutorial:playcanvas",
-    "build:tutorial:phaser": "tutomd tutomd/phaser/ --out dist/learn/phaser",
-    "build:tutorial:babylonjs": "tutomd tutomd/babylonjs/ --out dist/learn/babylonjs",
-    "build:tutorial:playcanvas": "tutomd tutomd/playcanvas/ --out dist/learn/playcanvas"
+    "astro": "astro"
   },
   "dependencies": {
     "@astrojs/mdx": "^1.0.0",
