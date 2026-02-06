@@ -1,0 +1,157 @@
+---
+title: "Colyseus 0.17 is here!"
+description: "Automatic reconnection, full-stack TypeScript safety, new defineServer() API, and more!"
+pubDate: "Feb 6 2026"
+author: "Endel Dreyer"
+heroImage: "../../../assets/blog/pattern-bg-purple.png"
+---
+import { Image } from 'astro:assets';
+import playgroundEndpointsImg from "../../../assets/blog/0.17/playground-endpoints.webp";
+import videoPreview from "../../../assets/blog/discord-embedded-sdk-video.png";
+
+I'm thrilled to share version 0.17 of Colyseus is here! 🎉
+
+This version brings **automatic reconnection**, **full-stack TypeScript safety**, a unified `defineServer()` API, and many quality of life improvements to the framework.
+
+### Automatic Reconnection ✨
+
+Handling disconnections gracefully has always been a challenge in real-time multiplayer games. With 0.17, the client SDK now supports **automatic reconnection** — preserving your callbacks and state listeners during abnormal closures, so players can seamlessly return to their session.
+
+On the server side, two new lifecycle methods make reconnection handling straightforward:
+
+```typescript
+class MyRoom extends Room {
+  async onDrop(client: Client, code: number) {
+    // flag as disconnected (player may return!)
+    this.state.players.get(client.sessionId).disconnected = true;
+    // allow reconnection for 10 seconds
+    await this.allowReconnection(client, 10);
+  }
+
+  async onReconnect(client: Client) {
+    // flag as connected (player is back!)
+    this.state.players.get(client.sessionId).disconnected = false;
+  }
+
+  async onLeave(client: Client, code: number) {
+    // delete from state (player not coming back)
+    this.state.players.delete(client.sessionId);
+  }
+}
+```
+
+`onDrop()` is triggered when a client disconnects abnormally, giving you the chance to hold their spot. If they reconnect in time, `onReconnect()` fires. If they don't, `onLeave()` takes over as usual. The client SDK also provides matching `onDrop()` and `onReconnect()` callbacks, and can skip the handshake when local state is available — making reconnection nearly instant.
+
+See [Reconnection 📚](https://docs.colyseus.io/room/reconnection) for more.
+
+### Unified `defineServer()` with Full-stack Type Safety 🔒
+
+The `new Server()` constructor and `@colyseus/tools` have been consolidated into a single, clean entry point — `defineServer()`:
+
+```typescript
+export const server = defineServer({
+  rooms: {
+    my_room: defineRoom(MyRoom),
+  },
+});
+```
+
+Because the server definition is now a typed export, your **client can import the server type directly** for end-to-end type safety across room state, messages, and HTTP routes:
+
+```typescript
+import type { server } from "../backend/src/app.config.ts";
+const client = new Client<typeof server>("http://localhost:2567");
+```
+
+This means autocompletion and type checking for room names, state structures, message types, and more — all inferred from your server definition. No more stringly-typed room joins or manual type wrangling.
+
+### New HTTP Routes & Playground 🛤️
+
+Colyseus 0.17 introduces a new API for declaring typed HTTP routes on the server side, powered by Zod for schema validation:
+
+```typescript
+import { createEndpoint, createRouter } from "colyseus";
+import { z } from "zod";
+
+const itemEndpoint = createEndpoint("/item/:id", {
+  method: "POST",
+  query: z.object({ include: z.string().optional() }),
+  body: z.object({ name: z.string() }).optional(),
+}, async (ctx) => {
+  // (...) process the request
+  return ctx.json({/* (...) response */})
+});
+
+export const server = defineServer({
+  routes: createRouter({
+    itemEndpoint,
+  }),
+});
+```
+
+As a bonus, your routes automatically get a **Playground** — a Postman-like UI that's auto-generated from your route definitions, making it easy to test and explore your API during development.
+
+<div class="mt-2 mb-6">
+  <Image src={playgroundEndpointsImg} class="rounded b-1" alt="Playground Endpoints" />
+</div>
+
+### New `Callbacks` API for TypeScript 🔄
+
+A new `Callbacks` API brings Unity-like schema callbacks to TypeScript, offering a familiar pattern for listening to state changes:
+
+```typescript
+import { Callbacks } from "@colyseus/sdk";
+
+var callbacks = Callbacks.get(room);
+
+callbacks.onAdd("players", (player, sessionId) => {
+  // player added!
+  // (...)
+
+  callbacks.onChange(player, () => {
+    // player changed
+    // (...)
+  });
+});
+
+callbacks.onRemove("players", (player, sessionId) => {
+  // player removed
+  // (...)
+});
+```
+
+### More new features & improvements 🛠
+
+- **`QueueRoom`** — A new built-in room type for [queue-based matchmaking](https://docs.colyseus.io/room/built-in/queue).
+- **Rate limiting** — New [`maxMessagesPerSecond`](https://docs.colyseus.io/room#maxmessagespersecond) option to rate-limit room messages, forcibly closing connections that exceed the threshold.
+- **[`room.ping(callback)`](https://docs.colyseus.io/sdk#on-an-active-room)** — New method for measuring round-trip latency from the client.
+- **Latency-based server selection** — New [`ColyseusSDK.selectByLatency(endpoints)`](https://docs.colyseus.io/sdk#latency--server-selection) and `sdk.getLatency()` for picking the closest server.
+- Schema **`$refId` access** — Now accessible on both client-side and server-side via `instance[$refId]`.
+- **Embedded debug inspector** — New `@colyseus/sdk/debug` module provides a realtime debug/inspector for rooms. On Unity: **Window → Colyseus → Room Inspector**.
+- **`LobbyRoom` improvements** — Fixed ghost rooms in lobby on room dispose; `.setMetadata()` now automatically calls `updateLobby()`.
+- **`.setMatchmaking()`** — Batch modify a room's matchmaking entry (`metadata`, `locked`, `maxClients`, etc.) in a single operation.
+- **Express v5 support** — Added compatibility with Express v5.
+- **`patchRate=0` fix** — Setting `patchRate=0` no longer stops `clock` intervals and timeouts from working.
+- **Experimental** — New [PostgreSQL matchmaking driver](https://docs.colyseus.io/server/driver#drizzle-driver-postgresql) and [Traefik module](https://docs.colyseus.io/scalability/traefik).
+
+### Breaking changes 🚨
+
+Migrating from version `0.16` to `0.17` shouldn't take long. Here's an overview of the breaking changes:
+
+- Room generic type changed from `Room<State, Metadata>` to `Room<{ state?, metadata?, client? }>`.
+- `onLeave(client, code)` now receives a close `code` number instead of a `consented` boolean flag.
+- `.setSeatReservationTime()` moved to a `.seatReservationTimeout` property.
+- `Protocol.WS_*` close codes moved to `CloseCode.*` (new `CloseCode.SERVER_SHUTDOWN`).
+- Room's presence pub/sub now unsubscribes automatically during `onDispose()` — no need to manually unsubscribe.
+
+See [Migrating to 0.17 📚](https://docs.colyseus.io/migrating/0.17) for more details.
+
+---
+
+### The Future: Version 1.0 and Beyond 🚀
+
+Colyseus is **independent** and **open-source** — developed and maintained by a solo indie developer, driven by the feedback, bug reports, and contributions from a passionate community. There's no venture capital or corporate backing behind this project — just a shared commitment to building the best multiplayer framework together. Your sponsorship directly funds the development of new features, bug fixes, and the path to [version 1.0](https://docs.colyseus.io/roadmap).
+
+If Colyseus powers your game or project, consider [becoming a sponsor](https://github.com/sponsors/endel) to help keep the framework thriving. Every contribution — big or small — makes a real difference and ensures Colyseus stays free, independent, and actively maintained for everyone.
+
+💖 Special shoutout to [Scorewarrior](https://scorewarrior.com/?utm_source=colyseus&utm_content=blog), [Pixels.xyz](https://pixels.xyz/?utm_source=colyseus&utm_content=blog), [Petr Kharitonov](https://github.com/peterkharitonov), [Bloxd](https://bloxd.io/?utm_source=colyseus&utm_content=blog), [Poki](https://developers.poki.com/?utm_source=colyseus&utm_content=blog), [0x&](https://0xand.com/?utm_source=colyseus&utm_content=blog), and [all our supporters](https://docs.colyseus.io/sponsors) 💖
