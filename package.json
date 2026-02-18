@@ -12,7 +12,7 @@
   "dependencies": {
     "@astrojs/mdx": "^1.0.0",
     "@astrojs/react": "^3.0.0",
-    "@astrojs/rss": "^2.4.4",
+    "@astrojs/rss": "^4.0.15",
     "@astrojs/sitemap": "^2.0.2",
     "@astrojs/tailwind": "^5.0.0",
     "@primer/octicons-react": "^19.14.0",
