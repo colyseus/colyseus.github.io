@@ -22,15 +22,15 @@ const pageDescription = description || SITE_DESCRIPTION;
 
 <!-- Global Metadata -->
 <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0" />
-<link rel="icon" type="image/svg+xml" href="/images/favicon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" type="image/png" href="/images/favicon.png" />
 <meta name="generator" content={Astro.generator} />
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
 
 <!-- Primary Meta Tags -->
-<title>Colyseus - {title}</title>
+<title>{pageTitle}</title>
 <meta name="title" content={pageTitle} />
 <meta name="description" content={pageDescription} />
 
@@ -45,18 +45,54 @@ const pageDescription = description || SITE_DESCRIPTION;
 <meta property="og:title" content={pageTitle} />
 <meta property="og:description" content={pageDescription} />
 <meta property="og:image" content={new URL(image, Astro.url)} />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:locale" content="en_US" />
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={pageTitle} />
-<meta property="twitter:description" content={pageDescription} />
-<meta property="twitter:image" content={new URL(image, Astro.url)} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@colyseus" />
+<meta name="twitter:creator" content="@colyseus" />
+<meta name="twitter:url" content={Astro.url} />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={pageDescription} />
+<meta name="twitter:image" content={new URL(image, Astro.url)} />
 
+<!-- RSS Feed -->
+<link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={new URL('/rss.xml', Astro.site)} />
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Colyseus",
+  "url": "https://colyseus.io",
+  "logo": "https://colyseus.io/images/favicon.png",
+  "description": SITE_DESCRIPTION,
+  "sameAs": [
+    "https://github.com/colyseus/colyseus",
+    "https://x.com/colyseus",
+    "https://discord.gg/RY8rRS7"
+  ]
+})} />
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Colyseus",
+  "applicationCategory": "DeveloperApplication",
+  "operatingSystem": "Cross-platform",
+  "url": "https://colyseus.io",
+  "description": SITE_DESCRIPTION,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "license": "https://opensource.org/licenses/MIT",
+  "programmingLanguage": ["JavaScript", "TypeScript"],
+  "softwareRequirements": "Node.js"
+})} />
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<!-- <link href="https://fonts.googleapis.com/css2?family=Assistant&family=Source+Sans+Pro:wght@300&display=swap" rel="stylesheet"> -->
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
