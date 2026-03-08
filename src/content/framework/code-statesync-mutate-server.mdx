@@ -3,7 +3,7 @@
 import { Room } from "colyseus";
 import { MyState } from "./MyState";
 
-export class MyRoom extends Room<MyState> {
+export class MyRoom extends Room {
   state = new MyState();
 
   onCreate() {

@@ -1,0 +1,28 @@
+```typescript
+import { Room, Client } from "colyseus";
+import { GameState, Player } from "./GameState";
+
+export class GameRoom extends Room {
+  state = new GameState();
+
+  messages = {
+    // listen for "move" messages from clients
+    move(client: Client, data: any) {
+      const player = this.state.players.get(client.sessionId);
+      if (player) {
+        player.x = data.x;
+        player.y = data.y;
+      }
+    },
+  }
+
+  onJoin(client: Client) {
+    const player = new Player();
+    this.state.players.set(client.sessionId, player); 
+  }
+
+  onLeave(client: Client) {
+    this.state.players.delete(client.sessionId);
+  }
+}
+```

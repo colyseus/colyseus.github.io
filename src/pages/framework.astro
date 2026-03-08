@@ -20,13 +20,9 @@ import CodeUnitTest from "../content/framework/code-unit-test.mdx";
 import scalabilityImage from "../../assets/diagrams/scalability.png";
 import logoDiscordjs from "../../assets/framework/logo-discordjs.png";
 import logoPlayfab from "../../assets/framework/logo-playfab.png";
-import logoPrisma from "../../assets/framework/logo-prisma.png";
 import logoFirebase from "../../assets/framework/logo-firebase.png";
 import logoMongodb from "../../assets/framework/logo-mongodb.png";
 import logoPostgres from "../../assets/framework/logo-postgres.png";
-import logoPassport from "../../assets/framework/logo-passport.png";
-import logoXsolla from "../../assets/framework/logo-xsolla.png";
-import logoSupabase from "../../assets/framework/logo-supabase.png";
 
 ---
 
@@ -84,7 +80,7 @@ import logoSupabase from "../../assets/framework/logo-supabase.png";
           </div>
 
           <div class="flex flex-col py-8 text-gray-400">
-            <Platforms />
+            <Platforms align="left" />
           </div>
 
         </div>
@@ -375,7 +371,7 @@ import logoSupabase from "../../assets/framework/logo-supabase.png";
         </div>
       </div>
 
-      <hr>
+      <hr class="border-white/5">
 
       <h2 class="text-2xl lg:text-3xl font-medium mt-16">
         Node.js ecosystem
@@ -384,15 +380,11 @@ import logoSupabase from "../../assets/framework/logo-supabase.png";
       <p class="text-sm lg:text-base mt-2 text-gray-400">Bring your favorite tools to your Colyseus server.</p>
 
       <div class="flex flex-row flex-wrap justify-center items-center gap-10 p-8 mx-auto w-full lg:w-3/4">
-        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/pg"><Image class="w-24 lg:w-36 inline-block" src={logoPostgres} alt="PostgreSQL" /></a>
-        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/mongodb"><Image class="w-24 lg:w-36 inline-block" src={logoMongodb} alt="MongoDB" /></a>
-        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/prisma"><Image class="w-24 lg:w-36 inline-block" src={logoPrisma} alt="Prisma" /></a>
-        <!-- <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/xsolla"><Image class="w-24 lg:w-36 inline-block" src={logoXsolla} alt="Xsolla" /></a> -->
-        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/discordjs"><Image class="w-24 lg:w-36 inline-block" src={logoDiscordjs} alt="Discord.js" /></a>
-        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/passport"><Image class="w-24 lg:w-36 inline-block" src={logoPassport} alt="PassportJS" /></a>
-        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/firebase-admin"><Image class="w-24 lg:w-36 inline-block" src={logoFirebase} alt="Firebase" /></a>
-        <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/playfab-sdk"><Image class="w-24 lg:w-36 inline-block" src={logoPlayfab} alt="PlayFab" /></a>
-        <!-- <a class="transition-opacity opacity-60 hover:opacity-100" href="https://www.npmjs.com/package/@supabase/supabase-js"><Image class="lg:w-48 inline-block" src={logoSupabase} alt="Firebase" /></a> -->
+        <a class="transition-opacity opacity-40 hover:opacity-80" href="https://www.npmjs.com/package/pg"><Image class="w-24 lg:w-36 inline-block brightness-0 invert" src={logoPostgres} alt="PostgreSQL" /></a>
+        <a class="transition-opacity opacity-40 hover:opacity-80" href="https://www.npmjs.com/package/mongodb"><Image class="w-24 lg:w-36 inline-block brightness-0 invert" src={logoMongodb} alt="MongoDB" /></a>
+        <a class="transition-opacity opacity-40 hover:opacity-80" href="https://www.npmjs.com/package/discord.js"><Image class="w-24 lg:w-36 inline-block brightness-0 invert" src={logoDiscordjs} alt="Discord.js" /></a>
+        <a class="transition-opacity opacity-40 hover:opacity-80" href="https://www.npmjs.com/package/firebase-admin"><Image class="w-24 lg:w-36 inline-block brightness-0 invert" src={logoFirebase} alt="Firebase" /></a>
+        <a class="transition-opacity opacity-40 hover:opacity-80" href="https://www.npmjs.com/package/playfab-sdk"><Image class="w-24 lg:w-36 inline-block brightness-0 invert" src={logoPlayfab} alt="PlayFab" /></a>
       </div>
 
     </div>

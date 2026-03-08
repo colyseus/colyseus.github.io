@@ -42,13 +42,29 @@ body {
 }
 
 /* === Showcase Grid === */
-.showcase-items > a {
+.showcase-items {
   background-size: cover;
   background-position: center center;
 }
 
-.showcase-expand-list {
-  background: linear-gradient(180deg, rgba(10,10,11,0) 0%, rgba(10,10,11,1) 70%);
+/* === Showcase Marquee === */
+@keyframes marquee-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+@keyframes marquee-right {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+.marquee-left {
+  animation: marquee-left 40s linear infinite;
+}
+.marquee-right {
+  animation: marquee-right 40s linear infinite;
+}
+.marquee-left:has(:hover),
+.marquee-right:has(:hover) {
+  animation-play-state: paused;
 }
 
 /* === Animation Delays === */
@@ -81,6 +97,47 @@ article code { @apply bg-white/10 px-1.5 py-0.5 rounded text-purple-300 text-bas
 /* === Code Blocks === */
 .expressive-code { margin-bottom: 1.8em; }
 .expressive-code code { white-space: pre-wrap !important; }
+
+/* Homepage code panels: remove expressive-code chrome, fill parent */
+.homepage-code {
+  display: flex;
+  flex-direction: column;
+}
+.homepage-code .expressive-code {
+  margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.homepage-code .expressive-code > figure {
+  margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.homepage-code .expressive-code .frame {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+}
+.homepage-code .expressive-code .frame > figcaption,
+.homepage-code .expressive-code .frame > .header {
+  display: none !important;
+}
+.homepage-code .expressive-code pre {
+  flex: 1;
+  margin: 0 !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  overflow-x: auto !important;
+}
+.homepage-code .expressive-code code {
+  white-space: pre !important;
+}
 
 /* === Footer === */
 footer a:hover { text-decoration: underline; }

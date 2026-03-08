@@ -9,6 +9,9 @@ import SuccessStoriesSection from '../components/SuccessStoriesSection.astro';
 import JoinCommunitySection from '../components/JoinCommunitySection.astro';
 import Platforms, { platforms } from '../components/Platforms.astro';
 
+import CodeServer from "../content/homepage/code-server.mdx";
+import CodeClient from "../content/homepage/code-client.mdx";
+
 const subtitle = "The developer-friendly framework for real-time multiplayer. From prototype to production in days, not months.";
 ---
 
@@ -122,7 +125,7 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
 
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-5xl mx-auto">
         <!-- Server Code -->
-        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02]">
+        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
           <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
             <div class="flex gap-1.5">
               <span class="w-3 h-3 rounded-full bg-white/10"></span>
@@ -132,33 +135,13 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
             <span class="text-xs text-gray-500 ml-2 font-mono">GameRoom.ts</span>
             <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
           </div>
-          <pre class="p-4 lg:p-6 text-sm leading-relaxed overflow-x-auto"><code><span class="syn-keyword">import</span> {'{'} Room, Client {'}'} <span class="syn-keyword">from</span> <span class="syn-string">"colyseus"</span>;
-<span class="syn-keyword">import</span> {'{'} GameState, Player {'}'} <span class="syn-keyword">from</span> <span class="syn-string">"./GameState"</span>;
-
-<span class="syn-keyword">export class</span> <span class="syn-type">GameRoom</span> <span class="syn-keyword">extends</span> <span class="syn-type">Room</span>&lt;<span class="syn-type">GameState</span>&gt; {'{'}
-
-  <span class="syn-function">onCreate</span>() {'{'}
-    <span class="syn-keyword">this</span>.<span class="syn-function">setState</span>(<span class="syn-keyword">new</span> <span class="syn-type">GameState</span>());
-
-    <span class="syn-keyword">this</span>.<span class="syn-function">onMessage</span>(<span class="syn-string">"move"</span>, (client, data) =&gt; {'{'}
-      <span class="syn-keyword">const</span> player = <span class="syn-keyword">this</span>.state.players.<span class="syn-function">get</span>(client.sessionId);
-      player.x += data.x;
-      player.y += data.y;
-    {'}'});
-  {'}'}
-
-  <span class="syn-function">onJoin</span>(client: <span class="syn-type">Client</span>) {'{'}
-    <span class="syn-keyword">this</span>.state.players.<span class="syn-function">set</span>(client.sessionId, <span class="syn-keyword">new</span> <span class="syn-type">Player</span>());
-  {'}'}
-
-  <span class="syn-function">onLeave</span>(client: <span class="syn-type">Client</span>) {'{'}
-    <span class="syn-keyword">this</span>.state.players.<span class="syn-function">delete</span>(client.sessionId);
-  {'}'}
-{'}'}</code></pre>
+          <div class="flex-1 homepage-code">
+            <CodeServer />
+          </div>
         </div>
 
         <!-- Client Code -->
-        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02]">
+        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
           <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
             <div class="flex gap-1.5">
               <span class="w-3 h-3 rounded-full bg-white/10"></span>
@@ -168,23 +151,9 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
             <span class="text-xs text-gray-500 ml-2 font-mono">game.ts</span>
             <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Client</span>
           </div>
-          <pre class="p-4 lg:p-6 text-sm leading-relaxed overflow-x-auto"><code><span class="syn-keyword">import</span> {'{'} Client {'}'} <span class="syn-keyword">from</span> <span class="syn-string">"colyseus.js"</span>;
-
-<span class="syn-keyword">const</span> client = <span class="syn-keyword">new</span> <span class="syn-type">Client</span>(<span class="syn-string">"wss://your-server.colyseus.cloud"</span>);
-<span class="syn-keyword">const</span> room = <span class="syn-keyword">await</span> client.<span class="syn-function">joinOrCreate</span>(<span class="syn-string">"game_room"</span>);
-
-<span class="syn-comment">// Listen to state changes in real-time</span>
-room.state.players.<span class="syn-function">onAdd</span>((player, key) =&gt; {'{'}
-
-  player.<span class="syn-function">onChange</span>(() =&gt; {'{'}
-    <span class="syn-comment">// Automatically called when state changes</span>
-    <span class="syn-function">updateSprite</span>(key, player.x, player.y);
-  {'}'});
-
-{'}'});
-
-<span class="syn-comment">// Send actions to the server</span>
-room.<span class="syn-function">send</span>(<span class="syn-string">"move"</span>, {'{'} x: <span class="syn-number">1</span>, y: <span class="syn-number">0</span> {'}'});</code></pre>
+          <div class="flex-1 homepage-code">
+            <CodeClient />
+          </div>
         </div>
       </div>
     </div>
@@ -199,34 +168,43 @@ room.<span class="syn-function">send</span>(<span class="syn-string">"move"</spa
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        <!-- Feature 1 -->
-        <div class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
-          <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- Feature 1: State Sync -->
+        <a href="https://docs.colyseus.io/state" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h3 class="text-white font-semibold mb-2">Real-Time State Sync</h3>
           <p class="text-sm text-gray-500 leading-relaxed">Automatic binary state synchronization. Define your state once, sync everywhere.</p>
-        </div>
+        </a>
 
-        <!-- Feature 2 -->
-        <div class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
-          <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- Feature 2: Matchmaking -->
+        <a href="https://docs.colyseus.io/#expose-the-room-identifier" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h3 class="text-white font-semibold mb-2">Built-in Matchmaking</h3>
           <p class="text-sm text-gray-500 leading-relaxed">Automatic room creation and player matching. Customizable filtering and sorting.</p>
-        </div>
+        </a>
 
-        <!-- Feature 3 -->
-        <div class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
-          <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- Feature 3: Scalable -->
+        <a href="https://docs.colyseus.io/scalability" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h3 class="text-white font-semibold mb-2">Scalable Architecture</h3>
           <p class="text-sm text-gray-500 leading-relaxed">Scale from 10 to 10,000+ CCU. Distribute rooms across multiple processes or machines.</p>
-        </div>
+        </a>
 
-        <!-- Feature 4 -->
+        <!-- Feature 4: Cheat-Proof -->
         <div class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
           <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
             <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -235,23 +213,29 @@ room.<span class="syn-function">send</span>(<span class="syn-string">"move"</spa
           <p class="text-sm text-gray-500 leading-relaxed">Authoritative server architecture. Game state lives on the server, not the client.</p>
         </div>
 
-        <!-- Feature 5 -->
-        <div class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
-          <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- Feature 5: Multi-Platform -->
+        <a href="https://docs.colyseus.io/getting-started" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 640 512"><path d="M448 64c106 0 192 86 192 192S554 448 448 448l-256 0C86 448 0 362 0 256S86 64 192 64l256 0zM192 176c-13.3 0-24 10.7-24 24l0 32-32 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l32 0 0 32c0 13.3 10.7 24 24 24s24-10.7 24-24l0-32 32 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-32 0 0-32c0-13.3-10.7-24-24-24zm240 96a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm64-96a32 32 0 1 0 0 64 32 32 0 1 0 0-64z"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h3 class="text-white font-semibold mb-2">Multi-Platform SDKs</h3>
           <p class="text-sm text-gray-500 leading-relaxed">JavaScript, Unity, Defold, Construct 3, Haxe, and Cocos Creator. Use the tools you already know.</p>
-        </div>
+        </a>
 
-        <!-- Feature 6 -->
-        <div class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
-          <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
-            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <!-- Feature 6: Open Source -->
+        <a href="https://github.com/colyseus/colyseus/blob/master/LICENSE" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 32 32"><path d="m16 0.4c-8.8 0-16 7.2-16 16 0 7 4.4 12.9 10.6 15.1l4-10.4c-2-0.7-3.5-2.5-3.5-4.7 0-2.7 2.2-4.8 4.9-4.8 2.7 0 4.9 2.1 4.9 4.8 0 2.2-1.5 4.1-3.5 4.7l4 10.4c6.2-2.2 10.6-8.1 10.6-15.1 0-8.8-7.2-16-16-16z"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h3 class="text-white font-semibold mb-2">Free & Open Source</h3>
           <p class="text-sm text-gray-500 leading-relaxed">MIT licensed. Free forever, even for commercial games. Full control over your infrastructure.</p>
-        </div>
+        </a>
       </div>
 
       <!-- Platform icons -->
@@ -330,7 +314,7 @@ room.<span class="syn-function">send</span>(<span class="syn-string">"move"</spa
 
   <!-- ===== GAMES SHOWCASE ===== -->
   <section class="border-t border-white/5">
-    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:pb-12">
       <div class="text-center mb-12">
         <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Showcase</p>
         <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Games Using Colyseus</h2>
@@ -345,34 +329,40 @@ room.<span class="syn-function">send</span>(<span class="syn-string">"move"</spa
           Watch the Colyseus Reel
         </a>
       </div>
-
-      <div id="showcase" class="h-[28rem] lg:h-[32rem] transition-all overflow-hidden relative">
-        <div class="grid gap-3 lg:gap-4 showcase-items grid-cols-2 lg:grid-cols-3">
-          {collections.showcase.map((item) => (
-            <a
-              class="group rounded-xl h-28 lg:h-60 relative transition-all overflow-hidden border border-white/5 hover:border-white/10"
-              href={item.url}
-              target="_blank"
-              style={`background-image: url(${item.image});`}
-            >
-              <span class="bg-black/80 backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform absolute bottom-0 p-3 lg:p-4 w-full text-white">
-                <span class="text-xs lg:text-sm font-medium">{item.name}</span>
-                <small class="block text-gray-400 text-xs">by {item.author}</small>
-                <img class="absolute right-3 bottom-3 w-5 lg:w-8 opacity-60" src={platforms[item.platform].image} alt={platforms[item.platform].name} />
-              </span>
-            </a>
-          ))}
-        </div>
-
-        <a
-          href="javascript:void(0)" onclick="document.getElementById('showcase').classList.remove('h-[28rem]','lg:h-[32rem]');this.remove();"
-          class="showcase-expand-list pt-10 flex h-28 justify-center items-end w-full absolute bottom-0 group text-gray-500 hover:text-gray-300 font-medium text-sm transition-colors"
-        >
-          Show all games
-          <svg class="inline-block ml-2 transition-transform group-hover:translate-x-1" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </div>
     </div>
+
+    <div class="showcase-marquee overflow-hidden space-y-3 lg:space-y-4 pb-20 lg:pb-32 relative">
+      <div class="absolute inset-y-0 left-0 w-24 lg:w-40 bg-gradient-to-r from-[#0a0a0b] to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute inset-y-0 right-0 w-24 lg:w-40 bg-gradient-to-l from-[#0a0a0b] to-transparent z-10 pointer-events-none"></div>
+        {(() => {
+          const half = Math.ceil(collections.showcase.length / 2);
+          const row1 = collections.showcase.slice(0, half);
+          const row2 = collections.showcase.slice(half);
+          return [
+            { items: row1, direction: 'marquee-left' },
+            { items: row2, direction: 'marquee-right' },
+          ].map(({ items, direction }) => (
+            <div class="overflow-hidden">
+              <div class={`flex gap-3 lg:gap-4 ${direction}`}>
+                {[...items, ...items].map((item) => (
+                  <a
+                    class="group rounded-xl h-28 lg:h-48 w-48 lg:w-80 shrink-0 relative overflow-hidden border border-white/5 hover:border-white/10 showcase-items"
+                    href={item.url}
+                    target="_blank"
+                    style={`background-image: url(${item.image});`}
+                  >
+                    <span class="bg-black/80 backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform absolute bottom-0 p-3 lg:p-4 w-full text-white">
+                      <span class="text-xs lg:text-sm font-medium">{item.name}</span>
+                      <small class="block text-gray-400 text-xs">by {item.author}</small>
+                      <img class="absolute right-3 bottom-3 w-5 lg:w-8 opacity-60" src={platforms[item.platform].image} alt={platforms[item.platform].name} />
+                    </span>
+                  </a>
+                ))}
+              </div>
+            </div>
+          ));
+        })()}
+      </div>
   </section>
 
   <!-- ===== COMPARISON ===== -->

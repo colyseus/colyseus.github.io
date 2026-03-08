@@ -12,8 +12,12 @@ const comingSoon = [
   { name: "GameMaker", image: "/images/platforms/gamemaker.png", url: "https://github.com/colyseus/native-sdk/issues/16" },
   { name: "Godot", image: "/images/platforms/godot.png", url: "https://github.com/colyseus/native-sdk/issues/8" },
 ];
+interface Props {
+  align?: 'center' | 'left';
+}
+const { align = 'center' } = Astro.props;
 ---
-<div class="flex flex-col items-center">
+<div class={`flex flex-col ${align === 'left' ? 'items-start' : 'items-center'}`}>
   <p class="text-sm text-gray-500 mb-4">Supports your favorite engine & platform</p>
   <div class="flex items-center gap-6">
     <ul class="flex gap-6 items-center">
