@@ -19,7 +19,7 @@ import locationsScreenshot from "../../assets/cloud/locations.png";
   isBlue={true}
 >
   <section id="hero" class="text-gray-200 min-h-[99vh] flex">
-    <div class="container mx-auto px-6 py-10 flex items-center">
+    <div class="max-w-7xl mx-auto px-6 py-10 flex items-center">
       <div
         class="flex justify-between flex-col lg:flex-row space-x-0 lg:space-x-8 w-full"
       >
@@ -53,7 +53,7 @@ import locationsScreenshot from "../../assets/cloud/locations.png";
           >
             <a
               href="https://cloud.colyseus.io/"
-              class="p-4 rounded border-solid border-white bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white transition-all text-xl font-semibold mr-4 lg:mr-0"
+              class="p-4 rounded bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white transition-all text-xl font-semibold mr-4 lg:mr-0"
               >Get started from $15/mo</a
             >
             <a
@@ -171,55 +171,110 @@ import locationsScreenshot from "../../assets/cloud/locations.png";
   </section>
 
   <section class="border-b border-white/5">
-    <div class="container container mx-auto px-6 relative py-24 text-center " >
+    <div class="max-w-7xl mx-auto px-6 relative py-24 text-center " >
 
       <div class="mb-12">
-        <h1 class="text-4xl lg:text-5xl font-medium" style="line-height: 1.3em;">Features</h1>
-        <p class="">Focus on building your multiplayer game or app, we handle the infrastructure.</p>
+        <p class="text-sm font-medium text-blue-400 uppercase tracking-widest mb-4">What You Get</p>
+        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Features</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Focus on building your multiplayer game or app, we handle the infrastructure.</p>
       </div>
 
-      <hr>
-
-      <div class="mb-12 pt-12">
-          <h2 class="text-3xl">Add new locations at the click of a button</h2>
-          <p class="mb-6">Your application may have multiple locations. Each location gets its own HTTP endpoint.</p>
-          <Image class="rounded-lg w-full lg:w-2/3 block m-auto" src={locationsScreenshot} alt="Deployment Locations" />
+      <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mb-12 pt-12 border-t border-white/5">
+          <Image class="rounded-xl w-full lg:w-1/2 border border-white/5" src={locationsScreenshot} alt="Deployment Locations" />
+          <div class="w-full lg:w-1/2 text-left">
+            <h3 class="text-2xl font-bold text-white mb-3">32 Global Locations</h3>
+            <p class="text-gray-400 leading-relaxed mb-4">Get your servers close to your players. Add new regions in one click — each location gets its own endpoint, ready to accept connections instantly.</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Expand to new regions without redeploying
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Lower latency for players worldwide
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Each location gets its own HTTP endpoint
+              </li>
+            </ul>
+          </div>
       </div>
 
-      <hr>
-
-      <div class="mb-12 pt-12">
-          <h2 class="text-3xl">Monitoring & Alerting</h2>
-          <p class="mb-6">Receive alerts whenever anything goes off on your servers.</p>
-          <Image class="rounded-lg w-full lg:w-2/3 block m-auto" src={alertingMonitoring} alt="Monitoring and Alerting" />
+      <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mb-12 pt-12 border-t border-white/5">
+          <Image class="rounded-xl w-full lg:w-1/2 border border-white/5" src={alertingMonitoring} alt="Monitoring and Alerting" />
+          <div class="w-full lg:w-1/2 text-left">
+            <h3 class="text-2xl font-bold text-white mb-3">Monitoring & Alerting</h3>
+            <p class="text-gray-400 leading-relaxed mb-4">Stay ahead of issues before your players notice. Get real-time alerts on CPU, memory, crashes, and abnormal activity — delivered straight to Slack or email.</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Slack and email notifications
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                CPU, memory, and crash monitoring
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Catch problems before players do
+              </li>
+            </ul>
+          </div>
       </div>
 
-      <hr>
-
-      <div class="mb-12 pt-12">
-          <h2 class="text-3xl">CCU, Room Count and Deployment Graphs</h2>
-          <p class="mb-6">Have an overview of your server's activity.</p>
-          <Image class="rounded-lg w-full lg:w-2/3 block m-auto" src={deployGraphs} alt="Deployment on graphs" />
+      <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mb-12 pt-12 border-t border-white/5">
+          <Image class="rounded-xl w-full lg:w-1/2 border border-white/5" src={deployGraphs} alt="Real-time analytics" />
+          <div class="w-full lg:w-1/2 text-left">
+            <h3 class="text-2xl font-bold text-white mb-3">Real-Time Analytics</h3>
+            <p class="text-gray-400 leading-relaxed mb-4">See exactly what your servers are doing. Track concurrent users, active rooms, and resource usage at a glance — so you can make informed scaling decisions.</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Live CCU and room count graphs
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Deployment history and performance trends
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Know when to scale up — before you need to
+              </li>
+            </ul>
+          </div>
       </div>
 
-      <hr>
-
-      <div class="pt-12">
-          <h2 class="text-3xl">Rolling Updates & Graceful Shutdown</h2>
-          <p class="mb-6">
-            Do not loose connections when deploying new versions of your server.
-            See <a href="https://docs.colyseus.io/server/graceful-shutdown" target="_blank">Graceful Shutdown</a>
-          </p>
-          <Image class="rounded-lg w-full lg:w-2/3 block m-auto" src={processShutDown} alt="Deployment on graphs" />
+      <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 pt-12 border-t border-white/5">
+          <Image class="rounded-xl w-full lg:w-1/2 border border-white/5" src={processShutDown} alt="Zero-downtime deployments" />
+          <div class="w-full lg:w-1/2 text-left">
+            <h3 class="text-2xl font-bold text-white mb-3">Zero-Downtime Deployments</h3>
+            <p class="text-gray-400 leading-relaxed mb-4">Ship updates without kicking players out. Rolling updates gracefully drain active rooms while new ones spin up on the latest version — no interruptions, no angry players.</p>
+            <ul class="space-y-2 text-sm text-gray-400">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Active sessions finish undisturbed
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                New connections route to updated servers
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                Deploy with confidence, any time of day
+              </li>
+            </ul>
+          </div>
       </div>
 
     </div>
   </section>
 
   <section class="border-b border-white/5 bg-white/[0.02] ">
-    <div class="container mx-auto px-6 relative py-14">
+    <div class="max-w-7xl mx-auto px-6 relative py-14">
       <div class="max-w-xl mx-auto p-12 ">
-        <h1 class="text-4xl pb-2 font-medium">Pricing Simulator</h1>
+        <p class="text-sm font-medium text-blue-400 uppercase tracking-widest mb-4">Estimate Your Cost</p>
+        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-2">Pricing Simulator</h2>
         <SimulatePriceComponent title="" client:only />
       </div>
     </div>
@@ -228,13 +283,12 @@ import locationsScreenshot from "../../assets/cloud/locations.png";
   <section
     class="border-b border-white/5 bg-gray-800 text-slate-100"
   >
-    <div class="container mx-auto px-6 relative py-20">
-      <h2 class="text-4xl lg:text-5xl text-center mb-1">
-        Deploying to Colyseus Cloud
-      </h2>
-      <p class="text-sm lg:text-base text-center mb-12 text-slate-300">
-        Steps required to deploy your Colyseus app to Colyseus Cloud.
-      </p>
+    <div class="max-w-7xl mx-auto px-6 relative py-20">
+      <div class="text-center mb-12">
+        <p class="text-sm font-medium text-blue-400 uppercase tracking-widest mb-4">Get Started</p>
+        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Deploying to Colyseus Cloud</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Steps required to deploy your Colyseus app to Colyseus Cloud.</p>
+      </div>
       <div class="text-base lg:text-xl leading-relaxed">
         <div class="flex flex-col lg:flex-row gap-8">
           <div class="w-full lg:w-1/2">

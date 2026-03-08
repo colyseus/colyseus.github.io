@@ -6,16 +6,7 @@ import MainLayout from '../layouts/MainLayout.astro';
 import ViewMore from '../components/ViewMore.astro';
 import SponsorsSection from '../components/SponsorsSection.astro';
 import CommunityStats from '../components/CommunityStats.astro';
-
-import CodeServerRoom from "../content/framework/code-server-room.mdx";
-import CodeServerMatchmaking from "../content/framework/code-server-matchmaking.mdx";
-import CodeClientJoinRoom from "../content/framework/code-client-join-room.mdx";
-
-import CodeStateServer  from "../content/framework/code-statesync-server.mdx";
-import CodeStateServerMutate  from "../content/framework/code-statesync-mutate-server.mdx";
-import CodeStateSyncClient  from "../content/framework/code-statesync-client.mdx";
-
-import CodeUnitTest from "../content/framework/code-unit-test.mdx";
+import ScrollCodeShowcase from '../components/ScrollCodeShowcase.astro';
 
 import scalabilityImage from "../../assets/diagrams/scalability.png";
 import logoDiscordjs from "../../assets/framework/logo-discordjs.png";
@@ -28,7 +19,7 @@ import logoPostgres from "../../assets/framework/logo-postgres.png";
 
 <MainLayout title="The Multiplayer Framework Developers Love - Colyseus" description="Open-source, battle-tested multiplayer game framework for Node.js. Built-in matchmaking, real-time state sync, scalability, and client SDKs for Unity, Defold, Haxe, and JavaScript." isHeaderExpanded={false} isBlue={false}>
   <section id="hero" class="text-gray-200 min-h-[99vh] flex">
-    <div class="container mx-auto px-6 py-10 flex items-center ">
+    <div class="max-w-7xl mx-auto px-6 py-10 flex items-center ">
       <div class="flex justify-between flex-col lg:flex-row space-x-0 lg:space-x-8 w-full">
 
         <!-- Left -->
@@ -130,164 +121,94 @@ import logoPostgres from "../../assets/framework/logo-postgres.png";
     </div>
   </section>
 
+  <ScrollCodeShowcase />
+
   <section class="border-b border-white/5">
-    <div class="container container mx-auto px-6 relative py-24">
+    <div class="max-w-7xl mx-auto px-6 relative py-24">
 
       <div class="text-center mb-8">
-        <h2 class="text-4xl lg:text-5xl font-medium">Architecture / Stack</h2>
-        <p class="text-sm lg:text-base mt-2 text-gray-400">A solid stack so you can focus on your game instead of re-inventing the wheel.</p>
+        <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Under the Hood</p>
+        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Architecture / Stack</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">A solid stack so you can focus on your game instead of re-inventing the wheel.</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-rows-2 gap-6 w-full justify-between">
-        <div class="rounded-xl bg-white/[0.03] p-6 border border-white/5">
-          <h3 class="font-medium mb-1 text-lg">Node.js Runtime</h3>
-          <div class="text-gray-400">
-            <p>Node.js is an asynchronous event-driven JavaScript runtime, designed to build scalable network applications.</p>
-            <ViewMore href="https://nodejs.org/en/about">Learn about Node.js</ViewMore>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <a href="https://nodejs.org/en/about" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 448 512"><path d="M224.5 508c-6.7 0-13.5-1.8-19.4-5.2l-61.7-36.5c-9.2-5.2-4.7-7-1.7-8 12.3-4.3 14.8-5.2 27.9-12.7 1.4-.8 3.2-.5 4.6 .4l47.4 28.1c1.7 1 4.1 1 5.7 0L412 367.5c1.7-1 2.8-3 2.8-5l0-213.2c0-2.1-1.1-4-2.9-5.1L227.3 37.7c-1.7-1-4-1-5.7 0L37.1 144.3c-1.8 1-2.9 3-2.9 5.1l0 213.1c0 2 1.1 4 2.9 4.9l50.6 29.2c27.5 13.7 44.3-2.4 44.3-18.7l0-210.4c0-3 2.4-5.3 5.4-5.3l23.4 0c2.9 0 5.4 2.3 5.4 5.3l0 210.5c0 36.6-20 57.6-54.7 57.6-10.7 0-19.1 0-42.5-11.6L20.6 396.1c-12-6.9-19.4-19.8-19.4-33.7l0-213.1c0-13.8 7.4-26.8 19.4-33.7L205.1 9c11.7-6.6 27.2-6.6 38.8 0L428.6 115.7c12 6.9 19.4 19.8 19.4 33.7l0 213.1c0 13.8-7.4 26.7-19.4 33.7L243.9 502.8c-5.9 3.4-12.6 5.2-19.4 5.2zM373.6 297.9c0-39.9-27-50.5-83.7-58-57.4-7.6-63.2-11.5-63.2-24.9 0-11.1 4.9-25.9 47.4-25.9 37.9 0 51.9 8.2 57.7 33.8 .5 2.4 2.7 4.2 5.2 4.2l24 0c1.5 0 2.9-.6 3.9-1.7s1.5-2.6 1.4-4.1c-3.7-44.1-33-64.6-92.2-64.6-52.7 0-84.1 22.2-84.1 59.5 0 40.4 31.3 51.6 81.8 56.6 60.5 5.9 65.2 14.8 65.2 26.7 0 20.6-16.6 29.4-55.5 29.4-48.9 0-59.6-12.3-63.2-36.6-.4-2.6-2.6-4.5-5.3-4.5l-23.9 0c-3 0-5.3 2.4-5.3 5.3 0 31.1 16.9 68.2 97.8 68.2 58.4-.1 92-23.2 92-63.4z"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </div>
+          <h3 class="text-white font-semibold mb-2">Node.js Runtime</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Asynchronous event-driven JavaScript runtime, designed to build scalable network applications.</p>
+        </a>
 
-        <div class="rounded-xl bg-white/[0.03] p-6 border border-white/5">
-          <h3 class="font-medium mb-1 text-lg">Networking Transport</h3>
-          <div class="text-gray-400">
-            <p>
-              WebSockets is used as transport layer.
-              <ViewMore class="inline" href="https://docs.colyseus.io/server/transport/">
-                Documentation
-              </ViewMore>
-            </p>
-            <p class="mt-2 text-sm"><em>Support for WebTransport is in our <a href="https://github.com/colyseus/colyseus/wiki/Public-Roadmap">public roadmap</a>.</em></p>
+        <a href="https://docs.colyseus.io/server/transport/" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </div>
+          <h3 class="text-white font-semibold mb-2">Networking Transport</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">WebSockets as transport layer, with WebTransport support in our public roadmap.</p>
+        </a>
 
-        <div class="rounded-xl bg-white/[0.03] p-6 border border-white/5">
-          <h3 class="font-medium mb-1 text-lg">Room-based system</h3>
-          <div class="text-gray-400">
-            <p>On-demand, stateful rooms are spawned per client request.</p>
-            <ViewMore href="https://docs.colyseus.io/server/room/">
-              See more
-            </ViewMore>
+        <a href="https://docs.colyseus.io/server/room/" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </div>
+          <h3 class="text-white font-semibold mb-2">Room-Based System</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">On-demand, stateful rooms are spawned per client request.</p>
+        </a>
 
-        <div class="rounded-xl bg-white/[0.03] p-6 border border-white/5">
-          <h3 class="font-medium mb-1 text-lg">Message Serialization</h3>
-          <div class="text-gray-400">
-            <p>
-              For state sync, we use <a href="#state-sync">our own binary delta serializer</a>.
-              For every other message, we use the fastest <a href="https://msgpack.org/">MessagePack</a> serializer available for JavaScript.
-            </p>
+        <a href="https://docs.colyseus.io/state/" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </div>
+          <h3 class="text-white font-semibold mb-2">Message Serialization</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Binary delta serialization for state sync, and the fastest MessagePack serializer for everything else.</p>
+        </a>
 
-        <div class="rounded-xl bg-white/[0.03] p-6 border border-white/5">
-          <h3 class="font-medium mb-1 text-lg">Web / API Routes</h3>
-          <div class="text-gray-400">
-            <p>Define your own custom API routes via Express or µWebSockets.js</p>
-            <ViewMore href="https://docs.colyseus.io/server/custom-http-routes/">See more</ViewMore>
+        <a href="https://docs.colyseus.io/server/custom-http-routes/" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </div>
+          <h3 class="text-white font-semibold mb-2">Web / API Routes</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Define your own custom API routes via Express or better-call.</p>
+        </a>
 
-        <div class="rounded-xl bg-white/[0.03] p-6 border border-white/5">
-          <h3 class="font-medium mb-1 text-lg">Database / Storage / Authentication</h3>
-          <div class="text-gray-400">
-            <p>Bring your favorite Node.js tool here. You are free to choose which database or authentication provider to use.</p>
-            <p class="mt-2 text-sm"><em>(An official recommendation is <a href="https://github.com/colyseus/colyseus/issues/594">coming soon</a>).</em></p>
+        <div class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
+          <h3 class="text-white font-semibold mb-2">Database / Auth</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Bring your favorite Node.js tools. You choose which database or authentication provider to use.</p>
         </div>
       </div>
 
       <div class="text-center mt-8">
-        <ViewMore href="/learn">Learn Colyseus</ViewMore>
+        <ViewMore href="https://docs.colyseus.io/learn">Learn Colyseus</ViewMore>
       </div>
 
-    </div>
-  </section>
-
-  <section id="match-making" class="border-b border-white/5">
-    <div class="container container mx-auto px-6 relative py-24  text-center mb-8">
-      <h2 class="text-4xl lg:text-5xl font-medium">Rooms & Match-making</h2>
-      <p class="text-sm lg:text-base mt-2 text-gray-400 mb-6">Let clients spawn and join into multiple rooms.</p>
-
-      <div class="flex flex-col lg:flex-row gap-10 items-center">
-        <div class="text-left mt-8 w-full lg:w-1/2">
-          <h3 class="text-2xl">Server-side</h3>
-          <p class="text-sm lg:text-base mt-4 my-2 text-gray-400">Write your server room code:</p>
-          <CodeServerRoom />
-
-          <p class="text-sm lg:text-base mt-4 my-2 text-gray-400">Expose the room for match-making:</p>
-          <CodeServerMatchmaking />
-        </div>
-
-        <div class="text-left mt-8 w-full lg:w-1/2">
-          <h3 class="text-2xl">Client-side</h3>
-          <p class="text-sm lg:text-base mt-4 my-2 text-gray-400">Let the client join the room. If no room has been found, the server will create one.</p>
-          <CodeClientJoinRoom />
-        </div>
-      </div>
-
-      <div class="text-center mt-10">
-        <ViewMore href="https://docs.colyseus.io/server/room/">See documentation</ViewMore>
-      </div>
-
-    </div>
-  </section>
-
-  <section id="state-sync" class="border-b border-white/5">
-    <div class="container container mx-auto px-6 relative py-24 text-center mb-8">
-      <h2 class="text-4xl lg:text-5xl font-medium">State Synchronization</h2>
-      <p class="mt-2 text-gray-400">An unique approach to room state synchronization.</p>
-
-      <div class="flex flex-wrap mt-12 mb-6 gap-4 justify-center items-center text-xs lg:text-lg">
-        <div class="flex gap-2 bg-green-600 rounded p-2 lg:p-3 text-white">
-          <svg class="w-3 lg:w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
-          <span>Automatically synchronized</span>
-        </div>
-
-        <div class="flex gap-2 bg-green-600 rounded p-2 lg:p-3 text-white">
-          <svg class="w-3 lg:w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
-          <span>Delta compressed</span>
-        </div>
-
-        <div class="flex gap-2 bg-green-600 rounded p-2 lg:p-3 text-white">
-          <svg class="w-3 lg:w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
-          <span>Client-side callbacks</span>
-        </div>
-
-        <div class="flex gap-2 bg-green-600 rounded p-2 lg:p-3 text-white">
-          <svg class="w-3 lg:w-5 text-white inline-block" fill="currentColor" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
-          <span>Optimized for speed & bandwidth</span>
-        </div>
-      </div>
-
-      <div class="flex flex-col lg:flex-row gap-10 items-center">
-        <div class="text-left mt-8 w-full lg:w-1/2">
-          <h3 class="text-2xl mb-1">Server-side</h3>
-
-          <p class="text-sm lg:text-base mb-4 text-gray-400">Define your synchronizable state structures</p>
-          <CodeStateServer />
-
-          <p class="text-sm lg:text-base mt-4 my-2 text-gray-400">Mutate the state on within your room code:</p>
-          <CodeStateServerMutate />
-        </div>
-
-        <div class="text-left mt-8 w-full lg:w-1/2">
-          <h3 class="text-2xl">Client-side</h3>
-          <p class="text-sm lg:text-base mt-4 my-2 text-gray-400">Listen to the changes coming from the server:</p>
-          <CodeStateSyncClient />
-        </div>
-      </div>
-
-      <div class="text-center mt-10">
-        <ViewMore href="https://docs.colyseus.io/state/">See documentation</ViewMore>
-      </div>
     </div>
   </section>
 
   <section id="scalability" class="border-b border-white/5 bg-gray-800">
-    <div class="container container mx-auto px-6 relative py-24 text-center mb-8">
-      <h2 class="text-4xl lg:text-5xl text-white font-medium">Scalability</h2>
-      <p class="text-sm lg:text-base mt-2 text-gray-400 leading-relaxed w-full lg:w-1/2 mx-auto">Simple yet powerful scaling strategy</p>
+    <div class="max-w-7xl mx-auto px-6 relative py-24 text-center mb-8">
+      <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Scale with Confidence</p>
+      <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Scalability</h2>
+      <p class="text-gray-400 max-w-xl mx-auto">Simple yet powerful scaling strategy</p>
 
       <div class="flex flex-col lg:flex-row justify-center items-center gap-8">
 
@@ -333,47 +254,60 @@ import logoPostgres from "../../assets/framework/logo-postgres.png";
   </section>
 
   <section id="ecosystem" class="border-b border-white/5">
-    <div class="container mx-auto px-6 relative py-24 text-center mb-8">
-      <h2 class="text-4xl font-medium">Tooling</h2>
-      <p class="text-sm lg:text-base mt-2 text-gray-400 mb-6">Built-in tools that accompany you from development to production.</p>
+    <div class="max-w-7xl mx-auto px-6 relative py-24 text-center mb-8">
+      <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Developer Experience</p>
+      <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Tooling</h2>
+      <p class="text-gray-400 max-w-xl mx-auto mb-6">Built-in tools that accompany you from development to production.</p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 w-full justify-between text-left mb-16">
-        <div class="rounded-xl bg-white/[0.03] p-6 border border-white/5">
-          <h3 class="font-medium mb-1 text-lg">Client-side Playground</h3>
-          <div class="text-gray-400">
-            <p>Easily create client connections and inspect how they are exchanging data with the server</p>
-            <ViewMore href="https://docs.colyseus.io/tools/playground/">Read documentation</ViewMore>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-5xl mx-auto text-left mb-16">
+        <a href="https://docs.colyseus.io/tools/playground/" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </div>
+          <h3 class="text-white font-semibold mb-2">Client-side Playground</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Create client connections and inspect data exchanged with the server.</p>
+        </a>
 
-        <div class="rounded-xl bg-white/[0.03] p-6 border border-white/5">
-          <h3 class="font-medium mb-1 text-lg">Realtime Room Inspector</h3>
-          <div class="text-gray-400">
-            <p>View and inspect the list of rooms spawned by the server.</p>
-            <ViewMore href="https://docs.colyseus.io/tools/monitoring/">Read documentation</ViewMore>
+        <a href="https://docs.colyseus.io/tools/monitoring/" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </div>
+          <h3 class="text-white font-semibold mb-2">Realtime Room Inspector</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">View and inspect the list of rooms spawned by the server.</p>
+        </a>
 
-        <div class="rounded-xl bg-white/[0.03] p-6 border border-white/5">
-          <h3 class="font-medium mb-1 text-lg">Unit Testing</h3>
-          <div class="text-gray-400">
-            <p>Utility methods for testing your rooms with your favorite testing framework</p>
-            <ViewMore href="https://docs.colyseus.io/tools/unit-testing/">Read documentation</ViewMore>
+        <a href="https://docs.colyseus.io/tools/unit-testing/" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </div>
+          <h3 class="text-white font-semibold mb-2">Unit Testing</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Utility methods for testing your rooms with your favorite testing framework.</p>
+        </a>
 
-        <div class="rounded-xl bg-white/[0.03] p-6 border border-white/5">
-          <h3 class="font-medium mb-1 text-lg">Load Testing</h3>
-          <div class="text-gray-400">
-            <p>Evaluate how your server behaves under high traffic.</p>
-            <ViewMore href="https://docs.colyseus.io/tools/loadtest/">Read documentation</ViewMore>
+        <a href="https://docs.colyseus.io/tools/loadtest/" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
-        </div>
+          <h3 class="text-white font-semibold mb-2">Load Testing</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Evaluate how your server behaves under high traffic.</p>
+        </a>
       </div>
 
       <hr class="border-white/5">
 
-      <h2 class="text-2xl lg:text-3xl font-medium mt-16">
+      <h2 class="text-2xl lg:text-3xl font-bold text-white mt-16">
         Node.js ecosystem
         <svg class="inline-block" stroke="currentColor" height="1em" viewBox="0 0 448 512"><path d="M224 508c-6.7 0-13.5-1.8-19.4-5.2l-61.7-36.5c-9.2-5.2-4.7-7-1.7-8 12.3-4.3 14.8-5.2 27.9-12.7 1.4-.8 3.2-.5 4.6.4l47.4 28.1c1.7 1 4.1 1 5.7 0l184.7-106.6c1.7-1 2.8-3 2.8-5V149.3c0-2.1-1.1-4-2.9-5.1L226.8 37.7c-1.7-1-4-1-5.7 0L36.6 144.3c-1.8 1-2.9 3-2.9 5.1v213.1c0 2 1.1 4 2.9 4.9l50.6 29.2c27.5 13.7 44.3-2.4 44.3-18.7V167.5c0-3 2.4-5.3 5.4-5.3h23.4c2.9 0 5.4 2.3 5.4 5.3V378c0 36.6-20 57.6-54.7 57.6-10.7 0-19.1 0-42.5-11.6l-48.4-27.9C8.1 389.2.7 376.3.7 362.4V149.3c0-13.8 7.4-26.8 19.4-33.7L204.6 9c11.7-6.6 27.2-6.6 38.8 0l184.7 106.7c12 6.9 19.4 19.8 19.4 33.7v213.1c0 13.8-7.4 26.7-19.4 33.7L243.4 502.8c-5.9 3.4-12.6 5.2-19.4 5.2zm149.1-210.1c0-39.9-27-50.5-83.7-58-57.4-7.6-63.2-11.5-63.2-24.9 0-11.1 4.9-25.9 47.4-25.9 37.9 0 51.9 8.2 57.7 33.8.5 2.4 2.7 4.2 5.2 4.2h24c1.5 0 2.9-.6 3.9-1.7s1.5-2.6 1.4-4.1c-3.7-44.1-33-64.6-92.2-64.6-52.7 0-84.1 22.2-84.1 59.5 0 40.4 31.3 51.6 81.8 56.6 60.5 5.9 65.2 14.8 65.2 26.7 0 20.6-16.6 29.4-55.5 29.4-48.9 0-59.6-12.3-63.2-36.6-.4-2.6-2.6-4.5-5.3-4.5h-23.9c-3 0-5.3 2.4-5.3 5.3 0 31.1 16.9 68.2 97.8 68.2 58.4-.1 92-23.2 92-63.4z"/></svg>
       </h2>
@@ -393,15 +327,15 @@ import logoPostgres from "../../assets/framework/logo-postgres.png";
   <SponsorsSection />
 
   <section class="border-t border-white/5 bg-white/[0.02]">
-    <div class="container mx-auto px-6 py-20 text-center">
-      <h2 class="text-3xl lg:text-4xl font-medium">Become a Sponsor</h2>
+    <div class="max-w-7xl mx-auto px-6 py-20 text-center">
+      <h2 class="text-2xl lg:text-4xl font-bold text-white">Become a Sponsor</h2>
       <p class="mt-4 leading-relaxed">
         The sustainability of Colyseus relies on <a href="/cloud-managed-hosting" class="text-purple-400 hover:text-purple-700 active:text-purple-800">Colyseus Cloud</a> subscriptions and sponsorships.
         <br />
         If you benefit from the project but are not yet using Colyseus Cloud, please consider sponsoring it.
       </p>
       <div class="flex justify-center space-x-3 my-8">
-        <a href="https://github.com/sponsors/endel" class="p-4 rounded border-solid border-white bg-purple-500 hover:bg-purple-600 active:bg-purple-700 text-white transition-all font-medium">GitHub Sponsors</a>
+        <a href="https://github.com/sponsors/endel" class="p-4 rounded bg-purple-500 hover:bg-purple-600 active:bg-purple-700 text-white transition-all font-medium">GitHub Sponsors</a>
       </div>
     </div>
   </section>

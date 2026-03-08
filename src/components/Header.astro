@@ -5,13 +5,14 @@ interface Props {
 }
 
 const { isExpanded = true, isBlue = false } = Astro.props;
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <header
-  class={`fixed w-full z-50 transition-all duration-300
+  class={`fixed w-full z-50 transition-all duration-300 border-b
     ${isExpanded
-      ? 'bg-[#0a0a0b]/80 backdrop-blur-lg border-b border-white/5'
-      : 'data-[scrolled=yes]:bg-[#0a0a0b]/80 data-[scrolled=yes]:backdrop-blur-lg data-[scrolled=yes]:border-b data-[scrolled=yes]:border-white/5'
+      ? 'bg-[#0a0a0b]/80 backdrop-blur-lg border-white/5'
+      : 'border-transparent data-[scrolled=yes]:bg-[#0a0a0b]/80 data-[scrolled=yes]:backdrop-blur-lg data-[scrolled=yes]:border-white/5'
     }`}
   data-scrolled="no"
 >
@@ -24,28 +25,24 @@ const { isExpanded = true, isBlue = false } = Astro.props;
     <!-- Desktop Nav -->
     <ul class="hidden lg:flex items-center gap-1">
       <li>
-        <a href="/framework" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5">
+        <a href="/framework" class={`px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-white/5 ${currentPath === '/framework' ? 'text-white' : 'text-gray-400 hover:text-white'}`}>
           Framework
         </a>
       </li>
       <li>
-        <a href="/cloud-managed-hosting" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5">
+        <a href="/cloud-managed-hosting" class={`px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-white/5 ${currentPath === '/cloud-managed-hosting' ? 'text-white' : 'text-gray-400 hover:text-white'}`}>
           Cloud
         </a>
       </li>
       <li>
-        <a href="/pricing" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5">
+        <a href="/pricing" class={`px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-white/5 ${currentPath === '/pricing' ? 'text-white' : 'text-gray-400 hover:text-white'}`}>
           Pricing
         </a>
       </li>
       <li>
-        <a href="https://docs.colyseus.io/" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5">
+        <a href="https://docs.colyseus.io/" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5 inline-flex items-center gap-1">
           Docs
-        </a>
-      </li>
-      <li>
-        <a href="/learn" class="px-4 py-2 text-sm font-medium text-gray-400 hover:text-white transition-colors rounded-lg hover:bg-white/5">
-          Learn
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
         </a>
       </li>
     </ul>
@@ -84,11 +81,11 @@ const { isExpanded = true, isBlue = false } = Astro.props;
       </button>
     </div>
     <nav class="flex flex-col items-center gap-6 text-lg mt-8">
-      <a href="/framework" class="text-gray-300 hover:text-white transition-colors">Framework</a>
-      <a href="/cloud-managed-hosting" class="text-gray-300 hover:text-white transition-colors">Cloud</a>
-      <a href="/pricing" class="text-gray-300 hover:text-white transition-colors">Pricing</a>
+      <a href="/framework" class={`transition-colors ${currentPath === '/framework' ? 'text-white' : 'text-gray-300 hover:text-white'}`}>Framework</a>
+      <a href="/cloud-managed-hosting" class={`transition-colors ${currentPath === '/cloud-managed-hosting' ? 'text-white' : 'text-gray-300 hover:text-white'}`}>Cloud</a>
+      <a href="/pricing" class={`transition-colors ${currentPath === '/pricing' ? 'text-white' : 'text-gray-300 hover:text-white'}`}>Pricing</a>
       <a href="https://docs.colyseus.io/" class="text-gray-300 hover:text-white transition-colors">Docs</a>
-      <a href="/learn" class="text-gray-300 hover:text-white transition-colors">Learn</a>
+
       <a href="/community" class="text-gray-300 hover:text-white transition-colors">Community</a>
       <div class="flex gap-6 mt-4">
         <a href="https://github.com/colyseus" target="_blank" class="text-gray-500 hover:text-white transition-colors">
