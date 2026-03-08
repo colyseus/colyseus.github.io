@@ -16,9 +16,13 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
 
   <!-- ===== HERO ===== -->
   <section class="relative min-h-[90vh] lg:min-h-screen flex items-center justify-center overflow-hidden">
-    <!-- Background glow -->
+    <!-- Background video -->
+    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-20">
+      <source src="/images/background/video.mp4" type="video/mp4">
+    </video>
+    <!-- Gradient overlay on top of video -->
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0b]/60 via-[#0a0a0b]/40 to-[#0a0a0b]"></div>
     <div class="absolute inset-0 bg-gradient-radial-hero"></div>
-    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-purple-500/5 rounded-full blur-3xl"></div>
 
     <div class="max-w-7xl mx-auto px-6 text-center relative z-10 py-32 lg:py-40">
       <h1 class="font-display text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-white mb-6 animate-fade-up">
@@ -331,6 +335,15 @@ room.<span class="syn-function">send</span>(<span class="syn-string">"move"</spa
         <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Showcase</p>
         <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Games Using Colyseus</h2>
         <p class="text-gray-500">A selection of multiplayer games made by happy developers.</p>
+        <a
+          href="https://www.youtube.com/watch?v=3EEw5Sl93KE"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-lg border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/5 text-sm font-medium text-gray-400 hover:text-purple-400 transition-all"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          Watch the Colyseus Reel
+        </a>
       </div>
 
       <div id="showcase" class="h-[28rem] lg:h-[32rem] transition-all overflow-hidden relative">
