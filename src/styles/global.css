@@ -67,6 +67,17 @@ body {
   animation-play-state: paused;
 }
 
+/* === Typewriter cursor === */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+#typewriter::after {
+  content: '|';
+  @apply text-purple-400/60 ml-[1px];
+  animation: blink 0.7s step-end infinite;
+}
+
 /* === Animation Delays === */
 .animate-delay-1 { animation-delay: 0.1s; }
 .animate-delay-2 { animation-delay: 0.2s; }

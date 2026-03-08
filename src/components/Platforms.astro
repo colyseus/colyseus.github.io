@@ -17,7 +17,7 @@ interface Props {
 }
 const { align = 'center' } = Astro.props;
 ---
-<div class={`flex flex-col ${align === 'left' ? 'items-start' : 'items-center'}`}>
+<div class={`flex flex-col ${align === 'left' ? 'items-center lg:items-start' : 'items-center'}`}>
   <p class="text-sm text-gray-500 mb-4 animate-fade-up" style="animation-delay: 0.5s">Supports your favorite engine & platform</p>
   <div class="flex items-center gap-6">
     <ul class="flex gap-6 items-center">

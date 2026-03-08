@@ -31,18 +31,25 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
 
         <!-- Left column: content -->
         <div class="text-center lg:text-left">
-          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-6 animate-fade-up">
-            Ship Multiplayer Games
+          <a href="https://shop.colyseus.io/" target="_blank" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-sm font-medium hover:bg-purple-500/20 hover:border-purple-500/40 transition-all mb-6 animate-fade-up">
+            Colyseus Merch Shop is live
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-6 animate-fade-up animate-delay-1">
+            Ship Multiplayer
+            <br />
+            <span id="typewriter" class="text-purple-400">Games</span>
             <br />
             <span class="gradient-text">Faster</span>
           </h1>
 
-          <p class="text-base lg:text-xl text-gray-400 max-w-2xl lg:max-w-none mb-10 animate-fade-up animate-delay-1">
+          <p class="text-base lg:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 lg:max-w-none mb-10 animate-fade-up animate-delay-2">
             {subtitle}
           </p>
 
           <!-- Terminal Command -->
-          <div class="animate-fade-up animate-delay-2 max-w-xl mx-auto lg:mx-0 mb-8">
+          <div class="animate-fade-up animate-delay-3 max-w-xl mx-auto lg:mx-0 mb-8">
             <div class="bg-white/[0.03] border border-white/10 rounded-xl p-1">
               <div class="flex items-center bg-white/[0.02] rounded-lg px-4 py-3">
                 <span class="text-gray-600 mr-3 select-none">$</span>
@@ -67,7 +74,7 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
           </div>
 
           <!-- CTAs -->
-          <div class="flex flex-wrap gap-4 justify-center lg:justify-start animate-fade-up animate-delay-3">
+          <div class="flex flex-wrap gap-4 justify-center lg:justify-start animate-fade-up animate-delay-4">
             <a href="https://docs.colyseus.io/" class="px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium text-sm transition-colors">
               Get Started
             </a>
@@ -78,13 +85,14 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
           </div>
 
           <!-- Platform support -->
-          <div class="mt-12 animate-fade-up animate-delay-3">
+          <div class="mt-12 animate-fade-up animate-delay-4">
             <Platforms align="left" />
           </div>
+
         </div>
 
         <!-- Right column: video (desktop only) -->
-        <div class="hidden lg:block animate-fade-up animate-delay-2">
+        <div class="hidden lg:block animate-fade-up animate-delay-3">
           <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-purple-500/10 aspect-video bg-white/[0.03]" id="hero-video-container">
             <!-- Loading spinner -->
             <div class="absolute inset-0 flex items-center justify-center" id="hero-video-loader">
@@ -98,6 +106,15 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
             </video>
             <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>
           </div>
+          <a
+            href="https://www.youtube.com/watch?v=3EEw5Sl93KE"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center gap-2 mt-3 text-sm text-gray-500 hover:text-purple-400 transition-colors"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            Watch the Colyseus Reel
+          </a>
         </div>
 
       </div>
@@ -115,6 +132,45 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
           heroVideo.style.opacity = '1';
           if (heroLoader) heroLoader.style.display = 'none';
         }
+      }
+
+      // Typewriter effect
+      const tw = document.getElementById('typewriter');
+      if (tw) {
+        const words = ['Games', 'Experiences', 'Apps', 'Worlds', 'Prototypes'];
+        let wordIndex = 0;
+        let charIndex = words[0].length;
+        let isDeleting = true;
+        const typeSpeed = 80;
+        const deleteSpeed = 50;
+        const pauseAfterType = 2000;
+        const pauseAfterDelete = 400;
+
+        function tick() {
+          const current = words[wordIndex];
+          if (!isDeleting) {
+            charIndex++;
+            tw.textContent = current.substring(0, charIndex);
+            if (charIndex === current.length) {
+              isDeleting = true;
+              setTimeout(tick, pauseAfterType);
+              return;
+            }
+            setTimeout(tick, typeSpeed);
+          } else {
+            charIndex--;
+            tw.textContent = current.substring(0, charIndex);
+            if (charIndex === 0) {
+              isDeleting = false;
+              wordIndex = (wordIndex + 1) % words.length;
+              setTimeout(tick, pauseAfterDelete);
+              return;
+            }
+            setTimeout(tick, deleteSpeed);
+          }
+        }
+
+        setTimeout(tick, pauseAfterType);
       }
 
       const button = document.getElementById('clipboard-click');
