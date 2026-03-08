@@ -17,64 +17,106 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
 <MainLayout title="Ship Multiplayer Games Faster" description={subtitle} isHeaderExpanded={false}>
 
   <!-- ===== HERO ===== -->
-  <section class="relative min-h-[90vh] lg:min-h-screen flex items-center justify-center overflow-hidden">
-    <!-- Background video -->
-    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-20">
+  <section class="relative min-h-[90vh] lg:min-h-screen flex items-center overflow-hidden">
+    <!-- Background video (mobile only) -->
+    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-20 lg:hidden">
       <source src="/images/background/video.mp4" type="video/mp4">
     </video>
-    <!-- Gradient overlay on top of video -->
-    <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0b]/60 via-[#0a0a0b]/40 to-[#0a0a0b]"></div>
-    <div class="absolute inset-0 bg-gradient-radial-hero"></div>
+    <!-- Gradient overlay (mobile only) -->
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0b]/60 via-[#0a0a0b]/40 to-[#0a0a0b] lg:hidden"></div>
+    <div class="absolute inset-0 bg-gradient-radial-hero lg:hidden"></div>
 
-    <div class="max-w-7xl mx-auto px-6 text-center relative z-10 py-32 lg:py-40">
-      <h1 class="font-display text-4xl sm:text-5xl lg:text-7xl font-bold tracking-tight text-white mb-6 animate-fade-up">
-        Ship Multiplayer Games
-        <br />
-        <span class="gradient-text">Faster</span>
-      </h1>
+    <div class="max-w-7xl mx-auto px-6 relative z-10 py-24 lg:py-32 w-full">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
 
-      <p class="text-base lg:text-xl text-gray-400 max-w-2xl mx-auto mb-10 animate-fade-up animate-delay-1">
-        {subtitle}
-      </p>
+        <!-- Left column: content -->
+        <div class="text-center lg:text-left">
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-6 animate-fade-up">
+            Ship Multiplayer Games
+            <br />
+            <span class="gradient-text">Faster</span>
+          </h1>
 
-      <!-- Terminal Command -->
-      <div class="animate-fade-up animate-delay-2 max-w-xl mx-auto mb-8">
-        <div class="bg-white/[0.03] border border-white/10 rounded-xl p-1">
-          <div class="flex items-center bg-white/[0.02] rounded-lg px-4 py-3">
-            <span class="text-gray-600 mr-3 select-none">$</span>
-            <code class="font-mono text-sm lg:text-base text-gray-300 flex-1 text-left">npm create colyseus-app@latest ./my-server</code>
-            <button class="group p-2 rounded-lg hover:bg-white/5 transition-colors" id="clipboard-click">
-              <svg class="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-              </svg>
-              <span
-                class="absolute pointer-events-none hidden data-[clicked=yes]:inline-block text-xs bg-white/10 text-white rounded py-1 px-2 -translate-x-8 translate-y-6"
-                data-clicked="no"
-              >
-                Copied!
-              </span>
-            </button>
+          <p class="text-base lg:text-xl text-gray-400 max-w-2xl lg:max-w-none mb-10 animate-fade-up animate-delay-1">
+            {subtitle}
+          </p>
+
+          <!-- Terminal Command -->
+          <div class="animate-fade-up animate-delay-2 max-w-xl mx-auto lg:mx-0 mb-8">
+            <div class="bg-white/[0.03] border border-white/10 rounded-xl p-1">
+              <div class="flex items-center bg-white/[0.02] rounded-lg px-4 py-3">
+                <span class="text-gray-600 mr-3 select-none">$</span>
+                <code class="font-mono text-sm lg:text-base text-gray-300 flex-1 text-left">npm create colyseus-app@latest ./my-server</code>
+                <button class="group p-2 rounded-lg hover:bg-white/5 transition-colors" id="clipboard-click">
+                  <svg class="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span
+                    class="absolute pointer-events-none hidden data-[clicked=yes]:inline-block text-xs bg-white/10 text-white rounded py-1 px-2 -translate-x-8 translate-y-6"
+                    data-clicked="no"
+                  >
+                    Copied!
+                  </span>
+                </button>
+              </div>
+            </div>
+            <p class="text-xs text-gray-600 mt-3">
+              <a href="https://nodejs.org/en" target="_blank" class="hover:text-gray-400 transition-colors">Requires Node.js</a>
+            </p>
+          </div>
+
+          <!-- CTAs -->
+          <div class="flex flex-wrap gap-4 justify-center lg:justify-start animate-fade-up animate-delay-3">
+            <a href="https://docs.colyseus.io/" class="px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium text-sm transition-colors">
+              Get Started
+            </a>
+            <a href="https://github.com/colyseus/colyseus" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-white font-medium text-sm transition-all">
+              <svg fill="currentColor" width="16" height="16" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+
+          <!-- Platform support -->
+          <div class="mt-12 animate-fade-up animate-delay-3">
+            <Platforms align="left" />
           </div>
         </div>
-        <p class="text-xs text-gray-600 mt-3">
-          <a href="https://nodejs.org/en" target="_blank" class="hover:text-gray-400 transition-colors">Requires Node.js</a>
-        </p>
-      </div>
 
-      <!-- CTAs -->
-      <div class="flex flex-wrap gap-4 justify-center animate-fade-up animate-delay-3">
-        <a href="https://docs.colyseus.io/" class="px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium text-sm transition-colors">
-          Get Started
-        </a>
-        <a href="https://github.com/colyseus/colyseus" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-white font-medium text-sm transition-all">
-          <svg fill="currentColor" width="16" height="16" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
-          View on GitHub
-        </a>
+        <!-- Right column: video (desktop only) -->
+        <div class="hidden lg:block animate-fade-up animate-delay-2">
+          <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-purple-500/10 aspect-video bg-white/[0.03]" id="hero-video-container">
+            <!-- Loading spinner -->
+            <div class="absolute inset-0 flex items-center justify-center" id="hero-video-loader">
+              <svg class="w-8 h-8 text-purple-400/60 animate-spin" viewBox="0 0 24 24" fill="none">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+            </div>
+            <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-0 transition-opacity duration-500" id="hero-video">
+              <source src="/images/background/video.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>
+          </div>
+        </div>
+
       </div>
     </div>
 
     <script is:inline>
+      const heroVideo = document.getElementById('hero-video');
+      const heroLoader = document.getElementById('hero-video-loader');
+      if (heroVideo) {
+        heroVideo.addEventListener('canplaythrough', () => {
+          heroVideo.style.opacity = '1';
+          if (heroLoader) heroLoader.style.display = 'none';
+        }, { once: true });
+        if (heroVideo.readyState >= 4) {
+          heroVideo.style.opacity = '1';
+          if (heroLoader) heroLoader.style.display = 'none';
+        }
+      }
+
       const button = document.getElementById('clipboard-click');
       if (button) {
         const icon = button.querySelector('span');
@@ -237,10 +279,6 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
         </a>
       </div>
 
-      <!-- Platform icons -->
-      <div class="mt-16 flex justify-center">
-        <Platforms />
-      </div>
     </div>
   </section>
 

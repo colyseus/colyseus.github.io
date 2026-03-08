@@ -18,11 +18,11 @@ interface Props {
 const { align = 'center' } = Astro.props;
 ---
 <div class={`flex flex-col ${align === 'left' ? 'items-start' : 'items-center'}`}>
-  <p class="text-sm text-gray-500 mb-4">Supports your favorite engine & platform</p>
+  <p class="text-sm text-gray-500 mb-4 animate-fade-up" style="animation-delay: 0.5s">Supports your favorite engine & platform</p>
   <div class="flex items-center gap-6">
     <ul class="flex gap-6 items-center">
-      {Object.values(platforms).map((platform) => (
-        <li>
+      {Object.values(platforms).map((platform, i) => (
+        <li class="animate-fade-up" style={`animation-delay: ${0.6 + i * 0.06}s`}>
           <a href={platform.url} title={platform.name} class="group flex flex-col items-center relative">
             <img
               src={platform.image}
@@ -38,8 +38,8 @@ const { align = 'center' } = Astro.props;
     </ul>
 
     <ul class="flex gap-6 items-center">
-      {comingSoon.map((platform) => (
-        <li>
+      {comingSoon.map((platform, i) => (
+        <li class="animate-fade-up" style={`animation-delay: ${0.6 + (Object.keys(platforms).length + i) * 0.06}s`}>
           <a href={platform.url} target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center relative">
             <img
               src={platform.image}
