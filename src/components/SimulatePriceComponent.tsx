@@ -136,7 +136,7 @@ export default function SimulatePriceComponent({ title = "Pricing Simulator" }) 
       <div className="flex flex-col mt-4 space-y-4">
         <div className="space-y-1">
           <span className="font-semibold block">Location</span>
-          <select className="border p-3 rounded text-slate-900" onChange={onChangeLocation} placeholder="Select a location" value={selectedLocation}>
+          <select className="border border-white/10 bg-white/5 p-3 rounded text-white" onChange={onChangeLocation} placeholder="Select a location" value={selectedLocation}>
             <option className="hidden" value="">Select a location</option>
             {Object.keys(regions).map((region_code: any) => (
               <optgroup key={region_code} label={regions[region_code]} >
@@ -154,7 +154,7 @@ export default function SimulatePriceComponent({ title = "Pricing Simulator" }) 
 
         <div className="space-y-1">
           <span className="font-semibold block">Plan</span>
-          <select disabled={!selectedLocation} className="border p-3 rounded disabled:bg-gray-100 text-slate-900" onChange={onChangePlan} value={selectedPlan} placeholder="Select plan">
+          <select disabled={!selectedLocation} className="border border-white/10 bg-white/5 p-3 rounded disabled:bg-white/[0.02] disabled:text-gray-500 text-white" onChange={onChangePlan} value={selectedPlan} placeholder="Select plan">
             {(selectedLocation)
               ? Object.keys(tierNames).map((tierName: any) => (
                   <optgroup key={tierName} label={tierName}>
@@ -186,13 +186,13 @@ export default function SimulatePriceComponent({ title = "Pricing Simulator" }) 
 
           <div>
             <input type="radio" onChange={onChangeScaleStrategy} checked={selectedScaleStrategy === "horizontal"} name="scale_strategy" id="scale_horizontal" value="horizontal" className="mr-2" />
-            <label htmlFor="scale_horizontal">Cluster - Scale horizontally <span className="bg-blue-600 text-white p-1 text-xs rounded shadow">Beta</span> <span className="text-blue-600">(+$100<small>/mo</small>)</span></label>
+            <label htmlFor="scale_horizontal">Cluster - Scale horizontally <span className="bg-blue-600 text-white p-1 text-xs rounded">Beta</span> <span className="text-blue-400">(+$100<small>/mo</small>)</span></label>
 
             <div className={`scaling-num-instances col-span-2 pb-4 my-4 ${(selectedScaleStrategy !== "horizontal") ?  "hidden" : ""}`}>
                 <label className="font-semibold block">Number of instances</label>
-                <input type="range" onInput={onChangeNumInstances} value={selectedNumInstances} min="1" max="12" className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" />
+                <input type="range" onInput={onChangeNumInstances} value={selectedNumInstances} min="1" max="12" className="w-full h-2 bg-white/10 rounded-lg appearance-none cursor-pointer" />
 
-                <div className="flex justify-between text-xs text-gray-600 mt-1 px-1">
+                <div className="flex justify-between text-xs text-gray-500 mt-1 px-1">
                     <span className="pl-0.5 ">1</span>
                     <span className=" w-2">2</span>
                     <span className=" w-2">3</span>
@@ -212,13 +212,13 @@ export default function SimulatePriceComponent({ title = "Pricing Simulator" }) 
         </div>
       </div>
 
-      <button onClick={onAddLocation} disabled={!selectedPlan} className="block mt-4 w-full rounded p-4 text-white bg-blue-600 transition-all hover:bg-blue-700 active:bg-blue-800 disabled:bg-gray-400">
+      <button onClick={onAddLocation} disabled={!selectedPlan} className="block mt-4 w-full rounded p-4 text-white bg-purple-600 transition-all hover:bg-purple-500 active:bg-purple-700 disabled:bg-white/10 disabled:text-gray-500">
         Add location: ${getPrice()}<small>/mo</small>
       </button>
 
       {(selectedPlan)
         ? <div className="pt-2">
-            <div className="text-xs lg:text-base col-span-2 text-sm text-slate-100 bg-gray-600 rounded-xl p-4 ">
+            <div className="text-xs lg:text-base col-span-2 text-sm text-gray-300 bg-white/5 rounded-xl p-4 border border-white/5">
               <label className="inline-block text-white font-medium mb-1">Capacity estimation</label>
               <p className="capacity-estimation" data-template="">
 
@@ -244,12 +244,12 @@ export default function SimulatePriceComponent({ title = "Pricing Simulator" }) 
       {(addedLocations.length > 0)
         ?
           <div>
-            <div className="border-t border-gray-300 mt-6 pt-6 space-y-3 text-sm">
+            <div className="border-t border-white/5 mt-6 pt-6 space-y-3 text-sm">
               {addedLocations.map((addedLocation: any, i) => (
                 <DeploymentLocation key={i} {...addedLocation} />
               ))}
             </div>
-            <div className="border-t border-gray-300 mt-6 pt-6 font-medium text-xl text-center">
+            <div className="border-t border-white/5 mt-6 pt-6 font-medium text-xl text-center text-white">
               Total: ${addedLocations.reduce((acc, added) => {
                 return acc + added.price;
               }, 0)}<small>/mo</small>

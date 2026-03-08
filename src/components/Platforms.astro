@@ -1,21 +1,54 @@
 ---
 export const platforms = {
-  javascript: { name: "JavaScript/TypeScript", image: "/images/sdks/javascript.png", url: "https://docs.colyseus.io/getting-started/javascript/", },
-  unity: { name: "Unity", image: "/images/sdks/unity.png", url: "https://docs.colyseus.io/getting-started/unity/", },
-  construct3: { name: "Construct 3", image: "/images/sdks/construct3.png", url: "https://docs.colyseus.io/getting-started/construct3/", },
-  defold: { name: "Defold Engine", image: "/images/sdks/defold.png", url: "https://docs.colyseus.io/getting-started/defold/", },
-  haxe: { name: "Haxe 4", image: "/images/sdks/haxe.png", url: "https://docs.colyseus.io/getting-started/haxe/", },
-  cocos: { name: "Cocos Creator", image: "/images/sdks/cocos.png", url: "https://docs.colyseus.io/getting-started/cocos/", },
+  javascript: { name: "JavaScript/TypeScript", image: "/images/sdks/javascript.png", url: "https://docs.colyseus.io/getting-started/javascript/" },
+  unity: { name: "Unity", image: "/images/sdks/unity.png", url: "https://docs.colyseus.io/getting-started/unity/" },
+  construct3: { name: "Construct 3", image: "/images/sdks/construct3.png", url: "https://docs.colyseus.io/getting-started/construct3/" },
+  defold: { name: "Defold Engine", image: "/images/sdks/defold.png", url: "https://docs.colyseus.io/getting-started/defold/" },
+  haxe: { name: "Haxe 4", image: "/images/sdks/haxe.png", url: "https://docs.colyseus.io/getting-started/haxe/" },
+  cocos: { name: "Cocos Creator", image: "/images/sdks/cocos.png", url: "https://docs.colyseus.io/getting-started/cocos/" },
 };
+
+const comingSoon = [
+  { name: "GameMaker", image: "/images/platforms/gamemaker.png", url: "https://github.com/colyseus/native-sdk/issues/16" },
+  { name: "Godot", image: "/images/platforms/godot.png", url: "https://github.com/colyseus/native-sdk/issues/8" },
+];
 ---
-<h2 class="mb-4 text-sm lg:text-base">Supports your favorite engine & platform</h2>
-<ul class="flex space-x-6 align-items-center justify-start group/all">
-  {Object.values(platforms).map((platform) => (
-    <li class="relative last:-top-2">
-      <a href={platform.url} title={platform.name} class="relative group flex flex-col justify-between text-left items-center">
-        <img src={platform.image} alt={platform.name} class="w-14 transition-all translate-y-0 opacity-80 group-hover:opacity-100 group-hover:-translate-y-1 " />
-        <span class="text-semibold absolute -bottom-5 text-sm transition-all whitespace-nowrap opacity-0 group-hover:opacity-100 group-hover:translate-y-1">{platform['alias'] || platform.name}</span>
-      </a>
-    </li>
-  ))}
-</ul>
+<div class="flex flex-col items-center">
+  <p class="text-sm text-gray-500 mb-4">Supports your favorite engine & platform</p>
+  <div class="flex items-center gap-6">
+    <ul class="flex gap-6 items-center">
+      {Object.values(platforms).map((platform) => (
+        <li>
+          <a href={platform.url} title={platform.name} class="group flex flex-col items-center relative">
+            <img
+              src={platform.image}
+              alt={platform.name}
+              class="w-10 lg:w-14 opacity-60 group-hover:opacity-100 group-hover:-translate-y-1 transition-all"
+            />
+            <span class="absolute top-full mt-1 text-xs text-gray-500 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+              {platform.name}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <ul class="flex gap-6 items-center">
+      {comingSoon.map((platform) => (
+        <li>
+          <a href={platform.url} target="_blank" rel="noopener noreferrer" class="group flex flex-col items-center relative">
+            <img
+              src={platform.image}
+              alt={platform.name}
+              class="w-10 lg:w-14 opacity-60 group-hover:opacity-100 group-hover:-translate-y-1 transition-all"
+            />
+            <span class="absolute top-full mt-1 flex flex-col items-center whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
+              <span class="text-xs text-gray-500">{platform.name}</span>
+              <span class="text-[10px] font-medium uppercase tracking-wide bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded border border-purple-500/30 mt-0.5">Alpha</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</div>

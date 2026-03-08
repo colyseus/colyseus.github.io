@@ -19,7 +19,7 @@ const subtitle = "Inspirational interviews with people thriving with Colyseus";
     <p class="font-sans text-lg font-normal text-gray-500 mt-2">{subtitle}</p>
   </TitleSection>
 
-  <section class="container m-auto px-6 pb-32 animate-from-bottom-fade">
+  <section class="container m-auto px-6 pb-32 animate-fade-up">
     <ul class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-center">
       {successStories.filter(post => post.data.published).map((post, i) => (
         <PostItem
@@ -33,6 +33,6 @@ const subtitle = "Inspirational interviews with people thriving with Colyseus";
 
   <SponsorsSection />
 
-  <JoinCommunitySection class="bg-white" />
+  <JoinCommunitySection />
 
 </MainLayout>

@@ -2,16 +2,18 @@
 const props: any = Astro.props;
 ---
 <a
-  class="animate-from-bottom-fade flex space-x-4 transition-all shadow w-full rounded p-4 items-center justify-center hover:shadow-lg"
+  class="group flex gap-4 p-6 rounded-xl bg-white/[0.03] border border-white/5 hover:border-white/10 transition-all"
   href={props.href || "#"}
 >
-  <img class="hidden lg:flex rounded-full w-12 lg:w-24 shadow-lg" src={props.author_img} alt={props.author} />
-  <span>
-    <span class="block italic font-light">"{props.quote}"</span>
-
-    <span class="flex mt-2 gap-4 justify-center items-center">
-      <img class="inline-block lg:hidden rounded-full w-12 lg:w-24 shadow-lg" src={props.author_img} alt={props.author} />
-      <span>{props.author} - {props.author_ref}</span>
-    </span>
-  </span>
+  <img class="hidden lg:block rounded-full w-14 h-14 object-cover ring-2 ring-white/10 flex-shrink-0" src={props.author_img} alt={props.author} />
+  <div>
+    <p class="text-gray-300 text-sm leading-relaxed italic mb-3">"{props.quote}"</p>
+    <div class="flex items-center gap-3">
+      <img class="lg:hidden rounded-full w-10 h-10 object-cover ring-2 ring-white/10" src={props.author_img} alt={props.author} />
+      <div>
+        <span class="text-white text-sm font-medium">{props.author}</span>
+        <span class="block text-gray-500 text-xs">{props.author_ref}</span>
+      </div>
+    </div>
+  </div>
 </a>
