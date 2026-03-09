@@ -18,25 +18,25 @@ import logoPostgres from "../../assets/framework/logo-postgres.png";
 ---
 
 <MainLayout title="The Multiplayer Framework Developers Love" description="Open-source real-time multiplayer framework for Node.js. Built-in matchmaking, automatic state synchronization, scalability, and client SDKs for Unity, Defold, Haxe, and JavaScript." isHeaderExpanded={false} isBlue={false}>
-  <section id="hero" class="text-gray-200 min-h-[99vh] flex bg-section-glow-purple">
-    <div class="max-w-7xl mx-auto px-6 py-10 flex items-center ">
-      <div class="flex justify-between flex-col lg:flex-row space-x-0 lg:space-x-8 w-full">
+  <section id="hero" class="text-gray-200 min-h-[99vh] flex bg-section-glow-purple overflow-hidden">
+    <div class="max-w-7xl mx-auto px-6 py-10 flex items-center min-w-0">
+      <div class="flex justify-between flex-col lg:flex-row space-x-0 lg:space-x-8 w-full min-w-0">
 
         <!-- Left -->
-        <div class="w-full">
+        <div class="w-full min-w-0">
           <div class="pt-20 pb-4 animate-fade-up">
             <svg class="w-16 text-purple-500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 122 133.24"> <defs> <style> .herocf1 { fill: url(#linear-gradient-2); } .herocf2 { fill: #000; } .herocf3 { fill: url(#linear-gradient-3); } .herocf4 { fill: url(#linear-gradient); } </style> <linearGradient id="linear-gradient" x1="13.09" y1="4.21" x2="132.62" y2="99.02" gradientUnits="userSpaceOnUse"> <stop offset="0" stop-color="#a32fe0"/> <stop offset="1" stop-color="#5945e3"/> </linearGradient> <linearGradient id="linear-gradient-2" x1="16.8" y1="-.46" x2="136.33" y2="94.34" xlink:href="#linear-gradient"/> <linearGradient id="linear-gradient-3" x1="-14.54" y1="39.05" x2="104.99" y2="133.85" xlink:href="#linear-gradient"/> </defs> <g> <g> <path class="herocf4" d="m19.8,48.53c3.4,2.77,7.52,5.48,12.5,7.91,3.66-7.06,17.75-24.8,57.44-19.62l-3.55-13.63c-49.3-4.23-63.47,18.99-66.4,25.34Z"/> <path class="herocf1" d="m10.96,41.3c5.52-10.03,24.41-30.58,71.44-26.05L76.37.39S27.06-5.33,2.19,26.95c.89,2.6,3.28,8.21,8.77,14.35Z"/> <path class="herocf3" d="m100.37,71.71c-7.91.83-15.27,1.22-22.07,1.22C30.31,72.92,9.06,54.07,0,40.61v62.04s3.88,40.13,120.38,28.48l-20-59.42Z"/> </g> </g> </svg>
             <h1 class="font-display text-5xl mt-8 text-semibold gradient-text">The Multiplayer Framework Developers Love</h1>
             <p class="mt-4 text-xl text-slate-300">Open-source, battle-tested, and built for real-time games. Free forever.</p>
           </div>
-          <div class="flex space-x-6 my-8 items-center animate-fade-up flex-col lg:flex-row">
+          <div class="flex space-x-6 my-8 items-center animate-fade-up flex-col lg:flex-row max-w-full overflow-hidden">
 
-            <span class="flex lg:block bg-gradient-purple p-1 rounded mx-auto lg:mx-0 w-full md:w-auto lg:w-auto text-sm lg:text-base">
-              <span class="font-mono bg-gray-950 pl-1 lg:pl-5 rounded relative flex items-center justify-start lg:justify-center  overflow-hidden lg:overflow-visible">
+            <span class="flex lg:block bg-gradient-purple p-1 rounded mx-auto lg:mx-0 w-full md:w-auto lg:w-auto text-sm lg:text-base max-w-full overflow-hidden">
+              <span class="font-mono bg-gray-950 pl-1 lg:pl-5 rounded relative flex items-center justify-start lg:justify-center overflow-hidden min-w-0">
                 <!-- caret -->
                 <svg class="inline-block relative w-3 -rotate-90 text-gray-300 mr-2" stroke="currentColor" data-hk="0-0" width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 11L21 1" stroke-width="2"></path></svg>
                 <span class="text-gray-300 whitespace-nowrap text-ellipsis lg:w-full overflow-hidden">npm create colyseus-app@latest ./my-server</span>
-                <button class="group inline-block cursor-pointer p-3 lg:p-5 relative" id="clipboard-click">
+                <button class="group inline-block cursor-pointer p-3 lg:p-5 relative flex-shrink-0" id="clipboard-click">
                   <svg class="inline-block w-5 text-gray-400 transition-all group-hover:scale-125 group-active:scale-75 group-active:text-purple-300  group-hover:text-gray-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                   <span
                     class="absolute pointer-events-none hidden bg-black data-[clicked=yes]:inline-block text-purple-200 text-sm bg-purple-600 rounded py-2 px-3 -translate-x-12 translate-y-10"
@@ -78,7 +78,7 @@ import logoPostgres from "../../assets/framework/logo-postgres.png";
 
         <!-- Right -->
         <div class="justify-center items-center text-lg flex grow">
-          <ul class="space-y-4 text-xl self-center rounded-lg whitespace-nowrap p-8 bg-black/40 flex flex-col">
+          <ul class="space-y-4 text-xl self-center rounded-lg lg:whitespace-nowrap p-8 bg-black/40 flex flex-col">
 
             <li class="animate-fade-up animate-delay-005">
               <svg class="inline mr-1 text-green-600" height="1em" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 512 512"><path d="M256 0c4.6 0 9.2 1 13.4 2.9L457.7 82.8c22 9.3 38.4 31 38.3 57.2c-.5 99.2-41.3 280.7-213.6 363.2c-16.7 8-36.1 8-52.8 0C57.3 420.7 16.5 239.2 16 140c-.1-26.2 16.3-47.9 38.3-57.2L242.7 2.9C246.8 1 251.4 0 256 0z"/></svg>
