@@ -10,7 +10,7 @@ const posts = (await getCollection('blog')).sort(
 	(a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate)
 );
 ---
-<MainLayout title="Blog">
+<MainLayout title="Blog - Colyseus Multiplayer Framework" description="News, tutorials, and updates from the Colyseus team. Learn about building real-time multiplayer with JavaScript and TypeScript.">
   <TitleSection>
     Blog
     <!-- <p class="font-sans text-lg font-normal text-gray-500 mt-2">xxx</p> -->

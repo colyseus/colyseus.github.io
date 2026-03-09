@@ -11,9 +11,9 @@ const successStories = (await getCollection('success-stories')).sort(
 	(a, b) => new Date(b.data.pubDate) - new Date(a.data.pubDate)
 );
 
-const subtitle = "Inspirational interviews with people thriving with Colyseus";
+const subtitle = "See how developers and studios ship multiplayer games with Colyseus. Real-world case studies and interviews.";
 ---
-<MainLayout title="Success stories" description={subtitle}>
+<MainLayout title="Success Stories - Built with Colyseus" description={subtitle}>
   <TitleSection>
     Success Stories
     <p class="font-sans text-lg font-normal text-gray-500 mt-2">{subtitle}</p>
