@@ -96,10 +96,6 @@ body {
 .marquee-teams {
   animation: marquee-teams 45s linear infinite;
 }
-.marquee-teams:has(:hover) {
-  animation-play-state: paused;
-}
-
 /* === Showcase Marquee === */
 @keyframes marquee-left {
   0% { transform: translateX(0); }
@@ -115,11 +111,6 @@ body {
 .marquee-right {
   animation: marquee-right 40s linear infinite;
 }
-.marquee-left:has(:hover),
-.marquee-right:has(:hover) {
-  animation-play-state: paused;
-}
-
 /* === Typewriter cursor === */
 @keyframes blink {
   0%, 100% { opacity: 1; }

@@ -11,7 +11,7 @@ import Platforms, { platforms } from '../components/Platforms.astro';
 import CodeServer from "../content/homepage/code-server.mdx";
 import CodeClient from "../content/homepage/code-client.mdx";
 
-const subtitle = "Build and ship real-time multiplayer experiences with Colyseus. Open-source framework for Node.js with built-in matchmaking, state sync, and SDKs for Unity, Defold, Haxe, and JavaScript.";
+const subtitle = "Build and ship real-time multiplayer experiences with Colyseus. Open-source framework for Node.js with built-in matchmaking, state sync, and SDKs for Unity, Defold, Construct, Haxe, JavaScript, and more.";
 
 const teams = [
   { name: "PreAlpha", href: "https://prealpha.dev/", logo: "/images/teams/prealpha.svg" },
@@ -318,7 +318,8 @@ const teams = [
             <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h3 class="text-white font-semibold mb-2">Cheat-Proof by Design</h3>
-          <p class="text-sm text-gray-500 leading-relaxed">Authoritative server architecture. Game state lives on the server, not the client.</p>
+          <p class="text-sm text-gray-500 leading-relaxed">Authoritative server architecture. Clients send inputs — the server decides what happens.</p>
+          
         </div>
 
         <!-- Feature 5: Multi-Platform -->
@@ -330,7 +331,7 @@ const teams = [
             <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </div>
           <h3 class="text-white font-semibold mb-2">Multi-Platform SDKs</h3>
-          <p class="text-sm text-gray-500 leading-relaxed">JavaScript, Unity, Defold, Construct 3, Haxe, and Cocos Creator. Use the tools you already know.</p>
+          <p class="text-sm text-gray-500 leading-relaxed">JavaScript, Unity, Defold, Construct 3, Haxe, Cocos Creator, and more. Use the tools you already know.</p>
         </a>
 
         <!-- Feature 6: Open Source -->
@@ -468,8 +469,8 @@ const teams = [
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
         {[
           { title: "vs Photon", items: ["Open-source, own your servers", "No CCU pricing surprises", "Full server-side control"] },
-          { title: "vs Mirror", items: ["Works with any game engine", "Not tied to Unity", "Dedicated server architecture"] },
-          { title: "vs Nakama", items: ["Simpler API, faster to learn", "TypeScript-native", "Focused on real-time games"] },
+          { title: "vs Mirror", items: ["Works with any game engine", "Not tied to Unity", "Runs as a standalone server process"] },
+          { title: "vs Nakama", items: ["Simpler API, faster to learn", "TypeScript-native", "Purpose-built for room-based multiplayer"] },
           { title: "vs From Scratch", items: ["Battle-tested in production", "Ship in days, not months", "Active community support"] },
         ].map((card) => (
           <div class="p-6 rounded-xl border border-white/5 bg-white/[0.02]">
