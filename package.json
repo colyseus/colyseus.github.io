@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "sponsors": "sponsorkit",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -28,6 +29,7 @@
     "tutomd": "^1.0.7"
   },
   "devDependencies": {
-    "open-graph-scraper": "^6.2.2"
+    "open-graph-scraper": "^6.2.2",
+    "sponsorkit": "^17.0.0"
   }
 }

@@ -30,7 +30,19 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
 
 <html lang="en">
 	<head>
-		<BaseHead title={(preTitle) ? `${preTitle}${title}` : title} description={description} image={props.heroImage && optimizedHeroImage.src} />
+		<BaseHead
+			title={(preTitle) ? `${preTitle}${title}` : title}
+			description={description}
+			image={props.heroImage && optimizedHeroImage.src}
+			article={{
+				publishedTime: pubDate instanceof Date ? pubDate.toISOString() : pubDate?.toString(),
+				modifiedTime: updatedDate instanceof Date ? updatedDate.toISOString() : updatedDate?.toString(),
+				author: props.author,
+				authorUrl: typeof author_link === 'string' ? author_link : undefined,
+				authorImage: typeof author_img === 'string' ? author_img : undefined,
+				section: props.isSuccessStories ? "Success Stories" : "Blog",
+			}}
+		/>
 	</head>
 
 	<body>
@@ -39,12 +51,12 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
 
       {(optimizedHeroImage) &&
         <div class="mx-auto w-full max-w-screen-lg md:-mb-20 lg:-mb-24 xl:-mb-32 -z-1">
-          <img class="rounded-b-2xl" width="1500" src={optimizedHeroImage.src} transition:name={`${slug}-hero`} />
+          <img class="rounded-b-2xl" width="1500" src={optimizedHeroImage.src} alt={title} transition:name={`${slug}-hero`} />
         </div>}
 
 			<article class="grid-container px-6 relative sm:text-sm text-base mx-auto max-w-screen-lg z-10">
 				<div class="mx-auto w-fit max-w-full py-5 sm:py-8 lg:px-10 lg:py-12 lg:p-12 lg:py-16 xl:p-16 xl:py-20 "> <!-- -mt-16 -->
-					<header class="overflow-hidden animate-from-bottom-fade text-center pt-16 bg-white rounded-lg z-20">
+					<header class="overflow-hidden animate-fade-up text-center pt-16 rounded-xl z-20">
 
             {(pubDate) &&
               <span class="inline-block font-mono text-gray-500" ><FormattedDate date={pubDate} /></span>}
@@ -57,23 +69,23 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
 
             <!-- "Success Stories" title -->
             {(props.isSuccessStories) &&
-              <h2 class="mt-10 -mb-6 text-gray-500 text-2xl">Success Story</h2>}
+              <h2 class="mt-10 -mb-6 text-gray-400 text-2xl">Success Story</h2>}
 
-            <h1 class="text-4xl lg:text-6xl mt-6 px-4">{title}</h1>
+            <h1 class="font-display text-4xl lg:text-6xl mt-6 px-4 text-white">{title}</h1>
 
             {(!props.isSuccessStories && description) &&
               <h4 class="mt-4">{description}</h4>}
 
             {(props.author) &&
-              <div class="font-mono text-gray-500 font-medium" >
+              <div class="font-mono text-gray-400 font-medium" >
                 By
-                <a class="inline-block text-gray-500" href={author_link}>
-                  {(author_img) && <img class="inline w-8 rounded-full border border-gray-500 mr-2" src={author_img} alt={props.author}>}
+                <a class="inline-block text-gray-400 hover:text-white transition-colors" href={author_link}>
+                  {(author_img) && <img class="inline w-8 rounded-full border border-white/10 mr-2" src={author_img} alt={props.author}>}
                   {props.author}
                 </a>
               </div>}
 
-            <hr class="-mx-16 mt-16 lg:my-16">
+            <hr class="-mx-16 mt-16 lg:my-16 border-white/5">
 					</header>
 
 					<slot />
@@ -88,7 +100,7 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
         <JoinCommunitySection />}
 
       {(footerSection === "colyseus-cloud") &&
-        <ColyseusCloudSection bgGray={true} />}
+        <ColyseusCloudSection />}
 
 		</main>
 		<Footer />

@@ -1,0 +1,18 @@
+```typescript
+import { Client, Callbacks } from "@colyseus/sdk";
+
+const client = new Client("https://your-server.com");
+const room = await client.joinOrCreate("game_room");
+const callbacks = Callbacks.get(room);
+
+// Listen to state changes in real-time
+callbacks.onAdd("players", (player, key) => {
+  addSpriteForPlayer(player);
+
+  callbacks.onChange(player, () => 
+    moveSprite(key, player.x, player.y));
+});
+
+// send a message to the server
+room.send("move", { x: 10, y: 20 });
+```

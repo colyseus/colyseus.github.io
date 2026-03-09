@@ -6,20 +6,20 @@ import MainLayout from '../layouts/MainLayout.astro';
 import SimulatePriceComponent from "../components/SimulatePriceComponent";
 ---
 
-<MainLayout title="Pricing">
+<MainLayout title="Pricing - Colyseus Cloud Hosting Plans" description="Compare Colyseus Cloud plans for managed multiplayer server hosting. Free tier available. Scale from prototype to production.">
   <TitleSection>
     Pricing
     <!-- p class="font-sans text-lg font-normal text-gray-500 mt-2"></p -->
   </TitleSection>
 
-  <section class="container m-auto px-6 mb-20 animate-from-bottom-fade space-y-4">
+  <section class="container m-auto px-6 mb-20 animate-fade-up space-y-4">
     <div class="max-w-screen-xl mx-auto mb-20">
       <div class="flex flex-col lg:flex-row justify-center space-x-0 lg:space-x-8 space-y-8">
 
         <!-- Open Source -->
-        <div class="bg-white rounded-lg shadow p-6 border my-auto">
-            <h3 class="text-2xl font-semibold">Open Source</h2>
-            <p class="border-b pb-2 text-purple-600 mb-4">Free</p>
+        <div class="rounded-xl bg-white/[0.03] border border-white/5 p-6 my-auto">
+            <h3 class="text-2xl font-semibold text-white">Open Source</h3>
+            <p class="border-b border-white/5 pb-2 text-purple-400 mb-4">Free</p>
             <ul class="mb-4 space-y-3">
               <!-- <li>
                 <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
@@ -38,19 +38,19 @@ import SimulatePriceComponent from "../components/SimulatePriceComponent";
                 <span>No restrictions</span>
               </li>
             </ul>
-            <a class="block rounded p-3 text-center text-purple-600 transition-all border-2 border-purple-500 hover:border-purple-600 active:border-purple-700" href="https://github.com/sponsors/endel">
+            <a class="block rounded-lg p-3 text-center text-purple-400 transition-all border border-purple-500/30 hover:border-purple-500/50 hover:bg-purple-500/10" href="https://github.com/sponsors/endel">
               Donate / Sponsor
             </a>
-            <a href="/framework" class="mt-4 block group/link text-purple-500 text-center text-sm">
+            <a href="/framework" class="mt-4 block group/link text-purple-400 text-center text-sm">
               Learn more
               <svg class="inline-block transition-transform ease-out relative group-hover/link:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
             </a>
         </div>
 
-        <!-- Open Source -->
-        <div class="bg-white rounded-lg shadow-lg p-6 border-2 border-purple-600">
-            <h3 class="text-2xl font-semibold">Colyseus Cloud</h2>
-            <p class="border-b pb-2 text-purple-600 mb-4">Starting at $15/mo</p>
+        <!-- Colyseus Cloud -->
+        <div class="rounded-xl bg-purple-500/[0.05] border-2 border-purple-500/30 p-6">
+            <h3 class="text-2xl font-semibold text-white">Colyseus Cloud</h3>
+            <p class="border-b border-white/5 pb-2 text-purple-400 mb-4">Starting at $15/mo</p>
             <ul class="mb-4 space-y-3">
               <!-- <li>
                 <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
@@ -77,8 +77,8 @@ import SimulatePriceComponent from "../components/SimulatePriceComponent";
                 <span>Support by email</span>
               </li>
             </ul>
-            <a class="block rounded p-3 text-center text-white transition-all bg-purple-500 hover:bg-purple-600 active:bg-purple-700" href="https://cloud.colyseus.io">Get Started</a>
-            <a href="/cloud-managed-hosting" class="mt-4 block group/link text-purple-500 text-center text-sm">
+            <a class="block rounded-lg p-3 text-center text-white transition-all bg-purple-600 hover:bg-purple-500" href="https://cloud.colyseus.io">Get Started</a>
+            <a href="/cloud-managed-hosting" class="mt-4 block group/link text-purple-400 text-center text-sm">
               Learn more
               <svg class="inline-block transition-transform ease-out relative group-hover/link:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
             </a>
@@ -87,13 +87,13 @@ import SimulatePriceComponent from "../components/SimulatePriceComponent";
       </div>
     </div>
 
-    <div class="border-t border-gray-300">
-      <div class="max-w-xl mx-auto bg-gray-50 px-8 pt-12 pb-8 rounded-b-lg border-l border-r border-b  shadow">
+    <div class="border-t border-white/5">
+      <div class="max-w-xl mx-auto bg-white/[0.03] px-8 pt-12 pb-8 rounded-b-xl border border-white/5">
         <SimulatePriceComponent client:only title="Simulator" />
       </div>
     </div>
   </section>
 
-  <ColyseusCloudSection bgGray={true} />
+  <ColyseusCloudSection />
 
 </MainLayout>

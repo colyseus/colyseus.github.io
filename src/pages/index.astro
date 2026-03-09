@@ -3,170 +3,498 @@ import MainLayout from '../layouts/MainLayout.astro';
 
 import { collections } from '../content/config';
 
-import ColyseusCloudSection from '../components/ColyseusCloudSection.astro';
 import SponsorsSection from '../components/SponsorsSection.astro';
 import SuccessStoriesSection from '../components/SuccessStoriesSection.astro';
 import JoinCommunitySection from '../components/JoinCommunitySection.astro';
 import Platforms, { platforms } from '../components/Platforms.astro';
 
-const subtitle = "Own your authoritative game servers. Versatile for any genre or platform.";
+import CodeServer from "../content/homepage/code-server.mdx";
+import CodeClient from "../content/homepage/code-client.mdx";
+
+const subtitle = "Build and ship real-time multiplayer experiences with Colyseus. Open-source framework for Node.js with built-in matchmaking, state sync, and SDKs for Unity, Defold, Haxe, and JavaScript.";
+
+const teams = [
+  { name: "PreAlpha", href: "https://prealpha.dev/", logo: "/images/teams/prealpha.svg" },
+  { name: "Bloxd.io", href: "https://bloxd.io/", logo: "/images/teams/bloxd.svg" },
+  { name: "Pixels", href: "https://pixels.xyz/", logo: "/images/teams/pixels.png" },
+  { name: "Emolingo", href: "https://emolingo.games/", logo: "/images/teams/emolingo.png" },
+  { name: "One Way Block", href: "https://onewayblock.com/", logo: "/images/teams/owb-studio.webp" },
+  { name: "DinoBros", href: "https://dinobros.com/", logo: "/images/teams/dinobros.svg" },
+  { name: "Elanra Studios", href: "https://elanrastudios.com/", logo: "/images/teams/elanra-studios.webp" },
+  { name: "Animoca Brands", href: "https://animocabrands.com/", logo: "/images/teams/animoca-brands.webp" },
+];
 ---
 
-<MainLayout title="Open-source Multiplayer Framework for Node.js" description={subtitle} isHeaderExpanded={false}>
-  <section class="text-gray-200 relative">
-    <video autoplay muted loop class="absolute h-[50vh] lg:h-[98vh] w-full m-auto top-0 bottom-0 -z-10 bg-gray-400">
+<MainLayout title="Colyseus - Real-Time Multiplayer Framework for Node.js" description={subtitle} isHeaderExpanded={false}>
+
+  <!-- ===== HERO ===== -->
+  <section class="relative min-h-[90vh] lg:min-h-screen flex items-center overflow-hidden">
+    <!-- Background video (mobile only) -->
+    <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-20 lg:hidden">
       <source src="/images/background/video.mp4" type="video/mp4">
     </video>
+    <!-- Gradient overlay (mobile only) -->
+    <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0b]/60 via-[#0a0a0b]/40 to-[#0a0a0b] lg:hidden"></div>
+    <div class="absolute inset-0 bg-gradient-radial-hero lg:hidden"></div>
+    <!-- Glow (desktop only) -->
+    <div class="absolute inset-0 hidden lg:block bg-gradient-radial-hero-desktop"></div>
 
-    <div class="bg-gradient-black z-10 min-h-[50vh] lg:min-h-[99vh] flex overflow-hidden">
-      <div class="container mx-auto px-6 flex items-center flex-col lg:flex-row relative py-16 lg:py-20 ">
-        <!-- <img src="/images/home/gladios.png" class="absolute -right-8 bottom-0 top-32 m-auto w-[26%] animate-leftToRight animation-delay-1" alt="Gladios" />
-        <img src="/images/home/valerya.png" class="absolute -left-12 bottom-0 -top-48 m-auto w-[26%] animate-rightToLeft animation-delay-1" alt="Valerya" /> -->
-        <div class="w-full text-center ">
-          <div class="py-16 lg:py-20 animate-from-top-fade">
-            <h1 class="text-5xl lg:text-7xl mb-2 font-medium drop-shadow-[0px_3px_2px_rgba(0,0,0,1)] ">
-              <span class="text-lg lg:text-4xl tracking-tight text-gray-300 inline-block mb-2 lg:mb-0">Free and Open-source</span> <br/>
-              <span class="gradient-text">Multiplayer Framework</span>
-            </h1>
-            <p class="text-base lg:text-xl inline-block mt-1 lg:mt-0">{subtitle}</p>
-          </div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10 py-24 lg:py-32 w-full">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
 
-          <div class="p-1 relative flex flex-row w-full justify-center animate-from-bottom-fade">
+        <!-- Left column: content -->
+        <div class="text-center lg:text-left">
+          <a href="https://shop.colyseus.io/" target="_blank" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 text-purple-300 text-sm font-medium hover:bg-purple-500/20 hover:border-purple-500/40 transition-all mb-6 animate-fade-up">
+            Colyseus Merch Shop is live
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
 
-            <div>
-              <span class="flex bg-gradient-purple p-0.5 lg:p-1 rounded w-2/3 mx-auto lg:w-full text-sm lg:text-base">
-                <span class="font-mono bg-gray-950 pl-1 lg:pl-5 rounded relative flex items-center justify-start lg:justify-center overflow-hidden lg:overflow-visible">
-                  <!-- caret -->
-                  <svg class="inline-block relative w-3 -rotate-90 text-gray-300 mr-2" stroke="currentColor" data-hk="0-0" width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 1L11 11L21 1" stroke-width="2"></path></svg>
-                  <span class="text-gray-300 whitespace-nowrap text-ellipsis lg:w-full overflow-hidden">npm create colyseus-app@latest ./my-server</span>
-                  <button class="group inline-block cursor-pointer p-2 lg:p-5 relative" id="clipboard-click">
-                    <svg class="inline-block w-5 text-gray-400 transition-all group-hover:scale-125 group-active:scale-75 group-active:text-purple-300  group-hover:text-gray-200" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"> <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect> <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                    <span
-                      class="absolute pointer-events-none hidden bg-black data-[clicked=yes]:inline-block text-purple-200 text-sm bg-purple-600 rounded py-2 px-3 -translate-x-12 translate-y-10"
-                      data-clicked="no"
-                    >
-                      Copied!
-                    </span>
-                  </button>
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-white mb-6 animate-fade-up animate-delay-1">
+            Ship Multiplayer
+            <br />
+            <span id="typewriter" class="text-purple-400">Games</span>
+            <br />
+            <span class="gradient-text">Faster</span>
+          </h1>
 
-                  <script is:inline>
-                    const button = document.getElementById('clipboard-click');
-                    const icon = button.querySelector('span');
-                    let timeout = null;
-                    button.addEventListener('click', () => {
-                      navigator.clipboard.writeText('npm create colyseus-app@latest ./my-server');
-                      clearTimeout(timeout);
-                      icon.dataset.clicked = 'yes';
-                      timeout = setTimeout(() => icon.dataset.clicked = 'no', 1000);
-                    });
-                  </script>
-                </span>
-              </span>
+          <p class="text-base lg:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0 lg:max-w-none mb-10 animate-fade-up animate-delay-2">
+            {subtitle}
+          </p>
 
-              <div class="text-sm text-gray-300 mt-6">
-                <a href="https://nodejs.org/en" target="_blank" class="transition-opacity hover:opacity-80 p-1">* Requires Node.js installed.</a>
+          <!-- Terminal Command -->
+          <div class="animate-fade-up animate-delay-3 max-w-xl mx-auto lg:mx-0 mb-8">
+            <div class="bg-white/[0.03] border border-white/10 rounded-xl p-1">
+              <div class="flex items-center bg-white/[0.02] rounded-lg px-4 py-3">
+                <span class="text-gray-600 mr-3 select-none">$</span>
+                <code class="font-mono text-sm lg:text-base text-gray-300 flex-1 text-left">npm create colyseus-app@latest ./my-server</code>
+                <button class="group p-2 rounded-lg hover:bg-white/5 transition-colors" id="clipboard-click">
+                  <svg class="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
+                  <span
+                    class="absolute pointer-events-none hidden data-[clicked=yes]:inline-block text-xs bg-white/10 text-white rounded py-1 px-2 -translate-x-8 translate-y-6"
+                    data-clicked="no"
+                  >
+                    Copied!
+                  </span>
+                </button>
               </div>
             </div>
-
+            <p class="text-xs text-gray-600 mt-3">
+              <a href="https://nodejs.org/en" target="_blank" class="hover:text-gray-400 transition-colors">Requires Node.js</a>
+            </p>
           </div>
 
-          <!--div class="mt-16 text-sm animate-delay-3 hidden lg:block animate-from-bottom-fade ">
-            <a target="_blank" href="https://stackblitz.com/edit/colyseus?embed=1&file=src%2Frooms%2FMyRoom.ts" class="m-auto rounded-full border-4 border-purple-600 text-white font-semibold py-2 px-4 mr-4 transition-all hover:bg-purple-600 active:bg-purple-700 hover:shadow-inner">See in action ⚡️</a>
-          </div-->
+          <!-- CTAs -->
+          <div class="flex flex-wrap gap-4 justify-center lg:justify-start animate-fade-up animate-delay-4">
+            <a href="https://docs.colyseus.io/" class="px-6 py-3 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium text-sm transition-colors">
+              Get Started
+            </a>
+            <a href="https://github.com/colyseus/colyseus" target="_blank" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-white font-medium text-sm transition-all">
+              <svg fill="currentColor" width="16" height="16" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+              View on GitHub
+            </a>
+          </div>
+
+          <!-- Platform support -->
+          <div class="mt-12 animate-fade-up animate-delay-4">
+            <Platforms align="left" />
+          </div>
 
         </div>
-      </div>
 
-    </div>
-  </section>
+        <!-- Right column: video (desktop only) -->
+        <div class="hidden lg:block animate-fade-up animate-delay-3">
+          <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-purple-500/10 aspect-video bg-white/[0.03]" id="hero-video-container">
+            <!-- Loading spinner -->
+            <div class="absolute inset-0 flex items-center justify-center" id="hero-video-loader">
+              <svg class="w-8 h-8 text-purple-400/60 animate-spin" viewBox="0 0 24 24" fill="none">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+              </svg>
+            </div>
+            <video autoplay muted loop playsinline class="w-full h-full object-cover opacity-0 transition-opacity duration-500" id="hero-video">
+              <source src="/images/background/video.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/10"></div>
+          </div>
+          <a
+            href="https://www.youtube.com/watch?v=3EEw5Sl93KE"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center justify-center gap-2 mt-3 text-sm text-gray-500 hover:text-purple-400 transition-colors"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            Watch the Colyseus Reel
+          </a>
+        </div>
 
-  <section class="bg-gradient-purple text-slate-100 text-center border-b border-solid border-gray-300">
-    <div class="container mx-auto px-6 relative py-16 lg:py-24">
-      <h2 class="text-2xl lg:text-5xl font-medium mb-6 lg:mb-10 text-white">
-        <span class="relative">
-          <a href="/framework">Meet Colyseus Features</a>
-          <span class="absolute transition-all animate-scale-x-100 inset-x-0 -bottom-0.5 h-0.5 bg-white"></span>
-        </span>
-      </h2>
-
-      <ul class="max-w-6xl mx-auto text-purple-100 grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 text-base lg:text-xl text-left justify-center items-center py-6">
-        <li class="flex space-x-4 items-center group">
-          <svg class="w-12 lg:w-24 max-h-12 lg:max-h-none opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 21 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"> <g clip-path="url(#clip0_5_340)"> <path d="M16.5798 6.3375L15.9798 5.5375L14.4798 6.6625L15.0798 7.4625L16.5798 6.3375ZM18.5298 6C18.9454 6 19.3298 5.875 19.6485 5.65938C19.861 5.51562 20.0454 5.33125 20.1892 5.11875C20.4048 4.8 20.5298 4.41563 20.5298 4C20.5298 3.58437 20.4048 3.2 20.1892 2.88125C20.1173 2.775 20.036 2.675 19.9454 2.58437C19.8548 2.49375 19.7548 2.4125 19.6485 2.34063C19.3298 2.125 18.9454 2 18.5298 2C18.1142 2 17.7298 2.125 17.411 2.34063C17.1985 2.48438 17.0142 2.66875 16.8704 2.88125C16.6548 3.2 16.5298 3.58437 16.5298 4C16.5298 5.10313 17.4267 6 18.5298 6ZM18.5298 3C19.0798 3 19.5298 3.45 19.5298 4C19.5298 4.55 19.0798 5 18.5298 5C17.9798 5 17.5298 4.55 17.5298 4C17.5298 3.45 17.9798 3 18.5298 3ZM3.64854 7.84062C3.32979 7.625 2.94541 7.5 2.52979 7.5C2.11416 7.5 1.72979 7.625 1.41104 7.84062C1.19854 7.98438 1.01416 8.16875 0.87041 8.38125C0.654785 8.7 0.529785 9.08438 0.529785 9.5C0.529785 10.6031 1.42666 11.5 2.52979 11.5C3.63291 11.5 4.52979 10.6031 4.52979 9.5C4.52979 9.08438 4.40479 8.7 4.18916 8.38125C4.04541 8.16875 3.86104 7.98438 3.64854 7.84062ZM2.52979 10.5C1.97979 10.5 1.52979 10.05 1.52979 9.5C1.52979 8.95 1.97979 8.5 2.52979 8.5C3.07979 8.5 3.52979 8.95 3.52979 9.5C3.52979 10.05 3.07979 10.5 2.52979 10.5ZM5.27979 10H6.77979V9H5.27979V10ZM19.9454 12.5844C19.8548 12.4938 19.7548 12.4125 19.6485 12.3406C19.3298 12.125 18.9454 12 18.5298 12C18.1142 12 17.7298 12.125 17.411 12.3406C17.3079 12.4094 17.2142 12.4875 17.1267 12.575L14.2579 10.8531C14.4329 10.4375 14.5298 9.97812 14.5298 9.5C14.5298 7.56563 12.9642 6 11.0298 6C10.6767 6 10.3454 6.06875 10.0235 6.1625L8.79541 3.53437C9.24228 3.16875 9.52979 2.62188 9.52979 2C9.52979 1.58438 9.40479 1.2 9.18916 0.88125C9.04541 0.66875 8.86103 0.484375 8.64853 0.340625C8.32978 0.125 7.94541 0 7.52979 0C7.11416 0 6.72978 0.125 6.41104 0.340625C6.19853 0.484375 6.01416 0.66875 5.87041 0.88125C5.65479 1.2 5.52979 1.58438 5.52979 2C5.52979 3.10313 6.42666 4 7.52979 4C7.65479 4 7.77666 3.98438 7.89541 3.9625L9.11416 6.575C8.16104 7.2 7.52979 8.275 7.52979 9.5C7.52979 11.4344 9.09541 13 11.0298 13C12.1235 13 13.086 12.4875 13.7298 11.7031L16.6173 13.4344C16.5642 13.6156 16.5329 13.8031 16.5329 14C16.5329 15.1031 17.4298 16 18.5329 16C18.9485 16 19.3329 15.875 19.6517 15.6594C19.8642 15.5156 20.0485 15.3312 20.1923 15.1187C20.4048 14.8 20.5298 14.4156 20.5298 14C20.5298 13.5844 20.4048 13.2 20.1892 12.8813C20.1173 12.775 20.0329 12.675 19.9454 12.5844ZM7.52979 3C6.97978 3 6.52979 2.55 6.52979 2C6.52979 1.45 6.97978 1 7.52979 1C8.07979 1 8.52979 1.45 8.52979 2C8.52979 2.55 8.07979 3 7.52979 3ZM11.0298 12C9.65166 12 8.52979 10.8781 8.52979 9.5C8.52979 8.12187 9.65166 7 11.0298 7C12.4079 7 13.5298 8.12187 13.5298 9.5C13.5298 10.8781 12.4079 12 11.0298 12ZM18.5298 15C17.9798 15 17.5298 14.55 17.5298 14C17.5298 13.45 17.9798 13 18.5298 13C19.0798 13 19.5298 13.45 19.5298 14C19.5298 14.55 19.0798 15 18.5298 15Z"></path> </g> <defs> <clipPath id="clip0_5_340"> <rect width="20" height="16" fill="white" transform="translate(0.529785)"></rect> </clipPath> </defs> </svg>
-          <p class="group-hover:text-white transition-all">Automatic <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">state synchronization</strong>.</p>
-        </li>
-        <li class="flex space-x-4 items-center group">
-          <svg class="w-12 lg:w-24 max-h-12 lg:max-h-none opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 17 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"> <path d="M16.3827 13.8556L14.6364 12.1094L15.717 10.3116C15.7811 10.2154 15.8099 10.1 15.7985 9.98495C15.7871 9.86993 15.7362 9.7624 15.6545 9.68065L14.567 8.59315C14.373 8.39909 14.0561 8.3969 13.8598 8.59315L12.9902 9.46315L4.02953 0.50221L1.10047 0.00752224C0.750156 -0.0434153 0.490469 0.263772 0.534844 0.573147L1.02953 3.50221L9.99047 12.4631L9.12047 13.3328C8.92516 13.5281 8.92516 13.8447 9.12047 14.04L10.208 15.1272C10.3767 15.296 10.6411 15.3216 10.8389 15.1897L12.6364 14.1091L14.3827 15.8553C14.578 16.0506 14.8945 16.0506 15.0898 15.8553L16.3827 14.5625C16.578 14.3675 16.578 14.0506 16.3827 13.8556ZM1.96234 3.02096L1.64016 1.11252L3.54828 1.43533L12.2836 10.1706L10.698 11.7563L1.96234 3.02096ZM14.7364 14.7947L12.7642 12.8222L10.6255 14.1303L10.1814 13.6863L14.2139 9.65408L14.658 10.0981L13.3502 12.2369L15.3223 14.2091L14.7364 14.7947ZM13.5105 1.43471L15.4189 1.11252L15.0961 3.02065L11.5292 6.58752L12.2364 7.29471L16.0292 3.5019L16.5239 0.572835C16.5748 0.222522 16.2677 -0.0371653 15.9583 0.00720974L13.0292 0.501897L9.23641 4.29471L9.94328 5.0019L13.5105 1.43471ZM7.93797 13.3325L7.06797 12.4628L7.82172 11.7091L7.11484 11.0019L6.36109 11.7556L4.77547 10.17L5.52953 9.41596L4.82234 8.70877L4.06828 9.46283L3.19859 8.59283C3.00328 8.39752 2.68672 8.39752 2.49141 8.59283L1.40422 9.68033C1.23547 9.84908 1.20984 10.1135 1.34172 10.3113L2.42234 12.1088L0.675781 13.8553C0.480469 14.0506 0.480469 14.3672 0.675781 14.5625L1.96859 15.8553C2.16391 16.0506 2.48047 16.0506 2.67578 15.8553L4.42203 14.1091L6.21984 15.1897C6.31604 15.2538 6.43146 15.2826 6.54648 15.2712C6.6615 15.2598 6.76903 15.2089 6.85078 15.1272L7.93828 14.0397C7.96547 14.0125 7.98016 13.9785 7.99984 13.9469C7.98484 13.8616 7.97453 13.775 7.97453 13.6866C7.97453 13.5981 7.98516 13.5113 7.99984 13.4256C7.98016 13.3941 7.96547 13.36 7.93797 13.3325ZM6.43328 14.13L4.29453 12.8222L2.32234 14.7944L1.73641 14.2085L3.70891 12.2363L2.40078 10.0975L2.84484 9.65346L6.87734 13.6863L6.43328 14.13Z"></path> </svg>
-          <p class="group-hover:text-white transition-all">Match-make clients into game <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">rooms on demand</strong>.</p>
-        </li>
-        <li class="flex space-x-4 items-center group">
-          <svg class="w-12 lg:w-24 max-h-12 lg:max-h-none opacity-60 group-hover:opacity-100 transition-opacity" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M.2 468.9C2.7 493.1 23.1 512 48 512l96 0 320 0c26.5 0 48-21.5 48-48l0-96c0-26.5-21.5-48-48-48l-48 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-64 0 0 80c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-80-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-64-80 0c-8.8 0-16-7.2-16-16s7.2-16 16-16l80 0 0-48c0-26.5-21.5-48-48-48L48 0C21.5 0 0 21.5 0 48L0 368l0 96c0 1.7 .1 3.3 .2 4.9z"/></svg>
-          <p class="group-hover:text-white transition-all"><strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">Scale</strong> to millions across different <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">game rooms</strong>.</p>
-        </li>
-        <li class="flex space-x-4 items-center group">
-          <svg class="w-12 lg:w-24 max-h-12 lg:max-h-none opacity-60 group-hover:opacity-100 transition-opacity" viewBox="0 0 16 16" stroke="none" fill="currentColor" xmlns="http://www.w3.org/2000/svg"> <path d="M14.2139 2.6168L8.21387 0.116799C8.0311 0.0409798 7.83517 0.00195313 7.6373 0.00195312C7.43944 0.00195313 7.24351 0.0409798 7.06074 0.116799L1.06074 2.6168C0.501367 2.84805 0.135742 3.39492 0.135742 4.00117C0.135742 10.2043 3.71387 14.4918 7.05762 15.8855C7.42637 16.0387 7.84199 16.0387 8.21074 15.8855C10.8889 14.7699 15.1357 10.9168 15.1357 4.00117C15.1357 3.39492 14.7701 2.84805 14.2139 2.6168ZM7.82949 14.9637C7.70449 15.0137 7.56699 15.0137 7.44512 14.9637C4.38574 13.7512 1.13574 9.50117 1.13574 4.00117C1.13574 3.79805 1.25762 3.6168 1.44199 3.53867L7.44199 1.03867C7.56387 0.988674 7.70449 0.988674 7.82637 1.03867L13.8264 3.53867C14.0139 3.6168 14.1357 3.79805 14.1326 4.00117C14.1357 9.50117 10.8857 13.7512 7.82949 14.9637ZM12.0857 4.80742C11.9389 4.66055 11.7014 4.66055 11.5545 4.8043L6.44824 9.86992L4.29199 7.69805C4.14512 7.55117 3.90762 7.55117 3.76074 7.69492L3.49512 7.96055C3.34824 8.10742 3.34824 8.34492 3.49199 8.4918L6.17637 11.198C6.32324 11.3449 6.56074 11.3449 6.70762 11.2012L12.3482 5.60742C12.4951 5.46055 12.4951 5.22305 12.3514 5.07617L12.0857 4.80742Z"></path> </svg>
-          <p class="group-hover:text-white transition-all"><strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">Authoritative</strong> server to <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">prevent hacks</strong> on the client.</p>
-        </li>
-        <li class="flex space-x-4 items-center group">
-          <svg class="w-12 lg:w-24 max-h-12 lg:max-h-none opacity-60 group-hover:opacity-100 transition-opacity" stroke="currentColor" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 32v448h448V32H0zm243.8 349.4c0 43.6-25.6 63.5-62.9 63.5-33.7 0-53.2-17.4-63.2-38.5l34.3-20.7c6.6 11.7 12.6 21.6 27.1 21.6 13.8 0 22.6-5.4 22.6-26.5V237.7h42.1v143.7zm99.6 63.5c-39.1 0-64.4-18.6-76.7-43l34.3-19.8c9 14.7 20.8 25.6 41.5 25.6 17.4 0 28.6-8.7 28.6-20.8 0-14.4-11.4-19.5-30.7-28l-10.5-4.5c-30.4-12.9-50.5-29.2-50.5-63.5 0-31.6 24.1-55.6 61.6-55.6 26.8 0 46 9.3 59.8 33.7L368 290c-7.2-12.9-15-18-27.1-18-12.3 0-20.1 7.8-20.1 18 0 12.6 7.8 17.7 25.9 25.6l10.5 4.5c35.8 15.3 55.9 31 55.9 66.2 0 37.8-29.8 58.6-69.7 58.6z"></path></svg>
-          <p class="group-hover:text-white transition-all">Leverage the ever-growing <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">JavaScript ecosystem</strong>.</p>
-        </li>
-        <li class="flex space-x-4 items-center group">
-          <svg class="w-12 lg:w-24 opacity-60 group-hover:opacity-100 transition-opacity" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M-.102 12.53C.01 5.956 4.613 1.277 10.248.52c6.718-.9 12.371 3.67 13.456 9.735 1.03 5.75-2.13 11.133-7.339 13.263-.45.184-.697.082-.87-.373l-2.587-6.728c-.15-.392-.048-.64.34-.814 1.17-.532 1.901-1.423 2.095-2.7a3.46 3.46 0 0 0-3.122-3.98 3.463 3.463 0 0 0-3.75 2.89c-.253 1.598.536 3.084 2.027 3.76.464.214.556.418.377.892l-2.6 6.772c-.125.334-.4.45-.75.315a11.98 11.98 0 0 1-6.33-5.76c-1.206-2.383-1.22-4.247-1.297-5.263zm1.012-.092c.02.32.03.692.063 1.07.305 3.48 2.4 6.946 6.34 8.862.156.073.214.04.272-.11q1.082-2.84 2.178-5.68c.063-.16.03-.231-.116-.323-1.53-.963-2.29-2.348-2.207-4.163.048-1.045.45-1.96 1.152-2.725 1.452-1.583 3.727-1.927 5.59-.852a4.436 4.436 0 0 1 2.188 4.376c-.174 1.48-.934 2.609-2.212 3.378-.13.078-.17.14-.11.29q1.102 2.847 2.187 5.698c.058.15.116.184.27.11 1.72-.802 3.157-1.95 4.265-3.484 1.685-2.333 2.377-4.932 2.048-7.793-.663-5.687-5.78-10.397-12.368-9.584-5.135.63-9.453 4.96-9.54 10.93z"></path></svg>
-          <p class="group-hover:text-white transition-all">Open-source, under the most permissive <strong class="text-white font-medium group-hover:bg-white group-hover:text-purple-600 transition-all">MIT License</strong>.</p>
-        </li>
-      </ul>
-
-      <div class="flex flex-col items-center justify-center py-8 text-purple-300">
-        <Platforms />
-      </div>
-
-      <div class="flex space-x-8 justify-center">
-        <a href="/framework" class="mt-2 group transition-all text-purple-200 font-semibold hover:text-purple-100 ">
-          Discover The Colyseus Framework
-          <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
-        </a>
       </div>
     </div>
+
+    <script is:inline>
+      const heroVideo = document.getElementById('hero-video');
+      const heroLoader = document.getElementById('hero-video-loader');
+      if (heroVideo) {
+        heroVideo.addEventListener('canplaythrough', () => {
+          heroVideo.style.opacity = '1';
+          if (heroLoader) heroLoader.style.display = 'none';
+        }, { once: true });
+        if (heroVideo.readyState >= 4) {
+          heroVideo.style.opacity = '1';
+          if (heroLoader) heroLoader.style.display = 'none';
+        }
+      }
+
+      // Typewriter effect
+      const tw = document.getElementById('typewriter');
+      if (tw) {
+        const words = ['Games', 'Experiences', 'Apps', 'Worlds', 'Prototypes'];
+        let wordIndex = 0;
+        let charIndex = words[0].length;
+        let isDeleting = true;
+        const typeSpeed = 80;
+        const deleteSpeed = 50;
+        const pauseAfterType = 2000;
+        const pauseAfterDelete = 400;
+
+        function tick() {
+          const current = words[wordIndex];
+          if (!isDeleting) {
+            charIndex++;
+            tw.textContent = current.substring(0, charIndex);
+            if (charIndex === current.length) {
+              isDeleting = true;
+              setTimeout(tick, pauseAfterType);
+              return;
+            }
+            setTimeout(tick, typeSpeed);
+          } else {
+            charIndex--;
+            tw.textContent = current.substring(0, charIndex);
+            if (charIndex === 0) {
+              isDeleting = false;
+              wordIndex = (wordIndex + 1) % words.length;
+              setTimeout(tick, pauseAfterDelete);
+              return;
+            }
+            setTimeout(tick, deleteSpeed);
+          }
+        }
+
+        setTimeout(tick, pauseAfterType);
+      }
+
+      const button = document.getElementById('clipboard-click');
+      if (button) {
+        const icon = button.querySelector('span');
+        let timeout = null;
+        button.addEventListener('click', () => {
+          navigator.clipboard.writeText('npm create colyseus-app@latest ./my-server');
+          clearTimeout(timeout);
+          icon.dataset.clicked = 'yes';
+          timeout = setTimeout(() => icon.dataset.clicked = 'no', 1000);
+        });
+      }
+    </script>
   </section>
 
-  <SuccessStoriesSection />
-
-  <section class="text-slate-900">
-    <div class="container mx-auto px-6 py-16 lg:py-24">
-      <div class="text-center">
-        <h2 class="text-2xl lg:text-5xl font-medium">Games using Colyseus</h2>
-        <p class="text-sm lg:text-base text-gray-600 py-2">A selection of multiplayer games made by happy developers.</p>
-      </div>
-
-      <div id="showcase" class="h-96 transition-all overflow-hidden relative">
-        <div class="grid gap-2 lg:gap-4 showcase-items mt-6 grid-cols-2 lg:grid-cols-3">
-          {collections.showcase.map((item) => (
-            <a class="text-xs lg:text-base group rounded h-24 lg:h-60 relative transition-all shadow hover:shadow-lg overflow-hidden" href={item.url} target="_blank" style={`background-image: url(${item.image});`}>
-              <span class="shadow-inner bg-purple-700 group-active:bg-purple-800 translate-y-full group-hover:translate-y-0 transition-transform absolute bottom-0 p-4 w-full rounded text-white">
-                {item.name}
-                <small class="block text-purple-200">by {item.author}</small>
-                {/* <small class="block text-gray-300">by <a href={item.author_link} target="_blank">{item.author}</a></small> */}
-                <img class="absolute right-4 bottom-4 w-6 lg:w-12" src={platforms[item.platform].image} alt={platforms[item.platform].name} />
-              </span>
-            </a>
+  <!-- ===== SOCIAL PROOF BAR ===== -->
+  <section class="border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-10">
+      <p class="text-center text-xs uppercase tracking-widest text-gray-600 mb-8">Trusted by teams with millions of players</p>
+      <div class="overflow-hidden relative">
+        <div class="absolute inset-y-0 left-0 w-24 lg:w-40 bg-gradient-to-r from-[#0a0a0b] to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-24 lg:w-40 bg-gradient-to-l from-[#0a0a0b] to-transparent z-10 pointer-events-none"></div>
+        <div class="flex w-max marquee-teams">
+          {[false, true].map((duplicate) => (
+            <div class="flex items-center gap-12 lg:gap-16 shrink-0 pr-12 lg:pr-16" aria-hidden={duplicate || undefined}>
+              {teams.map((team) => (
+                <a href={team.href} target="_blank" rel="noopener noreferrer nofollow" class="shrink-0 w-24 h-8 lg:w-32 lg:h-10 flex items-center justify-center opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+                  <img src={team.logo} alt={team.name} class="max-w-full max-h-full object-contain" />
+                </a>
+              ))}
+            </div>
           ))}
         </div>
+      </div>
+    </div>
+  </section>
 
-        <a
-          href="javascript:void(0)" onclick="document.getElementById('showcase').classList.remove('h-96');this.remove();"
-          class="showcase-expand-list pt-8 flex h-28 justify-center items-end block w-full absolute bottom-0 mt-2 group text-purple-500 font-semibold">
-          Expand all
-          <svg class="inline-block transition-transform ease-out relative group-hover:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+  <!-- ===== CODE EXAMPLE ===== -->
+  <section class="border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+      <div class="text-center mb-16">
+        <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">See It In Action</p>
+        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Real-Time State Sync in Minutes</h2>
+        <p class="text-gray-400 max-w-xl mx-auto">Define your game state on the server. Colyseus syncs it to all clients automatically — no manual serialization needed.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6 max-w-5xl mx-auto">
+        <!-- Server Code -->
+        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            </div>
+            <span class="text-xs text-gray-500 ml-2 font-mono">GameRoom.ts</span>
+            <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
+          </div>
+          <div class="flex-1 homepage-code">
+            <CodeServer />
+          </div>
+        </div>
+
+        <!-- Client Code -->
+        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            </div>
+            <span class="text-xs text-gray-500 ml-2 font-mono">game.ts</span>
+            <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Client</span>
+          </div>
+          <div class="flex-1 homepage-code">
+            <CodeClient />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES GRID ===== -->
+  <section class="border-t border-white/5 bg-section-glow-purple">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+      <div class="text-center mb-16">
+        <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Why Colyseus</p>
+        <h2 class="text-2xl lg:text-4xl font-bold text-white">Everything You Need for Multiplayer</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <!-- Feature 1: State Sync -->
+        <a href="https://docs.colyseus.io/state" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">Real-Time State Sync</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Automatic binary state synchronization. Define your state once, sync everywhere.</p>
         </a>
 
+        <!-- Feature 2: Matchmaking -->
+        <a href="https://docs.colyseus.io/#expose-the-room-identifier" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">Built-in Matchmaking</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Automatic room creation and player matching. Customizable filtering and sorting.</p>
+        </a>
+
+        <!-- Feature 3: Scalable -->
+        <a href="https://docs.colyseus.io/scalability" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">Scalable Architecture</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Scale from 10 to 10,000+ CCU. Distribute rooms across multiple processes or machines.</p>
+        </a>
+
+        <!-- Feature 4: Cheat-Proof -->
+        <div class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
+            <svg class="w-5 h-5 text-purple-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">Cheat-Proof by Design</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">Authoritative server architecture. Game state lives on the server, not the client.</p>
+        </div>
+
+        <!-- Feature 5: Multi-Platform -->
+        <a href="https://docs.colyseus.io/getting-started" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 640 512"><path d="M448 64c106 0 192 86 192 192S554 448 448 448l-256 0C86 448 0 362 0 256S86 64 192 64l256 0zM192 176c-13.3 0-24 10.7-24 24l0 32-32 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l32 0 0 32c0 13.3 10.7 24 24 24s24-10.7 24-24l0-32 32 0c13.3 0 24-10.7 24-24s-10.7-24-24-24l-32 0 0-32c0-13.3-10.7-24-24-24zm240 96a32 32 0 1 0 0 64 32 32 0 1 0 0-64zm64-96a32 32 0 1 0 0 64 32 32 0 1 0 0-64z"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">Multi-Platform SDKs</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">JavaScript, Unity, Defold, Construct 3, Haxe, and Cocos Creator. Use the tools you already know.</p>
+        </a>
+
+        <!-- Feature 6: Open Source -->
+        <a href="https://github.com/colyseus/colyseus/blob/master/LICENSE" target="_blank" class="group p-6 rounded-xl border border-white/5 hover:border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-all">
+          <div class="flex items-start justify-between mb-4">
+            <div class="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
+              <svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 32 32"><path d="m16 0.4c-8.8 0-16 7.2-16 16 0 7 4.4 12.9 10.6 15.1l4-10.4c-2-0.7-3.5-2.5-3.5-4.7 0-2.7 2.2-4.8 4.9-4.8 2.7 0 4.9 2.1 4.9 4.8 0 2.2-1.5 4.1-3.5 4.7l4 10.4c6.2-2.2 10.6-8.1 10.6-15.1 0-8.8-7.2-16-16-16z"/></svg>
+            </div>
+            <svg class="w-4 h-4 text-gray-600 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">Free & Open Source</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">MIT licensed. Free forever, even for commercial games. Full control over your infrastructure.</p>
+        </a>
       </div>
 
     </div>
   </section>
 
+  <!-- ===== GAMES SHOWCASE ===== -->
+  <section class="border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:pb-12">
+      <div class="text-center mb-12">
+        <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Showcase</p>
+        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Games Using Colyseus</h2>
+        <p class="text-gray-500">A selection of multiplayer games made by happy developers.</p>
+        <a
+          href="https://www.youtube.com/watch?v=3EEw5Sl93KE"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 mt-4 px-5 py-2.5 rounded-lg border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/5 text-sm font-medium text-gray-400 hover:text-purple-400 transition-all"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          Watch the Colyseus Reel
+        </a>
+      </div>
+    </div>
+
+    <div class="showcase-marquee overflow-hidden space-y-3 lg:space-y-4 pb-20 lg:pb-32 relative">
+      <div class="absolute inset-y-0 left-0 w-24 lg:w-40 bg-gradient-to-r from-[#0a0a0b] to-transparent z-10 pointer-events-none"></div>
+      <div class="absolute inset-y-0 right-0 w-24 lg:w-40 bg-gradient-to-l from-[#0a0a0b] to-transparent z-10 pointer-events-none"></div>
+        {(() => {
+          const half = Math.ceil(collections.showcase.length / 2);
+          const row1 = collections.showcase.slice(0, half);
+          const row2 = collections.showcase.slice(half);
+          return [
+            { items: row1, direction: 'marquee-left' },
+            { items: row2, direction: 'marquee-right' },
+          ].map(({ items, direction }) => (
+            <div class="overflow-hidden">
+              <div class={`flex w-max ${direction}`}>
+                {[false, true].map((duplicate) => (
+                  <div class="flex gap-3 lg:gap-4 shrink-0 pr-3 lg:pr-4" aria-hidden={duplicate || undefined}>
+                    {items.map((item) => (
+                      <a
+                        class="group rounded-xl h-28 lg:h-48 w-48 lg:w-80 shrink-0 relative overflow-hidden border border-white/5 hover:border-white/10 showcase-items"
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        style={`background-image: url(${item.image});`}
+                      >
+                        <span class="bg-black/80 backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform absolute bottom-0 p-3 lg:p-4 w-full text-white">
+                          <span class="text-xs lg:text-sm font-medium">{item.name}</span>
+                          <small class="block text-gray-400 text-xs">by {item.author}</small>
+                          <img class="absolute right-3 bottom-3 w-5 lg:w-8 opacity-60" src={platforms[item.platform].image} alt={platforms[item.platform].name} />
+                        </span>
+                      </a>
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </div>
+          ));
+        })()}
+      </div>
+  </section>
+
+  <!-- ===== NO VENDOR LOCK-IN ===== -->
+  <section class="border-t border-white/5 bg-section-glow-blue">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+      <div class="text-center mb-16">
+        <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">No Vendor Lock-In</p>
+        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Your Server, Your Rules</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">Colyseus is a standard Node.js application. Deploy it anywhere — no proprietary runtimes, no walled gardens, no surprises.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto mb-16">
+        <!-- Standard Node.js -->
+        <div class="p-6 rounded-xl border border-white/5 bg-white/[0.02] text-center">
+          <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 448 512"><path d="M224.5 508c-6.7 0-13.5-1.8-19.4-5.2l-61.7-36.5c-9.2-5.2-4.7-7-1.7-8 12.3-4.3 14.8-5.2 27.9-12.7 1.4-.8 3.2-.5 4.6 .4l47.4 28.1c1.7 1 4.1 1 5.7 0L412 367.5c1.7-1 2.8-3 2.8-5l0-213.2c0-2.1-1.1-4-2.9-5.1L227.3 37.7c-1.7-1-4-1-5.7 0L37.1 144.3c-1.8 1-2.9 3-2.9 5.1l0 213.1c0 2 1.1 4 2.9 4.9l50.6 29.2c27.5 13.7 44.3-2.4 44.3-18.7l0-210.4c0-3 2.4-5.3 5.4-5.3l23.4 0c2.9 0 5.4 2.3 5.4 5.3l0 210.5c0 36.6-20 57.6-54.7 57.6-10.7 0-19.1 0-42.5-11.6L20.6 396.1c-12-6.9-19.4-19.8-19.4-33.7l0-213.1c0-13.8 7.4-26.8 19.4-33.7L205.1 9c11.7-6.6 27.2-6.6 38.8 0L428.6 115.7c12 6.9 19.4 19.8 19.4 33.7l0 213.1c0 13.8-7.4 26.7-19.4 33.7L243.9 502.8c-5.9 3.4-12.6 5.2-19.4 5.2zM373.6 297.9c0-39.9-27-50.5-83.7-58-57.4-7.6-63.2-11.5-63.2-24.9 0-11.1 4.9-25.9 47.4-25.9 37.9 0 51.9 8.2 57.7 33.8 .5 2.4 2.7 4.2 5.2 4.2l24 0c1.5 0 2.9-.6 3.9-1.7s1.5-2.6 1.4-4.1c-3.7-44.1-33-64.6-92.2-64.6-52.7 0-84.1 22.2-84.1 59.5 0 40.4 31.3 51.6 81.8 56.6 60.5 5.9 65.2 14.8 65.2 26.7 0 20.6-16.6 29.4-55.5 29.4-48.9 0-59.6-12.3-63.2-36.6-.4-2.6-2.6-4.5-5.3-4.5l-23.9 0c-3 0-5.3 2.4-5.3 5.3 0 31.1 16.9 68.2 97.8 68.2 58.4-.1 92-23.2 92-63.4z"/></svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">Standard Node.js</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">No proprietary runtime. Your Colyseus server is just a Node.js app — use any npm package, any tooling you already know.</p>
+        </div>
+
+        <!-- Host Anywhere -->
+        <div class="p-6 rounded-xl border border-white/5 bg-white/[0.02] text-center">
+          <div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mx-auto mb-4">
+            <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 1c6.075 0 11 4.925 11 11s-4.925 11-11 11S1 18.075 1 12 5.925 1 12 1Zm3.241 10.5v-.001c-.1-2.708-.992-4.904-1.89-6.452a13.919 13.919 0 0 0-1.304-1.88L12 3.11l-.047.059c-.354.425-.828 1.06-1.304 1.88-.898 1.547-1.79 3.743-1.89 6.451Zm-12.728 0h4.745c.1-3.037 1.1-5.49 2.093-7.204.39-.672.78-1.233 1.119-1.673C6.11 3.329 2.746 7 2.513 11.5Zm18.974 0C21.254 7 17.89 3.329 13.53 2.623c.339.44.729 1.001 1.119 1.673.993 1.714 1.993 4.167 2.093 7.204ZM8.787 13c.182 2.478 1.02 4.5 1.862 5.953.382.661.818 1.29 1.304 1.88l.047.057.047-.059c.354-.425.828-1.06 1.304-1.88.842-1.451 1.679-3.471 1.862-5.951Zm-1.504 0H2.552a9.505 9.505 0 0 0 7.918 8.377 15.773 15.773 0 0 1-1.119-1.673C8.413 18.085 7.47 15.807 7.283 13Zm9.434 0c-.186 2.807-1.13 5.085-2.068 6.704-.39.672-.78 1.233-1.118 1.673A9.506 9.506 0 0 0 21.447 13Z"></path></svg>
+          </div>
+          <h3 class="text-white font-semibold mb-2">Host Anywhere</h3>
+          <p class="text-sm text-gray-500 leading-relaxed">AWS, Google Cloud, DigitalOcean, Fly.io, Railway, bare metal — if it runs Node.js, it runs Colyseus.</p>
+        </div>
+      </div>
+
+      <!-- Cloud callout -->
+      <div class="max-w-3xl mx-auto rounded-xl border border-blue-500/20 bg-blue-500/[0.03] p-8 flex flex-col lg:flex-row items-center gap-6 lg:gap-8">
+        <div class="flex-shrink-0">
+          <div class="w-14 h-14 rounded-xl bg-blue-500/10 flex items-center justify-center">
+            <svg class="w-8 h-8 text-blue-400" fill="currentColor" data-name="Layer 2" viewBox="0 0 2412.65 1617.19"> <g> <path d="m1915.36,385.08C1827.83,154.77,1607.34,0,1354.77,0c-156.52,0-304.53,61.78-414.55,166.78l82.52,245.37c67.02-118.54,194.72-193.85,332.03-193.85,177.7,0,330.51,120.5,371.33,292.96l19.21,80.55,82.73,3.28c205.42,8.08,366.31,175.51,366.31,381.15s-171.15,381.59-381.59,381.59h-471.74l73.57,218.3h398.18c330.72,0,599.89-268.94,599.89-599.89,0-296.67-212.84-542.69-497.29-591.16Zm-992.75,54.22l37.95,145.85c-424.87-55.42-575.65,134.42-614.83,209.98-53.3-25.98-97.4-54.97-133.82-84.61,31.34-68.02,183.03-316.49,710.7-271.22ZM23.46,479.51C289.6,134.03,817.4,195.21,817.4,195.21l64.65,159.03c-503.37-48.49-705.57,171.56-764.7,278.88-58.81-65.75-84.35-125.83-93.89-153.62Zm1264.98,1114.98C41.56,1719.17,0,1289.69,0,1289.69v-664c96.93,144.03,324.37,345.89,838.16,345.89,72.75,0,151.5-4.21,236.19-13.05l214.09,635.96Z"></path> </g> </svg>
+          </div>
+        </div>
+        <div class="flex-1 text-center lg:text-left">
+          <h3 class="text-white font-semibold text-lg mb-1">Don't want to manage servers?</h3>
+          <p class="text-sm text-gray-400">Colyseus Cloud handles deployment, scaling, and monitoring across 32 global locations. Starting at $15/mo.</p>
+        </div>
+        <div class="flex flex-col gap-2 flex-shrink-0">
+          <a href="/cloud-managed-hosting" class="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white text-sm font-medium transition-colors whitespace-nowrap">Explore Cloud<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+          <a href="https://calendly.com/endel/intro" class="inline-flex items-center justify-center gap-2 px-5 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-gray-400 hover:text-white text-xs font-medium transition-all whitespace-nowrap">
+            Speak with the founder
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== COMPARISON ===== -->
+  <section class="border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+      <div class="text-center mb-16">
+        <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Compare</p>
+        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">How Colyseus Compares</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-6xl mx-auto">
+        {[
+          { title: "vs Photon", items: ["Open-source, own your servers", "No CCU pricing surprises", "Full server-side control"] },
+          { title: "vs Mirror", items: ["Works with any game engine", "Not tied to Unity", "Dedicated server architecture"] },
+          { title: "vs Nakama", items: ["Simpler API, faster to learn", "TypeScript-native", "Focused on real-time games"] },
+          { title: "vs From Scratch", items: ["Battle-tested in production", "Ship in days, not months", "Active community support"] },
+        ].map((card) => (
+          <div class="p-6 rounded-xl border border-white/5 bg-white/[0.02]">
+            <h3 class="text-sm font-semibold text-purple-400 mb-4">{card.title}</h3>
+            <ul class="space-y-3">
+              {card.items.map((item) => (
+                <li class="flex items-start gap-2 text-sm text-gray-400">
+                  <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SUCCESS STORIES ===== -->
+  <SuccessStoriesSection />
+
+  <!-- ===== COMMUNITY ===== -->
   <JoinCommunitySection />
 
-  <ColyseusCloudSection bgGray={false} />
-
+  <!-- ===== SPONSORS ===== -->
   <SponsorsSection />
+
 </MainLayout>

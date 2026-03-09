@@ -1,18 +1,143 @@
 ---
-interface Props {
-  class?: string;
+import sponsorsData from '../data/sponsors.json';
+
+interface Sponsor {
+  sponsor: {
+    login: string;
+    name: string | null;
+    avatarUrl: string;
+    websiteUrl: string | null;
+    linkUrl: string;
+    type: string;
+  };
+  monthlyDollars: number;
 }
 
-const props = Astro.props;
-const addClass = props.class ?? "bg-gray-100 text-gray-500";
+const sponsors = sponsorsData as Sponsor[];
+
+// Tier thresholds match sponsor.config.ts
+const platinum = sponsors.filter(s => s.monthlyDollars >= 1000);
+const gold = sponsors.filter(s => s.monthlyDollars >= 500 && s.monthlyDollars < 1000);
+const silver = sponsors.filter(s => s.monthlyDollars >= 250 && s.monthlyDollars < 500);
+const featured = sponsors.filter(s => s.monthlyDollars >= 100 && s.monthlyDollars < 250);
+const backers = sponsors.filter(s => s.monthlyDollars > 0 && s.monthlyDollars < 100).sort((a, b) => b.monthlyDollars - a.monthlyDollars);
+const pastBackers = sponsors.filter(s => s.monthlyDollars <= 0 && s.sponsor.login !== '?');
+
+function getName(s: Sponsor) {
+  return s.sponsor.name || s.sponsor.login;
+}
+
+function getLink(s: Sponsor) {
+  return s.sponsor.websiteUrl || s.sponsor.linkUrl;
+}
+
+const topSponsors = [...platinum, ...gold, ...silver, ...featured];
+
+const tiers = [
+  ...(topSponsors.length > 0 ? [{ label: 'Sponsors', sponsors: topSponsors, size: 'lg' as const, rel: 'sponsored noopener' }] : []),
+  ...(backers.length > 0 ? [{ label: 'Backers', sponsors: backers, size: 'sm' as const, rel: 'nofollow noopener' }] : []),
+  ...(pastBackers.length > 0 ? [{ label: 'Past Sponsors', sponsors: pastBackers, size: 'xs' as const, rel: 'nofollow noopener' }] : []),
+];
+
+const sizeClasses = {
+  lg: { img: 'w-20 h-20 rounded-2xl border-2 border-white/10', name: 'text-sm text-gray-300', grid: 'sponsor-grid-lg' },
+  sm: { img: 'w-10 h-10 rounded-lg border border-white/5', name: 'text-[11px] text-gray-500', grid: 'sponsor-grid-sm' },
+  xs: { img: 'w-8 h-8 rounded-full border border-white/5 opacity-50', name: '', grid: 'sponsor-grid-xs' },
+};
 ---
 
-<section class={"text-center border-t border-b border-solid border-gray-300 " + addClass}>
-  <div class="container container mx-auto px-6 relative py-14">
-    <a href="https://cdn.jsdelivr.net/gh/colyseus/.github@main/sponsorkit/sponsors.svg"><img class="mx-auto" src="https://cdn.jsdelivr.net/gh/colyseus/.github@main/sponsorkit/sponsors.svg" alt="Colyseus Sponsors" /></a>
+<section class="border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-6 py-20 text-center">
+    <p class="text-sm font-medium text-gray-500 uppercase tracking-widest mb-2">Sponsors</p>
+    <p class="text-gray-600 text-sm mb-10">Colyseus is free and open source, made possible by these amazing people.</p>
 
-    <!-- h2 class="text-xl font-medium uppercase tracking-widest">Sponsors</h2 -->
-    <!-- img class="mx-auto" src="https://colyseus.io/sponsorkit/sponsors.part1.svg" alt="Colyseus Sponsors" / -->
-    <!-- img class="mx-auto -mt-8" src="https://colyseus.io/sponsorkit/sponsors.part2.svg" alt="Colyseus Sponsors" / -->
+    <div class="sponsors-scroll overflow-x-auto max-h-[340px] overflow-y-hidden pb-6">
+      <div class="flex items-start">
+        {tiers.map((tier, i) => (
+          <div class="flex items-start">
+            {i > 0 && (
+              <div class="flex flex-col items-center self-stretch justify-center px-8 shrink-0">
+                <div class="w-px flex-1 bg-white/5"></div>
+              </div>
+            )}
+
+            <div class="shrink-0 px-4 text-left">
+              <p class="text-[11px] font-medium text-gray-600 uppercase tracking-widest mb-4">{tier.label}</p>
+              <div class={sizeClasses[tier.size].grid}>
+                {tier.sponsors.map(s => (
+                  <a
+                    href={getLink(s)}
+                    target="_blank"
+                    rel={tier.rel}
+                    class="group flex flex-col items-center gap-1.5 overflow-hidden"
+                    title={getName(s)}
+                  >
+                    <img
+                      src={s.sponsor.avatarUrl}
+                      alt={getName(s)}
+                      class={`${sizeClasses[tier.size].img} group-hover:border-purple-500/50 transition-all group-hover:scale-105 group-hover:opacity-100`}
+                      loading="lazy"
+                    />
+                    {sizeClasses[tier.size].name && (
+                      <span class={`${sizeClasses[tier.size].name} group-hover:text-white transition-colors w-full text-center truncate`}>{getName(s)}</span>
+                    )}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <a
+      href="https://github.com/sponsors/endel"
+      target="_blank"
+      class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-lg border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/5 text-sm font-medium text-gray-400 hover:text-purple-400 transition-all"
+    >
+      <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"><path d="M4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.565 20.565 0 008 13.393a20.561 20.561 0 003.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.75.75 0 01-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5z" /></svg>
+      Become a sponsor
+    </a>
   </div>
 </section>
+
+<style>
+  .sponsor-grid-lg {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(2, auto);
+    grid-auto-columns: 100px;
+    gap: 20px;
+  }
+  .sponsor-grid-sm {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(3, auto);
+    grid-auto-columns: 72px;
+    gap: 10px;
+  }
+  .sponsor-grid-xs {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-rows: repeat(6, 36px);
+    grid-auto-columns: 36px;
+    gap: 6px;
+  }
+  .sponsors-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.1) transparent;
+  }
+  .sponsors-scroll::-webkit-scrollbar {
+    height: 6px;
+  }
+  .sponsors-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .sponsors-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+  }
+  .sponsors-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(255,255,255,0.2);
+  }
+</style>

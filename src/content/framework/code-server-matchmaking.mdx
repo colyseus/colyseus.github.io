@@ -1,5 +1,11 @@
 ```typescript
 // app.config.ts
-// ...
-gameServer.define("my_room", MyRoom);
+import { defineServer, defineRoom } from "colyseus";
+import { MyRoom } from "./MyRoom";
+
+export default defineServer({
+  rooms: {
+    my_room: defineRoom(MyRoom),
+  },
+});
 ```

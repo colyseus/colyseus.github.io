@@ -1,11 +1,10 @@
 name: Deploy to GitHub Pages
 
 on:
-  # Trigger the workflow every time you push to the `main` branch
-  # Using a different branch name? Replace `main` with your branch’s name
   push:
     branches: [ master, main ]
-  # Allows you to run this workflow manually from the Actions tab on GitHub.
+  pull_request:
+    branches: [ master, main ]
   workflow_dispatch:
 
 # Allow this job to clone the repo and create a page deployment
@@ -13,18 +12,19 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  pull-requests: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout your repository using git
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 20
 
       - name: Install
         shell: "bash"
@@ -48,12 +48,44 @@ jobs:
           done
 
       - name: Upload Pages Artifact
+        if: github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./dist/"
 
+      # PR preview via Cloudflare Pages
+      # Requires CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID repository secrets
+      # Create the project once: npx wrangler pages project create colyseus-preview
+      - name: Deploy preview to Cloudflare Pages
+        if: github.event_name == 'pull_request'
+        id: preview
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy ./dist --project-name=colyseus-preview --branch=pr-${{ github.event.pull_request.number }}
+
+      - name: Comment preview URL on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.preview.outputs.deployment-url }}';
+            const body = `Preview: ${url}`;
+            const { data: comments } = await github.rest.issues.listComments({
+              ...context.repo,
+              issue_number: context.issue.number,
+            });
+            const botComment = comments.find(c => c.body.startsWith('Preview:') && c.user.type === 'Bot');
+            if (botComment) {
+              await github.rest.issues.updateComment({ ...context.repo, comment_id: botComment.id, body });
+            } else {
+              await github.rest.issues.createComment({ ...context.repo, issue_number: context.issue.number, body });
+            }
+
   deploy:
     needs: build
+    if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -62,4 +94,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

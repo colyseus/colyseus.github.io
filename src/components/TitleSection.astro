@@ -7,11 +7,9 @@ const props = Astro.props;
 const separator = props.separator;
 ---
 <section>
-  <div class={`container mx-auto px-6 text-center flex items-center justify-center lg:flex-row relative py-10 ${(separator) ? "border-b border-gray-200" : ""}`}>
-    <!-- animate-from-top-fade -->
-    <h1 class="py-2 lg:py-8 text-4xl lg:text-6xl font-semibold text-gray-900 ">
+  <div class={`max-w-7xl mx-auto px-6 text-center flex items-center justify-center lg:flex-row relative py-10 ${(separator) ? "border-b border-white/5" : ""}`}>
+    <h1 class="font-display py-2 lg:py-8 text-4xl lg:text-6xl font-bold text-white">
       <slot />
     </h1>
   </div>
 </section>
-
