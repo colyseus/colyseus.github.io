@@ -22,15 +22,93 @@ import CodeStateSyncClient from "../content/framework/code-statesync-client.mdx"
     <div class="hidden lg:flex relative gap-16">
 
       <!-- Left: sticky code panel, vertically centered -->
-      <div class="w-1/2">
+      <div class="w-1/2 min-w-0">
         <div class="sticky top-0 h-screen flex items-center py-16" id="showcase-code-panel">
           <div class="showcase-panels w-full">
-            <div class="showcase-panel active" data-panel="0"><CodeServerRoom /></div>
-            <div class="showcase-panel" data-panel="1"><CodeServerMatchmaking /></div>
-            <div class="showcase-panel" data-panel="2"><CodeStateServer /></div>
-            <div class="showcase-panel" data-panel="3"><CodeStateServerMutate /></div>
-            <div class="showcase-panel" data-panel="4"><CodeClientJoinRoom /></div>
-            <div class="showcase-panel" data-panel="5"><CodeStateSyncClient /></div>
+            <div class="showcase-panel active" data-panel="0">
+              <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+                  <div class="flex gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                  </div>
+                  <span class="text-xs text-gray-500 ml-2 font-mono">MyRoom.ts</span>
+                  <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
+                </div>
+                <div class="flex-1 homepage-code"><CodeServerRoom /></div>
+              </div>
+            </div>
+            <div class="showcase-panel" data-panel="1">
+              <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+                  <div class="flex gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                  </div>
+                  <span class="text-xs text-gray-500 ml-2 font-mono">app.config.ts</span>
+                  <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
+                </div>
+                <div class="flex-1 homepage-code"><CodeServerMatchmaking /></div>
+              </div>
+            </div>
+            <div class="showcase-panel" data-panel="2">
+              <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+                  <div class="flex gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                  </div>
+                  <span class="text-xs text-gray-500 ml-2 font-mono">MyState.ts</span>
+                  <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
+                </div>
+                <div class="flex-1 homepage-code"><CodeStateServer /></div>
+              </div>
+            </div>
+            <div class="showcase-panel" data-panel="3">
+              <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+                  <div class="flex gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                  </div>
+                  <span class="text-xs text-gray-500 ml-2 font-mono">MyRoom.ts</span>
+                  <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
+                </div>
+                <div class="flex-1 homepage-code"><CodeStateServerMutate /></div>
+              </div>
+            </div>
+            <div class="showcase-panel" data-panel="4">
+              <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+                  <div class="flex gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                  </div>
+                  <span class="text-xs text-gray-500 ml-2 font-mono">client.ts</span>
+                  <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Client</span>
+                </div>
+                <div class="flex-1 homepage-code"><CodeClientJoinRoom /></div>
+              </div>
+            </div>
+            <div class="showcase-panel" data-panel="5">
+              <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+                <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+                  <div class="flex gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                    <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                  </div>
+                  <span class="text-xs text-gray-500 ml-2 font-mono">client.ts</span>
+                  <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Client</span>
+                </div>
+                <div class="flex-1 homepage-code"><CodeStateSyncClient /></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -83,42 +161,108 @@ import CodeStateSyncClient from "../content/framework/code-statesync-client.mdx"
         <span class="showcase-badge badge-server"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 512 512"><path d="M64 32C28.7 32 0 60.7 0 96v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zM64 288c-35.3 0-64 28.7-64 64v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V352c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/></svg>Server-side</span>
         <h3 class="text-xl font-medium mt-2 mb-3">Define your room</h3>
         <p class="text-gray-400 mb-4">Rooms are the core building block. Define lifecycle hooks for when players join, leave, or send messages.</p>
-        <CodeServerRoom />
+        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            </div>
+            <span class="text-xs text-gray-500 ml-2 font-mono">MyRoom.ts</span>
+            <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
+          </div>
+          <div class="flex-1 homepage-code"><CodeServerRoom /></div>
+        </div>
       </div>
 
       <div>
         <span class="showcase-badge badge-server"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 512 512"><path d="M64 32C28.7 32 0 60.7 0 96v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zM64 288c-35.3 0-64 28.7-64 64v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V352c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/></svg>Server-side</span>
         <h3 class="text-xl font-medium mt-2 mb-3">Expose for matchmaking</h3>
         <p class="text-gray-400 mb-4">Register your room type with a single line. Colyseus handles the rest.</p>
-        <CodeServerMatchmaking />
+        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            </div>
+            <span class="text-xs text-gray-500 ml-2 font-mono">app.config.ts</span>
+            <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
+          </div>
+          <div class="flex-1 homepage-code"><CodeServerMatchmaking /></div>
+        </div>
       </div>
 
       <div>
         <span class="showcase-badge badge-server"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 512 512"><path d="M64 32C28.7 32 0 60.7 0 96v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zM64 288c-35.3 0-64 28.7-64 64v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V352c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/></svg>Server-side</span>
         <h3 class="text-xl font-medium mt-2 mb-3">Define your state</h3>
         <p class="text-gray-400 mb-4">Define game state using decorated schema classes. Colyseus tracks and syncs changes automatically.</p>
-        <CodeStateServer />
+        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            </div>
+            <span class="text-xs text-gray-500 ml-2 font-mono">MyState.ts</span>
+            <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
+          </div>
+          <div class="flex-1 homepage-code"><CodeStateServer /></div>
+        </div>
       </div>
 
       <div>
         <span class="showcase-badge badge-server"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 512 512"><path d="M64 32C28.7 32 0 60.7 0 96v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zM64 288c-35.3 0-64 28.7-64 64v64c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V352c0-35.3-28.7-64-64-64H64zm280 72a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm80 0a24 24 0 1 1 48 0 24 24 0 1 1 -48 0z"/></svg>Server-side</span>
         <h3 class="text-xl font-medium mt-2 mb-3">Mutate state</h3>
         <p class="text-gray-400 mb-4">Just modify your state objects. Colyseus detects changes and broadcasts deltas.</p>
-        <CodeStateServerMutate />
+        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            </div>
+            <span class="text-xs text-gray-500 ml-2 font-mono">MyRoom.ts</span>
+            <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
+          </div>
+          <div class="flex-1 homepage-code"><CodeStateServerMutate /></div>
+        </div>
       </div>
 
       <div>
         <span class="showcase-badge badge-client"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 576 512"><path d="M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64H240l-10.7 32H160c-17.7 0-32 14.3-32 32s14.3 32 32 32H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H346.7L336 416H512c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64zM512 64V352H64V64H512z"/></svg>Client-side</span>
         <h3 class="text-xl font-medium mt-2 mb-3">Connect from the client</h3>
         <p class="text-gray-400 mb-4">Join a room with a few lines of code. If none is available, the server creates one.</p>
-        <CodeClientJoinRoom />
+        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            </div>
+            <span class="text-xs text-gray-500 ml-2 font-mono">client.ts</span>
+            <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Client</span>
+          </div>
+          <div class="flex-1 homepage-code"><CodeClientJoinRoom /></div>
+        </div>
       </div>
 
       <div>
         <span class="showcase-badge badge-client"><svg class="w-3 h-3" fill="currentColor" viewBox="0 0 576 512"><path d="M64 0C28.7 0 0 28.7 0 64V352c0 35.3 28.7 64 64 64H240l-10.7 32H160c-17.7 0-32 14.3-32 32s14.3 32 32 32H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H346.7L336 416H512c35.3 0 64-28.7 64-64V64c0-35.3-28.7-64-64-64H64zM512 64V352H64V64H512z"/></svg>Client-side</span>
         <h3 class="text-xl font-medium mt-2 mb-3">Listen to state changes</h3>
         <p class="text-gray-400 mb-4">React to state changes with fine-grained callbacks.</p>
-        <CodeStateSyncClient />
+        <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+          <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+            <div class="flex gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            </div>
+            <span class="text-xs text-gray-500 ml-2 font-mono">client.ts</span>
+            <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Client</span>
+          </div>
+          <div class="flex-1 homepage-code"><CodeStateSyncClient /></div>
+        </div>
       </div>
     </div>
   </div>
@@ -137,6 +281,8 @@ import CodeStateSyncClient from "../content/framework/code-statesync-client.mdx"
     transition: opacity 0.35s ease, transform 0.35s ease;
     pointer-events: none;
     visibility: hidden;
+    min-width: 0;
+    overflow: hidden;
   }
   .showcase-panel.active {
     opacity: 1;

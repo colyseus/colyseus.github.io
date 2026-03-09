@@ -7,7 +7,7 @@ module.exports = {
 		extend: {
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
-        display: ['Trajan Pro', ...defaultTheme.fontFamily.serif],
+        display: ['Trajan Pro', 'Trajan Fallback', ...defaultTheme.fontFamily.serif],
       },
 
       animation: {
