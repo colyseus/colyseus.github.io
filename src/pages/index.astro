@@ -25,6 +25,8 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
     <!-- Gradient overlay (mobile only) -->
     <div class="absolute inset-0 bg-gradient-to-b from-[#0a0a0b]/60 via-[#0a0a0b]/40 to-[#0a0a0b] lg:hidden"></div>
     <div class="absolute inset-0 bg-gradient-radial-hero lg:hidden"></div>
+    <!-- Glow (desktop only) -->
+    <div class="absolute inset-0 hidden lg:block bg-gradient-radial-hero-desktop"></div>
 
     <div class="max-w-7xl mx-auto px-6 relative z-10 py-24 lg:py-32 w-full">
       <div class="lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center">
@@ -257,7 +259,7 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
   </section>
 
   <!-- ===== FEATURES GRID ===== -->
-  <section class="border-t border-white/5">
+  <section class="border-t border-white/5 bg-section-glow-purple">
     <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
       <div class="text-center mb-16">
         <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Why Colyseus</p>
@@ -392,7 +394,7 @@ const subtitle = "The developer-friendly framework for real-time multiplayer. Fr
   </section>
 
   <!-- ===== NO VENDOR LOCK-IN ===== -->
-  <section class="border-t border-white/5">
+  <section class="border-t border-white/5 bg-section-glow-blue">
     <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
       <div class="text-center mb-16">
         <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">No Vendor Lock-In</p>
