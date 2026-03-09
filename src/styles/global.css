@@ -88,6 +88,18 @@ body {
   background-position: center center;
 }
 
+/* === Teams Marquee === */
+@keyframes marquee-teams {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-teams {
+  animation: marquee-teams 45s linear infinite;
+}
+.marquee-teams:has(:hover) {
+  animation-play-state: paused;
+}
+
 /* === Showcase Marquee === */
 @keyframes marquee-left {
   0% { transform: translateX(0); }

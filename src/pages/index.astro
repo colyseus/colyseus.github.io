@@ -12,6 +12,17 @@ import CodeServer from "../content/homepage/code-server.mdx";
 import CodeClient from "../content/homepage/code-client.mdx";
 
 const subtitle = "Build and ship real-time multiplayer experiences with Colyseus. Open-source framework for Node.js with built-in matchmaking, state sync, and SDKs for Unity, Defold, Haxe, and JavaScript.";
+
+const teams = [
+  { name: "PreAlpha", href: "https://prealpha.dev/", logo: "/images/teams/prealpha.svg" },
+  { name: "Bloxd.io", href: "https://bloxd.io/", logo: "/images/teams/bloxd.svg" },
+  { name: "Pixels", href: "https://pixels.xyz/", logo: "/images/teams/pixels.png" },
+  { name: "Emolingo", href: "https://emolingo.games/", logo: "/images/teams/emolingo.png" },
+  { name: "One Way Block", href: "https://onewayblock.com/", logo: "/images/teams/owb-studio.webp" },
+  { name: "DinoBros", href: "https://dinobros.com/", logo: "/images/teams/dinobros.svg" },
+  { name: "Elanra Studios", href: "https://elanrastudios.com/", logo: "/images/teams/elanra-studios.webp" },
+  { name: "Animoca Brands", href: "https://animocabrands.com/", logo: "/images/teams/animoca-brands.webp" },
+];
 ---
 
 <MainLayout title="Colyseus - Real-Time Multiplayer Framework for Node.js" description={subtitle} isHeaderExpanded={false}>
@@ -193,25 +204,20 @@ const subtitle = "Build and ship real-time multiplayer experiences with Colyseus
   <section class="border-t border-white/5">
     <div class="max-w-7xl mx-auto px-6 py-10">
       <p class="text-center text-xs uppercase tracking-widest text-gray-600 mb-8">Trusted by teams with millions of players</p>
-      <div class="flex flex-wrap justify-center items-center gap-8 lg:gap-14">
-        <a href="https://prealpha.dev/" target="_blank" rel="noopener noreferrer nofollow" class="opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
-          <img src="/images/teams/prealpha.svg" alt="PreAlpha" class="h-8 lg:h-10" />
-        </a>
-        <a href="https://bloxd.io/" target="_blank" rel="noopener noreferrer nofollow" class="opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
-          <img src="/images/teams/bloxd.svg" alt="Bloxd.io" class="h-8 lg:h-10" />
-        </a>
-        <a href="https://pixels.xyz/" target="_blank" rel="noopener noreferrer nofollow" class="opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
-          <img src="/images/teams/pixels.png" alt="Pixels" class="h-8 lg:h-10" />
-        </a>
-        <a href="https://emolingo.games/" target="_blank" rel="noopener noreferrer nofollow" class="opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
-          <img src="/images/teams/emolingo.png" alt="Emolingo" class="h-8 lg:h-10" />
-        </a>
-        <a href="https://onewayblock.com/" target="_blank" rel="noopener noreferrer nofollow" class="opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
-          <img src="/images/teams/owb-studio.webp" alt="One Way Block" class="h-8 lg:h-10" />
-        </a>
-        <a href="https://dinobros.com/" target="_blank" rel="noopener noreferrer nofollow" class="opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
-          <img src="/images/teams/dinobros.svg" alt="DinoBros" class="h-8 lg:h-10" />
-        </a>
+      <div class="overflow-hidden relative">
+        <div class="absolute inset-y-0 left-0 w-24 lg:w-40 bg-gradient-to-r from-[#0a0a0b] to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-24 lg:w-40 bg-gradient-to-l from-[#0a0a0b] to-transparent z-10 pointer-events-none"></div>
+        <div class="flex w-max marquee-teams">
+          {[false, true].map((duplicate) => (
+            <div class="flex items-center gap-12 lg:gap-16 shrink-0 pr-12 lg:pr-16" aria-hidden={duplicate || undefined}>
+              {teams.map((team) => (
+                <a href={team.href} target="_blank" rel="noopener noreferrer nofollow" class="shrink-0 opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+                  <img src={team.logo} alt={team.name} class="h-8 lg:h-10" />
+                </a>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -374,21 +380,25 @@ const subtitle = "Build and ship real-time multiplayer experiences with Colyseus
             { items: row2, direction: 'marquee-right' },
           ].map(({ items, direction }) => (
             <div class="overflow-hidden">
-              <div class={`flex gap-3 lg:gap-4 ${direction}`}>
-                {[...items, ...items].map((item) => (
-                  <a
-                    class="group rounded-xl h-28 lg:h-48 w-48 lg:w-80 shrink-0 relative overflow-hidden border border-white/5 hover:border-white/10 showcase-items"
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer nofollow"
-                    style={`background-image: url(${item.image});`}
-                  >
-                    <span class="bg-black/80 backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform absolute bottom-0 p-3 lg:p-4 w-full text-white">
-                      <span class="text-xs lg:text-sm font-medium">{item.name}</span>
-                      <small class="block text-gray-400 text-xs">by {item.author}</small>
-                      <img class="absolute right-3 bottom-3 w-5 lg:w-8 opacity-60" src={platforms[item.platform].image} alt={platforms[item.platform].name} />
-                    </span>
-                  </a>
+              <div class={`flex w-max ${direction}`}>
+                {[false, true].map((duplicate) => (
+                  <div class="flex gap-3 lg:gap-4 shrink-0 pr-3 lg:pr-4" aria-hidden={duplicate || undefined}>
+                    {items.map((item) => (
+                      <a
+                        class="group rounded-xl h-28 lg:h-48 w-48 lg:w-80 shrink-0 relative overflow-hidden border border-white/5 hover:border-white/10 showcase-items"
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        style={`background-image: url(${item.image});`}
+                      >
+                        <span class="bg-black/80 backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform absolute bottom-0 p-3 lg:p-4 w-full text-white">
+                          <span class="text-xs lg:text-sm font-medium">{item.name}</span>
+                          <small class="block text-gray-400 text-xs">by {item.author}</small>
+                          <img class="absolute right-3 bottom-3 w-5 lg:w-8 opacity-60" src={platforms[item.platform].image} alt={platforms[item.platform].name} />
+                        </span>
+                      </a>
+                    ))}
+                  </div>
                 ))}
               </div>
             </div>
