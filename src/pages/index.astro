@@ -211,8 +211,8 @@ const teams = [
           {[false, true].map((duplicate) => (
             <div class="flex items-center gap-12 lg:gap-16 shrink-0 pr-12 lg:pr-16" aria-hidden={duplicate || undefined}>
               {teams.map((team) => (
-                <a href={team.href} target="_blank" rel="noopener noreferrer nofollow" class="shrink-0 opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
-                  <img src={team.logo} alt={team.name} class="h-8 lg:h-10" />
+                <a href={team.href} target="_blank" rel="noopener noreferrer nofollow" class="shrink-0 w-24 h-8 lg:w-32 lg:h-10 flex items-center justify-center opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-300">
+                  <img src={team.logo} alt={team.name} class="max-w-full max-h-full object-contain" />
                 </a>
               ))}
             </div>
