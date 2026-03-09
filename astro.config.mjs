@@ -12,9 +12,9 @@ export default defineConfig({
   compressHTML: true,
   integrations: [expressiveCode(), mdx(), sitemap(), tailwind(), react()],
 
-  image: {
-    service: passthroughImageService(),
-  },
+  // image: {
+  //   service: passthroughImageService(),
+  // },
 
   //
   // Syntax Highlight docs:
