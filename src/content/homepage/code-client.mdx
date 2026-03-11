@@ -9,8 +9,12 @@ const callbacks = Callbacks.get(room);
 callbacks.onAdd("players", (player, key) => {
   addSpriteForPlayer(player);
 
-  callbacks.onChange(player, () => 
+  callbacks.onChange(player, () =>
     moveSprite(key, player.x, player.y));
+});
+
+callbacks.onRemove("players", (player, key) => {
+  removeSpriteForPlayer(key);
 });
 
 // send a message to the server
