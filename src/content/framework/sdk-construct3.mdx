@@ -1,0 +1,19 @@
+```javascript
+const client = new Colyseus.Client("https://your-server.com");
+const room = await client.joinOrCreate("game_room");
+const callbacks = Colyseus.Callbacks.get(room);
+
+callbacks.onAdd("players", (player, key) => {
+    const sprite = runtime.objects.Player.createInstance("Game", player.x, player.y);
+    callbacks.onChange(player, () => {
+        sprite.x = player.x;
+        sprite.y = player.y;
+    });
+});
+
+callbacks.onRemove("players", (player, key) => {
+    // destroy sprite instance
+});
+
+room.send("move", { x: 10, y: 20 });
+```

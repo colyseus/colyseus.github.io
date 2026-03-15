@@ -1,0 +1,20 @@
+```haxe
+import io.colyseus.Client;
+import io.colyseus.schema.Callbacks;
+
+var client = new Client("https://your-server.com");
+client.joinOrCreate("game_room", [], MyRoomState, function(err, room) {
+    var callbacks = Callbacks.get(room);
+
+    callbacks.onAdd("players", (player, key) -> {
+        addSpriteForPlayer(player);
+        callbacks.onChange(player, () ->
+            moveSprite(key, player.x, player.y));
+    });
+
+    callbacks.onRemove("players", (player, key) ->
+        removeSpriteForPlayer(key));
+
+    room.send("move", {x: 10, y: 20});
+});
+```

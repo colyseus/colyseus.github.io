@@ -1,0 +1,22 @@
+```gdscript
+var client: ColyseusClient = Colyseus.create_client()
+client.set_endpoint("wss://your-server.com")
+var room: ColyseusRoom = client.join_or_create("game_room")
+
+room.joined.connect(func():
+    var callbacks = Colyseus.callbacks(room)
+
+    callbacks.on_add("players", func(player, key):
+        add_sprite_for_player(player)
+        callbacks.on_change(player, func():
+            move_sprite(key, player.x, player.y)
+        )
+    )
+
+    callbacks.on_remove("players", func(player, key):
+        remove_sprite_for_player(key)
+    )
+
+    room.send("move", {"x": 10, "y": 20})
+)
+```

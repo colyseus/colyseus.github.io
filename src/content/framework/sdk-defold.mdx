@@ -1,0 +1,21 @@
+```lua
+local ColyseusSDK = require "colyseus.sdk"
+
+local client = ColyseusSDK.Client("https://your-server.com")
+client:join_or_create("game_room", function(room)
+    local callbacks = ColyseusSDK.callbacks(room)
+
+    callbacks:on_add("players", function(player, key)
+        add_sprite_for_player(player)
+        callbacks:on_change(player, function()
+            move_sprite(key, player.x, player.y)
+        end)
+    end)
+
+    callbacks:on_remove("players", function(player, key)
+        remove_sprite_for_player(key)
+    end)
+
+    room:send("move", { x = 10, y = 20 })
+end)
+```

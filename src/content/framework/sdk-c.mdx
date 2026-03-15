@@ -1,0 +1,22 @@
+```c
+#include "colyseus.h"
+
+colyseus_client_t* client = colyseus_client_new("https://your-server.com");
+colyseus_room_t* room = colyseus_join_or_create(client, "game_room");
+colyseus_callbacks_t* callbacks = colyseus_callbacks_get(room);
+
+void on_player_add(colyseus_state_t* player, const char* key) {
+    add_sprite_for_player(player);
+    colyseus_on_change(callbacks, player, on_player_change, (void*)key);
+}
+
+void on_player_change(colyseus_state_t* player, void* ctx) {
+    float x = colyseus_get_float(player, "x");
+    float y = colyseus_get_float(player, "y");
+    move_sprite((const char*)ctx, x, y);
+}
+
+colyseus_on_add(callbacks, "players", on_player_add, NULL);
+colyseus_on_remove(callbacks, "players", on_player_remove, NULL);
+colyseus_room_send(room, "move", data, data_len);
+```

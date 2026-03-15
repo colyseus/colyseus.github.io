@@ -1,0 +1,280 @@
+---
+import SDKTypescript from "../content/framework/sdk-typescript.mdx";
+import SDKReact from "../content/framework/sdk-react.mdx";
+import SDKUnity from "../content/framework/sdk-unity.mdx";
+import SDKGodot from "../content/framework/sdk-godot.mdx";
+import SDKGameMaker from "../content/framework/sdk-gamemaker.mdx";
+import SDKDefold from "../content/framework/sdk-defold.mdx";
+import SDKConstruct3 from "../content/framework/sdk-construct3.mdx";
+import SDKHaxe from "../content/framework/sdk-haxe.mdx";
+import SDKC from "../content/framework/sdk-c.mdx";
+
+const sdks = [
+  {
+    key: "typescript",
+    name: "TypeScript",
+    image: "/images/sdks/javascript.png",
+    filename: "client.ts",
+    install: "npm install @colyseus/sdk",
+    installType: "command",
+    docsUrl: "https://docs.colyseus.io/getting-started/typescript",
+    demoUrl: "https://github.com/endel/tank-battle-multiplayer/tree/master/web-playcanvas",
+    tag: "Stable",
+  },
+  {
+    key: "react",
+    name: "React",
+    svg: `<svg viewBox="-11.5 -10.23174 23 20.46348"><circle cx="0" cy="0" r="2.05" fill="currentColor"/><g stroke="currentColor" stroke-width="1" fill="none"><ellipse rx="11" ry="4.2"/><ellipse rx="11" ry="4.2" transform="rotate(60)"/><ellipse rx="11" ry="4.2" transform="rotate(120)"/></g></svg>`,
+    filename: "Game.tsx",
+    install: "npm install @colyseus/react",
+    installType: "command",
+    docsUrl: "https://docs.colyseus.io/getting-started/react",
+    demoUrl: "https://github.com/endel/r3f-lobby-car-prototype",
+    tag: "Stable",
+  },
+  {
+    key: "unity",
+    name: "Unity",
+    image: "/images/sdks/unity.png",
+    filename: "GameClient.cs",
+    install: "Download Plugin",
+    installType: "download",
+    installUrl: "https://github.com/colyseus/colyseus-unity3d/releases/latest/download/Colyseus_Plugin.unitypackage",
+    docsUrl: "https://docs.colyseus.io/getting-started/unity",
+    demoUrl: "https://github.com/endel/tank-battle-multiplayer/tree/master/unity",
+    tag: "Stable",
+  },
+  {
+    key: "godot",
+    name: "Godot",
+    image: "/images/platforms/godot.png",
+    filename: "client.gd",
+    install: "Download SDK",
+    installType: "download",
+    installUrl: "https://github.com/colyseus/native-sdk/releases?q=godot+sdk&expanded=true",
+    docsUrl: "https://docs.colyseus.io/getting-started/godot",
+    demoUrl: "https://github.com/endel/tank-battle-multiplayer/tree/master/godot",
+    tag: "Alpha",
+  },
+  {
+    key: "gamemaker",
+    name: "GameMaker",
+    image: "/images/platforms/gamemaker.png",
+    filename: "obj_client.gml",
+    install: "Download SDK",
+    installType: "download",
+    installUrl: "https://github.com/colyseus/native-sdk/releases?q=gamemaker+sdk&expanded=true",
+    docsUrl: "https://docs.colyseus.io/getting-started/gamemaker",
+    demoUrl: "https://github.com/endel/tank-battle-multiplayer/tree/master/gamemaker",
+    tag: "Alpha",
+  },
+  {
+    key: "defold",
+    name: "Defold",
+    image: "/images/sdks/defold.png",
+    filename: "client.lua",
+    install: "See documentation",
+    installType: "link",
+    docsUrl: "https://docs.colyseus.io/getting-started/defold",
+    demoUrl: "https://github.com/endel/tank-battle-multiplayer/tree/master/defold",
+    tag: "Stable",
+  },
+  {
+    key: "construct3",
+    name: "Construct 3",
+    image: "/images/sdks/construct3.png",
+    filename: "game.js",
+    install: "Download Addon",
+    installType: "download",
+    installUrl: "https://www.construct.net/en/make-games/addons/111/colyseus-multiplayer-sdk",
+    docsUrl: "https://docs.colyseus.io/getting-started/construct3",
+    demoUrl: "https://github.com/colyseus/construct3-demo",
+    tag: "Stable",
+  },
+  {
+    key: "haxe",
+    name: "Haxe",
+    image: "/images/sdks/haxe.png",
+    filename: "Client.hx",
+    install: "haxelib install colyseus",
+    installType: "command",
+    docsUrl: "https://docs.colyseus.io/getting-started/haxe",
+    demoUrl: "https://github.com/endel/tank-battle-multiplayer/tree/master/haxe",
+    tag: "Stable",
+  },
+  {
+    key: "c",
+    name: "C",
+    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    filename: "client.c",
+    install: "Download SDK",
+    installType: "download",
+    installUrl: "https://github.com/colyseus/native-sdk/releases?q=%22Colyseus+Native+SDK+-+Static+Library%22&expanded=true",
+    docsUrl: "https://github.com/colyseus/native-sdk",
+    demoUrl: "https://github.com/colyseus/native-sdk/tree/main/platforms/raylib",
+    tag: "Alpha",
+  },
+];
+---
+
+<section id="client-sdks" class="border-b border-white/5 bg-section-glow-purple">
+  <div class="max-w-7xl mx-auto px-6 py-24">
+
+    <div class="text-center mb-12">
+      <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Client SDKs</p>
+      <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Build on Any Platform</h2>
+      <p class="text-gray-400 max-w-xl mx-auto">Connect to your Colyseus server from any engine, framework, or language. State synchronization works the same everywhere.</p>
+    </div>
+
+    <!-- SDK Selector -->
+    <div class="flex flex-wrap justify-center gap-2 lg:gap-3 mb-10" id="sdk-selector">
+      {sdks.map((sdk, i) => (
+        <button
+          class={`sdk-btn group flex flex-col items-center justify-between gap-1 px-3 py-3 lg:px-4 lg:py-3 rounded-xl border transition-all cursor-pointer w-[72px] lg:w-[88px] ${i === 0 ? 'active' : ''}`}
+          data-sdk={sdk.key}
+        >
+          <div class="flex items-center justify-center h-7 lg:h-9">
+            {sdk.image ? (
+              <img src={sdk.image} alt={sdk.name} class="sdk-icon w-7 lg:w-9 transition-all" />
+            ) : (
+              <span class="sdk-icon w-7 lg:w-9 transition-all" set:html={sdk.svg} />
+            )}
+          </div>
+          <span class="sdk-label text-[10px] lg:text-xs font-medium transition-all whitespace-nowrap">{sdk.name}</span>
+          <span class={`text-[9px] font-medium uppercase tracking-wide px-1.5 py-0.5 rounded border ${sdk.tag === 'Alpha' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-green-500/20 text-green-400 border-green-500/30'}`}>{sdk.tag}</span>
+        </button>
+      ))}
+    </div>
+
+    <!-- SDK Content Panels -->
+    <div class="max-w-3xl mx-auto" id="sdk-panels">
+      {sdks.map((sdk, i) => (
+        <div class={`sdk-panel ${i === 0 ? 'active' : ''}`} data-panel={sdk.key}>
+          <!-- Code Panel -->
+          <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+            <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+              <div class="flex gap-1.5">
+                <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                <span class="w-3 h-3 rounded-full bg-white/10"></span>
+                <span class="w-3 h-3 rounded-full bg-white/10"></span>
+              </div>
+              <span class="text-xs text-gray-500 ml-2 font-mono">{sdk.filename}</span>
+              <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Client</span>
+            </div>
+            <div class="flex-1 homepage-code">
+              {sdk.key === "typescript" && <SDKTypescript />}
+              {sdk.key === "react" && <SDKReact />}
+              {sdk.key === "unity" && <SDKUnity />}
+              {sdk.key === "godot" && <SDKGodot />}
+              {sdk.key === "gamemaker" && <SDKGameMaker />}
+              {sdk.key === "defold" && <SDKDefold />}
+              {sdk.key === "construct3" && <SDKConstruct3 />}
+              {sdk.key === "haxe" && <SDKHaxe />}
+              {sdk.key === "c" && <SDKC />}
+            </div>
+          </div>
+
+          <!-- Install + Links -->
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 px-2">
+            <div class="flex items-center gap-3">
+              {sdk.installType === "command" ? (
+                <code class="text-sm bg-white/[0.04] border border-white/5 rounded-lg px-4 py-2 text-gray-300 font-mono">{sdk.install}</code>
+              ) : (
+                <a href={sdk.installUrl || sdk.docsUrl} target="_blank" rel="noopener noreferrer" class="text-sm bg-white/[0.04] border border-white/5 rounded-lg px-4 py-2 text-gray-300 hover:text-white hover:border-white/10 transition-all">
+                  {sdk.install}
+                  <svg class="inline-block w-3 h-3 ml-1 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              )}
+            </div>
+            <div class="flex items-center gap-4">
+              {sdk.demoUrl && (
+                <a href={sdk.demoUrl} target="_blank" rel="noopener noreferrer" class="text-sm text-gray-500 hover:text-gray-300 transition-all">
+                  Demo
+                  <svg class="inline-block w-3 h-3 ml-0.5 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+              )}
+              <a href={sdk.docsUrl} target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-purple-400 hover:text-purple-300 transition-all">
+                Get Started
+                <svg class="inline-block w-3.5 h-3.5 ml-0.5 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>
+
+<style>
+  /* SDK button states */
+  .sdk-btn {
+    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .sdk-btn:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .sdk-btn.active {
+    border-color: rgba(168, 85, 247, 0.5);
+    background: rgba(168, 85, 247, 0.1);
+  }
+  .sdk-btn .sdk-icon {
+    opacity: 0.5;
+    color: rgb(156, 163, 175);
+  }
+  .sdk-btn:hover .sdk-icon {
+    opacity: 0.8;
+  }
+  .sdk-btn.active .sdk-icon {
+    opacity: 1;
+    color: rgb(192, 132, 252);
+  }
+  .sdk-btn .sdk-label {
+    color: rgb(107, 114, 128);
+  }
+  .sdk-btn:hover .sdk-label {
+    color: rgb(156, 163, 175);
+  }
+  .sdk-btn.active .sdk-label {
+    color: rgb(216, 180, 254);
+  }
+
+  /* SDK content panels */
+  .sdk-panel {
+    display: none;
+  }
+  .sdk-panel.active {
+    display: block;
+    animation: sdk-fade-in 0.25s ease;
+  }
+  @keyframes sdk-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var buttons = document.querySelectorAll('#sdk-selector .sdk-btn');
+    var panels = document.querySelectorAll('#sdk-panels .sdk-panel');
+
+    if (!buttons.length || !panels.length) return;
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var sdk = btn.dataset.sdk;
+
+        // Toggle active button
+        buttons.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        // Toggle active panel
+        panels.forEach(function (p) { p.classList.remove('active'); });
+        var panel = document.querySelector('.sdk-panel[data-panel="' + sdk + '"]');
+        if (panel) panel.classList.add('active');
+      });
+    });
+  })();
+</script>

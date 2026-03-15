@@ -1,0 +1,23 @@
+```tsx
+import { Client } from "@colyseus/sdk";
+import { useRoom, useRoomState } from "@colyseus/react";
+
+const client = new Client("https://your-server.com");
+
+function Game() {
+  const { room, isConnecting } = useRoom(
+    () => client.joinOrCreate("game_room"),
+  );
+  const state = useRoomState(room);
+
+  if (isConnecting) return <p>Connecting...</p>;
+
+  return (
+    <ul>
+      {state?.players.map((player, key) => (
+        <li key={key}>Player at {player.x}, {player.y}</li>
+      ))}
+    </ul>
+  );
+}
+```

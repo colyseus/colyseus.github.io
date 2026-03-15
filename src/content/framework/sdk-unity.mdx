@@ -1,0 +1,19 @@
+```csharp
+using Colyseus;
+using Colyseus.Schema;
+
+var client = new Client("https://your-server.com");
+var room = await client.JoinOrCreate<GameState>("game_room");
+var callbacks = Callbacks.Get(room);
+
+callbacks.OnAdd(state => state.players, (sessionId, player) => {
+    AddSpriteForPlayer(player);
+    callbacks.OnChange(player, () =>
+        MoveSprite(sessionId, player.x, player.y));
+});
+
+callbacks.OnRemove(state => state.players, (sessionId, player) =>
+    RemoveSpriteForPlayer(sessionId));
+
+await room.Send("move", new { x = 10, y = 20 });
+```

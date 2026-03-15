@@ -1,0 +1,18 @@
+```typescript
+import { Client, Callbacks } from "@colyseus/sdk";
+
+const client = new Client("https://your-server.com");
+const room = await client.joinOrCreate("game_room");
+const callbacks = Callbacks.get(room);
+
+callbacks.onAdd("players", (player, key) => {
+  addSpriteForPlayer(player);
+  callbacks.onChange(player, () =>
+    moveSprite(key, player.x, player.y));
+});
+
+callbacks.onRemove("players", (player, key) =>
+  removeSpriteForPlayer(key));
+
+room.send("move", { x: 10, y: 20 });
+```
