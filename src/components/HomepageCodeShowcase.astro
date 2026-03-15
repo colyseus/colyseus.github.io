@@ -1,0 +1,132 @@
+---
+import { sdks } from "../data/sdks";
+import SDKClientCode from "./SDKClientCode.astro";
+import SDKLinks from "./SDKLinks.astro";
+import CodeServer from "../content/homepage/code-server.mdx";
+---
+
+<section class="border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+    <div class="text-center mb-16">
+      <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">See It In Action</p>
+      <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Real-Time State Sync in Minutes</h2>
+      <p class="text-gray-400 max-w-xl mx-auto">Define your game state on the server. Colyseus syncs it to all clients automatically — no manual serialization needed.</p>
+    </div>
+
+    <!-- SDK Selector -->
+    <div class="flex flex-wrap justify-center gap-1.5 lg:gap-2 mb-8" id="home-sdk-selector">
+      {sdks.map((sdk, i) => (
+        <button
+          class={`home-sdk-btn group flex items-center gap-1.5 px-2.5 py-1.5 lg:px-3 lg:py-2 rounded-lg border transition-all cursor-pointer ${i === 0 ? 'active' : ''}`}
+          data-sdk={sdk.key}
+        >
+          {sdk.image ? (
+            <img src={sdk.image} alt={sdk.name} class="home-sdk-icon w-4 lg:w-5 transition-all" />
+          ) : (
+            <span class="home-sdk-icon w-4 lg:w-5 transition-all" set:html={sdk.svg} />
+          )}
+          <span class="home-sdk-label text-xs font-medium transition-all whitespace-nowrap">{sdk.name}</span>
+        </button>
+      ))}
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 lg:gap-6 max-w-5xl mx-auto">
+      <!-- Server Code (static) -->
+      <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+          <div class="flex gap-1.5">
+            <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            <span class="w-3 h-3 rounded-full bg-white/10"></span>
+          </div>
+          <span class="text-xs text-gray-500 ml-2 font-mono">GameRoom.ts</span>
+          <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Server</span>
+        </div>
+        <div class="flex-1 homepage-code">
+          <CodeServer />
+        </div>
+      </div>
+
+      <!-- Client Code (switchable) -->
+      <div id="home-sdk-panels">
+        {sdks.map((sdk, i) => (
+          <div class={`home-sdk-panel ${i === 0 ? 'active' : ''}`} data-panel={sdk.key}>
+            <SDKClientCode sdk={sdk} />
+            <SDKLinks sdk={sdk} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* SDK button states */
+  .home-sdk-btn {
+    border-color: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .home-sdk-btn:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .home-sdk-btn.active {
+    border-color: rgba(168, 85, 247, 0.5);
+    background: rgba(168, 85, 247, 0.1);
+  }
+  .home-sdk-btn .home-sdk-icon {
+    opacity: 0.5;
+    color: rgb(156, 163, 175);
+  }
+  .home-sdk-btn:hover .home-sdk-icon {
+    opacity: 0.8;
+  }
+  .home-sdk-btn.active .home-sdk-icon {
+    opacity: 1;
+    color: rgb(192, 132, 252);
+  }
+  .home-sdk-btn .home-sdk-label {
+    color: rgb(107, 114, 128);
+  }
+  .home-sdk-btn:hover .home-sdk-label {
+    color: rgb(156, 163, 175);
+  }
+  .home-sdk-btn.active .home-sdk-label {
+    color: rgb(216, 180, 254);
+  }
+
+  /* SDK content panels */
+  .home-sdk-panel {
+    display: none;
+  }
+  .home-sdk-panel.active {
+    display: block;
+    animation: home-sdk-fade-in 0.25s ease;
+  }
+  @keyframes home-sdk-fade-in {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var buttons = document.querySelectorAll('#home-sdk-selector .home-sdk-btn');
+    var panels = document.querySelectorAll('#home-sdk-panels .home-sdk-panel');
+
+    if (!buttons.length || !panels.length) return;
+
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var sdk = btn.dataset.sdk;
+
+        buttons.forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+
+        panels.forEach(function (p) { p.classList.remove('active'); });
+        var panel = document.querySelector('.home-sdk-panel[data-panel="' + sdk + '"]');
+        if (panel) panel.classList.add('active');
+      });
+    });
+  })();
+</script>

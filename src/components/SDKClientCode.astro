@@ -1,0 +1,41 @@
+---
+import type { SDK } from "../data/sdks";
+
+import SDKTypescript from "../content/framework/sdk-typescript.mdx";
+import SDKReact from "../content/framework/sdk-react.mdx";
+import SDKUnity from "../content/framework/sdk-unity.mdx";
+import SDKGodot from "../content/framework/sdk-godot.mdx";
+import SDKGameMaker from "../content/framework/sdk-gamemaker.mdx";
+import SDKDefold from "../content/framework/sdk-defold.mdx";
+import SDKConstruct3 from "../content/framework/sdk-construct3.mdx";
+import SDKHaxe from "../content/framework/sdk-haxe.mdx";
+import SDKC from "../content/framework/sdk-c.mdx";
+
+interface Props {
+  sdk: SDK;
+}
+const { sdk } = Astro.props;
+---
+
+<div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+  <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+    <div class="flex gap-1.5">
+      <span class="w-3 h-3 rounded-full bg-white/10"></span>
+      <span class="w-3 h-3 rounded-full bg-white/10"></span>
+      <span class="w-3 h-3 rounded-full bg-white/10"></span>
+    </div>
+    <span class="text-xs text-gray-500 ml-2 font-mono">{sdk.filename}</span>
+    <span class="ml-auto text-[10px] uppercase tracking-wider text-gray-600 font-medium">Client</span>
+  </div>
+  <div class="flex-1 homepage-code">
+    {sdk.key === "typescript" && <SDKTypescript />}
+    {sdk.key === "react" && <SDKReact />}
+    {sdk.key === "unity" && <SDKUnity />}
+    {sdk.key === "godot" && <SDKGodot />}
+    {sdk.key === "gamemaker" && <SDKGameMaker />}
+    {sdk.key === "defold" && <SDKDefold />}
+    {sdk.key === "construct3" && <SDKConstruct3 />}
+    {sdk.key === "haxe" && <SDKHaxe />}
+    {sdk.key === "c" && <SDKC />}
+  </div>
+</div>

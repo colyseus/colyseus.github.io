@@ -1,0 +1,33 @@
+---
+import type { SDK } from "../data/sdks";
+
+interface Props {
+  sdk: SDK;
+}
+const { sdk } = Astro.props;
+---
+
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 px-2">
+  <div class="flex items-center gap-3">
+    {sdk.installType === "command" ? (
+      <code class="text-sm bg-white/[0.04] border border-white/5 rounded-lg px-4 py-2 text-gray-300 font-mono">{sdk.install}</code>
+    ) : (
+      <a href={sdk.installUrl || sdk.docsUrl} target="_blank" rel="noopener noreferrer" class="text-sm bg-white/[0.04] border border-white/5 rounded-lg px-4 py-2 text-gray-300 hover:text-white hover:border-white/10 transition-all">
+        {sdk.install}
+        <svg class="inline-block w-3 h-3 ml-1 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    )}
+  </div>
+  <div class="flex items-center gap-4">
+    {sdk.demoUrl && (
+      <a href={sdk.demoUrl} target="_blank" rel="noopener noreferrer" class="text-sm text-gray-500 hover:text-gray-300 transition-all">
+        Demo
+        <svg class="inline-block w-3 h-3 ml-0.5 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7v10" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    )}
+    <a href={sdk.docsUrl} target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-purple-400 hover:text-purple-300 transition-all">
+      Get Started
+      <svg class="inline-block w-3.5 h-3.5 ml-0.5 -mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</div>
