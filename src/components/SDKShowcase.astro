@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { sdks } from "../data/sdks";
 import SDKClientCode from "./SDKClientCode.astro";
 import SDKLinks from "./SDKLinks.astro";
@@ -22,7 +23,7 @@ import SDKLinks from "./SDKLinks.astro";
         >
           <div class="flex items-center justify-center h-7 lg:h-9">
             {sdk.image ? (
-              <img src={sdk.image} alt={sdk.name} class="sdk-icon w-7 lg:w-9 transition-all" />
+              <Image src={sdk.image} alt={sdk.name} class="sdk-icon w-7 lg:w-9 transition-all" />
             ) : (
               <span class="sdk-icon w-7 lg:w-9 transition-all" set:html={sdk.svg} />
             )}

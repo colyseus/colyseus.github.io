@@ -1,4 +1,4 @@
-import { defineConfig, passthroughImageService } from 'astro/config';
+import { defineConfig } from 'astro/config';
 
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
@@ -11,10 +11,6 @@ export default defineConfig({
   site: 'https://colyseus.io',
   compressHTML: true,
   integrations: [expressiveCode(), mdx(), sitemap(), tailwind(), react()],
-
-  // image: {
-  //   service: passthroughImageService(),
-  // },
 
   //
   // Syntax Highlight docs:

@@ -1,7 +1,20 @@
+import type { ImageMetadata } from 'astro';
+
+const sdkImages = import.meta.glob<{ default: ImageMetadata }>(
+  '/assets/sdks/*.png',
+  { eager: true }
+);
+
+function resolveImage(filename: string): ImageMetadata {
+  const mod = sdkImages[`/assets/sdks/${filename}`];
+  if (!mod) throw new Error(`SDK image not found: ${filename}`);
+  return mod.default;
+}
+
 export interface SDK {
   key: string;
   name: string;
-  image?: string;
+  image?: ImageMetadata;
   svg?: string;
   filename: string;
   install: string;
@@ -12,11 +25,14 @@ export interface SDK {
   tag: "Stable" | "Alpha";
 }
 
+// Keyed lookup map for use by showcase/other pages (e.g. platforms["javascript"].image)
+export const platforms: Record<string, { name: string; image?: ImageMetadata }> = {};
+
 export const sdks: SDK[] = [
   {
     key: "typescript",
     name: "TypeScript",
-    image: "/images/sdks/javascript.png",
+    image: resolveImage("javascript.png"),
     filename: "client.ts",
     install: "npm install @colyseus/sdk",
     installType: "command",
@@ -38,7 +54,7 @@ export const sdks: SDK[] = [
   {
     key: "unity",
     name: "Unity",
-    image: "/images/sdks/unity.png",
+    image: resolveImage("unity.png"),
     filename: "GameClient.cs",
     install: "Download Plugin",
     installType: "download",
@@ -50,7 +66,7 @@ export const sdks: SDK[] = [
   {
     key: "godot",
     name: "Godot",
-    image: "/images/platforms/godot.png",
+    image: resolveImage("godot.png"),
     filename: "client.gd",
     install: "Download SDK",
     installType: "download",
@@ -62,7 +78,7 @@ export const sdks: SDK[] = [
   {
     key: "gamemaker",
     name: "GameMaker",
-    image: "/images/platforms/gamemaker.png",
+    image: resolveImage("gamemaker.png"),
     filename: "obj_client.gml",
     install: "Download SDK",
     installType: "download",
@@ -74,7 +90,7 @@ export const sdks: SDK[] = [
   {
     key: "defold",
     name: "Defold",
-    image: "/images/sdks/defold.png",
+    image: resolveImage("defold.png"),
     filename: "client.lua",
     install: "See documentation",
     installType: "link",
@@ -83,21 +99,9 @@ export const sdks: SDK[] = [
     tag: "Stable",
   },
   {
-    key: "construct3",
-    name: "Construct 3",
-    image: "/images/sdks/construct3.png",
-    filename: "game.js",
-    install: "Download Addon",
-    installType: "download",
-    installUrl: "https://www.construct.net/en/make-games/addons/111/colyseus-multiplayer-sdk",
-    docsUrl: "https://docs.colyseus.io/getting-started/construct3",
-    demoUrl: "https://github.com/colyseus/construct3-demo",
-    tag: "Stable",
-  },
-  {
     key: "haxe",
     name: "Haxe",
-    image: "/images/sdks/haxe.png",
+    image: resolveImage("haxe.png"),
     filename: "Client.hx",
     install: "haxelib install colyseus",
     installType: "command",
@@ -108,7 +112,7 @@ export const sdks: SDK[] = [
   {
     key: "c",
     name: "C",
-    svg: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    image: resolveImage("c.png"),
     filename: "client.c",
     install: "Download SDK",
     installType: "download",
@@ -117,4 +121,24 @@ export const sdks: SDK[] = [
     demoUrl: "https://github.com/colyseus/native-sdk/tree/main/platforms/raylib",
     tag: "Alpha",
   },
+  {
+    key: "construct3",
+    name: "Construct 3",
+    image: resolveImage("construct3.png"),
+    filename: "game.js",
+    install: "Download Addon",
+    installType: "download",
+    installUrl: "https://www.construct.net/en/make-games/addons/111/colyseus-multiplayer-sdk",
+    docsUrl: "https://docs.colyseus.io/getting-started/construct3",
+    demoUrl: "https://github.com/colyseus/construct3-demo",
+    tag: "Stable",
+  },
 ];
+
+// Populate platforms lookup from sdks
+for (const sdk of sdks) {
+  if (sdk.image) {
+    platforms[sdk.key] = { name: sdk.name, image: sdk.image };
+  }
+}
+platforms["javascript"] = platforms["typescript"];

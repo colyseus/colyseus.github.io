@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { sdks } from "../data/sdks";
 import SDKClientCode from "./SDKClientCode.astro";
 import SDKLinks from "./SDKLinks.astro";
@@ -21,7 +22,7 @@ import CodeServer from "../content/homepage/code-server.mdx";
           data-sdk={sdk.key}
         >
           {sdk.image ? (
-            <img src={sdk.image} alt={sdk.name} class="home-sdk-icon w-4 lg:w-5 transition-all" />
+            <Image src={sdk.image} alt={sdk.name} class="home-sdk-icon w-4 lg:w-5 transition-all" />
           ) : (
             <span class="home-sdk-icon w-4 lg:w-5 transition-all" set:html={sdk.svg} />
           )}

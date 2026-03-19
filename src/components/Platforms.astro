@@ -1,14 +1,6 @@
 ---
-export const platforms = {
-  javascript: { name: "JavaScript/TypeScript", image: "/images/sdks/javascript.png", url: "https://docs.colyseus.io/getting-started/javascript/" },
-  unity: { name: "Unity", image: "/images/sdks/unity.png", url: "https://docs.colyseus.io/getting-started/unity/" },
-  construct3: { name: "Construct 3", image: "/images/sdks/construct3.png", url: "https://docs.colyseus.io/getting-started/construct3/" },
-  defold: { name: "Defold Engine", image: "/images/sdks/defold.png", url: "https://docs.colyseus.io/getting-started/defold/" },
-  haxe: { name: "Haxe 4", image: "/images/sdks/haxe.png", url: "https://docs.colyseus.io/getting-started/haxe/" },
-  cocos: { name: "Cocos Creator", image: "/images/sdks/cocos.png", url: "https://docs.colyseus.io/getting-started/cocos/" },
-  gamemaker: { name: "GameMaker", image: "/images/platforms/gamemaker.png", url: "https://github.com/colyseus/native-sdk/issues/16", tag: "Alpha" },
-  godot: { name: "Godot", image: "/images/platforms/godot.png", url: "https://github.com/colyseus/native-sdk/issues/8", tag: "Alpha" },
-};
+import { Image } from 'astro:assets';
+import { sdks } from '../data/sdks';
 interface Props {
   align?: 'center' | 'left';
 }
@@ -17,18 +9,18 @@ const { align = 'center' } = Astro.props;
 <div class={`flex flex-col ${align === 'left' ? 'items-center lg:items-start' : 'items-center'}`}>
   <p class="text-sm text-gray-500 mb-4 animate-fade-up" style="animation-delay: 0.5s">Supports your favorite engine & platform</p>
   <ul class="flex flex-wrap items-center justify-center gap-4">
-    {Object.values(platforms).map((platform, i) => (
+    {sdks.filter(sdk => sdk.image).map((sdk, i) => (
       <li class="animate-fade-up" style={`animation-delay: ${0.6 + i * 0.06}s`}>
-        <a href={platform.url} title={platform.name} {...platform.tag ? { target: "_blank", rel: "noopener noreferrer" } : {}} class="group flex flex-col items-center relative">
-          <img
-            src={platform.image}
-            alt={platform.name}
+        <a href={sdk.docsUrl} title={sdk.name} {...sdk.tag === "Alpha" ? { target: "_blank", rel: "noopener noreferrer" } : {}} class="group flex flex-col items-center relative">
+          <Image
+            src={sdk.image}
+            alt={sdk.name}
             class="w-10 lg:w-14 opacity-60 group-hover:opacity-100 group-hover:-translate-y-1 transition-all"
           />
           <span class="absolute top-full mt-1 flex flex-col items-center whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity">
-            <span class="text-xs text-gray-500">{platform.name}</span>
-            {platform.tag && (
-              <span class="text-[10px] font-medium uppercase tracking-wide bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded border border-purple-500/30 mt-0.5">{platform.tag}</span>
+            <span class="text-xs text-gray-500">{sdk.name}</span>
+            {sdk.tag === "Alpha" && (
+              <span class="text-[10px] font-medium uppercase tracking-wide bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded border border-purple-500/30 mt-0.5">{sdk.tag}</span>
             )}
           </span>
         </a>
