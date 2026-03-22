@@ -1,4 +1,4 @@
-const allRepos = [ 'colyseus', 'colyseus.js', 'schema', 'colyseus-unity-sdk', 'colyseus-haxe', 'colyseus-construct3', 'colyseus-defold', 'colyseus-examples', 'create-colyseus-app' ];
+const allRepos = [ 'docs', 'colyseus', 'colyseus.js', 'schema', 'colyseus-unity-sdk', 'colyseus-haxe', 'colyseus-construct3', 'colyseus-defold', 'colyseus-examples', 'create-colyseus-app' ];
 
 export const githubStars = await fetch('https://api.github.com/repos/colyseus/colyseus')
   .then(res => res.json())
