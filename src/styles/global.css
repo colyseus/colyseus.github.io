@@ -191,6 +191,13 @@ article code { @apply bg-white/10 px-1.5 py-0.5 rounded text-purple-300 text-bas
   white-space: pre !important;
 }
 
+/* === Native Select Dropdowns === */
+select option,
+select optgroup {
+  color: #d1d5db;
+  background-color: #1a1a1b;
+}
+
 /* === Footer === */
 footer a:hover { text-decoration: underline; }
 
