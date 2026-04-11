@@ -1,0 +1,129 @@
+---
+title: "First-class Vite Integration for Colyseus"
+description: "Develop your multiplayer game with hot module reloading, unified builds, and zero-config server setup."
+pubDate: "Apr 10 2026"
+author: "Endel Dreyer"
+heroImage: "../../../assets/blog/vite.webp"
+---
+
+Colyseus now ships with a first-class [Vite](https://vite.dev/) plugin that lets you develop and build your multiplayer game from a single config. One command starts both your client and game server, with hot module reloading for your room definitions.
+
+```bash
+npm install colyseus vite
+```
+
+## Getting Started
+
+Create a `vite.config.ts` at your project root:
+
+```typescript
+import { defineConfig } from 'vite';
+import { colyseus } from 'colyseus/vite';
+
+export default defineConfig({
+  plugins: [
+    colyseus({
+      serverEntry: '/src/server/index.ts',
+    }),
+  ],
+});
+```
+
+Then define your server entry:
+
+```typescript
+// src/server/index.ts
+import { defineServer, defineRoom } from 'colyseus';
+import { MyRoom } from './MyRoom';
+
+export const server = defineServer({
+  rooms: {
+    my_room: defineRoom(MyRoom),
+  },
+});
+```
+
+Run `npx vite` and you're up — client and game server on the same port, no separate process needed.
+
+## How It Works
+
+The plugin uses Vite's [Environment API](https://vite.dev/guide/api-environment) to create a dedicated `colyseus` server environment alongside the default client environment. During development:
+
+- **Shared HTTP server** — Colyseus attaches to Vite's dev server instead of creating its own. All server routes (matchmaking, custom endpoints, express middleware) are served on the same origin — no proxy or CORS configuration needed.
+- **Virtual server entry** — For production builds, the plugin generates a standalone server entry point that imports your server definition and calls `server.listen()`. No manual wiring required.
+
+## Hot Module Reloading
+
+When you edit a room class or server entry, the plugin hot-reloads your server code without restarting the process. Running rooms are cached, disposed, and restored with their state — connected clients automatically reconnect in-place.
+
+This means you can tweak game logic, save, and test immediately. No server restart, no lost state, no manual reconnection.
+
+## Building for Production
+
+Build both client and server with a single command:
+
+```bash
+npx vite build --app
+```
+
+This produces:
+
+```
+dist/
+  client/          # Static client assets (HTML, JS, CSS)
+  server/
+    server.mjs     # Standalone server entry point
+```
+
+The `--app` flag tells Vite to build all environments — the default client environment and the `colyseus` server environment — in one pass.
+
+### Optional: Serve client from the game server
+
+Set `serveClient: true` to serve the built client files from the production server via `express.static()` with SPA fallback — no separate static host needed:
+
+```typescript
+colyseus({
+  serverEntry: '/src/server/index.ts',
+  serveClient: true,
+})
+```
+
+## Plugin Options
+
+```typescript
+colyseus({
+  // Path to your server entry module (required)
+  serverEntry: '/src/server/index.ts',
+
+  // Port for the production server (default: 2567)
+  port: 2567,
+
+  // Serve built client files in production via express.static()
+  // with SPA fallback. No effect in dev mode. (default: false)
+  serveClient: true,
+
+  // Suppress per-reload log messages during development
+  quiet: false,
+
+  // Custom transport loader (advanced — for non-default WebSocket transports)
+  loadWsTransport: () => import('@colyseus/ws-transport'),
+})
+```
+
+The `serverEntry` is the only required option. Your server entry should export either a `server` created with `defineServer()`, or a `rooms` object — the plugin handles both patterns:
+
+```typescript
+// Option A: defineServer (recommended)
+export const server = defineServer({ rooms: { ... } });
+
+// Option B: bare rooms export
+export const rooms = {
+  my_room: defineRoom(MyRoom),
+};
+```
+
+## What's Next
+
+The Vite plugin is available now in `colyseus@0.17`. If you're starting a new project or migrating an existing one, give it a try — the development experience is a meaningful improvement over the traditional separate-process setup.
+
+We'd love to hear your feedback. Join us on [Discord](https://discord.gg/RY8rRS7) or open an issue on [GitHub](https://github.com/colyseus/colyseus).
