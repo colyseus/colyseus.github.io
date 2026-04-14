@@ -1,5 +1,5 @@
 ---
-title: "Two New Demos: Realtime Tanks & Turn-based Cards"
+title: "Two Open-Source Multiplayer Demos: Realtime Tanks & Turn-based Cards"
 description: "Open-source multiplayer samples showing one Colyseus server powering many engines — Unity, Godot, GameMaker, Defold, React, Three.js, PlayCanvas, and more."
 pubDate: "Apr 14 2026"
 author: "Endel Dreyer"
@@ -9,7 +9,7 @@ import { Image } from 'astro:assets';
 import tanksScreenshot from "../../../assets/blog/demo-tanks.webp";
 import cardsScreenshot from "../../../assets/blog/demo-cards.webp";
 
-Two new open-source demos, built to stress-test Colyseus's *"one server, any engine"* promise.
+Two new open-source demos, built to stress-test [Colyseus](/framework/)'s *"one server, any engine"* promise.
 
 Each one ships a single TypeScript server plus a pile of client implementations — Unity, Godot, GameMaker, Defold, MonoGame, Construct 3, Three.js, PlayCanvas, React, and Haxe — all talking to the same rooms.
 
@@ -52,7 +52,7 @@ A multiplayer card game in the shape of UNO: match by color or number, drop acti
 **Under the hood:**
 
 - Authoritative card validation — the server owns the deck, clients only request plays.
-- Hidden information via **StateView**: you see your own hand; everyone else is just a `handCount`.
+- Hidden information via [**StateView**](https://docs.colyseus.io/state/view): you see your own hand; everyone else is just a `handCount`.
 - Turn deadlines auto-resolve so one AFK player can't stall the table.
 - Seamless human ↔ bot swapping and reconnection — rooms survive churn without resetting.
 
