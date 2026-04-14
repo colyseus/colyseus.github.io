@@ -16,7 +16,7 @@ type Props = CollectionEntry<'blog'>['data'] & {
 };
 
 const props = Astro.props;
-const { preTitle, title, description, pubDate, updatedDate, slug } = props;
+const { preTitle, title, description, seoTitle, seoDescription, pubDate, updatedDate, slug } = props;
 const footerSection = props.footerSection || "colyseus-cloud";
 
 const author_img = props.author_img || (props.author === "Endel Dreyer" && "https://avatars.githubusercontent.com/u/130494?v=4");
@@ -31,8 +31,8 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
 <html lang="en">
 	<head>
 		<BaseHead
-			title={(preTitle) ? `${preTitle}${title}` : title}
-			description={description}
+			title={(preTitle) ? `${preTitle}${seoTitle ?? title}` : (seoTitle ?? title)}
+			description={seoDescription ?? description}
 			image={props.heroImage && optimizedHeroImage.src}
 			article={{
 				publishedTime: pubDate instanceof Date ? pubDate.toISOString() : pubDate?.toString(),
