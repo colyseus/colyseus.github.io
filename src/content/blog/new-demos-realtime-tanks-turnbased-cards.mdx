@@ -1,0 +1,65 @@
+---
+title: "Two New Demos: Realtime Tanks & Turn-based Cards"
+description: "Open-source multiplayer samples showing one Colyseus server powering many engines — Unity, Godot, GameMaker, Defold, React, Three.js, PlayCanvas, and more."
+pubDate: "Apr 14 2026"
+author: "Endel Dreyer"
+heroImage: "../../../assets/blog/demos-realtime-turnbased.webp"
+---
+import { Image } from 'astro:assets';
+import tanksScreenshot from "../../../assets/blog/demo-tanks.webp";
+import cardsScreenshot from "../../../assets/blog/demo-cards.webp";
+
+Two new open-source demos, built to stress-test Colyseus's *"one server, any engine"* promise.
+
+Each one ships a single TypeScript server plus a pile of client implementations — Unity, Godot, GameMaker, Defold, MonoGame, Construct 3, Three.js, PlayCanvas, React, and Haxe — all talking to the same rooms.
+
+Pick a style, clone a repo, start hacking.
+
+## Realtime Tanks
+
+Team-based tank combat for up to 12 players: drive with WASD, aim with the mouse, grab repair / damage / shield power-ups, and shoot your way to 10 points before the other team does.
+
+<div class="mx-auto mt-6 mb-12 w-sm w-full lg:w-2/3 text-center text-gray-600 ">
+  <a href="https://colyseus.io/realtime-tanks-demo/">
+    <Image src={tanksScreenshot} class="rounded b-1" alt="Realtime Tanks demo running in the PlayCanvas client" />
+  </a>
+  <p class="text-sm p-3 italic">Realtime Tanks running on the **PlayCanvas** client</p>
+</div>
+
+**Engines:** Unity, Godot, GameMaker, Defold, MonoGame, Construct 3, Three.js, PlayCanvas, Haxe/Heaps.
+
+**Under the hood:**
+
+- Fully authoritative server — movement, shooting, damage, and pickups all resolve server-side.
+- Spatial clustering keeps collision checks cheap as rooms fill up.
+- `MapSchema` for tanks / bullets / pickables, `ArraySchema` for teams.
+
+Play it live at [colyseus.io/realtime-tanks-demo](https://colyseus.io/realtime-tanks-demo/) — every web client in the repo plays against the same server, so a Three.js tank really is in the same match as a Godot one. Source: [colyseus/realtime-tanks-demo](https://github.com/colyseus/realtime-tanks-demo).
+
+## Turn-based Cards
+
+A multiplayer card game in the shape of UNO: match by color or number, drop action cards, stack +2s and +4s, win by emptying your hand. Rooms come pre-populated with bots so nobody stares at an empty lobby — bots step out as humans join and step back in when they leave.
+
+<div class="mx-auto mt-6 mb-12 w-sm w-full lg:w-2/3 text-center text-gray-600 ">
+  <a href="https://github.com/colyseus/turnbased-cards-demo">
+    <Image src={cardsScreenshot} class="rounded b-1" alt="Turn-based Cards demo running in the React + React Three Fiber client" />
+  </a>
+  <p class="text-sm p-3 italic">Turn-based Cards running on the **React + React Three Fiber** client</p>
+</div>
+
+**Engines:** Unity, Godot, GameMaker, Defold, React + React Three Fiber, Three.js, Haxe/Heaps.
+
+**Under the hood:**
+
+- Authoritative card validation — the server owns the deck, clients only request plays.
+- Hidden information via **StateView**: you see your own hand; everyone else is just a `handCount`.
+- Turn deadlines auto-resolve so one AFK player can't stall the table.
+- Seamless human ↔ bot swapping and reconnection — rooms survive churn without resetting.
+
+Source: [colyseus/turnbased-cards-demo](https://github.com/colyseus/turnbased-cards-demo). ("UNO" is a Mattel trademark; this is an independent educational project, not affiliated with Mattel. Card art from [4Colour Cards by VerzatileDev](https://verzatiledev.itch.io/4colour).)
+
+## One server, any engine
+
+Both repos have the same shape: one `server/` with the Colyseus room, and a sibling folder per client. No per-engine server, no translation layer, no duplicated game logic — every client speaks the same schema over the same WebSocket.
+
+Both are MIT-licensed and built to be forked. Pick the one closest to your game, delete the clients you don't need, and you've got a head start. Questions or war stories — find us on [Discord](https://discord.gg/RY8rRS7) or [GitHub](https://github.com/colyseus/colyseus).
