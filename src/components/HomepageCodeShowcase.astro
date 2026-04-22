@@ -33,7 +33,7 @@ import CodeServer from "../content/homepage/code-server.mdx";
 
     <div class="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 lg:gap-6 max-w-5xl mx-auto">
       <!-- Server Code (static) -->
-      <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+      <div class="order-2 lg:order-1 rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
           <div class="flex gap-1.5">
             <span class="w-3 h-3 rounded-full bg-white/10"></span>
@@ -49,7 +49,7 @@ import CodeServer from "../content/homepage/code-server.mdx";
       </div>
 
       <!-- Client Code (switchable) -->
-      <div id="home-sdk-panels">
+      <div id="home-sdk-panels" class="order-1 lg:order-2">
         {sdks.map((sdk, i) => (
           <div class={`home-sdk-panel ${i === 0 ? 'active' : ''}`} data-panel={sdk.key}>
             <SDKClientCode sdk={sdk} />
