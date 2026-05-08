@@ -54,8 +54,8 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
           <img class="rounded-b-2xl" width="1500" src={optimizedHeroImage.src} alt={title} transition:name={`${slug}-hero`} />
         </div>}
 
-			<article class="grid-container px-6 relative sm:text-sm text-base mx-auto max-w-screen-lg z-10">
-				<div class="mx-auto w-fit max-w-full py-5 sm:py-8 lg:px-10 lg:py-12 lg:p-12 lg:py-16 xl:p-16 xl:py-20 "> <!-- -mt-16 -->
+			<article class="grid-container px-6 relative sm:text-sm text-base mx-auto max-w-screen-lg z-10 min-w-0 w-full">
+				<div class="mx-auto w-fit max-w-full py-5 sm:py-8 lg:px-10 lg:py-12 lg:p-12 lg:py-16 xl:p-16 xl:py-20"> <!-- -mt-16 -->
 					<header class="overflow-hidden animate-fade-up text-center pt-16 rounded-xl z-20">
 
             {(pubDate) &&
@@ -71,7 +71,7 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
             {(props.isSuccessStories) &&
               <h2 class="mt-10 -mb-6 text-gray-400 text-2xl">Success Story</h2>}
 
-            <h1 class="font-display text-4xl lg:text-6xl mt-6 px-4 text-white">{title}</h1>
+            <h1 class="font-display text-3xl sm:text-4xl lg:text-6xl mt-6 px-4 text-white break-words">{title}</h1>
 
             {(!props.isSuccessStories && description) &&
               <h4 class="mt-4">{description}</h4>}
@@ -85,7 +85,7 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
                 </a>
               </div>}
 
-            <hr class="-mx-16 mt-16 lg:my-16 border-white/5">
+            <hr class="-mx-6 lg:-mx-16 mt-16 lg:my-16 border-white/5">
 					</header>
 
 					<slot />
