@@ -143,6 +143,18 @@ article hr { @apply my-8 border-gray-800; }
 article blockquote { @apply text-lg border-l-4 border-purple-600 bg-white/5 px-4 py-2 my-4 italic; }
 article code { @apply bg-white/10 px-1.5 py-0.5 rounded text-purple-300 text-base; }
 
+/* === Article Tables === */
+article .table-scroll { @apply my-8 overflow-x-auto rounded-xl border border-white/10 bg-white/[0.02]; }
+article table { @apply w-full text-sm border-collapse; }
+article thead { @apply bg-white/5; }
+article thead th { @apply px-3 py-3 text-left font-mono text-xs uppercase tracking-wider text-gray-400 whitespace-nowrap border-b border-white/10; }
+article tbody tr { @apply border-t border-white/5 transition-colors; }
+article tbody tr:hover { @apply bg-white/[0.04]; }
+article tbody td { @apply px-3 py-2 align-middle text-gray-300; }
+article tbody td:first-child { @apply font-mono text-gray-500 text-right tabular-nums; }
+article tbody td img { @apply rounded-md block; }
+article th[align="right"], article td[align="right"] { @apply text-right tabular-nums; }
+
 /* === Code Blocks === */
 .expressive-code { margin-bottom: 1.8em; }
 .expressive-code code { white-space: pre-wrap !important; }
