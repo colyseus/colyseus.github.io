@@ -10,7 +10,16 @@ import expressiveCode from "astro-expressive-code";
 export default defineConfig({
   site: 'https://colyseus.io',
   compressHTML: true,
-  integrations: [expressiveCode(), mdx(), sitemap(), tailwind(), react()],
+  integrations: [
+    expressiveCode({
+      themes: ['github-dark'],
+      useDarkModeMediaQuery: false,
+    }),
+    mdx(),
+    sitemap(),
+    tailwind(),
+    react(),
+  ],
 
   //
   // Syntax Highlight docs:
