@@ -3,7 +3,7 @@
 // all pages through the use of the <BaseHead /> component.
 import '../styles/global.css';
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
-import { GoogleAnalytics } from 'astro-analytics';
+import GoogleAnalytics from './GoogleAnalytics.astro';
 // import { ViewTransitions } from 'astro:transitions';
 
 interface Props {
@@ -47,7 +47,7 @@ const isArticle = !!article;
 <meta name="author" content="Colyseus" />
 <meta name="theme-color" content="#0a0a0b" />
 
-<GoogleAnalytics id="G-JC2SXHE7WL" />
+<GoogleAnalytics id="G-JC2SXHE7WL" hostnames={["colyseus.io"]} />
 
 <!-- Transitions are causing the main header not to shrink/grow properly -->
 <!-- <ViewTransitions /> -->
