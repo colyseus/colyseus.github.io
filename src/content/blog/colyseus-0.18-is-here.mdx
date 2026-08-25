@@ -1,0 +1,331 @@
+---
+title: "Colyseus 0.18 is here!"
+seoTitle: "Colyseus 0.18: Client-Side Prediction and Lag Compensation"
+description: "Built-in client-side prediction and lag compensation, request/response messaging, Schema 5.0, and the new @colyseus/database and @colyseus/admin packages."
+pubDate: "Aug 20 2026"
+author: "Endel Dreyer"
+heroImage: "../../../assets/blog/0.18/cover.webp"
+---
+import { Image } from 'astro:assets';
+import airHockeyImg from "../../../assets/blog/0.18/air-hockey.webp";
+import colystrikeImg from "../../../assets/blog/0.18/fps.webp";
+import mobaImg from "../../../assets/blog/0.18/moba.webp";
+import platformerImg from "../../../assets/blog/0.18/platformer.webp";
+import kartsImg from "../../../assets/blog/0.18/racing.webp";
+import playgroundHero from "../../../assets/blog/0.18/hero.webp";
+import adminRoomsImg from "../../../assets/blog/0.18/admin-rooms.webp";
+import sponsorsData from "../../data/sponsors.json";
+export const activeSponsors = sponsorsData
+  .filter((s) => s.monthlyDollars > 0)
+  .sort((a, b) => b.monthlyDollars - a.monthlyDollars);
+export const topSponsors = activeSponsors.filter((s) => s.monthlyDollars >= 100);
+export const backers = activeSponsors.filter((s) => s.monthlyDollars < 100);
+export const sponsorName = (s) => s.sponsor.name || s.sponsor.login;
+export const sponsorLink = (s) => s.sponsor.websiteUrl || s.sponsor.linkUrl;
+
+I'm thrilled to share version 0.18 of Colyseus is here! 🎉
+
+0.18 is intended to be the last release before 1.0, and it brings a lot of new features and improvements. The focus was on **fast-paced games** and **real-time action**, but the changes benefit all genres.
+
+Key highlights of 0.18 include **built-in client-side prediction and lag compensation**, a ~2.4× faster **`@colyseus/schema`** encoder, and many reliability fixes to `StateView` and `ArraySchema`.
+
+0.18 also introduces **`@colyseus/database`**, persistence on Drizzle ORM (PostgreSQL or SQLite), and **`@colyseus/admin`**, an operations console on top of it.
+
+## Prediction demos and playground 🏁
+
+The fastest way to see what 0.18 changes is to play it. While building the new prediction APIs, I kept five demos running alongside them. Each one validates a different piece of the stack.
+
+Air Hockey covers composite prediction, ColyStrike (FPS) covers lag compensation, and the MOBA runs a shared deterministic simulation. The Platformer tests dead-reckoned moving platforms, and Karts covers rollback prediction with hold-to-drift mini-turbos:
+
+<div class="mx-auto mt-6 mb-8 w-full text-center text-gray-600">
+  <div class="grid grid-cols-2 md:grid-cols-3 gap-4 w-full">
+    <div class="my-auto">
+      <a href="https://prediction-colyseus.vercel.app/" target="_blank" rel="noopener"><Image class="rounded" src={playgroundHero} alt="Prediction Playground: twelve labs isolating each netcode technique" /></a>
+      <p class="text-sm pt-2">Prediction Playground</p>
+    </div>
+    <div class="my-auto">
+      <a href="https://air-hockey-colyseus.vercel.app/" target="_blank" rel="noopener"><Image class="rounded" src={airHockeyImg} alt="Air Hockey demo: mallet, puck and goals all predicted client-side" /></a>
+      <p class="text-sm pt-2">Air Hockey</p>
+    </div>
+    <div class="my-auto">
+      <a href="https://colystrike.vercel.app/" target="_blank" rel="noopener"><Image class="rounded" src={colystrikeImg} alt="ColyStrike FPS demo: server-validated hitscan with lag compensation" /></a>
+      <p class="text-sm pt-2">ColyStrike (FPS)</p>
+    </div>
+    <div class="my-auto">
+      <a href="https://moba-colyseus.vercel.app/" target="_blank" rel="noopener"><Image class="rounded" src={mobaImg} alt="MOBA demo: heroes, creeps and towers on a deterministic shared simulation" /></a>
+      <p class="text-sm pt-2">MOBA</p>
+    </div>
+    <div class="my-auto">
+      <a href="https://platformer-colyseus.vercel.app/" target="_blank" rel="noopener"><Image class="rounded" src={platformerImg} alt="Platformer demo: reconciled movement over rideable moving platforms" /></a>
+      <p class="text-sm pt-2">Platformer</p>
+    </div>
+    <div class="my-auto">
+      <a href="https://racing-colyseus.vercel.app/" target="_blank" rel="noopener"><Image class="rounded" src={kartsImg} alt="Colyseus Karts demo: rollback prediction with hold-to-drift mini-turbos" /></a>
+      <p class="text-sm pt-2">Karts</p>
+    </div>
+  </div>
+</div>
+
+Give the demos a try!
+
+The source code of all five demos is available exclusively to [GitHub sponsors](https://github.com/sponsors/endel). Sponsoring is the most direct way to support the framework, and the premium demos will keep growing!
+
+The **Prediction Playground**, by contrast, is fully open source. It isolates each technique in a small lab: reconciliation, the interpolation modes, dead reckoning, lag compensation, optimistic events, predicted spawns, and more. All twelve labs share one server, with clients for multiple platforms (Web, Unity, Godot, Defold, etc.).
+
+## Client-side prediction & lag compensation 🎮
+
+Fast-paced games can't wait for the network. If your character only moves after a round-trip to the server, controls feel sluggish. But if the client simply moves itself, the server is no longer in charge and cheating becomes trivial.
+
+0.18 gives you both. The server stays authoritative and runs a fixed-rate simulation. The client predicts against it, and hits are resolved against what the shooter actually saw. The framework runs the prediction, reconciliation, and rewind loops. You supply the step function.
+
+On the server, three calls:
+
+```typescript
+import { Room } from "colyseus";
+import { schema, t } from "@colyseus/schema";
+import { applyInput, LEVEL } from "./shared/applyInput";   // SAME module the client imports
+
+// shared/MoveInput.ts: the only shape this room accepts, imported by both sides.
+export const MoveInput = schema({ moveX: t.number(), moveY: t.number() }, "MoveInput");
+
+class GameRoom extends Room<{ input: MoveInput }> {
+  state = new GameState();
+
+  // One buffer per session; hacked values are clamped on arrival.
+  inputs = this.defineInput(MoveInput, {
+    bufferMaxSize: 64,
+    sanitize: { moveX: (v) => Math.max(-1, Math.min(1, v)) },
+  });
+
+  // Records attached entities' positions (auto, on each broadcast).
+  rewind = this.allowRewindState({ maxRewindMs: 500 });
+
+  onCreate() {
+    this.rewind.attachAll(this.state.players, { fields: ["x", "y"] });
+    // Fixed-step loop @ 30 Hz: advertises the rate to predicting clients.
+    this.setFixedTimestep((ctx) => this.step(ctx), 30);
+  }
+
+  step(ctx) {
+    for (const [sid, p] of this.state.players) {
+      const cmd = this.inputs.get(sid).next();     // one input per tick
+      if (cmd) applyInput(p, cmd, LEVEL, ctx.dt);
+    }
+  }
+}
+```
+
+`defineInput()` declares what a client may send and buffers it per session. A `sanitize` map clamps hacked values before your simulation reads them. `setFixedTimestep()` runs your step at a constant delta time. The tick rate is advertised to clients through the join handshake.
+
+On the client:
+
+```typescript
+import { Predict } from "@colyseus/sdk";
+import { MoveInput } from "./shared/MoveInput";
+import { applyInput, LEVEL } from "./shared/applyInput";   // SAME function the server runs
+
+const predict = Predict.get(room, { mode: "lerp", delay: 100 });
+
+// Remote players: render 100ms in the past, interpolated between snapshots.
+predict.attachAll("players", { mode: "lerp", fields: ["x", "y"] });
+
+// Local player: the input handle is the ONLY thing that stages + sends.
+const input = room.input({ type: MoveInput });
+const self = room.state.players.get(room.sessionId);
+const me = predict.reconciler(self, {
+  input,
+  step: (ctx, s, cmd) => applyInput(s, cmd, LEVEL, ctx.dt),
+  smoothMs: 65,
+});
+
+function frame(now) {
+  const n = predict.tick(now);             // fixed input steps due this frame
+  for (let i = 0; i < n; i++) {
+    input.data.moveX = moveX();
+    input.send();                          // transmit + buffer, the reconciler observes
+  }
+  for (const [, p] of room.state.players) {
+    draw(predict.value(p, "x"), predict.value(p, "y"));  // ONE read idiom, local + remote
+  }
+  requestAnimationFrame(frame);
+}
+```
+
+The important line is the import. `applyInput` is the same function the server runs, so you write your movement once, in shared code. `predict.reconciler` handles the rollback. When authoritative state arrives, it rewinds your entity, replays the inputs the server hasn't acknowledged yet, and smooths out the mismatch. `attachAll` interpolates everyone else a hundred milliseconds in the past. `predict.value()` reads local and remote entities the same way.
+
+Lag compensation is the hardest part to build yourself. `allowRewindState()` records where every attached entity was on each broadcast. `rewind.lastSeenBy(sessionId)` then gives your hit test the world as that client last saw it, clamped to your `maxRewindMs` window. A player at 250ms of latency aims at a target that is a quarter of a second old, and the shot still lands.
+
+Add `import "@colyseus/sdk/debug"` for a panel with per-reconciler drift telemetry and a latency simulator.
+
+See [Netcode 📚](https://docs.colyseus.io/netcode) for more.
+
+## Schema 5.0 ⚡
+
+`@colyseus/schema` 5.0 is a big part of this release. The rewritten encoder performs about 2.4× faster than 4.0, so a server can handle more CCU just by upgrading.
+
+Schema 5.0 introduces a new **decorator-free syntax** for defining state. The old decorator syntax will continue to be supported, but the new syntax is more explicit and avoids some of the pitfalls of decorators in TypeScript.
+
+```typescript
+// 0.17 and still supported                 // 0.18: the new default
+class Player extends Schema {               export const Player = schema({
+  @type("number") x: number = 0;                x: t.number().default(0),
+  @type("number") y: number = 0;                y: t.number().default(0),
+}                                           }, "Player");
+```
+
+The new syntax also drops the `experimentalDecorators` and `useDefineForClassFields` tsconfig requirements, which simplifies tooling and removes a class of compatibility issues.
+
+Two new **delivery modifiers** control when a field reaches a client. `.patchOnly()` keeps one-frame impulses, like a hit flash, out of the full state sync. `.fullStateOnly()` sends map layout and spawn points once on join, and never patches them again.
+
+**Quantized floats** shrink the fields that change every tick. A float inside a known range doesn't need four bytes. `t.quantized()` maps the range onto an 8-, 16- or 32-bit integer on the wire, and your code still reads and writes a plain `number`. `t.angle()` is the ready-made preset for rotations, which wrap rather than clamp:
+
+```typescript
+const Input = schema({
+  yaw:      t.angle(),                                          // 2 bytes, wraps
+  pitch:    t.quantized({ min: -Math.PI/2, max: Math.PI/2 }),   // 2 bytes, clamps
+  throttle: t.quantized({ min: 0, max: 1, bits: 8 }),           // 1 byte
+}, "Input");
+```
+
+`StateView` also gained a standing subscription. `view.subscribe(collection)` covers present and future contents, whereas `view.add()` is one-shot. Pair it with streaming collections (`t.stream()`, experimental) to send large collections in slices across ticks, nearest-first per client.
+
+See [Schema 📚](https://docs.colyseus.io/state/schema) for more.
+
+## Request/response messaging 🔁
+
+Clients can now `await` a reply from a message handler. You no longer need to pair a request message with a reply message yourself:
+
+```typescript
+const profile = await room.request("get-profile", { userId: 42 });
+```
+
+On the server, the same `messages` handlers serve both fire-and-forget sends and requests. Return a value to answer, or use the new optional `ctx` argument to reject with a typed reason:
+
+```typescript
+messages = {
+  "get-profile": async (client, { userId }) => {
+    return await db.profiles.findById(userId); // becomes the client's response
+  },
+  "buy-item": (client, { itemId }, ctx) => {
+    const item = shop.get(itemId);
+    if (!item) return ctx.reject("unknown-item"); // rejects the client's promise
+    return { balance: item.buy(client) };
+  },
+}
+```
+
+Existing two-argument handlers are unaffected. Request/response is currently available on the JavaScript/TypeScript SDK.
+
+See [Request/Response 📚](https://docs.colyseus.io/room#responding-to-a-message-requestresponse) for more.
+
+## Database & Admin 💾
+
+Colyseus never had persistence built in, so every project assembled its own. `@colyseus/database` is a first step toward changing that: a `GameDatabase` on Drizzle ORM, running on SQLite or PostgreSQL, wired into the server with one option. Expect it to evolve with your feedback.
+
+```typescript
+import { defineServer } from "colyseus";
+import { GameDatabase } from "@colyseus/database";
+
+export const db = new GameDatabase({
+  connectionString: process.env.DATABASE_URL,
+});
+
+export default defineServer({
+  database: db,
+  // ...rooms, routes, etc.
+});
+```
+
+The package ships with the user store behind `@colyseus/auth`, versioned cloud saves with optimistic locking, leaderboards with seasons and `aroundMe()` queries, hot-reloadable live configs, analytics, moderation tools, and an audit log. The same connection can also serve as your [matchmaking driver](https://docs.colyseus.io/database#matchmaking-driver).
+
+`@colyseus/admin` (beta) is the operations console on top of it. You get CRUD over your tables, a live room inspector across every process, dashboard widgets, and role-based access.
+
+<div class="mt-2 mb-6">
+  <Image src={adminRoomsImg} class="rounded b-1" alt="Admin panel: live room inspector" />
+</div>
+
+See [Database 📚](https://docs.colyseus.io/database) and [Admin 📚](https://docs.colyseus.io/admin) for more.
+
+## Room plugins 🔌
+
+Rooms can now be composed from plugins. A plugin contributes message handlers, lifecycle hooks, and public methods. `definePlugins()` turns the list into a typed record:
+
+```typescript
+import { Room, definePlugins } from "colyseus";
+import { IdleKickPlugin } from "colyseus/plugins/idle-kick";
+
+export class MyRoom extends Room {
+  plugins = definePlugins([
+    new IdleKickPlugin({ timeoutMs: 60_000 }),
+  ]);
+}
+```
+
+Built-ins ship with the `colyseus` package: `IdleKickPlugin`, `WebRTCPlugin` (peer-to-peer signaling), `UniqueSessionPlugin` (one session per user), and `TrackUserSessionsPlugin`. Separately, the new `@colyseus/geoip` package resolves the client's country at auth time.
+
+See [Room Plugins 📚](https://docs.colyseus.io/room/plugins) for more.
+
+## More new features & improvements 🛠
+
+- **Reconnect resync**: on rejoin, the SDK reconciles the existing decoded state instead of decoding on top of it. Entries removed while you were offline are pruned. Object identity and callbacks are preserved. ([docs](https://docs.colyseus.io/room/reconnection))
+- **`beforeUpgrade`**: inspect the request before the WebSocket handshake, and return a `Response` to refuse it. ([docs](https://docs.colyseus.io/server/transport/ws#optionsbeforeupgrade))
+- **New SDKs (beta)**: a shared [Native SDK](https://docs.colyseus.io/getting-started/native-sdk) in C, with [Godot](https://docs.colyseus.io/getting-started/godot), [GameMaker](https://docs.colyseus.io/getting-started/gamemaker), and [Flutter](https://docs.colyseus.io/getting-started/flutter) integrations, plus a [MonoGame](https://docs.colyseus.io/getting-started/monogame) integration.
+- **`@colyseus/react`**: `usePredict`, `useInput`, `useReconciler` and more wrap the netcode stack as [hooks](https://docs.colyseus.io/getting-started/react#netcode-hooks-colyseus-018).
+- **`setTimestep()`**: `setSimulationInterval()` is now `setTimestep()`. The old name still works.
+- **`basicAuth()`**: password-protect HTTP routes, the monitor and the playground. ([docs](https://docs.colyseus.io/tools/playground#password-protection))
+- **Smaller SDK**: the browser bundle is minified and tree-shaken. ~58 KB gzip, down from ~191 KB.
+- **Playground**: CPU-profiling tab, grouped endpoint sidebar, and `room.request()` in the connection inspector.
+- **`create-colyseus-app` presets**: `minimal`, `realtime-action`, `turn-based`, plus flags for non-interactive setup. ([docs](https://docs.colyseus.io/getting-started#presets))
+
+## Breaking changes 🚨
+
+Migrating from version `0.17` to `0.18` shouldn't take long. Here's an overview of the breaking changes:
+
+- A `Schema` now holds at most 63 fields (was 64). The last slot was always unsafe, so 0.18 throws at startup instead of desyncing in production.
+- `setMetadata()` and `setMatchmaking({ metadata })` now replace metadata instead of merging. Spread `this.metadata` to keep the old behavior.
+- `client.id` was removed. Use `client.sessionId`.
+- `@colyseus/fossil-delta-serializer` was removed.
+- Playground data endpoints return 404 in production unless you pass a `use` guard.
+
+One change needs action from your users:
+
+> **Existing email/password users must reset their password.** `@colyseus/auth` ships a new password hasher with per-password salts, and pre-0.18 hashes cannot be verified by it. Keep `AUTH_SALT` set during the transition so the legacy hasher stays available. Send users through the forgot-password flow, then drop the variable. New projects can skip it entirely.
+
+See [Migrating to 0.18 📚](https://docs.colyseus.io/migrating/0.18) for more details.
+
+## Thanks to the community 💜
+
+0.18 exists because people filed careful reports and sent patches. A special thank you to [@bsharma-imperium](https://github.com/bsharma-imperium), who started the new [Native SDK](https://docs.colyseus.io/getting-started/native-sdk) and wrote much of its foundation. [@FTWinston](https://github.com/FTWinston) contributed several `StateView` improvements, plus much of the [React hooks](https://github.com/colyseus/react-tools). [@pierroo](https://github.com/pierroo) and [@zahmad12](https://github.com/zahmad12) reported the Android bugs in the Godot build.
+
+Pull requests also came from [@Hoodgail](https://github.com/Hoodgail), [@anaibol](https://github.com/anaibol), [@kuoder](https://github.com/kuoder), [@lkinasiewicz](https://github.com/lkinasiewicz), [@Andrek25](https://github.com/Andrek25), [@JoaoCnh](https://github.com/JoaoCnh), [@darkdi](https://github.com/darkdi) and [@Br1an67](https://github.com/Br1an67). Each of these people reported a bug or requested a feature that 0.18 delivers: [@ehart004](https://github.com/ehart004), [@serjek](https://github.com/serjek), [@thedomeffm](https://github.com/thedomeffm), [@chungweileong94](https://github.com/chungweileong94), [@igasmi](https://github.com/igasmi), [@sarpaslan](https://github.com/sarpaslan), [@krabas](https://github.com/krabas), [@NotRustyBot](https://github.com/NotRustyBot), [@ColaFanta](https://github.com/ColaFanta), [@trueicecold](https://github.com/trueicecold), [@TJEvans](https://github.com/TJEvans), [@neizzz](https://github.com/neizzz), [@mikkas70](https://github.com/mikkas70), [@hunkydoryrepair](https://github.com/hunkydoryrepair), [@cskinfill](https://github.com/cskinfill), [@ArthurVanRemoortel](https://github.com/ArthurVanRemoortel), [@mqllin](https://github.com/mqllin), [@paulocoutinhox](https://github.com/paulocoutinhox) and [@beemdvp](https://github.com/beemdvp).
+
+I also receive plenty of reports and suggestions on [Discord](https://discord.gg/RY8rRS7) or via DM. Those messages are just as valuable, but much harder to track. Thank you to everyone who reported something there!
+
+---
+
+## The future: version 1.0 and beyond 🚀
+
+Colyseus is [**independent**](/blog/colyseus-is-fully-independent) and **open-source**. A solo indie developer maintains it, driven by the feedback, bug reports, and contributions of a [passionate community](/community). There is no venture capital or corporate backing behind this project, only a shared commitment to building the best multiplayer framework together. Your sponsorship directly funds new features, bug fixes, and the path to [version 1.0](https://docs.colyseus.io/roadmap).
+
+If Colyseus powers your game or project, consider [becoming a sponsor](https://github.com/sponsors/endel) to help keep the framework thriving. Every contribution, big or small, makes a real difference. It keeps Colyseus free, independent, and actively maintained for everyone.
+
+💖 Special shoutout to [Scorewarrior](https://scorewarrior.com/?utm_source=colyseus&utm_content=blog), [Pixels.xyz](https://pixels.xyz/?utm_source=colyseus&utm_content=blog), [Petr Kharitonov](https://github.com/peterkharitonov), [Bloxd](https://bloxd.io/?utm_source=colyseus&utm_content=blog), [Poki](https://developers.poki.com/?utm_source=colyseus&utm_content=blog), [Wavedash](https://wavedash.com/?utm_source=colyseus&utm_content=blog), and [all our supporters](https://docs.colyseus.io/sponsors) 💖
+
+<div class="mt-8 text-center">
+  <p class="text-xs font-medium text-gray-500 uppercase tracking-widest mb-3">Sponsors</p>
+  <div class="flex flex-wrap justify-center gap-4 mb-8">
+    {topSponsors.map((s) => (
+      <a href={sponsorLink(s)} target="_blank" rel="sponsored noopener" title={sponsorName(s)}>
+        <img src={s.sponsor.avatarUrl} alt={sponsorName(s)} class="w-20 h-20 rounded-2xl border-2 border-white/10" loading="lazy" />
+      </a>
+    ))}
+  </div>
+  <p class="text-xs font-medium text-gray-500 uppercase tracking-widest mb-3">Backers</p>
+  <div class="flex flex-wrap justify-center gap-3">
+    {backers.map((s) => (
+      <a href={sponsorLink(s)} target="_blank" rel="nofollow noopener" title={sponsorName(s)}>
+        <img src={s.sponsor.avatarUrl} alt={sponsorName(s)} class="w-10 h-10 rounded-lg border border-white/5" loading="lazy" />
+      </a>
+    ))}
+  </div>
+</div>
