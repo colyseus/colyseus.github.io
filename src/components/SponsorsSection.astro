@@ -1,5 +1,6 @@
 ---
 import sponsorsData from '../data/sponsors.json';
+import { SUPPORTERS_ENTRY_URL } from '../data/supporters';
 
 interface Sponsor {
   sponsor: {
@@ -90,10 +91,14 @@ const sizeClasses = {
       </div>
     </div>
 
+    <p class="text-gray-500 text-sm mt-10 mb-3">
+      Supporters get <span class="text-gray-300">exclusive demos, full source &amp; premium guides</span>.
+    </p>
+    
     <a
-      href="https://github.com/sponsors/endel"
+      href={SUPPORTERS_ENTRY_URL}
       target="_blank"
-      class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-lg border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/5 text-sm font-medium text-gray-400 hover:text-purple-400 transition-all"
+      class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/5 text-sm font-medium text-gray-400 hover:text-purple-400 transition-all"
     >
       <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"><path d="M4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.565 20.565 0 008 13.393a20.561 20.561 0 003.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.75.75 0 01-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5z" /></svg>
       Become a sponsor
