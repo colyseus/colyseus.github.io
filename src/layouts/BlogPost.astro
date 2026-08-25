@@ -35,8 +35,8 @@ const optimizedHeroImage = props.heroImage && await getImage({width: 1500, src: 
 			description={seoDescription ?? description}
 			image={props.heroImage && optimizedHeroImage.src}
 			article={{
-				publishedTime: pubDate instanceof Date ? pubDate.toISOString() : pubDate?.toString(),
-				modifiedTime: updatedDate instanceof Date ? updatedDate.toISOString() : updatedDate?.toString(),
+				publishedTime: pubDate ? new Date(pubDate).toISOString() : undefined,
+				modifiedTime: updatedDate ? new Date(updatedDate).toISOString() : undefined,
 				author: props.author,
 				authorUrl: typeof author_link === 'string' ? author_link : undefined,
 				authorImage: typeof author_img === 'string' ? author_img : undefined,

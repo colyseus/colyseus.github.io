@@ -1,0 +1,25 @@
+---
+import { SOCIAL_LINKS } from "../data/navigation";
+
+interface Props {
+  /** classes for the flex container (gap, margins) */
+  class?: string;
+  /** classes for each icon link (colors, hover) */
+  linkClass?: string;
+  iconSize?: number;
+}
+
+const {
+  class: className = "flex gap-4",
+  linkClass = "text-gray-600 hover:text-gray-300 transition-colors",
+  iconSize = 20,
+} = Astro.props;
+---
+
+<div class={className}>
+  {SOCIAL_LINKS.map((social) => (
+    <a href={social.href} target="_blank" class={linkClass} aria-label={social.label}>
+      <svg fill="currentColor" width={iconSize} height={iconSize} viewBox={social.viewBox}><path d={social.path} /></svg>
+    </a>
+  ))}
+</div>

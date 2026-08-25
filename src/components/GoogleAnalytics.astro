@@ -1,0 +1,24 @@
+---
+interface Props {
+	id: string;
+	/** Only track on these hostnames (and subdomains) — scraped copies of the built HTML carry the tag otherwise. */
+	hostnames?: string[];
+}
+
+const { id, hostnames = [] } = Astro.props;
+---
+<script is:inline define:vars={{ id, hostnames }}>
+	const host = location.hostname;
+
+	if (hostnames.length === 0 || hostnames.some((h) => host === h || host.endsWith(`.${h}`))) {
+		const script = document.createElement('script');
+		script.async = true;
+		script.src = `https://www.googletagmanager.com/gtag/js?id=${id}`;
+		document.head.appendChild(script);
+
+		window.dataLayer = window.dataLayer || [];
+		window.gtag = function () { window.dataLayer.push(arguments); };
+		gtag('js', new Date());
+		gtag('config', id);
+	}
+</script>
