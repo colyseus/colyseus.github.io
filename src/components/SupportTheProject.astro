@@ -1,0 +1,31 @@
+---
+import { SUPPORTERS_ENTRY_URL } from "../data/supporters";
+
+interface Props {
+  /** heading style, overridable to match the surrounding context */
+  headingClass?: string;
+}
+
+const { headingClass = "text-white text-sm font-semibold mb-4" } = Astro.props;
+
+const MERCH_PRODUCTS = [
+  { name: "T-Shirt", href: "https://shop.colyseus.io/products/darkmode-t-shirt", img: "/images/merch/tshirt.webp", width: 160, height: 143, tilt: "group-hover:-rotate-6" },
+  { name: "Hat", href: "https://shop.colyseus.io/products/hat", img: "/images/merch/hat.webp", width: 160, height: 143, tilt: "group-hover:rotate-6" },
+  { name: "Mug", href: "https://shop.colyseus.io/products/ceramic-gladios-mug", img: "/images/merch/mug.webp", width: 160, height: 154, tilt: "group-hover:-rotate-6" },
+];
+---
+
+<h3 class={headingClass}>Support the Project</h3>
+<div class="flex gap-3 lg:gap-2 mb-8">
+  {MERCH_PRODUCTS.map((product) => (
+    <a href={product.href} target="_blank" class="group merch-item merch-float relative" aria-label={`Colyseus ${product.name}`}>
+      <img src={product.img} alt={`Colyseus ${product.name}`} width={product.width} height={product.height} loading="lazy" class={`w-14 h-14 lg:w-12 lg:h-12 object-contain transition-all duration-300 group-hover:scale-110 ${product.tilt}`} />
+      <span class="absolute -bottom-4 left-1/2 -translate-x-1/2 text-[10px] text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">{product.name}</span>
+    </a>
+  ))}
+</div>
+<a href="https://shop.colyseus.io/" target="_blank" class="block text-sm text-gray-500 hover:text-gray-300 transition-colors mb-5">Visit the shop &rarr;</a>
+<a href={SUPPORTERS_ENTRY_URL} target="_blank" class="inline-flex items-center gap-2 px-3 py-2 whitespace-nowrap rounded-lg border border-white/10 hover:border-purple-500/30 hover:bg-purple-500/5 text-xs font-medium text-gray-400 hover:text-purple-400 transition-all">
+  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"><path d="M4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.565 20.565 0 008 13.393a20.561 20.561 0 003.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.75.75 0 01-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5z" /></svg>
+  Become a Sponsor
+</a>

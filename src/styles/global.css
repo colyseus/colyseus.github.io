@@ -116,6 +116,19 @@ body {
   animation: blink 0.7s step-end infinite;
 }
 
+/* === Merch float (footer) === */
+@keyframes merch-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .merch-float { animation: merch-float 4s ease-in-out infinite; }
+  .merch-float:nth-child(2) { animation-delay: -1.3s; }
+  .merch-float:nth-child(3) { animation-delay: -2.6s; }
+}
+.merch-item img { filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.4)) drop-shadow(0 0 10px rgba(255, 255, 255, 0.18)); }
+.merch-item:hover img { filter: brightness(1.15) drop-shadow(0 0 2px rgba(216, 180, 254, 0.5)) drop-shadow(0 0 14px rgba(192, 132, 252, 0.45)); }
+
 /* === Animation Delays === */
 .animate-delay-1 { animation-delay: 0.1s; }
 .animate-delay-2 { animation-delay: 0.2s; }
@@ -212,6 +225,7 @@ select optgroup {
 
 /* === Footer === */
 footer a:hover { text-decoration: underline; }
+footer a.merch-item:hover { text-decoration: none; }
 
 /* === Code Syntax Colors (homepage inline code) === */
 .syn-keyword { color: #c084fc; }
