@@ -31,5 +31,14 @@
   "devDependencies": {
     "open-graph-scraper": "^6.2.2",
     "sponsorkit": "^17.0.0"
+  },
+  "overrides": {
+    "sitemap": "7.1.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "sharp": "^0.34.5",
+      "sitemap": "7.1.2"
+    }
   }
 }
