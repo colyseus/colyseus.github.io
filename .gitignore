@@ -3,3 +3,5 @@ node_modules/
 private
 .env
 src/data/.cache.json
+dist/
+.astro/
