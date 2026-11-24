@@ -2,8 +2,13 @@
 // MyRoom.ts
 import { Room } from "colyseus";
 
-class MyRoom extends Room {
+export class MyRoom extends Room {
   maxClients = 4;
+
+  messages = {
+    move: (client, payload) => {/* your code */},
+  };
+
   onCreate(options) {/* your code */}
   onAuth(client, options) {/* your code */}
   onJoin(client, options) {/* your code */}

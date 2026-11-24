@@ -1,15 +1,15 @@
 ```typescript
 // MyState.ts
-import { type, Schema, MapSchema, ArraySchema } from "@colyseus/schema";
+import { schema, t } from "@colyseus/schema";
 
-export class Player extends Schema {
-  @type("string") name: string;
-  @type("number") position: number;
-}
+export const Player = schema({
+  name: t.string(),
+  position: t.number(),
+}, "Player");
 
-export class MyState extends Schema {
-  @type({map: Player}) players = new MapSchema<Player>();
-  @type(["number"]) board = new ArraySchema<number>([0, 0, 0, 0, 0, 0, 0, 0, 0]);
-  @type("string") currentTurn: string;
-}
+export const MyState = schema({
+  players: t.map(Player),
+  board: t.array("number"),
+  currentTurn: t.string(),
+}, "MyState");
 ```

@@ -1,0 +1,119 @@
+---
+/**
+ * How joinOrCreate() finds its room across processes (docs: /scalability).
+ * Rows have fixed heights so the direct-WebSocket bypass on the right can be
+ * positioned against the Process and Client rows without measuring.
+ */
+const processes = [
+  { name: "Process 1", host: "node-1", rooms: ["Room 1", "Room 4"] },
+  { name: "Process 2", host: "node-2", rooms: ["Room 2"] },
+  { name: "Process 3", host: "node-3", rooms: ["Room 3"], target: "Room 3" },
+];
+---
+
+<div class="scale-diagram relative pr-10 select-none" aria-hidden="true">
+  <!-- Redis -->
+  <div class="h-14 rounded-xl border border-rose-400/25 bg-rose-400/[0.05] flex items-center justify-center gap-2.5 px-3">
+    <svg class="w-4 h-4 text-rose-300 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5"/><path d="M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg>
+    <span class="text-sm font-semibold text-white">Redis</span>
+    <span class="text-xs text-gray-500 truncate">shared presence + driver</span>
+  </div>
+
+  <div class="grid grid-cols-3 gap-2 h-7">
+    {processes.map((_, i) => (
+      <div class="relative">
+        <span class="scale-wire"></span>
+        {i === 1 && <span class="scale-step left-1/2 ml-2.5">2</span>}
+      </div>
+    ))}
+  </div>
+
+  <!-- Processes -->
+  <div class="grid grid-cols-3 gap-2 h-28">
+    {processes.map((p) => (
+      <div class:list={["rounded-xl border p-2.5 sm:p-3 flex flex-col min-w-0", p.target ? "border-purple-400/40 bg-purple-500/[0.08]" : "border-purple-500/20 bg-purple-500/[0.03]"]}>
+        <span class="text-xs font-semibold text-white truncate">{p.name}</span>
+        <span class="font-mono text-[10px] text-gray-500 truncate">{p.host}.mygame.io</span>
+        <span class="mt-auto flex flex-wrap gap-1">
+          {p.rooms.map((r) => (
+            <span class:list={["text-[10px] font-medium px-1.5 py-0.5 rounded", r === p.target ? "scale-target bg-green-500/15 text-green-300 ring-1 ring-green-400/50" : "bg-white/5 text-gray-400"]}>{r}</span>
+          ))}
+        </span>
+      </div>
+    ))}
+  </div>
+
+  <div class="grid grid-cols-3 gap-2 h-7">
+    {processes.map(() => <div class="relative"><span class="scale-wire"></span></div>)}
+  </div>
+
+  <!-- Load balancer -->
+  <div class="h-12 rounded-xl border border-white/10 bg-white/[0.03] flex items-center justify-center gap-2.5 px-3">
+    <svg class="w-4 h-4 text-gray-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20V10M12 10 5 4M12 10l7-6M12 10V4"/></svg>
+    <span class="text-sm font-semibold text-white">Load balancer</span>
+  </div>
+
+  <div class="relative h-9">
+    <span class="scale-wire"></span>
+    <span class="scale-step left-1/2 ml-2.5">1</span>
+  </div>
+
+  <!-- Client -->
+  <div class="h-14 rounded-xl border border-green-500/25 bg-green-500/[0.04] flex items-center justify-center gap-2.5 px-3 min-w-0">
+    <span class="text-[10px] font-semibold uppercase tracking-wider px-2 py-0.5 rounded-full bg-green-500/15 text-green-300 shrink-0">Client</span>
+    <code class="font-mono text-[11px] sm:text-xs text-gray-300 truncate">client.joinOrCreate("battle")</code>
+  </div>
+
+  <!-- Step 3: straight to the room's process, bypassing the load balancer -->
+  <div class="scale-bypass absolute right-2 top-[140px] bottom-[28px] w-8 rounded-r-xl">
+    <span class="scale-arrow"></span>
+    <span class="scale-step -right-2.5">3</span>
+  </div>
+</div>
+
+<style>
+  .scale-wire {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: rgba(168, 85, 247, 0.35);
+  }
+  .scale-step {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: #e9d5ff;
+    background: #2a1840;
+    border: 1px solid rgba(168, 85, 247, 0.5);
+  }
+  .scale-bypass {
+    border: 2px dashed rgba(74, 222, 128, 0.6);
+    border-left: 0;
+  }
+  .scale-bypass .scale-step { color: #bbf7d0; background: #10291a; border-color: rgba(74, 222, 128, 0.6); }
+  /* Arrowhead into Process 3's right edge. */
+  .scale-arrow {
+    position: absolute;
+    left: -1px;
+    top: -6px;
+    border-style: solid;
+    border-width: 5px 6px 5px 0;
+    border-color: transparent rgba(74, 222, 128, 0.9) transparent transparent;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .scale-target { animation: scale-pulse 2.4s ease-in-out infinite; }
+  }
+  @keyframes scale-pulse {
+    50% { box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.12), 0 0 14px rgba(74, 222, 128, 0.35); }
+  }
+</style>

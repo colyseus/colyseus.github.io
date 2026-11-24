@@ -1,0 +1,302 @@
+---
+/**
+ * Hero illustration of authoritative state sync. Each client sends inputs up
+ * its own connection; the server moves the players and patches only the
+ * fields that changed down to every client, which interpolate between patches.
+ * The simulation is a browser-side illustration, not a live server.
+ */
+import { Image } from "astro:assets";
+import { sdks } from "../../data/sdks";
+
+const sdk = (key: string) => sdks.find((s) => s.key === key)!;
+
+const players = [
+  { id: "kq3", x: 212, y: 96, color: "#f472b6" },
+  { id: "p7f", x: 88, y: 132, color: "#22d3ee" },
+];
+// One-way latency differs per client, as it would on real connections.
+const clients = [
+  { id: "a", label: "Browser", sdk: sdk("typescript"), player: "kq3", latency: 260 },
+  { id: "b", label: "Unity", sdk: sdk("unity"), player: "p7f", latency: 420 },
+];
+
+const W = 320;
+const H = 180;
+const pad = (n: number) => String(n).padStart(3, " ");
+---
+
+<figure class="sync-demo relative" data-sync-demo data-world={`${W}x${H}`}>
+  <div class="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-purple-600/25 via-fuchsia-500/10 to-cyan-500/20 blur-2xl pointer-events-none" aria-hidden="true"></div>
+
+  <div class="relative rounded-2xl border border-white/10 bg-[#0d0d10]/90 backdrop-blur shadow-2xl shadow-purple-500/10 p-3 sm:p-5" aria-hidden="true">
+    <!-- Server -->
+    <div class="rounded-xl border border-purple-500/25 bg-purple-500/[0.04]">
+      <div class="flex items-center gap-2 px-3 sm:px-4 py-2.5 border-b border-white/5">
+        <span class="sync-badge sync-badge-server">Server</span>
+        <span class="font-mono text-xs text-gray-400 truncate">my_room</span>
+        <span class="ml-auto inline-flex items-center gap-1.5 text-[11px] text-gray-500 shrink-0">
+          <svg class="w-3.5 h-3.5 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/></svg>
+          authoritative
+        </span>
+      </div>
+      <div class="font-mono text-[11px] sm:text-[13px] leading-6 px-3 sm:px-4 py-2.5 sm:py-3 text-gray-400 overflow-hidden">
+        <div class="whitespace-nowrap"><span class="text-gray-300">state</span>.players <span class="text-gray-600">MapSchema&lt;Player&gt;</span></div>
+        {players.map((p) => (
+          <div class="whitespace-pre pl-4"><span style={`color:${p.color}`}>"{p.id}"</span>: {"{"} x: <span class="sync-val" data-val={`${p.id}.x`}>{pad(p.x)}</span>, y: <span class="sync-val" data-val={`${p.id}.y`}>{pad(p.y)}</span> {"}"}</div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Connections: inputs travel up, patches travel down -->
+    <div class="grid grid-cols-2 gap-3 sm:gap-4 h-12 sm:h-16">
+      {clients.map((c) => (
+        <div class="relative">
+          <span class="sync-lane" data-lane={c.id} data-latency={c.latency}></span>
+          <span class="absolute left-1/2 top-1/2 -translate-y-1/2 ml-3 font-mono text-[10px] text-gray-600 whitespace-nowrap">~{c.latency} ms</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Clients -->
+    <div class="grid grid-cols-2 gap-3 sm:gap-4">
+      {clients.map((c) => (
+        <div class="rounded-xl border border-green-500/20 bg-green-500/[0.03] overflow-hidden min-w-0">
+          <div class="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 border-b border-white/5">
+            <span class="sync-badge sync-badge-client">Client</span>
+            <Image src={c.sdk.image!} alt="" class="w-4 h-4 opacity-80" />
+            <span class="text-[11px] sm:text-xs text-gray-400 truncate">{c.label}</span>
+          </div>
+          <div class="sync-arena relative aspect-[16/9]" data-arena={c.id} data-owner={c.player}>
+            {players.map((p) => (
+              <span
+                class="sync-dot"
+                data-dot={p.id}
+                data-you={p.id === c.player ? "" : undefined}
+                style={`--x:${(p.x / W) * 100};--y:${(p.y / H) * 100};--c:${p.color}`}
+              ></span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <figcaption class="relative mt-4 flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5 text-xs text-gray-500">
+    <span>Clients send inputs. The server runs the game and syncs only what changed.</span>
+    <span class="inline-flex items-center gap-3">
+      <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-green-400"></span>input</span>
+      <span class="inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>state patch</span>
+    </span>
+  </figcaption>
+</figure>
+
+<style>
+  .sync-badge {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+  .sync-badge-server { background: rgba(139, 92, 246, 0.15); color: rgb(196, 181, 253); }
+  .sync-badge-client { background: rgba(34, 197, 94, 0.15); color: rgb(134, 239, 172); }
+
+  .sync-val { border-radius: 3px; }
+  .sync-val.is-flash { animation: sync-flash 0.6s ease-out; }
+  @keyframes sync-flash {
+    from { background: rgba(168, 85, 247, 0.45); color: #fff; }
+    to { background: transparent; }
+  }
+
+  .sync-lane {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, rgba(168, 85, 247, 0.4), rgba(34, 197, 94, 0.4));
+  }
+  .sync-lane :global(.sync-packet) {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 7px;
+    height: 7px;
+    margin-left: -3px;
+    border-radius: 9999px;
+  }
+  .sync-lane :global(.sync-packet-patch) { background: #c084fc; box-shadow: 0 0 10px rgba(192, 132, 252, 0.9); }
+  .sync-lane :global(.sync-packet-input) { background: #4ade80; box-shadow: 0 0 10px rgba(74, 222, 128, 0.9); }
+
+  .sync-arena {
+    background-color: rgba(255, 255, 255, 0.015);
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 16px 16px;
+  }
+  .sync-dot {
+    position: absolute;
+    left: calc(var(--x) * 1%);
+    top: calc(var(--y) * 1%);
+    width: 10px;
+    height: 10px;
+    margin: -5px 0 0 -5px;
+    border-radius: 9999px;
+    background: var(--c);
+    box-shadow: 0 0 12px var(--c);
+    /* One server tick, so dots glide between patches instead of jumping. */
+    transition: left 0.1s linear, top 0.1s linear;
+  }
+  .sync-dot[data-you]::after {
+    content: "";
+    position: absolute;
+    inset: -5px;
+    border-radius: 9999px;
+    border: 1px solid var(--c);
+    opacity: 0.6;
+  }
+  .sync-dot[data-you]::before {
+    content: "you";
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 6px);
+    transform: translateX(-50%);
+    font-size: 9px;
+    line-height: 1;
+    color: var(--c);
+  }
+</style>
+
+<script>
+  type Vec = { x: number; y: number };
+  type Player = Vec & { tx: number; ty: number };
+
+  const TICK_MS = 100;
+  const SPEED = 90; // world units per second
+
+  document.querySelectorAll<HTMLElement>("[data-sync-demo]").forEach((root) => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const [W, H] = root.dataset.world!.split("x").map(Number);
+    const players = new Map<string, Player>();
+    root.querySelectorAll<HTMLElement>("[data-arena]")[0].querySelectorAll<HTMLElement>("[data-dot]").forEach((dot) => {
+      const x = Math.round((parseFloat(dot.style.getPropertyValue("--x")) / 100) * W);
+      const y = Math.round((parseFloat(dot.style.getPropertyValue("--y")) / 100) * H);
+      players.set(dot.dataset.dot!, { x, y, tx: x, ty: y });
+    });
+
+    const clients = [...root.querySelectorAll<HTMLElement>("[data-arena]")].map((arena) => {
+      const id = arena.dataset.arena!;
+      const lane = root.querySelector<HTMLElement>(`[data-lane="${id}"]`)!;
+      return { arena, lane, owner: arena.dataset.owner!, latency: Number(lane.dataset.latency), nextInputAt: 0 };
+    });
+
+    const values = new Map<string, HTMLElement>();
+    root.querySelectorAll<HTMLElement>("[data-val]").forEach((el) => values.set(el.dataset.val!, el));
+
+    // Timed deliveries (packets in flight); dropped on pause, then a full sync catches clients up.
+    let queue: { at: number; run: () => void }[] = [];
+    let clock = 0;
+    let lastTick = 0;
+    let raf = 0;
+    let last = 0;
+
+    const send = (lane: HTMLElement, kind: "patch" | "input", latency: number, run: () => void) => {
+      const h = lane.clientHeight;
+      const dot = document.createElement("span");
+      dot.className = `sync-packet sync-packet-${kind}`;
+      lane.appendChild(dot);
+      const [from, to] = kind === "patch" ? [-4, h - 4] : [h - 4, -4];
+      dot.animate([{ transform: `translateY(${from}px)` }, { transform: `translateY(${to}px)` }], { duration: latency, easing: "linear" }).onfinish = () => dot.remove();
+      queue.push({ at: clock + latency, run });
+    };
+
+    const render = (arena: HTMLElement, snapshot: Record<string, Vec>) => {
+      for (const id in snapshot) {
+        const dot = arena.querySelector<HTMLElement>(`[data-dot="${id}"]`)!;
+        dot.style.setProperty("--x", String((snapshot[id].x / W) * 100));
+        dot.style.setProperty("--y", String((snapshot[id].y / H) * 100));
+      }
+    };
+
+    const flash = (key: string, value: number) => {
+      const el = values.get(key)!;
+      el.textContent = String(value).padStart(3, " ");
+      el.classList.remove("is-flash");
+      void el.offsetWidth; // restart the animation
+      el.classList.add("is-flash");
+    };
+
+    const serverTick = () => {
+      const patch: Record<string, Vec> = {};
+      players.forEach((p, id) => {
+        const dx = p.tx - p.x;
+        const dy = p.ty - p.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 0.5) return;
+        const step = Math.min(dist, (SPEED * TICK_MS) / 1000);
+        const nx = Math.round(p.x + (dx / dist) * step);
+        const ny = Math.round(p.y + (dy / dist) * step);
+        if (nx !== p.x) flash(`${id}.x`, nx);
+        if (ny !== p.y) flash(`${id}.y`, ny);
+        if (nx === p.x && ny === p.y) { p.x = p.tx; p.y = p.ty; return; }
+        p.x = nx;
+        p.y = ny;
+        patch[id] = { x: nx, y: ny };
+      });
+      // Idle players send nothing: no change, no patch.
+      if (Object.keys(patch).length === 0) return;
+      clients.forEach((c) => send(c.lane, "patch", c.latency, () => render(c.arena, patch)));
+    };
+
+    const clientInputs = () => {
+      clients.forEach((c) => {
+        if (clock < c.nextInputAt) return;
+        c.nextInputAt = clock + 1600 + Math.random() * 2400;
+        const target = { x: 24 + Math.random() * (W - 48), y: 20 + Math.random() * (H - 40) };
+        send(c.lane, "input", c.latency, () => {
+          const p = players.get(c.owner)!;
+          p.tx = Math.round(target.x);
+          p.ty = Math.round(target.y);
+        });
+      });
+    };
+
+    const frame = (now: number) => {
+      clock += Math.min(now - (last || now), 100); // clamp long frames so nothing jumps
+      last = now;
+      clientInputs();
+      while (clock - lastTick >= TICK_MS) { lastTick += TICK_MS; serverTick(); }
+      const due = queue.filter((e) => e.at <= clock);
+      queue = queue.filter((e) => e.at > clock);
+      due.forEach((e) => e.run());
+      raf = requestAnimationFrame(frame);
+    };
+
+    const start = () => {
+      if (raf) return;
+      last = 0;
+      // Anything in flight was dropped: resync clients to the full state.
+      const full: Record<string, Vec> = {};
+      players.forEach((p, id) => (full[id] = { x: p.x, y: p.y }));
+      clients.forEach((c) => render(c.arena, full));
+      raf = requestAnimationFrame(frame);
+    };
+    const stop = () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+      queue = [];
+      root.querySelectorAll(".sync-packet").forEach((el) => el.remove());
+    };
+
+    let onScreen = false;
+    new IntersectionObserver(([entry]) => {
+      onScreen = entry.isIntersecting;
+      onScreen && !document.hidden ? start() : stop();
+    }).observe(root);
+    document.addEventListener("visibilitychange", () => (onScreen && !document.hidden ? start() : stop()));
+  });
+</script>
