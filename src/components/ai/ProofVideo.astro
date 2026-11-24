@@ -2,6 +2,7 @@
 import { ONE_PROMPT_RUN as run } from "../../data/ai-poc";
 
 const { wide, mobile: inset } = run.video;
+const poster = (url: string) => `background: url(${url}) center / cover no-repeat`;
 const label = `Two players in ${run.gameName}, the game ${run.agent} built from one prompt, at ${run.captureRttMs} ms of simulated lag`;
 ---
 
@@ -21,11 +22,12 @@ const label = `Two players in ${run.gameName}, the game ${run.agent} built from 
     <div class="relative">
       <!-- Side by side only where it's wide enough; phones and the hero's side column get one seat with the other inset. -->
       <!-- Only the visible cut ever loads: preload="none", and the script plays whichever is on screen. -->
-      <video class="hidden sm:block lg:hidden w-full h-auto" width={wide.width} height={wide.height} muted loop playsinline preload="none" poster={wide.poster} data-proof-video aria-label={label}>
+      <!-- The posters are backgrounds, not poster attributes: a hidden video still fetches its poster. -->
+      <video class="hidden sm:block lg:hidden w-full h-auto" width={wide.width} height={wide.height} muted loop playsinline preload="none" style={poster(wide.poster)} data-proof-video aria-label={label}>
         <source src={wide.webm} type="video/webm" />
         <source src={wide.mp4} type="video/mp4" />
       </video>
-      <video class="sm:hidden lg:block w-full h-auto" width={inset.width} height={inset.height} muted loop playsinline preload="none" poster={inset.poster} data-proof-video aria-label={label}>
+      <video class="sm:hidden lg:block w-full h-auto" width={inset.width} height={inset.height} muted loop playsinline preload="none" style={poster(inset.poster)} data-proof-video aria-label={label}>
         <source src={inset.webm} type="video/webm" />
         <source src={inset.mp4} type="video/mp4" />
       </video>

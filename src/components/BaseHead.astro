@@ -88,7 +88,9 @@ const isArticle = !!article;
   "sameAs": [
     "https://github.com/colyseus/colyseus",
     "https://x.com/colyseus",
-    "https://discord.gg/RY8rRS7"
+    "https://discord.gg/RY8rRS7",
+    "https://www.youtube.com/@colyseus",
+    "https://www.linkedin.com/company/colyseus/"
   ]
 })} />
 
@@ -141,9 +143,8 @@ const isArticle = !!article;
   }
 })} />}
 
-<!-- Preload display font -->
-<link rel="preload" href="/fonts/TrajanPro-Regular.ttf" as="font" type="font/ttf" crossorigin />
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Preload the display weight the page's h1 uses: regular on articles, bold elsewhere -->
+{isArticle
+  ? <link rel="preload" href="/fonts/TrajanPro-Regular.woff2" as="font" type="font/woff2" crossorigin />
+  : <link rel="preload" href="/fonts/TrajanPro-Bold.woff2" as="font" type="font/woff2" crossorigin />}
+<link rel="preload" href="/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />

@@ -161,7 +161,7 @@ const faqs: FaqItem[] = [
               </div>
               <span class="mx-auto px-3 py-0.5 rounded-md bg-white/5 text-[11px] text-gray-500 font-mono">cloud.colyseus.io</span>
             </div>
-            <Image src={panelOverview} alt="Colyseus Cloud panel: one application running in three regions, with players online, rooms, CPU and memory" widths={[640, 1000, 1400]} sizes="(min-width: 1024px) 50vw, 100vw" class="block w-full h-auto" loading="eager" />
+            <Image src={panelOverview} alt="Colyseus Cloud panel: one application running in three regions, with players online, rooms, CPU and memory" widths={[640, 1000, 1400]} sizes="(min-width: 1024px) 50vw, calc(100vw - 3rem)" class="block w-full h-auto" loading="eager" fetchpriority="high" />
           </div>
           <div class="hidden sm:block absolute -bottom-10 -left-6 lg:-left-10 w-[58%] rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-black/60 cloud-float">
             <Image src={panelLogs} alt="Live server logs in the Colyseus Cloud panel" widths={[480, 800]} sizes="30vw" class="block w-full h-auto" />
@@ -212,7 +212,7 @@ const faqs: FaqItem[] = [
             <!-- The screenshot peeks up from the bottom edge and rises on hover. -->
             <div class="mt-auto px-6 lg:px-8">
               <div class="cloud-shot rounded-t-xl border border-b-0 border-white/10 overflow-hidden h-52 lg:h-64 bg-[#0d0d10]">
-                <Image src={f.image} alt={f.alt} widths={[600, 1000, 1400]} sizes="(min-width: 1024px) 45vw, 100vw" class="w-full h-full object-cover object-left-top" />
+                <Image src={f.image} alt={f.alt} widths={[600, 1000, 1400]} sizes="(min-width: 1024px) 45vw, calc(100vw - 6rem)" class="w-full h-full object-cover object-left-top" />
               </div>
             </div>
           </article>
@@ -298,7 +298,7 @@ const faqs: FaqItem[] = [
       <div class="relative" data-reveal="scale">
         <div class="absolute -inset-4 rounded-[1.75rem] bg-gradient-to-br from-blue-600/20 via-cyan-500/10 to-indigo-500/20 blur-2xl pointer-events-none"></div>
         <div class="relative rounded-2xl border border-white/10 bg-[#0d0d10]/90 backdrop-blur p-6 lg:p-8 shadow-2xl">
-          <SimulatePriceComponent title="" client:only />
+          <SimulatePriceComponent title="" client:visible />
         </div>
       </div>
     </div>
