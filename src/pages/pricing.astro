@@ -1,5 +1,7 @@
 ---
 import ColyseusCloudSection from '../components/ColyseusCloudSection.astro';
+import PremiumDemos from '../components/PremiumDemos.astro';
+import ScrollReveal from '../components/ScrollReveal.astro';
 import TitleSection from '../components/TitleSection.astro';
 import MainLayout from '../layouts/MainLayout.astro';
 
@@ -8,6 +10,8 @@ import { SUPPORTERS_ENTRY_URL } from "../data/supporters";
 ---
 
 <MainLayout title="Pricing - Colyseus Cloud Hosting Plans" description="Compare Colyseus Cloud plans for managed multiplayer server hosting. Free tier available. Scale from prototype to production.">
+  <ScrollReveal />
+
   <TitleSection>
     Pricing
     <!-- p class="font-sans text-lg font-normal text-gray-500 mt-2"></p -->
@@ -44,7 +48,7 @@ import { SUPPORTERS_ENTRY_URL } from "../data/supporters";
               Become a Sponsor
             </a>
             <p class="text-gray-500 text-sm mt-3 max-w-xs text-center">
-              Supporters get <span class="text-gray-300">exclusive demos, full source &amp; premium guides</span>.
+              Supporters get <a href="#premium-demos" class="text-gray-300 underline decoration-white/20 underline-offset-2 hover:text-white hover:decoration-white/50 transition-colors">exclusive demos</a><span class="text-gray-300">, full source &amp; premium guides</span>.
             </p>
             <a href="/framework" class="mt-4 block group/link text-purple-400 text-center text-sm">
               Learn more
@@ -98,6 +102,8 @@ import { SUPPORTERS_ENTRY_URL } from "../data/supporters";
       </div>
     </div>
   </section>
+
+  <PremiumDemos />
 
   <ColyseusCloudSection />
 
