@@ -26,7 +26,7 @@ const pad = (n: number) => String(n).padStart(3, " ");
 ---
 
 <figure class="sync-demo relative" data-sync-demo data-world={`${W}x${H}`}>
-  <div class="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-purple-600/25 via-fuchsia-500/10 to-cyan-500/20 blur-2xl pointer-events-none" aria-hidden="true"></div>
+  <div class="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-purple-600/25 via-fuchsia-500/15 to-rose-500/15 blur-2xl pointer-events-none" aria-hidden="true"></div>
 
   <div class="relative rounded-2xl border border-white/10 bg-[#0d0d10]/90 backdrop-blur shadow-2xl shadow-purple-500/10 p-3 sm:p-5" aria-hidden="true">
     <!-- Server -->
@@ -63,7 +63,7 @@ const pad = (n: number) => String(n).padStart(3, " ");
         <div class="rounded-xl border border-green-500/20 bg-green-500/[0.03] overflow-hidden min-w-0">
           <div class="flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-2 border-b border-white/5">
             <span class="sync-badge sync-badge-client">Client</span>
-            <Image src={c.sdk.image!} alt="" class="w-4 h-4 opacity-80" />
+            <Image src={c.sdk.image!} alt="" width={32} class="w-4 h-4 opacity-80" />
             <span class="text-[11px] sm:text-xs text-gray-400 truncate">{c.label}</span>
           </div>
           <div class="sync-arena relative aspect-[16/9]" data-arena={c.id} data-owner={c.player}>

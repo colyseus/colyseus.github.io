@@ -5,8 +5,8 @@
  * pauses while the section is off-screen and stops under reduced motion.
  */
 interface Props {
-  /** Colour set: the AI page's purple/cyan/pink, or Cloud's blue/cyan/indigo. */
-  tone?: "ai" | "cloud";
+  /** Colour set, one per site section: home violet/blue, framework purple/magenta/rose, AI purple/cyan/pink, Cloud blue/cyan/indigo. */
+  tone?: "home" | "framework" | "ai" | "cloud";
   /** Which of the three blobs to draw. */
   blobs?: (1 | 2 | 3)[];
   /** Dimmed, for sections below the hero. */
@@ -24,6 +24,8 @@ const { tone = "ai", blobs = [1, 2, 3], soft = false, grid = false } = Astro.pro
 {grid && <div class="aurora-grid absolute inset-0 pointer-events-none" aria-hidden="true"></div>}
 
 <style is:global>
+  .aurora-home { --aurora-1: rgba(109, 40, 217, 0.36); --aurora-2: rgba(37, 99, 235, 0.24); --aurora-3: rgba(192, 38, 211, 0.16); }
+  .aurora-framework { --aurora-1: rgba(147, 51, 234, 0.30); --aurora-2: rgba(217, 70, 239, 0.20); --aurora-3: rgba(244, 63, 94, 0.14); }
   .aurora-ai { --aurora-1: rgba(126, 34, 206, 0.32); --aurora-2: rgba(8, 145, 178, 0.22); --aurora-3: rgba(219, 39, 119, 0.18); }
   .aurora-cloud { --aurora-1: rgba(37, 99, 235, 0.34); --aurora-2: rgba(8, 145, 178, 0.24); --aurora-3: rgba(79, 70, 229, 0.22); }
   .aurora-soft { opacity: 0.6; }
@@ -42,7 +44,11 @@ const { tone = "ai", blobs = [1, 2, 3], soft = false, grid = false } = Astro.pro
     .aurora-blob-3 { animation: aurora-drift-3 26s ease-in-out infinite; }
   }
   .aurora.is-paused .aurora-blob { animation-play-state: paused; }
-  @media (max-width: 767px) { .aurora-blob-3 { display: none; } }
+  /* Phones: two static blobs. Animating 60vmax gradients costs GPU and battery for little effect. */
+  @media (max-width: 767px) {
+    .aurora-blob-3 { display: none; }
+    .aurora-blob { animation: none; will-change: auto; }
+  }
 
   .aurora-grid {
     background-image:
