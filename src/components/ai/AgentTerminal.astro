@@ -1,0 +1,105 @@
+---
+import { ONE_PROMPT_RUN } from "../../data/ai-poc";
+
+type Line = { kind: "cmd" | "out" | "ok" | "note"; text: string };
+
+// Fallback until a verified run provides its own condensed transcript.
+const DEFAULT_LINES: Line[] = [
+  { kind: "note", text: "prompt: Build a small multiplayer browser game with Colyseus 0.18…" },
+  { kind: "cmd", text: "npx skills add colyseus/skill -y -a claude-code" },
+  { kind: "ok", text: "colyseus → ./.claude/skills/colyseus" },
+  { kind: "cmd", text: "npm create colyseus-app@latest my-game -- --layout vite --netcode fixed --matchmaking filterby,reconnection --git --yes" },
+  { kind: "out", text: "Included: shape-vite, netcode-fixed, netcode-fixed-client, filterby, reconnection" },
+  { kind: "cmd", text: "npm test" },
+  { kind: "ok", text: "two clients join and see each other move" },
+  { kind: "cmd", text: "npm start" },
+  { kind: "ok", text: "http://localhost:5173 — open two tabs" },
+];
+
+const lines: Line[] = ONE_PROMPT_RUN.transcript.length ? ONE_PROMPT_RUN.transcript : DEFAULT_LINES;
+const prefix = { cmd: "$", out: " ", ok: "✓", note: "›" };
+---
+
+<div class="relative" data-ai-terminal>
+  <div class="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-purple-600/20 via-cyan-500/10 to-pink-500/20 blur-2xl pointer-events-none"></div>
+  <div class="relative rounded-2xl border border-white/10 bg-[#0d0d10]/90 backdrop-blur shadow-2xl shadow-purple-500/10 overflow-hidden">
+    <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+      <div class="flex gap-1.5">
+        <span class="w-3 h-3 rounded-full bg-[#ff5f57]/70"></span>
+        <span class="w-3 h-3 rounded-full bg-[#febc2e]/70"></span>
+        <span class="w-3 h-3 rounded-full bg-[#28c840]/70"></span>
+      </div>
+      <span class="text-xs text-gray-500 ml-2 font-mono">agent — ~/my-game</span>
+      <span class="ml-auto inline-flex items-center gap-1.5 text-[10px] uppercase tracking-wider text-gray-500 font-medium">
+        <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg> replay
+      </span>
+    </div>
+    <p class="sr-only">An AI agent installs the Colyseus skill, scaffolds a Colyseus 0.18 project, passes its tests and starts the game.</p>
+    <div class="term-body px-4 py-4 font-mono text-[12.5px] leading-relaxed" aria-hidden="true">
+      {lines.map((line) => (
+        <div class="term-line flex gap-2" data-kind={line.kind} data-text={line.text}>
+          <span class={`select-none shrink-0 w-3 ${line.kind === "cmd" ? "text-purple-400" : line.kind === "ok" ? "text-emerald-400" : "text-gray-600"}`}>{prefix[line.kind]}</span>
+          <span class={`term-text break-all ${line.kind === "cmd" ? "text-gray-100" : line.kind === "note" ? "text-cyan-300/80 italic" : line.kind === "ok" ? "text-emerald-300/90" : "text-gray-500"}`}>{line.text}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+<style>
+  .term-line.is-typing .term-text::after {
+    content: "▋";
+    margin-left: 1px;
+    color: rgba(192, 132, 252, 0.8);
+    animation: term-blink 0.8s step-end infinite;
+  }
+  .term-line.is-hidden { visibility: hidden; }
+  @keyframes term-blink { 50% { opacity: 0; } }
+</style>
+
+<script is:inline>
+  (function () {
+    var root = document.querySelector('[data-ai-terminal]');
+    if (!root || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var body = root.querySelector('.term-body');
+    var lines = Array.prototype.slice.call(root.querySelectorAll('.term-line'));
+    // Lock the height to the fully-rendered transcript: typing never shifts layout.
+    body.style.height = body.offsetHeight + 'px';
+
+    var visible = false, running = false, timer = null;
+    function wait(ms, fn) { timer = setTimeout(fn, ms); }
+
+    function reset() {
+      lines.forEach(function (l) {
+        l.classList.add('is-hidden');
+        l.classList.remove('is-typing');
+        l.querySelector('.term-text').textContent = '';
+      });
+    }
+
+    function play(i) {
+      if (!visible) { running = false; return; }
+      if (i >= lines.length) { wait(4200, function () { reset(); play(0); }); return; }
+      var line = lines[i], text = line.getAttribute('data-text'), el = line.querySelector('.term-text');
+      line.classList.remove('is-hidden');
+      if (line.getAttribute('data-kind') === 'cmd') {
+        line.classList.add('is-typing');
+        var n = 0;
+        (function type() {
+          n = Math.min(text.length, n + 1 + Math.floor(Math.random() * 2));
+          el.textContent = text.slice(0, n);
+          if (n < text.length) return wait(18 + Math.random() * 30, type);
+          wait(380, function () { line.classList.remove('is-typing'); play(i + 1); });
+        })();
+      } else {
+        el.textContent = text;
+        wait(line.getAttribute('data-kind') === 'note' ? 700 : 260, function () { play(i + 1); });
+      }
+    }
+
+    new IntersectionObserver(function (entries) {
+      visible = entries[0].isIntersecting;
+      if (visible && !running) { running = true; clearTimeout(timer); reset(); play(0); }
+    }).observe(root);
+  })();
+</script>

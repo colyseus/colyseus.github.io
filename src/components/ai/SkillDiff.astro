@@ -1,0 +1,196 @@
+---
+import { Code } from "astro-expressive-code/components";
+
+// What models tend to write from pre-0.17 memory vs. what the skill steers them to.
+// Keep in sync with the "Do not write / Write instead" table in github.com/colyseus/skill.
+const oldRoom = `import { Room, Client } from "colyseus";
+import { Schema, MapSchema, type } from "@colyseus/schema";
+
+class Player extends Schema {
+  @type("number") x = 0;
+  @type("number") y = 0;
+}
+class State extends Schema {
+  @type({ map: Player }) players = new MapSchema<Player>();
+}
+
+export class ArenaRoom extends Room<State> {
+  onCreate() {
+    this.setState(new State());
+    this.onMessage("move", (client, data) => {
+      const player = this.state.players.get(client.id);
+      player.x = data.x;
+      player.y = data.y;
+    });
+  }
+
+  onJoin(client: Client) {
+    this.state.players.set(client.id, new Player());
+  }
+
+  async onLeave(client: Client, consented: boolean) {
+    if (!consented) {
+      await this.allowReconnection(client, 30);
+    }
+  }
+}`;
+
+const newRoom = `import { Room, Client, CloseCode, validate } from "colyseus";
+import { schema, t } from "@colyseus/schema";
+import { z } from "zod";
+
+const Player = schema({ x: t.number(), y: t.number() }, "Player");
+const State = schema({ players: t.map(Player) }, "State");
+
+export class ArenaRoom extends Room {
+  state = new State();
+
+  messages = {
+    move: validate(z.object({ x: z.number(), y: z.number() }), (client, { x, y }) => {
+      const player = this.state.players.get(client.sessionId);
+      player.x = x;
+      player.y = y;
+    }),
+  };
+
+  onJoin(client: Client) {
+    this.state.players.set(client.sessionId, new Player());
+  }
+
+  onDrop(client: Client, code: CloseCode) {
+    this.allowReconnection(client, 30);
+  }
+
+  onLeave(client: Client, code: CloseCode) {
+    this.state.players.delete(client.sessionId);
+  }
+}`;
+
+const oldClient = `import { Client, getStateCallbacks } from "colyseus.js";
+
+const client = new Client("ws://localhost:2567");
+const room = await client.joinOrCreate<State>("arena");
+
+const $ = getStateCallbacks(room);
+$(room.state).players.onAdd((player, id) => {
+  $(player).listen("x", (x) => draw(id, x));
+});`;
+
+const newClient = `import { Client, Callbacks } from "@colyseus/sdk";
+import type { server } from "./app.config";
+
+const client = new Client<typeof server>("http://localhost:2567");
+const room = await client.joinOrCreate("arena");
+
+const callbacks = Callbacks.get(room);
+callbacks.onAdd("players", (player, sessionId) => {
+  callbacks.listen(player, "x", (x) => draw(sessionId, x));
+});`;
+
+const pitfalls = [
+  { old: `"colyseus.js"`, fix: `"@colyseus/sdk"`, why: "The JS client was renamed in 0.17; colyseus.js is the pre-0.17 client." },
+  { old: "Room<State>", fix: "state = new State()", why: "The generic is now an options object; a bare state type no longer type-checks." },
+  { old: "client.id", fix: "client.sessionId", why: "Removed in 0.18, so it is silently undefined at runtime." },
+  { old: "onLeave(client, consented)", fix: "onDrop + CloseCode", why: "The second argument is a close code. 4000 is truthy, so reconnection never runs." },
+];
+---
+
+<div class="skill-diff" data-skill-diff data-state="off">
+  <!-- Toggle -->
+  <div class="flex items-center justify-center gap-4 mb-8">
+    <span class="skill-label-off text-sm font-medium transition-colors">Without the skill</span>
+    <button type="button" role="switch" aria-checked="false" aria-label="Toggle the Colyseus agent skill" class="skill-switch relative w-16 h-8 rounded-full border border-white/10 transition-colors" data-skill-toggle>
+      <span class="skill-knob absolute top-1 left-1 w-6 h-6 rounded-full bg-white shadow-lg"></span>
+    </button>
+    <span class="skill-label-on text-sm font-medium transition-colors">With <code class="font-mono text-xs px-1.5 py-0.5 rounded bg-white/5">colyseus/skill</code></span>
+  </div>
+
+  <div class="grid lg:grid-cols-[1.35fr_1fr] gap-4 lg:gap-6 items-start">
+    {[
+      { file: "ArenaRoom.ts", side: "Server", old: oldRoom, next: newRoom, oldDel: "{12,14,16,23,26-27}", nextIns: "{5-6,8-9,11-13,20,23-24,27}" },
+      { file: "client.ts", side: "Client", old: oldClient, next: newClient, oldDel: "{1,6-8}", nextIns: "{1-2,4,7-9}" },
+    ].map((panel) => (
+      <div class="rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+          <div class="flex gap-1.5">
+            <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            <span class="w-3 h-3 rounded-full bg-white/10"></span>
+          </div>
+          <span class="text-xs text-gray-500 ml-2 font-mono">{panel.file}</span>
+          <span class="skill-badge-off ml-auto text-[10px] uppercase tracking-wider font-medium text-red-400/80">pre-0.17 · breaks</span>
+          <span class="skill-badge-on ml-auto text-[10px] uppercase tracking-wider font-medium text-emerald-400/90">0.18 · correct</span>
+        </div>
+        <div class="skill-stack grid">
+          <div class="skill-pane skill-pane-off homepage-code" aria-label={`${panel.side} code without the skill`}>
+            <Code code={panel.old} lang="ts" meta={`del=${panel.oldDel}`} />
+          </div>
+          <div class="skill-pane skill-pane-on homepage-code" aria-label={`${panel.side} code with the skill`}>
+            <Code code={panel.next} lang="ts" meta={`ins=${panel.nextIns}`} />
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <ul class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mt-6">
+    {pitfalls.map((p, i) => (
+      <li class="p-4 rounded-xl border border-white/5 bg-white/[0.02]" data-reveal style={`--reveal-delay:${0.06 * i}s`}>
+        <p class="font-mono text-xs mb-2">
+          <span class="text-red-400/90 line-through decoration-red-400/50">{p.old}</span>
+          <span class="text-gray-600 mx-1">→</span>
+          <span class="text-emerald-300">{p.fix}</span>
+        </p>
+        <p class="text-gray-500 text-sm">{p.why}</p>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .skill-stack > .skill-pane { grid-area: 1 / 1; transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease; }
+  [data-state="off"] .skill-pane-on,
+  [data-state="on"] .skill-pane-off { opacity: 0; transform: translateY(8px); filter: blur(4px); pointer-events: none; visibility: hidden; }
+  [data-state="off"] .skill-pane-on { transition-property: opacity, transform, filter, visibility; }
+
+  [data-state="off"] .skill-badge-on,
+  [data-state="on"] .skill-badge-off { display: none; }
+
+  .skill-switch { background: rgba(255, 255, 255, 0.06); }
+  .skill-knob { transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s ease; }
+  [data-state="on"] .skill-switch { background: linear-gradient(135deg, #7e22ce, #0891b2); border-color: transparent; box-shadow: 0 0 24px -4px rgba(168, 85, 247, 0.7); }
+  [data-state="on"] .skill-knob { transform: translateX(32px); }
+  .skill-label-off { color: rgb(248 113 113 / 0.9); }
+  .skill-label-on { color: rgb(107 114 128); }
+  [data-state="on"] .skill-label-off { color: rgb(107 114 128); }
+  [data-state="on"] .skill-label-on { color: rgb(110 231 183); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skill-stack > .skill-pane, .skill-knob { transition: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var root = document.querySelector('[data-skill-diff]');
+    if (!root) return;
+    var toggle = root.querySelector('[data-skill-toggle]');
+    var touched = false;
+    function set(on) {
+      root.setAttribute('data-state', on ? 'on' : 'off');
+      toggle.setAttribute('aria-checked', on ? 'true' : 'false');
+    }
+    toggle.addEventListener('click', function () {
+      touched = true;
+      set(root.getAttribute('data-state') !== 'on');
+    });
+    // Flip it once on its own, so a skimming reader still sees the fix.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function (entries) {
+      if (!entries[0].isIntersecting) return;
+      io.disconnect();
+      setTimeout(function () { if (!touched) set(true); }, 2200);
+    }, { threshold: 1, rootMargin: '0px 0px -25% 0px' });
+    io.observe(toggle);
+  })();
+</script>

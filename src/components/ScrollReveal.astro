@@ -1,0 +1,25 @@
+---
+/**
+ * Reveals `[data-reveal]` elements as they scroll into view. Include once, at
+ * the top of the page content, so nothing flashes before it hides; stagger
+ * siblings with `style="--reveal-delay: .1s"`.
+ */
+---
+<script is:inline>
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+    document.documentElement.classList.add('reveal-ready');
+    function observe() {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        });
+      }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+      document.querySelectorAll('[data-reveal]').forEach(function (el) { observer.observe(el); });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', observe);
+    else observe();
+  })();
+</script>

@@ -1,0 +1,40 @@
+---
+import Faq, { type FaqItem } from "../Faq.astro";
+
+const faqs: FaqItem[] = [
+  {
+    q: "Which AI coding agents can build a Colyseus game?",
+    a: "Any agent that can run shell commands in a folder: Claude Code, OpenAI Codex, Cursor, Gemini CLI, GitHub Copilot, and others that support Agent Skills. Chat-only assistants can't run the scaffolder, but they can still read the docs through `https://docs.colyseus.io/llms.txt`.",
+  },
+  {
+    q: "What is the Colyseus agent skill?",
+    a: "An open Agent Skill (github.com/colyseus/skill) that teaches your agent the Colyseus 0.18 APIs: canonical shapes for rooms, schema state, the client SDK and netcode, plus a table of outdated patterns to avoid. It checks your installed versions before writing code and never runs anything on its own. Install it with `npx skills add colyseus/skill`, or add `--global` to enable it for every project.",
+  },
+  {
+    q: "Why does my AI write outdated Colyseus code?",
+    a: "Most models learned Colyseus from material older than 0.18. Left alone, they import `colyseus.js`, type rooms as `Room<MyState>`, read `client.id` and treat `onLeave`'s second argument as a boolean. That code fails to compile or silently breaks reconnection. The skill, or the Markdown docs at `llms.txt`, keep the agent on the current API.",
+  },
+  {
+    q: "Do I need to understand netcode to make a real-time game?",
+    a: "Not to get started. The fixed-tick scaffold (`--netcode fixed`) already wires an authoritative fixed-tick loop, per-client input buffers with sanitization, client-side prediction with reconciliation, and interpolation for other players. You, or your agent, write one pure step function that the server and the client both run.",
+  },
+  {
+    q: "Can players cheat when the client was written by an AI?",
+    a: "The server is authoritative: clients only send inputs, which are clamped by `sanitize` and applied by the server's own simulation. A modified client can't teleport or award itself points; it can only send the inputs a real player could.",
+  },
+  {
+    q: "Where do I host a Colyseus game?",
+    a: "Anywhere Node.js 22 runs. `npm run build` outputs the client to `dist/client` and the server to `dist/server`. Colyseus Cloud deploys and scales it for you, and the scaffold already ships its `ecosystem.config.cjs`.",
+  },
+  {
+    q: "Is Colyseus free?",
+    a: "Yes. Colyseus is MIT-licensed open source. Colyseus Cloud is optional managed hosting, and the source code of the premium demos is a perk for GitHub sponsors.",
+  },
+  {
+    q: "Can I use Unity, Godot, Defold or another engine?",
+    a: "Yes. The server is the same, and official SDKs cover Unity, Godot, Defold, GameMaker, Construct 3, Haxe, C and more. The prompts here target the browser because an agent can build and test that end to end on its own.",
+  },
+];
+---
+
+<Faq items={faqs} heading="Building multiplayer games with AI" />

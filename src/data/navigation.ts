@@ -17,6 +17,7 @@ export interface SocialLink extends NavLink {
 export const PRODUCT_LINKS: NavLink[] = [
   { label: "Colyseus Cloud", href: "/cloud-managed-hosting" },
   { label: "Framework", href: "/framework" },
+  { label: "Colyseus for AI", href: "/ai" },
   { label: "Pricing", href: "/pricing" },
 ];
 

@@ -1,0 +1,63 @@
+---
+/**
+ * Drifting colour blobs behind a section, optionally over a faint grid.
+ * Place it first inside a `relative overflow-hidden` section; the drift
+ * pauses while the section is off-screen and stops under reduced motion.
+ */
+interface Props {
+  /** Colour set: the AI page's purple/cyan/pink, or Cloud's blue/cyan/indigo. */
+  tone?: "ai" | "cloud";
+  /** Which of the three blobs to draw. */
+  blobs?: (1 | 2 | 3)[];
+  /** Dimmed, for sections below the hero. */
+  soft?: boolean;
+  /** Faint grid that fades out towards the edges. */
+  grid?: boolean;
+}
+
+const { tone = "ai", blobs = [1, 2, 3], soft = false, grid = false } = Astro.props;
+---
+
+<div class:list={["aurora absolute inset-0 pointer-events-none", `aurora-${tone}`, { "aurora-soft": soft }]} aria-hidden="true">
+  {blobs.map((n) => <span class={`aurora-blob aurora-blob-${n}`}></span>)}
+</div>
+{grid && <div class="aurora-grid absolute inset-0 pointer-events-none" aria-hidden="true"></div>}
+
+<style is:global>
+  .aurora-ai { --aurora-1: rgba(126, 34, 206, 0.32); --aurora-2: rgba(8, 145, 178, 0.22); --aurora-3: rgba(219, 39, 119, 0.18); }
+  .aurora-cloud { --aurora-1: rgba(37, 99, 235, 0.34); --aurora-2: rgba(8, 145, 178, 0.24); --aurora-3: rgba(79, 70, 229, 0.22); }
+  .aurora-soft { opacity: 0.6; }
+
+  .aurora-blob { position: absolute; border-radius: 9999px; will-change: transform; }
+  .aurora-blob-1 { width: 60vmax; height: 60vmax; left: -18vmax; top: -22vmax; background: radial-gradient(circle, var(--aurora-1) 0%, transparent 62%); }
+  .aurora-blob-2 { width: 48vmax; height: 48vmax; right: -16vmax; top: -8vmax; background: radial-gradient(circle, var(--aurora-2) 0%, transparent 62%); }
+  .aurora-blob-3 { width: 52vmax; height: 52vmax; left: 20vmax; bottom: -30vmax; background: radial-gradient(circle, var(--aurora-3) 0%, transparent 62%); }
+
+  @keyframes aurora-drift-1 { 50% { transform: translate(8vmax, 6vmax) scale(1.1); } }
+  @keyframes aurora-drift-2 { 50% { transform: translate(-7vmax, 9vmax) scale(0.92); } }
+  @keyframes aurora-drift-3 { 50% { transform: translate(-6vmax, -7vmax) scale(1.08); } }
+  @media (prefers-reduced-motion: no-preference) {
+    .aurora-blob-1 { animation: aurora-drift-1 18s ease-in-out infinite; }
+    .aurora-blob-2 { animation: aurora-drift-2 22s ease-in-out infinite; }
+    .aurora-blob-3 { animation: aurora-drift-3 26s ease-in-out infinite; }
+  }
+  .aurora.is-paused .aurora-blob { animation-play-state: paused; }
+  @media (max-width: 767px) { .aurora-blob-3 { display: none; } }
+
+  .aurora-grid {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 30%, transparent 75%);
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>(".aurora").forEach((aurora) => {
+    new IntersectionObserver((entries) => {
+      aurora.classList.toggle("is-paused", !entries[0].isIntersecting);
+    }).observe(aurora.parentElement!);
+  });
+</script>

@@ -22,3 +22,17 @@ const { id, hostnames = [] } = Astro.props;
 		gtag('config', id);
 	}
 </script>
+<!-- Click events from markup: data-track="event_name", plus data-track-<param>="value" per param. -->
+<script is:inline>
+	document.addEventListener('click', function (e) {
+		var el = e.target.closest && e.target.closest('[data-track]');
+		if (!el || typeof window.gtag !== 'function') return;
+		var params = {};
+		for (var k in el.dataset) {
+			if (k.length > 5 && k.indexOf('track') === 0) {
+				params[k.slice(5).replace(/[A-Z]/g, function (c, i) { return (i ? '_' : '') + c.toLowerCase(); })] = el.dataset[k];
+			}
+		}
+		window.gtag('event', el.dataset.track, params);
+	});
+</script>

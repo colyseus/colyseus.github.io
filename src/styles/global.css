@@ -42,6 +42,19 @@ body {
   background-clip: text;
 }
 
+.gradient-text-ai {
+  /* symmetric stops so the shifting animation loops without a seam */
+  background: linear-gradient(90deg, #67e8f9 0%, #c084fc 25%, #f472b6 50%, #c084fc 75%, #67e8f9 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+@keyframes gradient-text-shift { to { background-position: 200% center; } }
+@media (prefers-reduced-motion: no-preference) {
+  .gradient-text-ai { animation: gradient-text-shift 8s linear infinite; }
+}
+
 /* === Gradient Backgrounds === */
 .bg-gradient-purple {
   background: linear-gradient(138deg, rgba(88, 66, 220, 1) 0%, rgba(150, 50, 224, 1) 100%);
@@ -135,6 +148,84 @@ body {
 .animate-delay-3 { animation-delay: 0.3s; }
 .animate-delay-4 { animation-delay: 0.4s; }
 .animate-delay-5 { animation-delay: 0.5s; }
+
+/* === Nav "AI" dot === */
+.nav-ai-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, #22d3ee, #a855f7 55%, #ec4899);
+  box-shadow: 0 0 8px rgba(168, 85, 247, 0.8);
+}
+@keyframes nav-ai-pulse {
+  0%, 100% { box-shadow: 0 0 6px rgba(168, 85, 247, 0.7); }
+  50% { box-shadow: 0 0 12px rgba(34, 211, 238, 0.9); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .nav-ai-dot { animation: nav-ai-pulse 2.4s ease-in-out infinite; }
+}
+
+/* === Scroll Reveal (see ScrollReveal.astro) === */
+/* Hidden only once the script has run, so no-JS visitors still see everything. */
+.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0s);
+}
+.reveal-ready [data-reveal="scale"] { transform: translateY(12px) scale(0.96); }
+.reveal-ready [data-reveal].is-revealed { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .reveal-ready [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+
+/* === Cursor Spotlight (cards) === */
+.spotlight { position: relative; isolation: isolate; }
+.spotlight::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(168, 85, 247, 0.12), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+@media (hover: hover) {
+  .spotlight:hover::before { opacity: 1; }
+}
+
+/* === Rotating Conic Border === */
+@property --conic-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes conic-spin { to { --conic-angle: 360deg; } }
+.conic-border { position: relative; isolation: isolate; }
+.conic-border::before,
+.conic-border::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--conic-angle), transparent 0deg, #a855f7 70deg, #22d3ee 140deg, transparent 200deg, #ec4899 290deg, transparent 360deg);
+  z-index: -1;
+  pointer-events: none;
+}
+/* ::before is the 1px ring; ::after the soft glow behind it. */
+.conic-border::before {
+  padding: 1px;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+.conic-border::after { filter: blur(24px); opacity: 0.35; z-index: -2; }
+@media (prefers-reduced-motion: no-preference) {
+  .conic-border::before,
+  .conic-border::after { animation: conic-spin 6s linear infinite; }
+}
 
 /* === Blog / Article Styles === */
 article { @apply mb-12; }

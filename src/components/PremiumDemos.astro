@@ -1,0 +1,126 @@
+---
+import { Image } from "astro:assets";
+import { PREMIUM_DEMOS, PREDICTION_PLAYGROUND_URL } from "../data/premium-demos";
+import { CUSTOMIZE_DEMO_PROMPT } from "../data/ai-prompts";
+import { SUPPORTERS_ENTRY_URL } from "../data/supporters";
+
+const COUNT_WORDS = ["Zero", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"];
+const count = COUNT_WORDS[PREMIUM_DEMOS.length] ?? String(PREMIUM_DEMOS.length);
+---
+
+<section id="premium-demos" class="relative border-t border-white/5 bg-section-glow-bottom scroll-mt-16">
+  <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+    <div class="lg:flex lg:items-end lg:justify-between gap-12 mb-12">
+      <div class="max-w-3xl" data-reveal>
+        <p class="text-sm font-medium text-pink-400 uppercase tracking-widest mb-4">Premium demos for sponsors</p>
+        <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">Skip the blank page.<br /> <span class="gradient-text-ai">Remix a pro demo.</span></h2>
+        <p class="text-gray-400">
+          {count} production-grade prototypes, each built to prove a hard netcode technique. Play them free.
+          Sponsors get the full source: hand it to your agent and reshape it into your own game.
+          The netcode stays proven; the rules, content and art become yours.
+        </p>
+      </div>
+      <a href={SUPPORTERS_ENTRY_URL} target="_blank" rel="noopener" class="mt-6 lg:mt-0 shrink-0 inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-pink-600 hover:bg-pink-500 text-white font-medium text-sm transition-colors" data-reveal data-track="sponsor_click" data-track-placement="section">
+        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21s-7.5-4.6-10-9.3C.4 8.4 2.2 4.5 6 4.5c2.1 0 3.4 1.2 4.1 2.3h3.8C14.6 5.7 15.9 4.5 18 4.5c3.8 0 5.6 3.9 4 7.2C19.5 16.4 12 21 12 21z"/></svg>
+        Sponsor to unlock the source
+      </a>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+      {PREMIUM_DEMOS.map((demo, i) => (
+        <div
+          class="demo-card spotlight group relative flex flex-col rounded-2xl border border-white/5 hover:border-white/15 bg-white/[0.02] overflow-hidden transition-all duration-500"
+          data-reveal="scale"
+          style={`--reveal-delay:${0.06 * (i % 3)}s`}
+        >
+          <a href={demo.play} target="_blank" rel="noopener" class="relative block overflow-hidden aspect-[16/9]" aria-label={`Play ${demo.title}`} data-track="demo_play" data-track-demo={demo.title}>
+            <Image src={demo.image} alt={`${demo.title} — Colyseus premium demo`} widths={[480, 800]} sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.06]" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0b] via-[#0a0a0b]/20 to-transparent"></div>
+            <!-- Bottom-left: the key-art cards carry their logos up top. -->
+            <span class="absolute bottom-6 left-5 z-10 inline-flex items-center gap-1 px-2 py-1 rounded-full bg-black/60 backdrop-blur text-[11px] text-gray-200 border border-white/10">
+              <svg class="w-3 h-3 text-pink-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              Source for sponsors
+            </span>
+            <span class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <span class="w-14 h-14 rounded-full bg-white/10 backdrop-blur border border-white/20 flex items-center justify-center scale-75 group-hover:scale-100 transition-transform duration-300">
+                <svg class="w-6 h-6 text-white ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </span>
+            </span>
+          </a>
+          <div class="flex flex-col flex-1 p-5 -mt-8 relative">
+            <h3 class="text-white font-semibold text-lg mb-2">{demo.title}</h3>
+            <div class="flex flex-wrap gap-1.5 mb-3">
+              {demo.techniques.map((t) => <span class="px-2 py-0.5 rounded-full text-[11px] bg-purple-500/10 text-purple-300 border border-purple-500/20">{t}</span>)}
+            </div>
+            <p class="text-gray-500 text-sm mb-4 flex-1">{demo.description}</p>
+            <div class="flex items-center justify-between gap-3 text-sm">
+              <span class="text-xs text-gray-600">{demo.engines.join(" · ")}</span>
+              <div class="flex items-center gap-3">
+                <a href={demo.play} target="_blank" rel="noopener" class="text-gray-300 hover:text-white transition-colors" data-track="demo_play" data-track-demo={demo.title}>Play ↗</a>
+                <a href={SUPPORTERS_ENTRY_URL} target="_blank" rel="noopener" class="text-pink-300 hover:text-pink-200 transition-colors" data-track="sponsor_click" data-track-placement="card" data-track-demo={demo.title}>Get the source</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+
+      <!-- Customize prompt -->
+      <div class="sm:col-span-2 lg:col-span-3 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] gap-4 lg:gap-8 items-center rounded-2xl border border-dashed border-white/10 bg-white/[0.015] p-5 lg:p-6" data-reveal="scale" style="--reveal-delay:.3s">
+        <div>
+          <p class="text-white font-semibold text-lg mb-1">Make it yours</p>
+          <p class="text-gray-500 text-sm mb-4">Open a demo's source in your agent and paste this. Swap the <code class="text-purple-300">&lt;describe your game here&gt;</code> line for your idea.</p>
+          <button type="button" class="inline-flex items-center gap-2 px-3 py-2 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-gray-300 hover:text-white text-sm transition-all" data-copy-customize data-track="demo_customize_copy">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <span>Copy prompt</span>
+          </button>
+        </div>
+        <pre class="max-h-56 overflow-auto rounded-lg bg-black/40 border border-white/5 p-4 text-[12px] leading-relaxed text-gray-400 font-mono whitespace-pre-wrap" data-customize-prompt>{CUSTOMIZE_DEMO_PROMPT}</pre>
+      </div>
+    </div>
+
+    <p class="mt-8 text-sm text-gray-500 text-center" data-reveal>
+      Want to learn the techniques first? The <a href={PREDICTION_PLAYGROUND_URL} target="_blank" rel="noopener" class="text-purple-400 hover:text-purple-300">Prediction Playground</a> is fully open source:
+      twelve labs isolating reconciliation, interpolation, dead reckoning, lag compensation and more.
+    </p>
+  </div>
+</section>
+
+<style>
+  .demo-card:hover { transform: translateY(-4px); box-shadow: 0 24px 60px -24px rgba(168, 85, 247, 0.45); }
+  @media (prefers-reduced-motion: reduce) {
+    .demo-card:hover { transform: none; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll('#premium-demos .spotlight').forEach(function (card) {
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+
+    var btn = document.querySelector('[data-copy-customize]');
+    var pre = document.querySelector('[data-customize-prompt]');
+    if (!btn || !pre) return;
+    var label = btn.querySelector('span');
+    btn.addEventListener('click', function () {
+      var text = pre.textContent;
+      var done = function () {
+        label.textContent = 'Copied!';
+        setTimeout(function () { label.textContent = 'Copy prompt'; }, 1600);
+      };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done);
+      else {
+        var range = document.createRange();
+        range.selectNodeContents(pre);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        try { document.execCommand('copy'); done(); } finally { sel.removeAllRanges(); }
+      }
+    });
+  })();
+</script>

@@ -1,0 +1,91 @@
+---
+import { ONE_PROMPT_RUN as run } from "../../data/ai-poc";
+
+const { wide, mobile: inset } = run.video;
+const label = `Two players in ${run.gameName}, the game ${run.agent} built from one prompt, at ${run.captureRttMs} ms of simulated lag`;
+---
+
+<figure class="relative" data-proof-video-root>
+  <div class="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-cyan-500/20 via-purple-600/15 to-pink-500/20 blur-2xl pointer-events-none"></div>
+  <div class="relative rounded-2xl border border-white/10 bg-[#0d0d10] overflow-hidden shadow-2xl shadow-purple-500/10">
+    <div class="flex items-center gap-2 px-4 py-2.5 border-b border-white/5 bg-white/[0.03]">
+      <div class="flex gap-1.5 shrink-0">
+        <span class="w-3 h-3 rounded-full bg-[#ff5f57]/70"></span>
+        <span class="w-3 h-3 rounded-full bg-[#febc2e]/70"></span>
+        <span class="w-3 h-3 rounded-full bg-[#28c840]/70"></span>
+      </div>
+      <span class="mx-auto px-3 py-0.5 rounded-md bg-white/5 text-[11px] text-gray-500 font-mono truncate min-w-0">
+        {run.gameName} · built from one prompt · two players
+      </span>
+    </div>
+    <div class="relative">
+      <!-- Side by side only where it's wide enough; phones and the hero's side column get one seat with the other inset. -->
+      <!-- Only the visible cut ever loads: preload="none", and the script plays whichever is on screen. -->
+      <video class="hidden sm:block lg:hidden w-full h-auto" width={wide.width} height={wide.height} muted loop playsinline preload="none" poster={wide.poster} data-proof-video aria-label={label}>
+        <source src={wide.webm} type="video/webm" />
+        <source src={wide.mp4} type="video/mp4" />
+      </video>
+      <video class="sm:hidden lg:block w-full h-auto" width={inset.width} height={inset.height} muted loop playsinline preload="none" poster={inset.poster} data-proof-video aria-label={label}>
+        <source src={inset.webm} type="video/webm" />
+        <source src={inset.mp4} type="video/mp4" />
+      </video>
+      {run.liveUrl && (
+        <a href={run.liveUrl} target="_blank" rel="noopener" class="ai-fine-only group/video absolute inset-0 flex items-center justify-center" aria-label={`Play ${run.gameName}`} data-track="ai_play" data-track-placement="hero_video">
+          <span class="flex items-center justify-center w-20 h-20 rounded-full bg-black/55 backdrop-blur border border-white/25 text-white opacity-0 scale-75 transition-all duration-300 group-hover/video:opacity-100 group-hover/video:scale-100">
+            <svg class="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+        </a>
+      )}
+    </div>
+  </div>
+
+  {run.liveUrl && (
+    <a href={run.liveUrl} target="_blank" rel="noopener" class="ai-fine-only ai-play-btn group relative mt-5 flex items-center gap-4 w-full sm:max-w-md sm:mx-auto lg:max-w-none rounded-xl px-4 py-3.5 bg-white text-[#0a0a0b] hover:bg-gray-100 shadow-xl shadow-purple-500/20 transition-all" data-track="ai_play" data-track-placement="hero">
+      <span class="ai-play-icon shrink-0 flex items-center justify-center w-12 h-12 rounded-full text-white">
+        <svg class="w-5 h-5 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+      </span>
+      <span class="flex-1 min-w-0">
+        <span class="block font-semibold text-lg leading-tight">Play {run.gameName} now</span>
+        <span class="block text-sm text-gray-600">Live in your browser · open it in two tabs</span>
+      </span>
+      <svg class="shrink-0 w-5 h-5 text-gray-500 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M7 17 17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  )}
+
+  <figcaption class="mt-4 text-center text-xs text-gray-500">
+    Real capture of the unedited run · {run.captureRttMs} ms simulated round trip · {run.agent}, {run.model}
+  </figcaption>
+</figure>
+
+<style>
+  .ai-play-icon { background: linear-gradient(135deg, #7e22ce, #9333ea 45%, #0e7490); box-shadow: 0 6px 18px -6px rgba(147, 51, 234, 0.8); }
+  .ai-play-btn:hover { transform: translateY(-1px); box-shadow: 0 20px 40px -12px rgba(147, 51, 234, 0.45); }
+  @media (prefers-reduced-motion: no-preference) {
+    .ai-play-icon { animation: ai-play-pulse 2.4s ease-in-out infinite; }
+  }
+  @keyframes ai-play-pulse {
+    0%, 100% { box-shadow: 0 6px 18px -6px rgba(147, 51, 234, 0.8), 0 0 0 0 rgba(168, 85, 247, 0.45); }
+    50% { box-shadow: 0 6px 18px -6px rgba(147, 51, 234, 0.8), 0 0 0 10px rgba(168, 85, 247, 0); }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    var videos = document.querySelectorAll('[data-proof-video]');
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      videos.forEach(function (v) { v.setAttribute('controls', ''); });
+      return;
+    }
+    // A display:none cut never intersects, so it never plays or downloads.
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var v = entry.target;
+        if (entry.isIntersecting) {
+          var p = v.play();
+          if (p && p.catch) p.catch(function () { v.setAttribute('controls', ''); });
+        } else v.pause();
+      });
+    }, { threshold: 0.25 });
+    videos.forEach(function (v) { io.observe(v); });
+  })();
+</script>

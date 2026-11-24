@@ -1,0 +1,446 @@
+---
+import { PRESETS, DEFAULT_PRESET_ID, buildPrompt, promptSegments, getPreset } from "../../data/ai-prompts";
+import { ONE_PROMPT_RUN as run, hasOnePromptRun } from "../../data/ai-poc";
+import { SOCIAL_LINKS } from "../../data/navigation";
+
+const discordUrl = SOCIAL_LINKS.find((l) => l.label === "Discord")!.href;
+
+const presets = PRESETS.map((p) => ({
+  id: p.id,
+  label: p.label,
+  blurb: p.blurb,
+  verified: !!p.verified,
+  segments: promptSegments(p.id),
+}));
+const initial = getPreset(DEFAULT_PRESET_ID);
+const initialText = buildPrompt(DEFAULT_PRESET_ID);
+const verifiedLabel = hasOnePromptRun ? getPreset(run.presetId).label.toLowerCase() : "";
+
+const steps = [
+  { title: "Open an empty folder", body: "In Claude Code, Codex, Cursor, Gemini CLI or Copilot. Node.js 22+ required." },
+  {
+    title: "Paste the prompt",
+    body: `The agent installs the skill, scaffolds, builds and tests on its own.${hasOnePromptRun ? ` Our verified run took ${run.durationMin} minutes.` : ""}`,
+  },
+  { title: "npm start, two tabs", body: "Open http://localhost:5173 twice and play against yourself." },
+  {
+    title: "Play with a friend",
+    body: `<code>npm i -D @colyseus/tunnel</code>, then press <kbd>s</kbd> + <kbd>Enter</kbd> where <code>npm start</code> runs and send the link. Needs a free <a href="/blog/colyseus-tunnel/">Colyseus Cloud login</a>.`,
+  },
+];
+---
+
+<section id="prompt" class="relative border-t border-white/5 bg-section-glow-purple scroll-mt-16">
+  <div class="max-w-5xl mx-auto px-6 py-20 lg:py-28">
+    <div class="text-center mb-10" data-reveal>
+      <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">The Prompt</p>
+      <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">Pick a game. <span class="gradient-text-ai">Paste the prompt.</span></h2>
+      <p class="text-gray-400 max-w-2xl mx-auto">
+        Pick a genre, tweak the game line, paste it into your coding agent in an empty folder. It installs the
+        Colyseus skill, scaffolds a 0.18 project and keeps going until the tests prove two players can see each other.
+      </p>
+    </div>
+
+    <!-- Preset chips -->
+    <div class="relative mb-3" data-reveal style="--reveal-delay:.08s">
+      <div class="ai-chips relative flex gap-1.5 overflow-x-auto no-scrollbar p-1 rounded-xl border border-white/5 bg-white/[0.02] w-max max-w-full mx-auto" role="tablist" aria-label="Game genre">
+        <span class="ai-chip-indicator" aria-hidden="true"></span>
+        {PRESETS.map((p) => (
+          <button
+            type="button"
+            role="tab"
+            class={`ai-chip relative z-10 whitespace-nowrap px-3.5 py-2 rounded-lg text-sm font-medium transition-colors ${p.id === DEFAULT_PRESET_ID ? "is-active text-white" : "text-gray-400 hover:text-white"}`}
+            aria-selected={p.id === DEFAULT_PRESET_ID ? "true" : "false"}
+            data-preset={p.id}
+          >
+            {p.label}
+            {p.verified && <span class="ml-1.5 inline-block align-middle w-1.5 h-1.5 rounded-full bg-emerald-400" title="Verified run"></span>}
+          </button>
+        ))}
+      </div>
+    </div>
+    <p class="text-center text-sm text-gray-500 mb-8 min-h-[1.25rem]" data-prompt-blurb aria-live="polite">{initial.blurb}</p>
+
+    <!-- Prompt card -->
+    <div class="conic-border rounded-2xl" data-reveal="scale" style="--reveal-delay:.12s">
+      <div class="rounded-2xl bg-[#0c0c0f] overflow-hidden">
+        <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">
+          <div class="flex gap-1.5">
+            <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            <span class="w-3 h-3 rounded-full bg-white/10"></span>
+            <span class="w-3 h-3 rounded-full bg-white/10"></span>
+          </div>
+          <span class="text-xs text-gray-500 ml-2 font-mono truncate min-w-0" data-prompt-filename>{`${initial.id}.md`}</span>
+          <span class={`ml-auto shrink-0 whitespace-nowrap inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-300 text-[11px] font-medium transition-opacity ${initial.verified ? "" : "opacity-0"}`} data-prompt-verified>
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            Verified run
+          </span>
+          <span class={`shrink-0 text-[11px] text-gray-600 ${initial.verified ? "hidden" : ""}`} data-prompt-editable>editable</span>
+        </div>
+
+        <div class="relative">
+          <label for="ai-prompt-text" class="sr-only">Prompt for your AI coding agent</label>
+          <textarea
+            id="ai-prompt-text"
+            class="ai-prompt-area block w-full h-[26rem] lg:h-[30rem] resize-y bg-transparent text-gray-300 font-mono text-[12.5px] lg:text-[13px] leading-[1.65] p-5 lg:p-6 focus:outline-none selection:bg-purple-500/30"
+            spellcheck="false"
+            autocomplete="off"
+            data-prompt-text
+          >{initialText}</textarea>
+          <pre class="ai-prompt-overlay absolute inset-0 m-0 overflow-hidden whitespace-pre-wrap break-words font-mono text-[12.5px] lg:text-[13px] leading-[1.65] p-5 lg:p-6 text-gray-300 pointer-events-none opacity-0" aria-hidden="true" data-prompt-overlay></pre>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2 px-4 py-3 border-t border-white/5 bg-white/[0.02]">
+          <button type="button" class="ai-copy-btn relative inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white font-medium text-sm transition-colors" data-prompt-copy>
+            <svg class="ai-copy-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            <svg class="ai-check-icon w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+            <span data-prompt-copy-label>Copy prompt</span>
+          </button>
+          <button type="button" class="ai-fine-only px-3 py-2.5 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-gray-300 hover:text-white text-sm transition-all" data-prompt-download>Download .md</button>
+          <button type="button" class="ai-touch-only inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-purple-400/40 bg-purple-500/10 text-purple-100 text-sm font-medium" data-prompt-share>
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+            Send to my computer
+          </button>
+          <button type="button" class="px-3 py-2.5 rounded-lg text-gray-500 hover:text-white text-sm transition-colors" data-prompt-reset>Reset</button>
+          <button type="button" class="hidden px-3 py-2.5 rounded-lg text-amber-300 hover:text-amber-200 text-sm transition-colors" data-prompt-undo>Undo preset switch</button>
+          <span class="ml-auto hidden sm:inline text-xs text-gray-600"><kbd class="font-sans">⌘/Ctrl</kbd> + <kbd class="font-sans">Enter</kbd> copies</span>
+        </div>
+      </div>
+    </div>
+    <p class="sr-only" aria-live="polite" data-prompt-status></p>
+
+    <!-- How to use -->
+    <ol class="grid sm:grid-cols-2 gap-3 mt-8">
+      {steps.map((step, i) => (
+        <li class="flex gap-3 p-4 rounded-xl border border-white/5 bg-white/[0.02]" data-reveal style={`--reveal-delay:${0.08 * i}s`}>
+          <span class="shrink-0 w-7 h-7 rounded-full bg-purple-500/15 text-purple-300 text-sm font-semibold flex items-center justify-center">{i + 1}</span>
+          <div class="min-w-0">
+            <p class="text-white text-sm font-medium">{step.title}</p>
+            <p class="ai-step-body text-gray-500 text-sm" set:html={step.body} />
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    {hasOnePromptRun && (
+      <p class="mt-6 text-center text-sm text-gray-500 max-w-2xl mx-auto" data-reveal>
+        Only the {verifiedLabel} prompt has a verified run: {run.agent} with {run.model}, {run.durationMin} minutes.
+        The other genres, agents and models are untested, so
+        <a href={discordUrl} target="_blank" rel="noopener" class="text-purple-400 hover:text-purple-300" data-track="ai_feedback_link">tell us how yours went</a>.
+      </p>
+    )}
+
+    <p class="mt-4 text-center text-xs text-gray-600 font-mono break-all" data-reveal>
+      Terminal? <span class="text-gray-400">claude "$(curl -fsSL https://colyseus.io/ai/prompts/<a class="text-purple-400 hover:text-purple-300" href={`/ai/prompts/${initial.id}.txt`} data-prompt-raw data-track="ai_prompt_raw" data-track-preset={initial.id}>{initial.id}</a>.txt)"</span>
+    </p>
+  </div>
+</section>
+
+<style is:global>
+  .no-scrollbar { scrollbar-width: none; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+
+  .ai-chip-indicator {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 0;
+    width: 0;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.28), rgba(34, 211, 238, 0.14));
+    box-shadow: inset 0 0 0 1px rgba(168, 85, 247, 0.45), 0 0 24px -6px rgba(168, 85, 247, 0.6);
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), width 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
+  /* Before JS positions the indicator, the active chip carries its own background. */
+  .ai-chips:not(.has-indicator) .ai-chip.is-active {
+    background: rgba(168, 85, 247, 0.2);
+    box-shadow: inset 0 0 0 1px rgba(168, 85, 247, 0.45);
+  }
+
+  .ai-prompt-area { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,.12) transparent; }
+  .ai-prompt-area.is-swapping { opacity: 0; }
+  .ai-prompt-overlay.is-active { opacity: 1; }
+  .ai-prompt-overlay { transition: opacity 0.25s ease; }
+
+  .ai-seg-changed {
+    color: #e9d5ff;
+    background: linear-gradient(90deg, rgba(168, 85, 247, 0.16), rgba(34, 211, 238, 0.06));
+    border-radius: 4px;
+    box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.08);
+    transition: background 0.8s ease, color 0.8s ease, box-shadow 0.8s ease;
+  }
+  .ai-seg-changed.is-settled { background: transparent; color: inherit; box-shadow: none; }
+  .ai-seg-caret::after {
+    content: "▋";
+    color: #c084fc;
+    animation: ai-caret 0.7s step-end infinite;
+  }
+  @keyframes ai-caret { 50% { opacity: 0; } }
+
+  .ai-step-body code, .ai-step-body kbd { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em; color: #d8b4fe; background: rgba(255, 255, 255, 0.05); padding: 1px 5px; border-radius: 4px; }
+  .ai-step-body a { color: #c084fc; }
+  .ai-step-body a:hover { color: #d8b4fe; }
+
+  .ai-copy-btn .ai-check-icon { display: none; }
+  .ai-copy-btn.is-copied { background: #059669; }
+  .ai-copy-btn.is-copied .ai-copy-icon { display: none; }
+  .ai-copy-btn.is-copied .ai-check-icon { display: block; animation: ai-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes ai-pop { from { transform: scale(0.3); } to { transform: scale(1); } }
+
+  .ai-particle {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    margin: -3px 0 0 -3px;
+    border-radius: 9999px;
+    pointer-events: none;
+    animation: ai-burst 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes ai-burst {
+    0% { transform: translate(0, 0) scale(1); opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)) scale(0.2); opacity: 0; }
+  }
+</style>
+
+<script is:inline define:vars={{ presets, defaultId: DEFAULT_PRESET_ID }}>
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var byId = {};
+    presets.forEach(function (p) { byId[p.id] = p; });
+    var join = function (p) { return p.segments.map(function (s) { return s.text; }).join('\n\n') + '\n'; };
+
+    var chipsEl = document.querySelector('.ai-chips');
+    var indicator = chipsEl.querySelector('.ai-chip-indicator');
+    var chips = Array.prototype.slice.call(chipsEl.querySelectorAll('.ai-chip'));
+    var textarea = document.querySelector('[data-prompt-text]');
+    var overlay = document.querySelector('[data-prompt-overlay]');
+    var blurb = document.querySelector('[data-prompt-blurb]');
+    var filename = document.querySelector('[data-prompt-filename]');
+    var verified = document.querySelector('[data-prompt-verified]');
+    var editable = document.querySelector('[data-prompt-editable]');
+    var raw = document.querySelector('[data-prompt-raw]');
+    var copyBtn = document.querySelector('[data-prompt-copy]');
+    var copyLabel = document.querySelector('[data-prompt-copy-label]');
+    var undoBtn = document.querySelector('[data-prompt-undo]');
+    var status = document.querySelector('[data-prompt-status]');
+
+    var current = byId[defaultId];
+    var dirty = false, animating = false, swap = 0, undoState = null, undoTimer = null, copyTimer = null;
+
+    function moveIndicator(chip) {
+      indicator.style.width = chip.offsetWidth + 'px';
+      indicator.style.transform = 'translateX(' + chip.offsetLeft + 'px)';
+    }
+    function activeChip() { return chipsEl.querySelector('.ai-chip.is-active'); }
+    chipsEl.classList.add('has-indicator');
+    moveIndicator(activeChip());
+    window.addEventListener('resize', function () { moveIndicator(activeChip()); });
+
+    textarea.addEventListener('input', function () { dirty = textarea.value !== join(current); });
+
+    function setMeta(p) {
+      blurb.textContent = p.blurb;
+      filename.textContent = p.id + '.md';
+      verified.classList.toggle('opacity-0', !p.verified);
+      editable.classList.toggle('hidden', p.verified);
+      raw.textContent = p.id;
+      raw.setAttribute('href', '/ai/prompts/' + p.id + '.txt');
+      raw.setAttribute('data-track-preset', p.id);
+    }
+
+    function track(name, params) {
+      if (typeof window.gtag === 'function') window.gtag('event', name, params);
+    }
+
+    // Types only the segments that differ from what's on screen, capped at ~1.2s total.
+    function animateTo(next, done) {
+      var run = ++swap; // a newer swap takes over the overlay; this one stops where it is
+      var prevSegs = dirty ? null : current.segments;
+      overlay.textContent = '';
+      var targets = [];
+      next.segments.forEach(function (seg, i) {
+        var span = document.createElement('span');
+        var changed = !prevSegs || prevSegs[i].text !== seg.text;
+        if (changed) { span.className = 'ai-seg-changed'; targets.push({ el: span, text: seg.text }); }
+        else span.textContent = seg.text;
+        overlay.appendChild(span);
+        if (i < next.segments.length - 1) overlay.appendChild(document.createTextNode('\n\n'));
+      });
+      overlay.appendChild(document.createTextNode('\n'));
+
+      var total = targets.reduce(function (n, t) { return n + t.text.length; }, 0);
+      var perFrame = Math.max(4, Math.ceil(total / 72));
+      overlay.scrollTop = textarea.scrollTop;
+      overlay.classList.add('is-active');
+      textarea.classList.add('is-swapping');
+      if (targets[0]) {
+        var top = targets[0].el.offsetTop - 24;
+        if (top > overlay.scrollTop + overlay.clientHeight - 80 || top < overlay.scrollTop) overlay.scrollTop = top;
+      }
+
+      var ti = 0, ci = 0;
+      (function frame() {
+        if (run !== swap) return;
+        var budget = perFrame;
+        while (budget > 0 && ti < targets.length) {
+          var t = targets[ti], take = Math.min(budget, t.text.length - ci);
+          ci += take; budget -= take;
+          t.el.textContent = t.text.slice(0, ci);
+          t.el.classList.add('ai-seg-caret');
+          if (ci >= t.text.length) { t.el.classList.remove('ai-seg-caret'); ti++; ci = 0; }
+        }
+        if (ti < targets.length) return requestAnimationFrame(frame);
+        var scroll = overlay.scrollTop;
+        textarea.value = join(next);
+        textarea.scrollTop = scroll;
+        textarea.classList.remove('is-swapping');
+        setTimeout(function () {
+          if (run !== swap) return;
+          targets.forEach(function (t) { t.el.classList.add('is-settled'); });
+          overlay.classList.remove('is-active');
+          done();
+        }, 350);
+      })();
+    }
+
+    function select(id) {
+      var next = byId[id];
+      if (!next || next === current) return;
+      if (dirty) {
+        undoState = { preset: current, text: textarea.value };
+        undoBtn.classList.remove('hidden');
+        clearTimeout(undoTimer);
+        undoTimer = setTimeout(function () { undoBtn.classList.add('hidden'); undoState = null; }, 6000);
+      }
+      chips.forEach(function (c) {
+        var on = c.getAttribute('data-preset') === id;
+        c.classList.toggle('is-active', on);
+        c.classList.toggle('text-white', on);
+        c.classList.toggle('text-gray-400', !on);
+        c.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      var chip = activeChip();
+      moveIndicator(chip);
+      chip.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
+      setMeta(next);
+
+      if (reduceMotion) {
+        textarea.value = join(next);
+        current = next; dirty = false;
+        return;
+      }
+      animating = true;
+      animateTo(next, function () { animating = false; });
+      current = next; dirty = false;
+    }
+
+    chips.forEach(function (chip) {
+      chip.addEventListener('click', function () { select(chip.getAttribute('data-preset')); });
+    });
+
+    undoBtn.addEventListener('click', function () {
+      if (!undoState) return;
+      var s = undoState;
+      undoState = null;
+      undoBtn.classList.add('hidden');
+      select(s.preset.id);
+      // Restores the user's edited text once the swap animation has settled.
+      var restore = function () {
+        if (animating) return setTimeout(restore, 60);
+        textarea.value = s.text;
+        dirty = true;
+      };
+      restore();
+    });
+
+    document.querySelector('[data-prompt-reset]').addEventListener('click', function () {
+      textarea.value = join(current);
+      dirty = false;
+      textarea.scrollTop = 0;
+    });
+
+    document.querySelector('[data-prompt-download]').addEventListener('click', function () {
+      var blob = new Blob([textarea.value], { type: 'text/markdown' });
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'colyseus-' + current.id + '.md';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 0);
+      track('ai_prompt_download', { preset: current.id, edited: dirty });
+    });
+
+    // Phones can't run an agent: hand the prompt to the share sheet (mail, notes, AirDrop…).
+    document.querySelector('[data-prompt-share]').addEventListener('click', function () {
+      var title = 'Colyseus prompt: ' + current.label;
+      var url = location.origin + '/ai/prompts/' + current.id + '.txt';
+      track('ai_prompt_share', { preset: current.id, edited: dirty });
+      if (navigator.share) {
+        navigator.share({ title: title, text: textarea.value }).catch(function () {});
+        return;
+      }
+      var body = 'Paste this into your coding agent, in an empty folder:\n' + url;
+      location.href = 'mailto:?subject=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body);
+    });
+
+    function burst(btn) {
+      if (reduceMotion) return;
+      var colors = ['#a855f7', '#22d3ee', '#ec4899', '#34d399', '#fbbf24'];
+      for (var i = 0; i < 16; i++) {
+        var p = document.createElement('span');
+        var angle = (Math.PI * 2 * i) / 16 + Math.random() * 0.4;
+        var dist = 36 + Math.random() * 38;
+        p.className = 'ai-particle';
+        p.style.background = colors[i % colors.length];
+        p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+        p.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+        btn.appendChild(p);
+        setTimeout(p.remove.bind(p), 750);
+      }
+    }
+
+    function fallbackCopy(text) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } finally { ta.remove(); }
+    }
+
+    function copy(placement) {
+      var text = textarea.value;
+      var done = function () {
+        copyBtn.classList.add('is-copied');
+        copyLabel.textContent = 'Copied — paste it into your agent';
+        status.textContent = 'Prompt copied to clipboard';
+        burst(copyBtn);
+        clearTimeout(copyTimer);
+        copyTimer = setTimeout(function () {
+          copyBtn.classList.remove('is-copied');
+          copyLabel.textContent = 'Copy prompt';
+        }, 2200);
+        track('ai_prompt_copy', { preset: current.id, edited: dirty, placement: placement });
+      };
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+      } else { fallbackCopy(text); done(); }
+    }
+
+    copyBtn.addEventListener('click', function () { copy('prompt'); });
+    textarea.addEventListener('keydown', function (e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') { e.preventDefault(); copy('shortcut'); }
+    });
+    // Buttons elsewhere on the page (final CTA) copy the current prompt too; delegated since they render later.
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest && e.target.closest('[data-copy-prompt]');
+      if (!btn) return;
+      copy(btn.getAttribute('data-copy-prompt') || 'other');
+      document.getElementById('prompt').scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth' });
+    });
+  })();
+</script>

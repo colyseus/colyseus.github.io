@@ -34,6 +34,12 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
         </a>
       </li>
       <li>
+        <a href="/ai" class={`px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-white/5 inline-flex items-center gap-1.5 ${currentPath === '/ai' ? 'text-white' : 'text-gray-400 hover:text-white'}`}>
+          <span class="nav-ai-dot" aria-hidden="true"></span>
+          AI
+        </a>
+      </li>
+      <li>
         <a href="/cloud-managed-hosting" class={`px-4 py-2 text-sm font-medium transition-colors rounded-lg hover:bg-white/5 ${currentPath === '/cloud-managed-hosting' ? 'text-white' : 'text-gray-400 hover:text-white'}`}>
           Cloud
         </a>
@@ -88,6 +94,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
   <nav class="flex flex-col px-8 pb-10 transition-[opacity,transform] duration-300 delay-75 opacity-0 translate-y-2" id="mobile-menu-nav">
     <div class="flex flex-col gap-5 text-lg">
       <a href="/framework" class={`transition-colors ${currentPath === '/framework' ? 'text-white' : 'text-gray-300 hover:text-white'}`}>Framework</a>
+      <a href="/ai" class={`transition-colors inline-flex items-center gap-2 ${currentPath === '/ai' ? 'text-white' : 'text-gray-300 hover:text-white'}`}><span class="nav-ai-dot" aria-hidden="true"></span>AI</a>
       <a href="/cloud-managed-hosting" class={`transition-colors ${currentPath === '/cloud-managed-hosting' ? 'text-white' : 'text-gray-300 hover:text-white'}`}>Cloud</a>
       <a href="/pricing" class={`transition-colors ${currentPath === '/pricing' ? 'text-white' : 'text-gray-300 hover:text-white'}`}>Pricing</a>
       <a href="https://docs.colyseus.io/" class="text-gray-300 hover:text-white transition-colors inline-flex items-center gap-1">

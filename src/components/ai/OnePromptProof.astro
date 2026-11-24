@@ -1,0 +1,92 @@
+---
+import { ONE_PROMPT_RUN as run } from "../../data/ai-poc";
+import { getPreset } from "../../data/ai-prompts";
+import AgentTerminal from "./AgentTerminal.astro";
+
+const preset = getPreset(run.presetId);
+
+const stats: { value: number | string; label: string }[] = [
+  { value: 1, label: "prompt" },
+  { value: run.followUps, label: "follow-ups" },
+  { value: run.humanEdits, label: "hand edits" },
+  { value: run.linesAdded, label: "lines written" },
+  { value: run.testsPassing, label: "tests passing" },
+  { value: `${run.durationMin}m`, label: "prompt → commit" },
+];
+const badges = [
+  run.attempts === 1 ? "First attempt" : `${run.attempts} attempts`,
+  `${run.driftEma} prediction drift at ${run.captureRttMs} ms lag`,
+];
+const driftDetail = `Both clients' reconciler drift.ema stayed at ${run.driftEma} through a 60 s bot duel at ${run.captureRttMs} ms ± ${run.captureJitterMs} ms simulated lag (RUN.md, "Independent check").`;
+
+const tree = `${run.repo}/tree/${run.tag}`;
+const diff = `${run.repo}/compare/${run.scaffoldSha}...${run.agentSha}`;
+const promptFile = `${run.repo}/blob/main/PROMPT.md`;
+const runLog = `${run.repo}/blob/main/RUN.md`;
+---
+
+<section id="proof" class="relative border-t border-white/5 overflow-hidden scroll-mt-16">
+  <div class="absolute inset-0 bg-section-glow-blue-top pointer-events-none"></div>
+  <div class="relative max-w-7xl mx-auto px-6 py-20 lg:py-32">
+    <div class="text-center mb-12" data-reveal>
+      <p class="text-sm font-medium text-cyan-400 uppercase tracking-widest mb-4">Proof, not a promise</p>
+      <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">We ran it. <span class="gradient-text-ai">Unedited.</span></h2>
+      <p class="text-gray-400 max-w-2xl mx-auto">
+        We pasted the {preset.label.toLowerCase()} prompt above into a fresh {run.agent} session in an empty folder and walked away.
+        {run.durationMin} minutes later it had committed {run.gameName}, the game in the video up top.
+        {run.attempts > 1 && <span class="block mt-3 text-sm text-gray-500">{run.attemptsNote}</span>}
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] gap-10 items-start">
+      <div data-reveal="scale">
+        <AgentTerminal />
+        <p class="mt-4 text-center text-xs text-gray-600">Condensed replay of the real session · {run.agent}, {run.model} · {run.date}</p>
+      </div>
+
+      <div>
+        <dl class="grid grid-cols-3 gap-3 mb-4">
+          {stats.map((s, i) => (
+            <div class="flex flex-col-reverse rounded-xl border border-white/5 bg-white/[0.02] p-4 text-center" data-reveal style={`--reveal-delay:${0.05 * i}s`}>
+              <dt class="text-[11px] uppercase tracking-wider text-gray-500 mt-1">{s.label}</dt>
+              <dd class="text-2xl lg:text-3xl font-bold text-white tabular-nums whitespace-nowrap" data-count-to={typeof s.value === "number" ? s.value : undefined}>{typeof s.value === "number" ? s.value.toLocaleString("en-US") : s.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <ul class="flex flex-wrap gap-2 mb-6" data-reveal>
+          {badges.map((b, i) => (
+            <li class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-emerald-500/25 bg-emerald-500/10 text-emerald-300 text-xs font-medium" title={i === 1 ? driftDetail : undefined}>
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+              {b}
+            </li>
+          ))}
+        </ul>
+        {run.liveUrl && (
+          <div class="mb-3" data-reveal>
+            <a href={run.liveUrl} target="_blank" rel="noopener" class="ai-cta-primary relative flex items-center justify-center gap-2.5 w-full px-6 py-4 rounded-xl text-white font-semibold text-base overflow-hidden" data-track="ai_play" data-track-placement="proof" data-share-on-touch={`${run.gameName}, a multiplayer game built from one prompt`}>
+              <svg class="w-5 h-5 shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              <span class="ai-fine-only">Play {run.gameName} now <span class="hidden sm:inline text-white/70 font-normal">· open it in two tabs</span></span>
+              <span class="ai-touch-only">Send {run.gameName} to your computer</span>
+            </a>
+            <p class="ai-touch-only mt-2 text-center text-xs text-gray-500">It plays with a keyboard and mouse.</p>
+          </div>
+        )}
+        <ul class="space-y-2 text-sm" data-reveal>
+          {[
+            { href: tree, label: "Browse the unedited source", note: `tag ${run.tag}`, key: "source" },
+            { href: diff, label: "See exactly what the agent wrote", note: "scaffold → agent diff", key: "diff" },
+            { href: promptFile, label: "The exact prompt", note: "PROMPT.md", key: "prompt" },
+            { href: runLog, label: "How we ran it", note: `versions, timings${run.attempts > 1 ? `, ${run.attempts === 2 ? "both" : `all ${run.attempts}`} attempts` : ""}`, key: "run" },
+          ].map((link) => (
+            <li>
+              <a href={link.href} target="_blank" rel="noopener" class="group flex items-center justify-between gap-3 px-4 py-3 rounded-lg border border-white/5 hover:border-white/15 bg-white/[0.02] hover:bg-white/[0.04] transition-all" data-track="ai_proof_link" data-track-link={link.key}>
+                <span class="text-gray-200 group-hover:text-white">{link.label}</span>
+                <span class="text-xs text-gray-600 font-mono text-right">{link.note} <span class="inline-block transition-transform group-hover:translate-x-0.5">→</span></span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>

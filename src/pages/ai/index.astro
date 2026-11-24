@@ -1,0 +1,391 @@
+---
+import { Image } from "astro:assets";
+import MainLayout from "../../layouts/MainLayout.astro";
+import ScrollReveal from "../../components/ScrollReveal.astro";
+import JoinCommunitySection from "../../components/JoinCommunitySection.astro";
+import Aurora from "../../components/Aurora.astro";
+import AgentTerminal from "../../components/ai/AgentTerminal.astro";
+import PromptBuilder from "../../components/ai/PromptBuilder.astro";
+import OnePromptProof from "../../components/ai/OnePromptProof.astro";
+import ProofVideo from "../../components/ai/ProofVideo.astro";
+import SkillDiff from "../../components/ai/SkillDiff.astro";
+import PremiumDemos from "../../components/PremiumDemos.astro";
+import AiFaq from "../../components/ai/AiFaq.astro";
+import { ONE_PROMPT_RUN as run, hasOnePromptRun } from "../../data/ai-poc";
+import vibeJamImage from "../../../assets/blog/vibe-jam-2026.jpg";
+
+if (!hasOnePromptRun) {
+  console.warn("[/ai] ONE_PROMPT_RUN.repo is empty — the Proof section is hidden.");
+}
+
+const title = "Colyseus for AI Coding Agents: One-Prompt Multiplayer Games";
+const description = "Paste one prompt into Claude Code, Cursor or Codex and get a working multiplayer game: an authoritative Colyseus 0.18 server with client-side prediction.";
+
+const agents = ["Claude Code", "Codex", "Cursor", "Gemini CLI", "Copilot"];
+
+const heroStats = [
+  "1 prompt",
+  `${run.humanEdits} hand edits`,
+  run.attempts === 1 ? "First attempt" : `${run.attempts} attempts`,
+  `${run.durationMin} min, prompt to commit`,
+];
+
+const abs = (path: string) => new URL(path, Astro.site).href;
+const videoLd = {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  name: `${run.gameName}: a multiplayer game built from one prompt`,
+  description: `${run.agent} (${run.model}) built ${run.gameName} from one Colyseus prompt, with no follow-ups and no hand edits: ${run.gameSummary}`,
+  thumbnailUrl: [abs(run.video.wide.poster)],
+  uploadDate: run.captureDate,
+  duration: run.clipDuration,
+  contentUrl: abs(run.video.wide.mp4),
+};
+
+const reasons = [
+  {
+    title: "Scaffolds without questions",
+    body: "<code>create-colyseus-app</code> takes layout, netcode, matchmaking, auth and database as flags, so an agent never gets stuck on an interactive prompt.",
+    icon: `<path d="M4 17l6-6-6-6M12 19h8"/>`,
+  },
+  {
+    title: "Types from server to client",
+    body: "<code>new Client&lt;typeof server&gt;()</code> infers room state and message types. A hallucinated field becomes a compile error the agent fixes on its own.",
+    icon: `<path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/>`,
+  },
+  {
+    title: "Proves sync before you look",
+    body: "<code>@colyseus/testing</code> boots the real server and connects real clients, so the agent can assert two players see each other before you open a browser.",
+    icon: `<path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/>`,
+  },
+  {
+    title: "Authoritative by default",
+    body: "The server owns the state and sanitizes every input; prediction, reconciliation and interpolation are built in. Your agent writes one pure step function.",
+    icon: `<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/>`,
+  },
+];
+
+const vibeJamGames = 48;
+const vibeJamStats = [
+  { value: vibeJamGames, suffix: "", label: "games built with Colyseus" },
+  { value: 945, suffix: "", label: "total entries" },
+  { value: null, text: "1 in 7", label: "online multiplayer entries used Colyseus" },
+  { value: 90, suffix: "%+", label: "of every line had to come from AI" },
+];
+---
+
+<MainLayout title={title} description={description} image="/images/ai/og.png" isHeaderExpanded={false}>
+  <ScrollReveal />
+
+  <!-- ===== HERO ===== -->
+  <section class="ai-hero relative overflow-hidden" data-ai-hero>
+    <Aurora grid />
+    <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#0a0a0b] pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-16 lg:pt-36 lg:pb-28 w-full">
+      <div class="lg:grid lg:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] lg:gap-12 xl:gap-16 lg:items-center">
+        <div class="text-center lg:text-left max-w-3xl mx-auto lg:max-w-none">
+          <a href="https://github.com/colyseus/skill" target="_blank" rel="noopener" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-200 text-sm font-medium hover:bg-cyan-400/20 hover:border-cyan-400/40 transition-all mb-6 animate-fade-up">
+            <span class="nav-ai-dot"></span>
+            New: the Colyseus agent skill for 0.18
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-[2.75rem] xl:text-[3.5rem] lg:leading-[1.08] font-bold tracking-tight text-white mb-6 animate-fade-up animate-delay-1">
+            One prompt.
+            <br />
+            <span class="gradient-text-ai">A real <br class="hidden lg:block" />multiplayer game.</span>
+          </h1>
+
+          <p class="text-lg lg:text-xl text-gray-300 mb-3 animate-fade-up animate-delay-2">
+            Colyseus is built for AI. Paste one prompt and let it run in
+            <span class="ai-agent-rotator relative inline-grid align-bottom text-left font-semibold" data-agent-rotator>
+              {agents.map((a, i) => <span class={`ai-agent ${i === 0 ? "is-current" : ""}`} aria-hidden={i === 0 ? undefined : "true"}>{a}</span>)}
+            </span>
+          </p>
+          <p class="text-base lg:text-lg text-gray-400 max-w-2xl mx-auto lg:mx-0 mb-6 animate-fade-up animate-delay-2">
+            Your coding agent ships an authoritative server, client-side prediction, matchmaking, reconnection
+            and tests that prove two players can see each other, all on the Colyseus 0.18 API.
+          </p>
+
+          {hasOnePromptRun && (
+            <a href="#proof" class="group inline-flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-1.5 mb-8 text-sm text-gray-400 hover:text-gray-200 transition-colors animate-fade-up animate-delay-3" data-track="ai_cta" data-track-target="proof" data-track-placement="hero">
+              {heroStats.map((s) => (
+                <span class="inline-flex items-center gap-1.5 whitespace-nowrap">
+                  <svg class="w-3.5 h-3.5 text-emerald-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                  {s}
+                </span>
+              ))}
+              <span class="text-purple-300 group-hover:text-purple-200 whitespace-nowrap">How we ran it ↓</span>
+            </a>
+          )}
+
+          <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center lg:justify-start items-center mb-3 animate-fade-up animate-delay-3">
+            <a href="#prompt" class="ai-cta-primary relative inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium text-sm whitespace-nowrap overflow-hidden" data-track="ai_cta" data-track-target="prompt" data-track-placement="hero">
+              Get the prompt
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <div class="flex items-center w-full max-w-sm sm:w-auto bg-white/[0.03] border border-white/10 rounded-lg pl-4 pr-2 py-1.5">
+              <span class="text-gray-600 mr-3 select-none font-mono">$</span>
+              <code class="font-mono text-sm text-gray-300 flex-1 text-left mr-2 whitespace-nowrap">npx skills add colyseus/skill</code>
+              <button type="button" class="relative p-2 rounded-lg hover:bg-white/5 text-gray-500 hover:text-gray-300 transition-colors" data-copy-text="npx skills add colyseus/skill" aria-label="Copy the skill install command" data-track="ai_skill_copy" data-track-placement="hero">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span class="ai-copied-tip absolute pointer-events-none text-xs bg-white/10 text-white rounded py-1 px-2 -translate-x-1/2 left-1/2 top-full mt-1 whitespace-nowrap">Copied!</span>
+              </button>
+            </div>
+            {!hasOnePromptRun && (
+              <a href="#premium-demos" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-white font-medium text-sm transition-all">
+                Premium demos
+              </a>
+            )}
+          </div>
+          <p class="text-xs text-gray-600 animate-fade-up animate-delay-3">Works with any agent that supports <a href="https://skills.sh/colyseus/skill" target="_blank" rel="noopener" class="hover:text-gray-400 transition-colors">Agent Skills</a>. Add <code class="font-mono">--global</code> for every project.</p>
+
+          <p class="mt-6 text-sm animate-fade-up animate-delay-4">
+            <a href="/blog/vibe-jam-2026/" class="group text-gray-400 hover:text-white transition-colors" data-track="ai_vibe_jam" data-track-placement="hero">
+              <span class="inline-block w-1.5 h-1.5 mr-2 align-middle rounded-full bg-amber-300"></span>{vibeJamGames} Vibe Jam 2026 games shipped their multiplayer on Colyseus&nbsp;<span class="inline-block transition-transform group-hover:translate-x-0.5">→</span>
+            </a>
+          </p>
+        </div>
+
+        <div class="mt-14 lg:mt-0 animate-fade-up animate-delay-3">
+          {hasOnePromptRun ? <ProofVideo /> : <AgentTerminal />}
+        </div>
+      </div>
+    </div>
+    {hasOnePromptRun && <script type="application/ld+json" set:html={JSON.stringify(videoLd)} />}
+  </section>
+
+  <PromptBuilder />
+
+  {hasOnePromptRun && <OnePromptProof />}
+
+  <!-- ===== SKILL ON / OFF ===== -->
+  <section class="border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+      <div class="text-center mb-10" data-reveal>
+        <p class="text-sm font-medium text-cyan-400 uppercase tracking-widest mb-4">The agent skill</p>
+        <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">What your model writes without it</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">
+          Most models learned Colyseus from code older than 0.18. Same request, same model: flip the switch.
+        </p>
+      </div>
+      <div data-reveal>
+        <SkillDiff />
+      </div>
+      <p class="mt-8 text-center text-sm text-gray-500" data-reveal>
+        No skill support? Point your agent at <a href="https://docs.colyseus.io/llms.txt" target="_blank" rel="noopener" class="text-purple-400 hover:text-purple-300">docs.colyseus.io/llms.txt</a>
+        or <a href="https://docs.colyseus.io/llms-full.txt" target="_blank" rel="noopener" class="text-purple-400 hover:text-purple-300">llms-full.txt</a>,
+        or append <code class="font-mono text-gray-400">.md</code> to any docs URL.
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== WHY COLYSEUS FITS AGENTS ===== -->
+  <section class="border-t border-white/5 bg-section-glow-purple">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+      <div class="text-center mb-14" data-reveal>
+        <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Why it works</p>
+        <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">A framework agents get right</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">
+          Vibe-coded multiplayer usually breaks at the network layer. Colyseus puts the hard parts in the framework
+          and gives your agent the feedback loops to check its own work.
+        </p>
+      </div>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4" data-ai-reasons>
+        {reasons.map((r, i) => (
+          <div class="spotlight group p-6 rounded-2xl border border-white/5 hover:border-white/10 bg-white/[0.02] transition-colors" data-reveal style={`--reveal-delay:${0.06 * i}s`}>
+            <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-purple-500/20 to-cyan-500/10 border border-purple-500/20 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3">
+              <svg class="w-5 h-5 text-purple-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={r.icon} />
+            </div>
+            <h3 class="text-white font-semibold mb-2">{r.title}</h3>
+            <p class="ai-reason text-gray-500 text-sm leading-relaxed" set:html={r.body} />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== VIBE JAM 2026 ===== -->
+  <section class="relative border-t border-white/5 overflow-hidden">
+    <div class="absolute inset-0 bg-section-glow-blue pointer-events-none"></div>
+    <div class="relative max-w-7xl mx-auto px-6 py-20 lg:py-32">
+      <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div data-reveal>
+          <p class="text-sm font-medium text-amber-300 uppercase tracking-widest mb-4">Vibe Jam 2026</p>
+          <h2 class="text-3xl lg:text-5xl font-bold text-white mb-5">
+            1 in 7 vibe-coded multiplayer games <span class="gradient-text-ai">shipped on Colyseus</span>
+          </h2>
+          <p class="text-gray-400 mb-8">
+            In <a href="https://x.com/levelsio" target="_blank" rel="noopener" class="text-gray-200 hover:text-white">@levelsio</a>'s
+            month-long Vibe Jam, sponsored by Cursor, at least 90% of every game's code had to be written by AI.
+            {vibeJamGames} of the 945 entries used Colyseus for their multiplayer: about 1 in 7 of the jam's online multiplayer games.
+          </p>
+          <dl class="grid grid-cols-2 gap-3 mb-8">
+            {vibeJamStats.map((s, i) => (
+              <div class="flex flex-col-reverse rounded-xl border border-white/5 bg-white/[0.02] p-4" data-reveal style={`--reveal-delay:${0.06 * i}s`}>
+                <dt class="text-xs text-gray-500 mt-1">{s.label}</dt>
+                <dd class="text-3xl lg:text-4xl font-bold text-white tabular-nums">
+                  {s.value === null ? s.text : <><span data-count-to={s.value}>{s.value}</span>{s.suffix}</>}
+                </dd>
+              </div>
+            ))}
+          </dl>
+          <a href="/blog/vibe-jam-2026/" class="group inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-white text-[#0a0a0b] hover:bg-gray-200 font-medium text-sm transition-colors" data-track="ai_vibe_jam" data-track-placement="section">
+            See all {vibeJamGames} Colyseus games
+            <svg class="w-4 h-4 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+        <a href="/blog/vibe-jam-2026/" class="group relative block" data-reveal="scale" aria-label="Read: Vibe Jam 2026 — 1 in 7 multiplayer games shipped with Colyseus">
+          <div class="absolute -inset-4 rounded-[1.75rem] bg-gradient-to-br from-amber-400/20 via-pink-500/10 to-purple-600/20 blur-2xl pointer-events-none"></div>
+          <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <Image src={vibeJamImage} alt="Vibe Jam 2026: 48 multiplayer games built with Colyseus" widths={[640, 1000]} sizes="(min-width: 1024px) 50vw, 100vw" class="w-full h-auto transition-transform duration-700 group-hover:scale-[1.03]" />
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <PremiumDemos />
+
+  <AiFaq />
+
+  <!-- ===== FINAL CTA ===== -->
+  <section class="relative border-t border-white/5 overflow-hidden">
+    <Aurora soft blobs={[1, 3]} />
+    <div class="relative max-w-4xl mx-auto px-6 py-24 lg:py-32 text-center" data-reveal>
+      <h2 class="font-display text-3xl lg:text-5xl font-bold text-white mb-5">Your agent is <span class="gradient-text-ai">ready</span></h2>
+      <p class="text-gray-400 max-w-xl mx-auto mb-10">Copy the prompt, open an empty folder, and come back in about an hour to a tested multiplayer game. Then take it live on Colyseus Cloud.</p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <button type="button" class="ai-cta-primary relative inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white font-medium text-sm overflow-hidden" data-copy-prompt="final_cta">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy the prompt
+        </button>
+        <a href="https://cloud.colyseus.io/" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-white font-medium text-sm transition-all" data-track="ai_cta" data-track-target="cloud" data-track-placement="final">Deploy on Colyseus Cloud</a>
+        <a href="https://docs.colyseus.io/" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-gray-400 hover:text-white font-medium text-sm transition-colors" data-track="ai_cta" data-track-target="docs" data-track-placement="final">Read the docs →</a>
+      </div>
+    </div>
+  </section>
+
+  <JoinCommunitySection />
+</MainLayout>
+
+<style is:global>
+  /* === Rotating agent name === */
+  .ai-agent-rotator > .ai-agent {
+    grid-area: 1 / 1;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translateY(0.6em);
+    filter: blur(4px);
+    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), filter 0.45s ease;
+    background: linear-gradient(90deg, #a5f3fc, #e9d5ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .ai-agent-rotator > .ai-agent.is-current { opacity: 1; transform: none; filter: none; }
+  .ai-agent-rotator > .ai-agent.is-leaving { opacity: 0; transform: translateY(-0.6em); filter: blur(4px); }
+
+  /* === Primary CTA with a moving sheen === */
+  .ai-cta-primary {
+    background: linear-gradient(135deg, #7e22ce, #9333ea 45%, #0e7490);
+    box-shadow: 0 10px 30px -10px rgba(147, 51, 234, 0.7);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .ai-cta-primary:hover { box-shadow: 0 14px 40px -10px rgba(147, 51, 234, 0.9); transform: translateY(-1px); }
+  .ai-cta-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+    transform: translateX(-120%);
+  }
+  @keyframes ai-sheen { 0%, 60% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+  @media (prefers-reduced-motion: no-preference) {
+    .ai-cta-primary::after { animation: ai-sheen 4.5s ease-in-out infinite; }
+  }
+
+  .ai-reason code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.85em; color: #d8b4fe; background: rgba(255, 255, 255, 0.05); padding: 1px 5px; border-radius: 4px; }
+
+  .ai-copied-tip { opacity: 0; transition: opacity 0.2s ease; }
+  [data-copied="yes"] > .ai-copied-tip { opacity: 1; }
+
+  /* Phones and tablets can't run an agent or play a keyboard-and-mouse game. */
+  @media (hover: none) and (pointer: coarse) { .ai-fine-only { display: none !important; } }
+  @media not all and (hover: none) and (pointer: coarse) { .ai-touch-only { display: none !important; } }
+</style>
+
+<script is:inline>
+  (function () {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Rotating agent name in the hero.
+    var rotator = document.querySelector('[data-agent-rotator]');
+    if (rotator && !reduceMotion) {
+      var names = Array.prototype.slice.call(rotator.children), idx = 0;
+      setInterval(function () {
+        if (document.hidden) return;
+        var cur = names[idx], next = names[(idx + 1) % names.length];
+        cur.classList.remove('is-current');
+        cur.classList.add('is-leaving');
+        cur.setAttribute('aria-hidden', 'true');
+        next.classList.remove('is-leaving');
+        next.classList.add('is-current');
+        next.removeAttribute('aria-hidden');
+        setTimeout(function () { cur.classList.remove('is-leaving'); }, 460);
+        idx = (idx + 1) % names.length;
+      }, 2200);
+    }
+
+    // Plain copy buttons.
+    document.querySelectorAll('[data-copy-text]').forEach(function (btn) {
+      var t = null;
+      btn.addEventListener('click', function () {
+        var text = btn.getAttribute('data-copy-text');
+        if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text);
+        btn.setAttribute('data-copied', 'yes');
+        clearTimeout(t);
+        t = setTimeout(function () { btn.setAttribute('data-copied', 'no'); }, 1200);
+      });
+    });
+
+    // On touch screens, a keyboard-and-mouse game goes to the share sheet instead.
+    var coarse = window.matchMedia('(hover: none) and (pointer: coarse)');
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('[data-share-on-touch]');
+      if (!a || !coarse.matches || !navigator.share) return;
+      e.preventDefault();
+      navigator.share({ title: a.getAttribute('data-share-on-touch'), url: a.href }).catch(function () {});
+    });
+
+    // Cursor spotlight on the "Why it works" cards; PremiumDemos binds its own.
+    document.querySelectorAll('[data-ai-reasons] .spotlight').forEach(function (card) {
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+
+    // Count-up numbers; the real values are already in the HTML.
+    if (reduceMotion || !('IntersectionObserver' in window)) return;
+    var counters = document.querySelectorAll('[data-count-to]');
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        io.unobserve(entry.target);
+        var el = entry.target, to = +el.getAttribute('data-count-to');
+        if (!(to > 1)) return;
+        var start = performance.now(), dur = 1300;
+        (function tick(now) {
+          var p = Math.min(1, (now - start) / dur);
+          var eased = p === 1 ? 1 : 1 - Math.pow(2, -10 * p);
+          el.textContent = Math.round(to * eased).toLocaleString('en-US');
+          if (p < 1) requestAnimationFrame(tick);
+        })(start);
+      });
+    }, { threshold: 0.6 });
+    counters.forEach(function (c) { io.observe(c); });
+  })();
+</script>
