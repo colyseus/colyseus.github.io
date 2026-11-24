@@ -1,413 +1,383 @@
 ---
-import MainLayout from "../layouts/MainLayout.astro";
-import TitleSection from "../components/TitleSection.astro";
-import SimulatePriceComponent from "../components/SimulatePriceComponent";
-import CodeBlock from "../components/CodeBlock.astro";
-import TestimonialEntry from "../components/TestimonialEntry.astro";
 import { Image } from "astro:assets";
-import alertingMonitoring from "../../assets/blog/004-product-update-2024/alerting-monitoring.png";
-import processShutDown from "../../assets/blog/004-product-update-2024/process-shutdown.gif";
-import deployGraphs from "../../assets/blog/004-product-update-2024/deploy-graphs.png";
-import locationsScreenshot from "../../assets/cloud/locations.png";
+import { Code } from "astro-expressive-code/components";
+import MainLayout from "../layouts/MainLayout.astro";
+import Aurora from "../components/Aurora.astro";
+import Faq, { type FaqItem } from "../components/Faq.astro";
+import ScrollReveal from "../components/ScrollReveal.astro";
+import SimulatePriceComponent from "../components/SimulatePriceComponent";
+// Shot from the panel's fixture preview (cloud/admin: vite.preview.config.ts), dark theme, 2x.
+import panelOverview from "../../assets/cloud/panel/overview.webp";
+import panelLogs from "../../assets/cloud/panel/logs.webp";
+import panelLocations from "../../assets/cloud/panel/locations.webp";
+import panelAlerts from "../../assets/cloud/panel/alerts.webp";
+import panelStats from "../../assets/cloud/panel/stats.webp";
+import panelDeploying from "../../assets/cloud/panel/deploying.webp";
+import tunnelImage from "../../assets/blog/tunnel.webp";
+
+const SIGNUP_URL = "https://cloud.colyseus.io/";
+const FOUNDER_CALL_URL = "https://calendly.com/endel/intro";
+const DEPLOY_COMMAND = "npx @colyseus/cloud deploy";
+
+const highlights = [
+  { label: "Deployments from CLI", icon: `<path d="m4 17 6-6-6-6M12 19h8"/>` },
+  { label: "Predictable and affordable pricing", icon: `<circle cx="12" cy="12" r="9"/><path d="M15 9.5c-.5-1-1.6-1.5-3-1.5-1.7 0-3 .9-3 2s1.3 1.7 3 2 3 .9 3 2-1.3 2-3 2c-1.4 0-2.5-.5-3-1.5M12 6v2m0 8v2"/>` },
+  { label: "Scale horizontally or vertically", icon: `<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>` },
+  { label: "No imposed CCU/DAU/MAU limits", icon: `<circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M16 5a3 3 0 0 1 0 6M21 20a6 6 0 0 0-4-5.6"/>` },
+  { label: "Managed SSL Certificates", icon: `<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>` },
+  { label: "32 locations available worldwide", icon: `<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>` },
+  { label: "99.9% uptime SLA", icon: `<path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="m9 12 2 2 4-4"/>` },
+  { label: "Zero-downtime deployments", icon: `<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>` },
+];
+
+const check = `<path d="M20 6 9 17l-5-5"/>`;
+
+const features = [
+  {
+    title: "32 global locations",
+    body: "Get your servers close to your players. Add regions in one click: each location gets its own endpoint, ready to accept connections.",
+    points: ["New regions without redeploying", "Lower latency worldwide", "One HTTP endpoint per location"],
+    image: panelLocations,
+    alt: "Choosing regions and plans for a new application, with its monthly price",
+    icon: `<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>`,
+  },
+  {
+    title: "Monitoring & alerting",
+    body: "Hear about trouble before your players do. Alerts on CPU, memory, crashes and deploys go straight to Slack, Discord or email.",
+    points: ["Slack, Discord or email", "CPU and memory thresholds", "Crashes, restarts and failed deploys"],
+    image: panelAlerts,
+    alt: "Alert settings: email, Slack or Discord, CPU and memory thresholds, application and deploy events",
+    icon: `<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/>`,
+  },
+  {
+    title: "Real-time analytics",
+    body: "See what your servers are doing. Track concurrent users, active rooms and resource usage, and scale before you need to.",
+    points: ["Live CCU and room graphs", "CPU and memory per server", "Filter by region"],
+    image: panelStats,
+    alt: "Players online, rooms, CPU and memory charts across three regions over 24 hours",
+    icon: `<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>`,
+  },
+  {
+    title: "Zero-downtime deployments",
+    body: "Ship updates without kicking players out. Old processes drain their rooms while new ones take every new connection on the latest version.",
+    points: ["Active matches finish undisturbed", "New rooms on the new version", "Live output from every server"],
+    image: panelDeploying,
+    alt: "A deploy rolling out to two regions, with live output from each server",
+    icon: `<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>`,
+  },
+];
+
+const steps = [
+  { title: "Create a Colyseus app", code: `npm create colyseus-app ./my-colyseus-server\ncd ./my-colyseus-server` },
+  { title: "Push it to a Git repository", code: `git remote add origin <your-repo-url>\ngit add .\ngit push origin main` },
+  { title: "Deploy it", code: `npm install @colyseus/cloud\nnpx @colyseus/cloud deploy` },
+];
+
+const faqs: FaqItem[] = [
+  {
+    q: "Does Colyseus Cloud offer a free tier?",
+    a: "Not at the moment. The Colyseus framework itself is free and open source, so you can always host it on your own servers.",
+  },
+  {
+    q: "What happens if I delete an application I've already paid for?",
+    a: "Your account is credited with the unused time left on that application, and the credit goes towards your next one.",
+  },
+  {
+    q: "Does Colyseus Cloud auto-scale?",
+    a: "Not yet. For heavier workloads, upgrade your deployment's resources from the Colyseus Cloud dashboard. Auto-scaling for horizontally scaled (cluster) deployments is planned.",
+  },
+  {
+    q: "How many CCU can Colyseus Cloud handle?",
+    a: "It depends on your code: how much CPU it uses and how many messages your server and clients exchange. The pricing simulator includes a capacity estimate, but every game is different, so load-test yours to find its real limits.",
+  },
+  {
+    q: "What's the difference between scaling vertically and horizontally?",
+    a: "Scaling vertically gives a single server instance more CPU and memory. Scaling horizontally spreads your game across several instances that work as one cluster.",
+  },
+];
 ---
 
-<!-- <svg width="100%" class="py-8" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1776.76 352.57"> <defs> <style> .cls-1 { fill: #000; } .cls-2 { fill: #007bfc; } @media (prefers-color-scheme: dark) { .cls-1 { fill: #fff } } </style> </defs> <g> <g> <g> <path class="cls-1" d="m495.76,223.99c-26.09-22.9-33.02-52.72-33.02-78.54,0-18.11,5.59-49.52,31.16-72.95,19.16-17.57,44.46-28.22,84.13-28.22,16.51,0,26.36,1.06,38.61,2.66,10.11,1.33,18.64,3.73,26.63,4.53,2.92.27,3.99,1.6,3.99,3.2,0,2.13-.8,5.32-1.33,14.64-.54,8.79-.27,23.43-.8,28.75-.27,3.99-.8,6.12-3.2,6.12-2.13,0-2.66-2.13-2.66-5.86-.26-8.25-3.73-17.57-10.39-24.49-8.79-9.32-29.55-16.51-54.05-16.51-23.16,0-38.34,5.86-50.05,16.51-19.44,17.83-24.49,43.13-24.49,68.95,0,63.37,48.19,94.78,83.86,94.78,23.69,0,38.07-2.66,48.72-14.91,4.53-5.06,7.99-12.78,9.05-17.57.8-4.26,1.33-5.32,3.46-5.32,1.86,0,2.4,1.86,2.4,3.99,0,3.2-3.2,26.36-5.86,35.41-1.33,4.53-2.4,5.86-6.92,7.72-10.66,4.26-30.88,6.12-47.92,6.12-36.48,0-67.1-7.99-91.33-29.02Z"></path> <path class="cls-1" d="m671.23,163.55c0-38.6,27.15-88.66,98.24-88.66,59.11,0,95.85,32.75,95.85,84.67s-37.81,92.65-98.24,92.65c-68.16,0-95.85-48.45-95.85-88.66Zm159.21,4.26c0-50.05-30.08-80.94-67.89-80.94-26.09,0-56.71,13.84-56.71,69.76,0,46.59,26.63,83.33,70.83,83.33,16.5,0,53.78-7.72,53.78-72.15Z"></path> <path class="cls-1" d="m937.76,183.52c0,29.02,0,43.4,5.06,47.66,3.99,3.46,13.05,4.79,31.16,4.79,12.51,0,21.56-.27,27.42-6.39,2.93-2.93,5.33-9.32,5.86-13.58.26-2.13.8-3.46,2.66-3.46,1.6,0,2.13,2.4,2.13,5.06s-1.6,19.44-3.47,26.09c-1.6,5.06-2.66,6.12-14.91,6.12-16.78,0-30.36-.26-42.07-.8-11.71-.26-21.57-.53-31.15-.53-2.67,0-7.73.27-13.32.27-5.59.26-11.45.53-16.24.53-2.92,0-4.52-.8-4.52-2.4,0-1.07.8-2.4,3.72-2.4,3.47,0,6.13-.26,8.25-.8,4.79-1.06,6.13-5.32,6.93-11.98,1.06-9.59,1.06-27.42,1.06-48.19v-39.94c0-34.34,0-40.73-.26-47.92-.54-7.72-2.66-10.12-10.12-12.25-1.86-.53-4.78-.8-7.72-.8-2.66,0-3.99-.8-3.99-2.4s1.6-2.13,5.06-2.13c10.92,0,25.83.53,32.22.53,5.59,0,24.76-.53,33.82-.53,3.46,0,5.06.53,5.06,2.13s-1.33,2.4-4.26,2.4c-2.67,0-6.39.27-9.06.8-6.38,1.07-8.25,4.26-8.78,12.25-.54,7.19-.54,13.58-.54,47.92v39.94Z"></path> <path class="cls-1" d="m1065.29,190.44c0-12.25-2.12-17.04-5.32-23.69-1.6-3.46-33.54-53.25-41.8-65.23-5.86-8.26-10.65-13.58-15.17-15.98-2.93-1.6-6.93-2.93-9.86-2.93-1.86,0-3.46-.8-3.46-2.4s1.6-2.13,4.53-2.13c3.99,0,21.56.53,29.29.53,5.06,0,15.98-.53,26.63-.53,2.12,0,3.46.53,3.46,2.13,0,1.87-1.6,1.87-5.33,2.93-1.86.54-3.2,1.6-3.2,3.46s1.07,4.53,2.93,7.72c4.26,6.92,34.88,59.91,38.87,66.29,2.93-5.32,31.42-53.78,34.88-60.7,2.4-5.06,3.46-9.05,3.46-11.98,0-2.13-1.06-4.26-5.06-5.06-2.13-.54-4.26-.8-4.26-2.66,0-1.6,1.33-2.13,3.99-2.13,7.72,0,15.97.53,22.9.53,5.06,0,20.5-.53,25.03-.53,2.66,0,4.26.53,4.26,1.87,0,1.6-1.86,2.66-4.53,2.66-2.4,0-6.65,1.07-10.11,2.66-5.06,2.4-7.19,4.53-12.25,10.65-7.73,9.05-41.27,62.83-45.53,72.42-3.47,8.26-2.93,15.18-2.93,22.63v18.11c0,3.73,0,13.05.54,22.63.53,6.65,2.66,10.92,9.59,11.98,3.46.54,8.52.8,11.71.8,2.66,0,3.99,1.33,3.99,2.4,0,1.6-1.86,2.4-5.06,2.4-14.64,0-30.36-.8-36.75-.8-5.86,0-21.56.8-30.35.8-3.2,0-5.06-.53-5.06-2.4,0-1.07,1.06-2.4,3.72-2.4,3.2,0,6.13-.26,8.26-.8,4.78-1.06,6.65-5.32,7.18-11.98.8-9.59.8-18.91.8-22.63v-18.64Z"></path> <path class="cls-1" d="m1181.65,246.35c-3.72-1.6-4.52-2.66-4.52-7.72,0-12.25,1.06-26.36,1.33-30.08,0-3.46,1.06-5.86,2.92-5.86,2.13,0,2.4,2.13,2.4,3.73,0,2.93.8,7.72,2.13,11.72,5.06,16.78,22.63,22.36,37.27,22.36,20.24,0,32.48-12.78,32.48-28.75,0-9.85-2.4-19.7-23.17-31.95l-13.58-7.99c-27.69-16.24-36.74-31.41-36.74-51.39,0-27.69,26.63-45.53,59.11-45.53,15.18,0,27.15,2.13,33.28,3.73,2.13.54,3.2,1.33,3.2,2.93,0,2.93-.8,9.32-.8,27.15,0,4.79-1.06,7.19-2.93,7.19-1.6,0-2.4-1.33-2.4-3.99,0-2.13-1.06-9.05-6.12-14.91-3.46-4.26-10.92-10.65-26.09-10.65-16.78,0-31.95,8.79-31.95,24.23,0,10.12,3.73,18.11,24.76,29.82l9.59,5.32c30.88,17.04,40.47,34.34,40.47,54.85,0,16.77-6.39,30.35-23.43,42.33-11.18,7.99-26.63,9.32-39.14,9.32-13.57,0-27.95-1.33-38.07-5.86Z"></path> <path class="cls-1" d="m1330.23,143.58c0-34.34,0-40.73-.26-47.92-.54-7.72-2.66-10.12-10.12-12.25-1.86-.53-5.86-.8-9.31-.8-2.4,0-3.99-.8-3.99-2.4s1.86-2.13,5.33-2.13c12.25,0,27.15.53,33.81.53,7.45,0,59.37.27,63.9,0,4.26-.26,7.99-1.06,9.85-1.33,1.33-.27,2.66-1.07,3.73-1.07,1.33,0,1.6,1.07,1.6,2.13,0,1.6-1.33,4.26-1.87,14.64-.26,2.4-.8,12.25-1.33,14.91-.27,1.06-.8,3.73-2.66,3.73-1.6,0-1.87-1.07-1.87-2.93,0-1.59-.26-5.59-1.6-8.25-1.86-3.99-3.72-7.19-15.44-8.25-3.99-.54-31.95-1.07-36.74-1.07-1.06,0-1.6.8-1.6,2.13v55.91c0,1.33.26,2.4,1.6,2.4,5.32,0,35.68,0,41-.53,5.59-.54,9.06-1.07,11.18-3.46,1.87-1.6,2.67-2.93,3.73-2.93s1.86,1.07,1.86,2.4-.54,5.06-1.86,16.51c-.54,4.53-1.06,13.58-1.06,15.17,0,1.87-.27,5.06-2.4,5.06-1.6,0-2.13-.8-2.13-1.87-.26-2.4-.26-5.32-.8-8.25-1.33-4.53-4.26-7.99-13.05-8.79-4.26-.53-30.88-1.07-36.74-1.07-1.07,0-1.33,1.07-1.33,2.4v18.11c0,7.72-.26,26.89,0,33.55.54,15.44,7.72,18.9,31.68,18.9,6.13,0,15.98-.27,22.1-2.93,5.86-2.66,8.52-7.45,10.12-16.77.53-2.4,1.06-3.46,2.66-3.46,1.86,0,2.13,2.93,2.13,5.32,0,5.06-1.87,20.5-3.2,25.03-1.6,5.86-3.73,5.86-12.52,5.86-17.57,0-31.68-.26-43.13-.8-11.45-.26-20.24-.53-27.15-.53-2.67,0-7.73.27-13.32.27-5.59.26-11.45.53-16.24.53-2.92,0-4.52-.8-4.52-2.4,0-1.07.8-2.4,3.72-2.4,3.47,0,6.13-.26,8.25-.8,4.79-1.06,6.13-5.32,6.93-11.98,1.06-9.59,1.06-27.42,1.06-48.19v-39.94Z"></path> <path class="cls-1" d="m1470.82,143.58c0-34.34.26-40.73-.27-47.92-.53-7.98-2.66-10.12-10.11-12.25-1.86-.53-5.86-.8-9.05-.8-2.66,0-3.99-.8-3.99-2.4s1.6-2.13,5.06-2.13c12.52,0,28.22.53,35.14.53,5.86,0,21.57-.53,30.09-.53,3.46,0,5.06.53,5.06,2.13s-1.33,2.4-3.73,2.4c-2.66,0-3.99.27-6.92.8-6.13,1.07-7.99,4.26-8.52,12.25-.54,7.19-.54,13.58-.54,47.92v31.69c0,33.01,6.39,45.79,17.84,54.85,10.39,8.25,21.57,9.05,29.56,9.05,10.11,0,22.1-2.93,31.42-11.98,13.05-12.25,13.57-31.95,13.57-55.11v-28.49c0-34.34-.26-40.73-.53-47.92-.54-7.72-2.4-10.12-9.85-12.25-1.87-.53-5.86-.8-8.52-.8s-3.99-.8-3.99-2.4,1.6-2.13,4.79-2.13c11.98,0,27.69.53,27.95.53,2.67,0,18.37-.53,27.42-.53,3.2,0,4.79.53,4.79,2.13s-1.33,2.4-3.99,2.4-3.99.27-6.92.8c-6.39,1.07-7.99,4.26-8.52,12.25-.26,7.19-.53,13.58-.53,47.92v24.23c0,25.3-2.67,51.92-22.37,68.16-16.5,13.84-34.34,16.24-49.52,16.24-12.25,0-36.48-.53-53.52-15.44-11.98-10.38-21.3-27.16-21.3-59.91v-33.28Z"></path> <path class="cls-1" d="m1667.85,246.35c-3.72-1.6-4.52-2.66-4.52-7.72,0-12.25,1.06-26.36,1.33-30.08,0-3.46,1.06-5.86,2.92-5.86,2.13,0,2.4,2.13,2.4,3.73,0,2.93.8,7.72,2.13,11.72,5.06,16.78,22.63,22.36,37.27,22.36,20.24,0,32.48-12.78,32.48-28.75,0-9.85-2.4-19.7-23.17-31.95l-13.58-7.99c-27.69-16.24-36.74-31.41-36.74-51.39,0-27.69,26.63-45.53,59.11-45.53,15.18,0,27.15,2.13,33.28,3.73,2.13.54,3.2,1.33,3.2,2.93,0,2.93-.8,9.32-.8,27.15,0,4.79-1.06,7.19-2.93,7.19-1.6,0-2.4-1.33-2.4-3.99,0-2.13-1.06-9.05-6.12-14.91-3.46-4.26-10.92-10.65-26.09-10.65-16.78,0-31.95,8.79-31.95,24.23,0,10.12,3.73,18.11,24.76,29.82l9.59,5.32c30.88,17.04,40.47,34.34,40.47,54.85,0,16.77-6.39,30.35-23.43,42.33-11.18,7.99-26.63,9.32-39.14,9.32-13.57,0-27.95-1.33-38.07-5.86Z"></path> </g> <g> <path class="cls-2" d="m324.35,65.21C309.53,26.21,272.19,0,229.42,0c-26.51,0-51.57,10.46-70.2,28.24l13.97,41.55c11.35-20.07,32.97-32.83,56.23-32.83,30.09,0,55.97,20.41,62.88,49.61l3.25,13.64,14.01.55c34.79,1.37,62.03,29.72,62.03,64.54s-28.98,64.62-64.62,64.62h-79.89l12.46,36.97h67.43c56.01,0,101.59-45.54,101.59-101.59,0-50.24-36.04-91.9-84.21-100.11Z"></path> <g> <path class="cls-2" d="m35.89,120.32c6.17,5.02,13.64,9.93,22.66,14.33,6.63-12.8,32.17-44.94,104.12-35.56l-6.43-24.7c-89.36-7.67-115.04,34.41-120.35,45.93Z"></path> <path class="cls-2" d="m19.87,107.21c10.01-18.17,44.25-55.44,129.49-47.23l-10.95-26.93S49.04,22.7,3.97,81.2c1.62,4.71,5.94,14.88,15.9,26.01Z"></path> <path class="cls-2" d="m181.93,162.32c-14.34,1.5-27.68,2.21-40,2.21-87,0-125.52-34.18-141.93-58.57v112.44s7.04,72.73,218.19,51.61l-36.25-107.69Z"></path> </g> </g> <g> <path class="cls-1" d="m1408.19,352.57c-10.48,0-19.19-3.5-26.13-10.51-6.88-6.94-10.32-15.59-10.32-25.94s3.44-19.06,10.32-25.93c6.94-7.01,15.65-10.51,26.13-10.51,6.34,0,12.2,1.48,17.57,4.45,5.37,2.97,9.56,7,12.57,12.07l-11.91,6.91c-1.74-3.14-4.21-5.59-7.41-7.36-3.2-1.77-6.81-2.65-10.81-2.65-6.81,0-12.31,2.14-16.52,6.41-4.14,4.34-6.21,9.88-6.21,16.62s2.07,12.19,6.21,16.52c4.21,4.27,9.71,6.41,16.52,6.41,4.01,0,7.63-.89,10.87-2.65,3.23-1.77,5.69-4.19,7.36-7.26l11.91,6.91c-3,5.07-7.19,9.09-12.57,12.06-5.37,2.97-11.23,4.46-17.57,4.46Z"></path> <path class="cls-1" d="m1480.68,281.08v56.87h26.74v13.22h-40.55v-70.09h13.82Z"></path> <path class="cls-1" d="m1589.92,342.05c-7.07,7.01-15.68,10.51-25.83,10.51s-18.76-3.5-25.83-10.51c-7.01-7.14-10.52-15.79-10.52-25.94s3.51-18.82,10.52-25.83c7.07-7.08,15.68-10.61,25.83-10.61s18.76,3.54,25.83,10.61c7.08,7.01,10.61,15.62,10.61,25.83s-3.54,18.86-10.61,25.94Zm-41.95-9.41c4.27,4.27,9.65,6.41,16.12,6.41s11.85-2.14,16.12-6.41c4.34-4.34,6.51-9.85,6.51-16.52s-2.17-12.18-6.51-16.52c-4.34-4.34-9.71-6.51-16.12-6.51s-11.78,2.17-16.12,6.51c-4.34,4.34-6.51,9.85-6.51,16.52s2.17,12.19,6.51,16.52Z"></path> <path class="cls-1" d="m1655.91,352.57c-7.81,0-14.22-2.2-19.23-6.61-5.01-4.41-7.51-10.31-7.51-17.72v-47.16h13.72v46.06c0,3.74,1.08,6.66,3.26,8.76,2.17,2.1,5.42,3.16,9.76,3.16s7.59-1.05,9.76-3.16c2.17-2.1,3.26-5.02,3.26-8.76v-46.06h13.81v47.16c0,7.41-2.5,13.32-7.51,17.72-5.01,4.41-11.45,6.61-19.32,6.61Z"></path> <path class="cls-1" d="m1715.18,281.08h27.84c9.61,0,17.62,3.37,24.03,10.11,6.47,6.68,9.71,14.99,9.71,24.93s-3.24,18.26-9.71,24.93c-6.41,6.74-14.42,10.11-24.03,10.11h-27.84v-70.09Zm13.82,56.87h14.02c6.08,0,11.01-2,14.82-6.01,3.8-4.14,5.71-9.41,5.71-15.82s-1.9-11.71-5.71-15.72c-3.8-4.07-8.74-6.11-14.82-6.11h-14.02v43.66Z"></path> </g> </g> </g> </svg> --><!-- <svg class="m-auto w-48" fill="currentColor"  data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2412.65 1617.19"> <g> <path d="m1915.36,385.08C1827.83,154.77,1607.34,0,1354.77,0c-156.52,0-304.53,61.78-414.55,166.78l82.52,245.37c67.02-118.54,194.72-193.85,332.03-193.85,177.7,0,330.51,120.5,371.33,292.96l19.21,80.55,82.73,3.28c205.42,8.08,366.31,175.51,366.31,381.15s-171.15,381.59-381.59,381.59h-471.74l73.57,218.3h398.18c330.72,0,599.89-268.94,599.89-599.89,0-296.67-212.84-542.69-497.29-591.16Zm-992.75,54.22l37.95,145.85c-424.87-55.42-575.65,134.42-614.83,209.98-53.3-25.98-97.4-54.97-133.82-84.61,31.34-68.02,183.03-316.49,710.7-271.22ZM23.46,479.51C289.6,134.03,817.4,195.21,817.4,195.21l64.65,159.03c-503.37-48.49-705.57,171.56-764.7,278.88-58.81-65.75-84.35-125.83-93.89-153.62Zm1264.98,1114.98C41.56,1719.17,0,1289.69,0,1289.69v-664c96.93,144.03,324.37,345.89,838.16,345.89,72.75,0,151.5-4.21,236.19-13.05l214.09,635.96Z"></path> </g> </svg> --><!-- <h1 class="text-6xl">Colyseus Cloud</h1> -->
 <MainLayout
   title="Colyseus Cloud - Managed Multiplayer Server Hosting"
-  description="Deploy and scale multiplayer servers without DevOps. One-command deployments, auto-scaling, 32 global regions. Starting at $15/month."
+  description="Deploy and scale multiplayer servers without DevOps. One-command deployments, zero-downtime updates, 32 global locations. Starting at $15/month."
   isHeaderExpanded={false}
   isBlue={true}
 >
-  <section id="hero" class="text-gray-200 min-h-[99vh] flex bg-section-glow-blue-top">
-    <div class="max-w-7xl mx-auto px-6 py-10 flex items-center">
-      <div
-        class="flex justify-between flex-col lg:flex-row space-x-0 lg:space-x-8 w-full"
-      >
-        <!-- Left -->
-        <div class="w-full lg:max-w-screen-sm">
-          <div class="pt-24 lg:py-8 animate-fade-up">
-            <svg
-              class="w-16 text-blue-500"
-              fill="currentColor"
-              data-name="Layer 2"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 2412.65 1617.19"
-            >
-              <g>
-                <path
-                  d="m1915.36,385.08C1827.83,154.77,1607.34,0,1354.77,0c-156.52,0-304.53,61.78-414.55,166.78l82.52,245.37c67.02-118.54,194.72-193.85,332.03-193.85,177.7,0,330.51,120.5,371.33,292.96l19.21,80.55,82.73,3.28c205.42,8.08,366.31,175.51,366.31,381.15s-171.15,381.59-381.59,381.59h-471.74l73.57,218.3h398.18c330.72,0,599.89-268.94,599.89-599.89,0-296.67-212.84-542.69-497.29-591.16Zm-992.75,54.22l37.95,145.85c-424.87-55.42-575.65,134.42-614.83,209.98-53.3-25.98-97.4-54.97-133.82-84.61,31.34-68.02,183.03-316.49,710.7-271.22ZM23.46,479.51C289.6,134.03,817.4,195.21,817.4,195.21l64.65,159.03c-503.37-48.49-705.57,171.56-764.7,278.88-58.81-65.75-84.35-125.83-93.89-153.62Zm1264.98,1114.98C41.56,1719.17,0,1289.69,0,1289.69v-664c96.93,144.03,324.37,345.89,838.16,345.89,72.75,0,151.5-4.21,236.19-13.05l214.09,635.96Z"
-                ></path>
-              </g>
-            </svg>
-            <h1
-              class="font-display text-4xl lg:text-5xl mt-8 text-semibold gradient-text-blue"
-            >
-              Deploy and Scale Without DevOps
-            </h1>
-            <p class="mt-4 text-lg lg:text-xl text-slate-300">
-              The fastest way to get your Colyseus game server into production. Focus on your game, not infrastructure.
-            </p>
-          </div>
-          <div
-            class="flex flex-wrap lg:flex-nowrap space-x-0 lg:space-x-6 my-8 items-center animate-fade-up"
-          >
-            <a
-              href="https://cloud.colyseus.io/"
-              class="p-4 rounded bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white transition-all text-xl font-semibold mr-4 lg:mr-0"
-              >Get started from $15/mo</a
-            >
-            <a
-              href="/pricing"
-              class="my-4 group font-medium transition-all text-blue-400 hover:text-blue-500 active:text-blue-600"
-            >
-              View pricing
-              <svg
-                class="inline-block transition-transform ease-out relative group-hover:translate-x-1"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                ><g fill="none" fill-rule="evenodd"
-                  ><path d="M0 0h24v24H0z"></path><path
-                    fill="currentColor"
-                    d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"
-                  ></path></g
-                ></svg
-              >
+  <ScrollReveal />
+
+  <!-- ===== HERO ===== -->
+  <section class="relative overflow-hidden">
+    <Aurora tone="cloud" grid />
+    <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#0a0a0b] pointer-events-none"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-16 lg:pt-36 lg:pb-24">
+      <div class="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] lg:gap-14 lg:items-center">
+        <div class="text-center lg:text-left">
+          <a href="/blog/colyseus-tunnel/" class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-blue-400/30 bg-blue-400/10 text-blue-200 text-sm font-medium hover:bg-blue-400/20 hover:border-blue-400/40 transition-all mb-6 animate-fade-up" data-track="cloud_cta" data-track-target="tunnel" data-track-placement="hero_badge">
+            <span class="w-1.5 h-1.5 rounded-full bg-blue-300"></span>
+            <span class="sm:hidden">New: the Colyseus Tunnel</span>
+            <span class="hidden sm:inline">New: share your local server with the Colyseus Tunnel</span>
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-[2.75rem] xl:text-[3.25rem] lg:leading-[1.1] font-bold tracking-tight text-white mb-6 animate-fade-up animate-delay-1">
+            Deploy and scale
+            <br />
+            <span class="gradient-text-blue">without DevOps</span>
+          </h1>
+          <p class="text-lg lg:text-xl text-gray-300 max-w-xl mx-auto lg:mx-0 mb-8 animate-fade-up animate-delay-2">
+            The fastest way to get your Colyseus game server into production. Focus on your game, not infrastructure.
+          </p>
+
+          <div class="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start items-center mb-6 animate-fade-up animate-delay-3">
+            <a href={SIGNUP_URL} class="cloud-cta-primary relative inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white font-semibold whitespace-nowrap overflow-hidden" data-track="cloud_cta" data-track-target="signup" data-track-placement="hero">
+              Get started from $15/mo
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+            <a href="#pricing" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-white font-medium transition-all" data-track="cloud_cta" data-track-target="pricing" data-track-placement="hero">
+              Estimate your cost
             </a>
           </div>
+
+          <div class="flex items-center w-full max-w-sm mx-auto lg:mx-0 bg-white/[0.03] border border-white/10 rounded-lg pl-4 pr-2 py-1.5 animate-fade-up animate-delay-3">
+            <span class="text-gray-600 mr-3 select-none font-mono">$</span>
+            <code class="font-mono text-sm text-gray-300 flex-1 text-left whitespace-nowrap">{DEPLOY_COMMAND}</code>
+            <button type="button" class="relative p-2 rounded-lg hover:bg-white/5 text-gray-500 hover:text-gray-300 transition-colors" data-copy-text={DEPLOY_COMMAND} aria-label="Copy the deploy command" data-track="cloud_cta" data-track-target="copy_deploy" data-track-placement="hero">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              <span class="cloud-copied-tip absolute pointer-events-none text-xs bg-white/10 text-white rounded py-1 px-2 -translate-x-1/2 left-1/2 top-full mt-1 whitespace-nowrap">Copied!</span>
+            </button>
+          </div>
         </div>
 
-        <!-- Right -->
-        <div class="justify-center items-center text-lg flex">
-          <ul class="space-y-4 text-base lg:text-xl self-center rounded-lg whitespace-nowrap py-8 lg:p-8 bg-black/40">
-            <li class="animate-fade-up animate-delay-005">
-              <svg
-                class="inline mr-1 text-green-600"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                height="1em"
-                viewBox="0 0 576 512"
-                ><path
-                  d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"
-                ></path></svg
-              >
-              Deployments from CLI
-            </li>
-            <li class="animate-fade-up animate-delay-010">
-              <svg
-                class="inline mr-1 text-green-600"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                height="1em"
-                viewBox="0 0 512 512"
-                ><path
-                  d="M512 80c0 18-14.3 34.6-38.4 48c-29.1 16.1-72.5 27.5-122.3 30.9c-3.7-1.8-7.4-3.5-11.3-5C300.6 137.4 248.2 128 192 128c-8.3 0-16.4 .2-24.5 .6l-1.1-.6C142.3 114.6 128 98 128 80c0-44.2 86-80 192-80S512 35.8 512 80zM160.7 161.1c10.2-.7 20.7-1.1 31.3-1.1c62.2 0 117.4 12.3 152.5 31.4C369.3 204.9 384 221.7 384 240c0 4-.7 7.9-2.1 11.7c-4.6 13.2-17 25.3-35 35.5c0 0 0 0 0 0c-.1 .1-.3 .1-.4 .2l0 0 0 0c-.3 .2-.6 .3-.9 .5c-35 19.4-90.8 32-153.6 32c-59.6 0-112.9-11.3-148.2-29.1c-1.9-.9-3.7-1.9-5.5-2.9C14.3 274.6 0 258 0 240c0-34.8 53.4-64.5 128-75.4c10.5-1.5 21.4-2.7 32.7-3.5zM416 240c0-21.9-10.6-39.9-24.1-53.4c28.3-4.4 54.2-11.4 76.2-20.5c16.3-6.8 31.5-15.2 43.9-25.5V176c0 19.3-16.5 37.1-43.8 50.9c-14.6 7.4-32.4 13.7-52.4 18.5c.1-1.8 .2-3.5 .2-5.3zm-32 96c0 18-14.3 34.6-38.4 48c-1.8 1-3.6 1.9-5.5 2.9C304.9 404.7 251.6 416 192 416c-62.8 0-118.6-12.6-153.6-32C14.3 370.6 0 354 0 336V300.6c12.5 10.3 27.6 18.7 43.9 25.5C83.4 342.6 135.8 352 192 352s108.6-9.4 148.1-25.9c7.8-3.2 15.3-6.9 22.4-10.9c6.1-3.4 11.8-7.2 17.2-11.2c1.5-1.1 2.9-2.3 4.3-3.4V304v5.7V336zm32 0V304 278.1c19-4.2 36.5-9.5 52.1-16c16.3-6.8 31.5-15.2 43.9-25.5V272c0 10.5-5 21-14.9 30.9c-16.3 16.3-45 29.7-81.3 38.4c.1-1.7 .2-3.5 .2-5.3zM192 448c56.2 0 108.6-9.4 148.1-25.9c16.3-6.8 31.5-15.2 43.9-25.5V432c0 44.2-86 80-192 80S0 476.2 0 432V396.6c12.5 10.3 27.6 18.7 43.9 25.5C83.4 438.6 135.8 448 192 448z"
-                ></path></svg
-              >
-              Predictable and affordable pricing
-            </li>
-            <li class="animate-fade-up animate-delay-015">
-              <svg
-                class="inline mr-1 text-green-600"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                height="1em"
-                viewBox="0 0 512 512"
-                ><path
-                  d="M177.9 494.1c-18.7 18.7-49.1 18.7-67.9 0L17.9 401.9c-18.7-18.7-18.7-49.1 0-67.9l50.7-50.7 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 41.4-41.4 48 48c6.2 6.2 16.4 6.2 22.6 0s6.2-16.4 0-22.6l-48-48 50.7-50.7c18.7-18.7 49.1-18.7 67.9 0l92.1 92.1c18.7 18.7 18.7 49.1 0 67.9L177.9 494.1z"
-                ></path></svg
-              >
-              Scale horizontally or vertically
-            </li>
-            <li class="animate-fade-up animate-delay-020">
-              <svg
-                class="inline mr-1 text-green-600"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                height="1em"
-                viewBox="0 0 640 512"
-                ><path
-                  d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z"
-                ></path></svg
-              >
-              No imposed CCU/DAU/MAU limits
-            </li>
-            <li class="animate-fade-up animate-delay-025">
-              <svg
-                class="inline mr-1 text-green-600"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                height="1em"
-                viewBox="0 0 512 512"
-                ><path
-                  d="M336 352c97.2 0 176-78.8 176-176S433.2 0 336 0S160 78.8 160 176c0 18.7 2.9 36.8 8.3 53.7L7 391c-4.5 4.5-7 10.6-7 17v80c0 13.3 10.7 24 24 24h80c13.3 0 24-10.7 24-24V448h40c13.3 0 24-10.7 24-24V384h40c6.4 0 12.5-2.5 17-7l33.3-33.3c16.9 5.4 35 8.3 53.7 8.3zM376 96a40 40 0 1 1 0 80 40 40 0 1 1 0-80z"
-                ></path></svg
-              >
-              Managed SSL Certificates
-            </li>
-            <li class="animate-fade-up animate-delay-030">
-              <svg
-                class="inline mr-1 text-green-600"
-                fill="currentColor"
-                xmlns="http://www.w3.org/2000/svg"
-                height="1em"
-                viewBox="0 0 512 512"
-                ><path
-                  d="M266.3 48.3L232.5 73.6c-5.4 4-8.5 10.4-8.5 17.1v9.1c0 6.8 5.5 12.3 12.3 12.3c2.4 0 4.8-.7 6.8-2.1l41.8-27.9c2-1.3 4.4-2.1 6.8-2.1h1c6.2 0 11.3 5.1 11.3 11.3c0 3-1.2 5.9-3.3 8l-19.9 19.9c-5.8 5.8-12.9 10.2-20.7 12.8l-26.5 8.8c-5.8 1.9-9.6 7.3-9.6 13.4c0 3.7-1.5 7.3-4.1 10l-17.9 17.9c-6.4 6.4-9.9 15-9.9 24v4.3c0 16.4 13.6 29.7 29.9 29.7c11 0 21.2-6.2 26.1-16l4-8.1c2.4-4.8 7.4-7.9 12.8-7.9c4.5 0 8.7 2.1 11.4 5.7l16.3 21.7c2.1 2.9 5.5 4.5 9.1 4.5c8.4 0 13.9-8.9 10.1-16.4l-1.1-2.3c-3.5-7 0-15.5 7.5-18l21.2-7.1c7.6-2.5 12.7-9.6 12.7-17.6c0-10.3 8.3-18.6 18.6-18.6H400c8.8 0 16 7.2 16 16s-7.2 16-16 16H379.3c-7.2 0-14.2 2.9-19.3 8l-4.7 4.7c-2.1 2.1-3.3 5-3.3 8c0 6.2 5.1 11.3 11.3 11.3h11.3c6 0 11.8 2.4 16 6.6l6.5 6.5c1.8 1.8 2.8 4.3 2.8 6.8s-1 5-2.8 6.8l-7.5 7.5C386 262 384 266.9 384 272s2 10 5.7 13.7L408 304c10.2 10.2 24.1 16 38.6 16H454c6.5-20.2 10-41.7 10-64c0-111.4-87.6-202.4-197.7-207.7zm172 307.9c-3.7-2.6-8.2-4.1-13-4.1c-6 0-11.8-2.4-16-6.6L396 332c-7.7-7.7-18-12-28.9-12c-9.7 0-19.2-3.5-26.6-9.8L314 287.4c-11.6-9.9-26.4-15.4-41.7-15.4H251.4c-12.6 0-25 3.7-35.5 10.7L188.5 301c-17.8 11.9-28.5 31.9-28.5 53.3v3.2c0 17 6.7 33.3 18.7 45.3l16 16c8.5 8.5 20 13.3 32 13.3H248c13.3 0 24 10.7 24 24c0 2.5 .4 5 1.1 7.3c71.3-5.8 132.5-47.6 165.2-107.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM187.3 100.7c-6.2-6.2-16.4-6.2-22.6 0l-32 32c-6.2 6.2-6.2 16.4 0 22.6s16.4 6.2 22.6 0l32-32c6.2-6.2 6.2-16.4 0-22.6z"
-                ></path></svg
-              >
-              32 locations available worldwide
-            </li>
-            <li class="animate-fade-up animate-delay-035">
-              <svg class="inline mr-1 text-green-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
-              99.9% uptime SLA
-            </li>
-          </ul>
+        <!-- The panel, with its live logs floating over it -->
+        <div class="relative mt-16 lg:mt-0 lg:mb-10 animate-fade-up animate-delay-3">
+          <div class="absolute -inset-6 rounded-[2rem] bg-gradient-to-br from-blue-600/25 via-cyan-500/10 to-indigo-500/25 blur-2xl pointer-events-none"></div>
+          <div class="relative rounded-2xl border border-white/10 bg-[#0d0d10] overflow-hidden shadow-2xl shadow-blue-500/10">
+            <div class="flex items-center gap-2 px-4 py-2.5 border-b border-white/5 bg-white/[0.03]">
+              <div class="flex gap-1.5 shrink-0">
+                <span class="w-3 h-3 rounded-full bg-[#ff5f57]/70"></span>
+                <span class="w-3 h-3 rounded-full bg-[#febc2e]/70"></span>
+                <span class="w-3 h-3 rounded-full bg-[#28c840]/70"></span>
+              </div>
+              <span class="mx-auto px-3 py-0.5 rounded-md bg-white/5 text-[11px] text-gray-500 font-mono">cloud.colyseus.io</span>
+            </div>
+            <Image src={panelOverview} alt="Colyseus Cloud panel: one application running in three regions, with players online, rooms, CPU and memory" widths={[640, 1000, 1400]} sizes="(min-width: 1024px) 50vw, 100vw" class="block w-full h-auto" loading="eager" />
+          </div>
+          <div class="hidden sm:block absolute -bottom-10 -left-6 lg:-left-10 w-[58%] rounded-xl overflow-hidden border border-white/10 shadow-2xl shadow-black/60 cloud-float">
+            <Image src={panelLogs} alt="Live server logs in the Colyseus Cloud panel" widths={[480, 800]} sizes="30vw" class="block w-full h-auto" />
+          </div>
         </div>
+      </div>
+
+      <ul class="grid sm:grid-cols-2 xl:grid-cols-4 gap-px mt-20 lg:mt-24 rounded-2xl border border-white/10 bg-white/10 overflow-hidden">
+        {highlights.map((h, i) => (
+          <li class="flex items-center gap-3 px-5 py-4 bg-[#0c0d12]" data-reveal style={`--reveal-delay:${0.04 * i}s`}>
+            <span class="shrink-0 w-9 h-9 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/10 border border-blue-500/20 flex items-center justify-center">
+              <svg class="w-4 h-4 text-blue-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={h.icon} />
+            </span>
+            <span class="text-gray-200 font-medium">{h.label}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="border-t border-white/5 bg-section-glow-blue">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+      <div class="text-center mb-14" data-reveal>
+        <p class="text-sm font-medium text-blue-400 uppercase tracking-widest mb-4">What you get</p>
+        <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">Production infrastructure, <span class="gradient-text-blue">handled</span></h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">Focus on building your multiplayer game or app. We run the servers, watch them and keep your players connected through every deploy.</p>
+      </div>
+
+      <div class="grid lg:grid-cols-2 gap-5" data-cloud-spotlight>
+        {features.map((f, i) => (
+          <article class="spotlight group flex flex-col rounded-2xl border border-white/5 hover:border-white/10 bg-white/[0.02] overflow-hidden transition-colors" data-reveal="scale" style={`--reveal-delay:${0.06 * (i % 2)}s`}>
+            <div class="p-6 lg:p-8">
+              <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/10 border border-blue-500/20 flex items-center justify-center mb-4">
+                <svg class="w-5 h-5 text-blue-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" set:html={f.icon} />
+              </div>
+              <h3 class="text-xl lg:text-2xl font-semibold text-white mb-2">{f.title}</h3>
+              <p class="text-gray-400 leading-relaxed mb-4">{f.body}</p>
+              <ul class="flex flex-wrap gap-x-5 gap-y-1.5 text-sm text-gray-400">
+                {f.points.map((p) => (
+                  <li class="inline-flex items-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-blue-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" set:html={check} />
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <!-- The screenshot peeks up from the bottom edge and rises on hover. -->
+            <div class="mt-auto px-6 lg:px-8">
+              <div class="cloud-shot rounded-t-xl border border-b-0 border-white/10 overflow-hidden h-52 lg:h-64 bg-[#0d0d10]">
+                <Image src={f.image} alt={f.alt} widths={[600, 1000, 1400]} sizes="(min-width: 1024px) 45vw, 100vw" class="w-full h-full object-cover object-left-top" />
+              </div>
+            </div>
+          </article>
+        ))}
       </div>
     </div>
   </section>
 
-  <section class="border-b border-white/5 bg-section-glow-blue">
-    <div class="max-w-7xl mx-auto px-6 relative py-24 text-center " >
-
-      <div class="mb-12">
-        <p class="text-sm font-medium text-blue-400 uppercase tracking-widest mb-4">What You Get</p>
-        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Features</h2>
-        <p class="text-gray-400 max-w-xl mx-auto">Focus on building your multiplayer game or app, we handle the infrastructure.</p>
+  <!-- ===== DEPLOY IN THREE STEPS ===== -->
+  <section class="border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
+      <div class="text-center mb-14" data-reveal>
+        <p class="text-sm font-medium text-blue-400 uppercase tracking-widest mb-4">Get started</p>
+        <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">Three steps to production</h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">From an empty folder to players connecting to your server. The scaffold already ships the configuration Colyseus Cloud reads.</p>
       </div>
 
-      <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mb-12 pt-12 border-t border-white/5">
-          <Image class="rounded-xl w-full lg:w-1/2 border border-white/5" src={locationsScreenshot} alt="Deployment Locations" />
-          <div class="w-full lg:w-1/2 text-left">
-            <h3 class="text-2xl font-bold text-white mb-3">32 Global Locations</h3>
-            <p class="text-gray-400 leading-relaxed mb-4">Get your servers close to your players. Add new regions in one click — each location gets its own endpoint, ready to accept connections instantly.</p>
-            <ul class="space-y-2 text-sm text-gray-400">
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                Expand to new regions without redeploying
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                Lower latency for players worldwide
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                Each location gets its own HTTP endpoint
-              </li>
-            </ul>
+      <ol class="relative grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div class="hidden lg:block absolute top-5 left-[16%] right-[16%] h-px bg-gradient-to-r from-blue-500/0 via-blue-500/40 to-blue-500/0" aria-hidden="true"></div>
+        {steps.map((step, i) => (
+          <li class="relative flex flex-col" data-reveal style={`--reveal-delay:${0.08 * i}s`}>
+            <div class="flex lg:flex-col items-center gap-3 lg:gap-4 mb-4">
+              <span class="relative z-10 w-10 h-10 shrink-0 rounded-full bg-[#0a0a0b] border border-blue-400/40 text-blue-200 font-semibold flex items-center justify-center shadow-[0_0_24px_-6px_rgba(59,130,246,0.7)]">{i + 1}</span>
+              <h3 class="text-white font-semibold text-lg">{step.title}</h3>
+            </div>
+            <div class="homepage-code flex-1 rounded-xl border border-white/10 bg-[#0d0d10] text-sm">
+              <Code code={step.code} lang="bash" />
+            </div>
+          </li>
+        ))}
+      </ol>
+
+      <p class="mt-10 text-center" data-reveal>
+        <a href="https://docs.colyseus.io/cloud/" class="group inline-flex items-center gap-2 text-blue-300 hover:text-blue-200 font-medium transition-colors" data-track="cloud_cta" data-track-target="docs" data-track-placement="steps">
+          Read the deployment guide
+          <span class="inline-block transition-transform group-hover:translate-x-0.5">→</span>
+        </a>
+      </p>
+
+      <!-- Tunnel: the same login, before there's anything to deploy -->
+      <div class="mt-16 grid lg:grid-cols-2 items-center gap-8 lg:gap-12 rounded-2xl border border-white/10 bg-white/[0.02] overflow-hidden" data-reveal="scale">
+        <a href="/blog/colyseus-tunnel/" class="block" aria-label="Read: Share your localhost with the Colyseus Tunnel" data-track="cloud_cta" data-track-target="tunnel" data-track-placement="tunnel_image">
+          <Image src={tunnelImage} alt="A public play.colyseus.dev URL forwarding to localhost:2567" widths={[640, 1000]} sizes="(min-width: 1024px) 50vw, 100vw" class="w-full h-full object-cover" />
+        </a>
+        <div class="p-6 pt-0 lg:p-10 lg:pl-0">
+          <p class="text-sm font-medium text-purple-300 uppercase tracking-widest mb-3">Before you deploy</p>
+          <h3 class="text-2xl lg:text-3xl font-bold text-white mb-3">Playtest from your machine</h3>
+          <p class="text-gray-400 leading-relaxed mb-5">
+            Your Colyseus Cloud login also opens the Colyseus Tunnel. It puts the game running on your machine on a
+            public URL, so playtesters join from a link or a QR code. Free while it's in preview.
+          </p>
+          <div class="flex items-center bg-black/30 border border-white/10 rounded-lg px-4 py-2.5 mb-5 font-mono text-sm text-gray-300 overflow-x-auto">
+            <span class="text-gray-600 mr-3 select-none">$</span>npx colyseus-tunnel 2567
           </div>
-      </div>
-
-      <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mb-12 pt-12 border-t border-white/5">
-          <Image class="rounded-xl w-full lg:w-1/2 border border-white/5" src={alertingMonitoring} alt="Monitoring and Alerting" />
-          <div class="w-full lg:w-1/2 text-left">
-            <h3 class="text-2xl font-bold text-white mb-3">Monitoring & Alerting</h3>
-            <p class="text-gray-400 leading-relaxed mb-4">Stay ahead of issues before your players notice. Get real-time alerts on CPU, memory, crashes, and abnormal activity — delivered straight to Slack or email.</p>
-            <ul class="space-y-2 text-sm text-gray-400">
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                Slack and email notifications
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                CPU, memory, and crash monitoring
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                Catch problems before players do
-              </li>
-            </ul>
-          </div>
-      </div>
-
-      <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 mb-12 pt-12 border-t border-white/5">
-          <Image class="rounded-xl w-full lg:w-1/2 border border-white/5" src={deployGraphs} alt="Real-time analytics" />
-          <div class="w-full lg:w-1/2 text-left">
-            <h3 class="text-2xl font-bold text-white mb-3">Real-Time Analytics</h3>
-            <p class="text-gray-400 leading-relaxed mb-4">See exactly what your servers are doing. Track concurrent users, active rooms, and resource usage at a glance — so you can make informed scaling decisions.</p>
-            <ul class="space-y-2 text-sm text-gray-400">
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                Live CCU and room count graphs
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                Deployment history and performance trends
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                Know when to scale up — before you need to
-              </li>
-            </ul>
-          </div>
-      </div>
-
-      <div class="flex flex-col lg:flex-row items-center gap-10 lg:gap-16 pt-12 border-t border-white/5">
-          <Image class="rounded-xl w-full lg:w-1/2 border border-white/5" src={processShutDown} alt="Zero-downtime deployments" />
-          <div class="w-full lg:w-1/2 text-left">
-            <h3 class="text-2xl font-bold text-white mb-3">Zero-Downtime Deployments</h3>
-            <p class="text-gray-400 leading-relaxed mb-4">Ship updates without kicking players out. Rolling updates gracefully drain active rooms while new ones spin up on the latest version — no interruptions, no angry players.</p>
-            <ul class="space-y-2 text-sm text-gray-400">
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                Active sessions finish undisturbed
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                New connections route to updated servers
-              </li>
-              <li class="flex items-center gap-2">
-                <svg class="w-4 h-4 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
-                Deploy with confidence, any time of day
-              </li>
-            </ul>
-          </div>
-      </div>
-
-    </div>
-  </section>
-
-  <section class="border-b border-white/5 bg-section-glow-blue-bottom">
-    <div class="max-w-7xl mx-auto px-6 relative py-14">
-      <div class="max-w-xl mx-auto p-12 ">
-        <p class="text-sm font-medium text-blue-400 uppercase tracking-widest mb-4">Estimate Your Cost</p>
-        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-2">Pricing Simulator</h2>
-        <SimulatePriceComponent title="" client:only />
-      </div>
-    </div>
-  </section>
-
-  <section
-    class="border-b border-white/5 bg-gray-800 text-slate-100"
-  >
-    <div class="max-w-7xl mx-auto px-6 relative py-20">
-      <div class="text-center mb-12">
-        <p class="text-sm font-medium text-blue-400 uppercase tracking-widest mb-4">Get Started</p>
-        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Deploying to Colyseus Cloud</h2>
-        <p class="text-gray-400 max-w-xl mx-auto">Steps required to deploy your Colyseus app to Colyseus Cloud.</p>
-      </div>
-      <div class="text-base lg:text-xl leading-relaxed">
-        <div class="flex flex-col lg:flex-row gap-8">
-          <div class="w-full lg:w-1/2">
-            <h3>Create a Colyseus app</h3>
-            <CodeBlock
-              lang="bash"
-              code={`npm create colyseus-app ./my-colyseus-server\ncd ./my-colyseus-server`}
-            />
-
-            <h3>Push your sources to a Git repository</h3>
-            <CodeBlock
-              lang="bash"
-              code={`git remote add origin git@github.com:you/repo.git\ngit add .\ngit push origin main`}
-            />
-          </div>
-
-          <div class="w-full lg:w-1/2">
-            <h3>Deploy it!</h3>
-            <CodeBlock
-              lang="bash"
-              code={`npm install @colyseus/cloud\nnpx @colyseus/cloud deploy`}
-            />
-          </div>
-        </div>
-
-        <div class="text-center text-lg mt-12">
-          <a
-            href="https://docs.colyseus.io/cloud/"
-            class="group transition-all text-slate-200 font-semibold hover:text-slate-100"
-          >
-            Learn more
-            <svg
-              class="inline-block transition-transform ease-out relative group-hover:translate-x-1"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              ><g fill="none" fill-rule="evenodd"
-                ><path d="M0 0h24v24H0z"></path><path
-                  fill="currentColor"
-                  d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"
-                ></path></g
-              ></svg
-            >
+          <a href="/blog/colyseus-tunnel/" class="group inline-flex items-center gap-2 text-purple-300 hover:text-purple-200 font-medium transition-colors" data-track="cloud_cta" data-track-target="tunnel" data-track-placement="tunnel_card">
+            How the tunnel works
+            <span class="inline-block transition-transform group-hover:translate-x-0.5">→</span>
           </a>
         </div>
       </div>
     </div>
   </section>
 
-  <TitleSection> FAQ </TitleSection>
-
-  <section
-    class="grid-container relative mx-auto max-w-screen-lg lg:z-10 text-lg text-gray-300"
-  >
-    <div
-      class="mx-auto w-fit max-w-full px-6 lg:px-10 lg:px-12 xl:px-16 space-y-4 mb-32"
-    >
-      <div>
-        <p><strong>Q: Does Colyseus Cloud offer a free tier?</strong></p>
-        <p>A: Not at this moment.</p>
-      </div>
-
-      <div>
-        <p>
-          <strong
-            >Q: What happens if I delete the application I've already paid for?</strong
-          >
+  <!-- ===== PRICING ===== -->
+  <section id="pricing" class="relative overflow-hidden border-t border-white/5 bg-section-glow-blue-bottom scroll-mt-16">
+    <div class="max-w-6xl mx-auto px-6 py-20 lg:py-32 grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-10 lg:gap-16 items-center">
+      <div data-reveal>
+        <p class="text-sm font-medium text-blue-400 uppercase tracking-widest mb-4">Estimate your cost</p>
+        <h2 class="text-3xl lg:text-5xl font-bold text-white mb-5">Pay for servers, <span class="gradient-text-blue">not players</span></h2>
+        <p class="text-gray-400 leading-relaxed mb-6">
+          Each location runs on a plan you pick, from $15/mo. There are no CCU, DAU or MAU limits and bandwidth is unlimited,
+          so you only pay for the servers you run. Pick a location and a plan to see the price.
         </p>
-        <p>
-          A: When deleting an application, your account will be credited with
-          the remaining unused time from that application. The credits will be
-          used on the next new application
-        </p>
+        <div class="flex flex-wrap gap-x-6 gap-y-3">
+          <a href="/pricing" class="group inline-flex items-center gap-2 text-blue-300 hover:text-blue-200 font-medium transition-colors" data-track="cloud_cta" data-track-target="pricing_page" data-track-placement="pricing">
+            Compare plans <span class="inline-block transition-transform group-hover:translate-x-0.5">→</span>
+          </a>
+          <a href={FOUNDER_CALL_URL} class="group inline-flex items-center gap-2 text-gray-400 hover:text-white font-medium transition-colors" data-track="cloud_cta" data-track-target="founder_call" data-track-placement="pricing">
+            Need something custom? Talk to the founder <span class="inline-block transition-transform group-hover:translate-x-0.5">→</span>
+          </a>
+        </div>
       </div>
-
-      <div>
-        <p><strong>Q: Does Colyseus Cloud handle auto-scaling?</strong></p>
-        <p>
-          A: Not at this moment. If you need to handle heavier workloads, it is
-          required to upgrade your deployment's resources through the Colyseus
-          Cloud dashboard. We plan on adding support to auto-scaling on
-          "horizontal scalability" deployments in the future.
-        </p>
+      <div class="relative" data-reveal="scale">
+        <div class="absolute -inset-4 rounded-[1.75rem] bg-gradient-to-br from-blue-600/20 via-cyan-500/10 to-indigo-500/20 blur-2xl pointer-events-none"></div>
+        <div class="relative rounded-2xl border border-white/10 bg-[#0d0d10]/90 backdrop-blur p-6 lg:p-8 shadow-2xl">
+          <SimulatePriceComponent title="" client:only />
+        </div>
       </div>
+    </div>
+  </section>
 
-      <div>
-        <p><strong>Q: How many CCU can Colyseus Cloud handle?</strong></p>
-        <p>
-          A: The capacity of your servers will depend on how performant is your
-          code, considering CPU usage and and amount of networked messages
-          exchanged between server and clients. There is a capacity estimator in
-          the <a href="/pricing">pricing simulator</a>, but take it as a grain
-          of salt, as every application has its particular requirements. It is
-          recommended to loadtest your application to identify its real
-          limitations.
-        </p>
+  <Faq items={faqs} heading="Colyseus Cloud questions" accent="blue">
+    <p class="mt-6 text-center text-sm text-gray-500">
+      Couldn't find your answer? <a href="mailto:support@colyseus.io?subject=Inquiry%2FQuestion%3A%20...&body=Hi" class="text-blue-300 hover:text-blue-200">Contact support</a>.
+    </p>
+  </Faq>
+
+  <!-- ===== FINAL CTA ===== -->
+  <section class="relative border-t border-white/5 overflow-hidden">
+    <Aurora tone="cloud" soft blobs={[1, 3]} />
+    <div class="relative max-w-4xl mx-auto px-6 py-24 lg:py-32 text-center" data-reveal>
+      <h2 class="font-display text-3xl lg:text-5xl font-bold text-white mb-5">Take your game <span class="gradient-text-blue">live</span></h2>
+      <p class="text-gray-400 max-w-xl mx-auto mb-10">Deploy from your terminal, pick the locations closest to your players, and let Colyseus Cloud keep the servers running.</p>
+      <div class="flex flex-wrap gap-4 justify-center">
+        <a href={SIGNUP_URL} class="cloud-cta-primary relative inline-flex items-center gap-2 px-6 py-3 rounded-lg text-white font-semibold overflow-hidden" data-track="cloud_cta" data-track-target="signup" data-track-placement="final">
+          Get started from $15/mo
+        </a>
+        <a href={FOUNDER_CALL_URL} class="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-white font-medium transition-all" data-track="cloud_cta" data-track-target="founder_call" data-track-placement="final">
+          Speak with the founder
+        </a>
+        <a href="https://docs.colyseus.io/cloud/" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-gray-400 hover:text-white font-medium transition-colors" data-track="cloud_cta" data-track-target="docs" data-track-placement="final">Read the docs →</a>
       </div>
-
-      <div>
-        <p><strong>Q: What does it mean to "scale vertically"?</strong></p>
-        <p>
-          A: Vertical scalability is the term used when you have a single server
-          instance, and you add more resources (CPU/Memory) to increase its
-          capacity.
-        </p>
-      </div>
-
-      <div>
-        <p><strong>Q: What does it mean to "scale horizontally"?</strong></p>
-        <p>
-          A: Horizontal scalability is the term used when you distribute the
-          load of your application across multiple server instances.
-        </p>
-      </div>
-
-      <p>
-        Couldn't find the answer you're looking for? <a
-          href="mailto:support@colyseus.io?subject=Inquiry%2FQuestion%3A%20...&body=Hi"
-          >Contact support</a
-        >.
-      </p>
     </div>
   </section>
 </MainLayout>
+
+<style is:global>
+  .cloud-cta-primary {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb 45%, #0891b2);
+    box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.75);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .cloud-cta-primary:hover { box-shadow: 0 14px 40px -10px rgba(37, 99, 235, 0.95); transform: translateY(-1px); }
+  .cloud-cta-primary::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+    transform: translateX(-120%);
+  }
+  @keyframes cloud-sheen { 0%, 60% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+
+  .cloud-shot { transform: translateY(8px); transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+  .group:hover .cloud-shot { transform: none; }
+
+  @keyframes cloud-float { 50% { transform: translateY(-8px); } }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .cloud-cta-primary::after { animation: cloud-sheen 4.5s ease-in-out infinite; }
+    .cloud-float { animation: cloud-float 6s ease-in-out infinite; }
+  }
+
+  .cloud-copied-tip { opacity: 0; transition: opacity 0.2s ease; }
+  [data-copied="yes"] > .cloud-copied-tip { opacity: 1; }
+</style>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll('[data-copy-text]').forEach(function (btn) {
+      var t = null;
+      btn.addEventListener('click', function () {
+        var text = btn.getAttribute('data-copy-text');
+        if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text);
+        btn.setAttribute('data-copied', 'yes');
+        clearTimeout(t);
+        t = setTimeout(function () { btn.setAttribute('data-copied', 'no'); }, 1200);
+      });
+    });
+
+    document.querySelectorAll('[data-cloud-spotlight] .spotlight').forEach(function (card) {
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  })();
+</script>
