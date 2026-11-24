@@ -7,11 +7,11 @@ import CodeServer from "../content/homepage/code-server.mdx";
 ---
 
 <section class="border-t border-white/5">
-  <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
-    <div class="text-center mb-16">
-      <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">See It In Action</p>
-      <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">Real-Time State Sync in Minutes</h2>
-      <p class="text-gray-400 max-w-xl mx-auto">Define your game state on the server. Colyseus syncs it to all clients automatically — no manual serialization needed.</p>
+  <div class="max-w-7xl mx-auto px-6 py-20 lg:py-28">
+    <div class="text-center mb-12" data-reveal>
+      <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">See it in action</p>
+      <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">Real-time state sync <span class="gradient-text">in minutes</span></h2>
+      <p class="text-gray-400 max-w-xl mx-auto">Define your game state on the server. Colyseus syncs it to every client automatically, with no serialization code to write.</p>
     </div>
 
     <!-- SDK Selector -->
@@ -22,7 +22,7 @@ import CodeServer from "../content/homepage/code-server.mdx";
           data-sdk={sdk.key}
         >
           {sdk.image ? (
-            <Image src={sdk.image} alt={sdk.name} class="home-sdk-icon w-4 lg:w-5 transition-all" />
+            <Image src={sdk.image} alt={sdk.name} width={40} class="home-sdk-icon w-4 lg:w-5 transition-all" />
           ) : (
             <span class="home-sdk-icon w-4 lg:w-5 transition-all" set:html={sdk.svg} />
           )}
@@ -31,7 +31,7 @@ import CodeServer from "../content/homepage/code-server.mdx";
       ))}
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 lg:gap-6 max-w-5xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 items-start gap-4 lg:gap-6 max-w-5xl mx-auto" data-reveal>
       <!-- Server Code (static) -->
       <div class="order-2 lg:order-1 rounded-xl border border-white/5 overflow-hidden bg-white/[0.02] flex flex-col">
         <div class="flex items-center gap-2 px-4 py-3 border-b border-white/5 bg-white/[0.02]">

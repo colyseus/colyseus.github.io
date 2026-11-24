@@ -22,10 +22,17 @@ const gold = sponsors.filter(s => s.monthlyDollars >= 500 && s.monthlyDollars < 
 const silver = sponsors.filter(s => s.monthlyDollars >= 250 && s.monthlyDollars < 500);
 const featured = sponsors.filter(s => s.monthlyDollars >= 100 && s.monthlyDollars < 250);
 const backers = sponsors.filter(s => s.monthlyDollars > 0 && s.monthlyDollars < 100).sort((a, b) => b.monthlyDollars - a.monthlyDollars);
-const pastBackers = sponsors.filter(s => s.monthlyDollars <= 0 && s.sponsor.login !== '?');
+// Private sponsors come through without a login or an avatar.
+const pastBackers = sponsors.filter(s => s.monthlyDollars <= 0 && s.sponsor.login !== '?' && s.sponsor.avatarUrl);
 
 function getName(s: Sponsor) {
   return s.sponsor.name || s.sponsor.login;
+}
+
+// GitHub serves avatars at 460px unless asked; request twice the displayed size.
+function getAvatar(s: Sponsor, px: number) {
+  const url = s.sponsor.avatarUrl;
+  return url.includes("avatars.githubusercontent.com") ? `${url}${url.includes("?") ? "&" : "?"}s=${px * 2}` : url;
 }
 
 function getLink(s: Sponsor) {
@@ -41,9 +48,9 @@ const tiers = [
 ];
 
 const sizeClasses = {
-  lg: { img: 'w-20 h-20 rounded-2xl border-2 border-white/10', name: 'text-sm text-gray-300', grid: 'sponsor-grid-lg' },
-  sm: { img: 'w-10 h-10 rounded-lg border border-white/5', name: 'text-[11px] text-gray-500', grid: 'sponsor-grid-sm' },
-  xs: { img: 'w-8 h-8 rounded-full border border-white/5 opacity-50', name: '', grid: 'sponsor-grid-xs' },
+  lg: { px: 80, img: 'w-20 h-20 rounded-2xl border-2 border-white/10', name: 'text-sm text-gray-300', grid: 'sponsor-grid-lg' },
+  sm: { px: 40, img: 'w-10 h-10 rounded-lg border border-white/5', name: 'text-[11px] text-gray-500', grid: 'sponsor-grid-sm' },
+  xs: { px: 32, img: 'w-8 h-8 rounded-full border border-white/5 opacity-50', name: '', grid: 'sponsor-grid-xs' },
 };
 ---
 
@@ -74,7 +81,10 @@ const sizeClasses = {
                     title={getName(s)}
                   >
                     <img
-                      src={s.sponsor.avatarUrl}
+                      src={getAvatar(s, sizeClasses[tier.size].px)}
+                      width={sizeClasses[tier.size].px}
+                      height={sizeClasses[tier.size].px}
+                      decoding="async"
                       alt={getName(s)}
                       class={`${sizeClasses[tier.size].img} group-hover:border-purple-500/50 transition-all group-hover:scale-105 group-hover:opacity-100`}
                       loading="lazy"

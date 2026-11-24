@@ -8,11 +8,11 @@ const successStories = (await getCollection('success-stories')).sort(
 ---
 
 <section class="border-t border-white/5">
-  <div class="max-w-7xl mx-auto px-6 py-20 lg:py-32">
-    <p class="text-sm font-medium text-purple-400 uppercase tracking-widest text-center mb-4">Success Stories</p>
-    <h2 class="text-2xl lg:text-4xl font-bold text-white text-center mb-12">
-      Trusted by Indies and Studios Worldwide
-    </h2>
+  <div class="max-w-7xl mx-auto px-6 py-20 lg:py-28">
+    <div class="text-center mb-14" data-reveal>
+      <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Success stories</p>
+      <h2 class="text-3xl lg:text-5xl font-bold text-white">Trusted by indies <span class="gradient-text">and studios worldwide</span></h2>
+    </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
       {successStories.filter((story) => story.data.author_img && story.data.quote).map((story) => (
