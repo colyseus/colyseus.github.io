@@ -1,110 +1,319 @@
 ---
+import Aurora from '../components/Aurora.astro';
 import ColyseusCloudSection from '../components/ColyseusCloudSection.astro';
+import Faq, { type FaqItem } from '../components/Faq.astro';
 import PremiumDemos from '../components/PremiumDemos.astro';
 import ScrollReveal from '../components/ScrollReveal.astro';
-import TitleSection from '../components/TitleSection.astro';
 import MainLayout from '../layouts/MainLayout.astro';
 
 import SimulatePriceComponent from "../components/SimulatePriceComponent";
 import { SUPPORTERS_ENTRY_URL } from "../data/supporters";
+
+const SIGNUP_URL = "https://cloud.colyseus.io/";
+const FOUNDER_CALL_URL = "https://calendly.com/endel/intro";
+
+const check = `<path d="M20 6 9 17l-5-5"/>`;
+
+const openSourceFeatures = [
+  "Self-host on your own servers",
+  "Every feature and SDK included",
+  "No CCU, DAU or MAU limits",
+  "Community support on Discord",
+];
+
+const cloudFeatures = [
+  "Deploy with one command",
+  "32 locations worldwide",
+  "Zero-downtime deployments",
+  "Managed SSL certificates",
+  "No CCU, DAU or MAU limits",
+  "Unlimited bandwidth",
+  "Monitoring, logs and alerts",
+  "99.9% uptime SLA",
+  "Scale vertically or horizontally",
+  "Support by email",
+];
+
+const comparison = [
+  { label: "Framework, SDKs and features", self: "Included", cloud: "Included" },
+  { label: "CCU, DAU or MAU limits", self: "None", cloud: "None" },
+  { label: "Servers", self: "Your own, anywhere", cloud: "32 locations worldwide" },
+  { label: "Deployments", self: "Your own pipeline", cloud: "One command, zero downtime" },
+  { label: "SSL certificates", self: "You manage them", cloud: "Managed" },
+  { label: "Monitoring, logs and alerts", self: "You set them up", cloud: "Built in" },
+  { label: "Scaling", self: "You operate it", cloud: "From the dashboard" },
+  { label: "Uptime SLA", self: null, cloud: "99.9%" },
+  { label: "Support", self: "Community", cloud: "Email" },
+  { label: "Price", self: "Free", cloud: "From $15/mo per location" },
+];
+
+const faqs: FaqItem[] = [
+  {
+    q: "Is Colyseus free?",
+    a: "Yes. The Colyseus framework and its client SDKs are open source under the MIT license. You can host them on your own servers with no license fees and no player limits.",
+  },
+  {
+    q: "How much does Colyseus Cloud cost?",
+    a: "Plans start at $15/mo per location. The price depends on the plan (CPU and memory) you pick for each location, and on how many locations you run. The pricing simulator on this page gives you the exact number.",
+  },
+  {
+    q: "Does Colyseus Cloud charge per CCU or for bandwidth?",
+    a: "No. There are no CCU, DAU or MAU limits and bandwidth is unlimited, so you only pay for the servers you run.",
+  },
+  {
+    q: "Does Colyseus Cloud offer a free tier?",
+    a: "Not at the moment. The Colyseus framework itself is free and open source, so you can always host it on your own servers.",
+  },
+  {
+    q: "What's the difference between scaling vertically and horizontally?",
+    a: "Scaling vertically gives a single server instance more CPU and memory. Scaling horizontally spreads your game across several instances that work as one cluster. Clusters are in beta and add $100/mo to the location.",
+  },
+  {
+    q: "How many CCU can a plan handle?",
+    a: "It depends on your code: how much CPU it uses and how many messages your server and clients exchange. The pricing simulator includes a capacity estimate, but every game is different, so load-test yours to find its real limits.",
+  },
+  {
+    q: "What happens if I delete an application I've already paid for?",
+    a: "Your account is credited with the unused time left on that application, and the credit goes towards your next one.",
+  },
+  {
+    q: "What do sponsors get?",
+    a: "Sponsoring keeps the open-source framework maintained. Sponsors also get the full source of the premium demos, plus premium guides.",
+  },
+];
 ---
 
-<MainLayout title="Pricing - Colyseus Cloud Hosting Plans" description="Compare Colyseus Cloud plans for managed multiplayer server hosting. Free tier available. Scale from prototype to production.">
+<MainLayout
+  title="Pricing - Colyseus Cloud Hosting Plans"
+  description="Colyseus is free and open source. Colyseus Cloud managed multiplayer hosting starts at $15/mo per location, with no CCU limits and unlimited bandwidth."
+  isHeaderExpanded={false}
+>
   <ScrollReveal />
 
-  <TitleSection>
-    Pricing
-    <!-- p class="font-sans text-lg font-normal text-gray-500 mt-2"></p -->
-  </TitleSection>
+  <!-- ===== HERO + PLANS ===== -->
+  <section class="relative overflow-hidden">
+    <Aurora tone="home" grid />
+    <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-[#0a0a0b] pointer-events-none"></div>
 
-  <section class="container m-auto px-6 mb-20 animate-fade-up space-y-4">
-    <div class="max-w-screen-xl mx-auto mb-20">
-      <div class="flex flex-col lg:flex-row justify-center space-x-0 lg:space-x-8 space-y-8">
+    <div class="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-16 lg:pt-36 lg:pb-24">
+      <div class="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
+        <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4 animate-fade-up">Pricing</p>
+        <h1 class="font-display text-4xl sm:text-5xl xl:text-[3.25rem] lg:leading-[1.1] font-bold tracking-tight text-white mb-6 animate-fade-up animate-delay-1">
+          Free to build.
+          <br />
+          <span class="gradient-text">Pay for servers, not players.</span>
+        </h1>
+        <p class="text-lg lg:text-xl text-gray-300 max-w-2xl mx-auto animate-fade-up animate-delay-2">
+          The Colyseus framework is open source and free to self-host. When you'd rather not run servers,
+          Colyseus Cloud hosts your game from $15/mo, with no CCU limits.
+        </p>
+      </div>
+
+      <div class="grid lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] gap-5 max-w-5xl mx-auto animate-fade-up animate-delay-3">
 
         <!-- Open Source -->
-        <div class="rounded-xl bg-white/[0.03] border border-white/5 p-6 my-auto">
-            <h3 class="text-2xl font-semibold text-white">Open Source</h3>
-            <p class="border-b border-white/5 pb-2 text-purple-400 mb-4">Free</p>
-            <ul class="mb-4 space-y-3">
-              <!-- <li>
-                <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                Feature 1
-              </li> -->
-              <li class="flex space-x-1">
-                <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                <span>Self-host on your own servers</span>
+        <div class="spotlight flex flex-col rounded-2xl border border-white/10 bg-[#0d0d10]/80 backdrop-blur p-6 lg:p-8" data-pricing-spotlight>
+          <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-3">Open source</p>
+          <h2 class="text-2xl font-semibold text-white mb-4">Colyseus Framework</h2>
+          <p class="flex items-baseline gap-2 mb-1">
+            <span class="text-5xl font-bold tracking-tight text-white">$0</span>
+            <span class="text-gray-400">forever</span>
+          </p>
+          <p class="text-sm text-gray-500 mb-6">MIT licensed. Host it wherever you like.</p>
+
+          <ul class="space-y-3 mb-8">
+            {openSourceFeatures.map((feature) => (
+              <li class="flex items-start gap-2.5 text-gray-300">
+                <svg class="w-4 h-4 mt-1 text-purple-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" set:html={check} />
+                {feature}
               </li>
-              <li class="flex space-x-1">
-                <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                <span>Community support</span>
-              </li>
-              <li class="flex space-x-1">
-                <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                <span>No restrictions</span>
-              </li>
-            </ul>
-            <a class="flex items-center justify-center gap-2 rounded-lg p-3 text-center text-purple-400 transition-all border border-purple-500/30 hover:border-purple-500/50 hover:bg-purple-500/10" href={SUPPORTERS_ENTRY_URL} target="_blank">
+            ))}
+          </ul>
+
+          <div class="mt-auto">
+            <a href={SUPPORTERS_ENTRY_URL} target="_blank" rel="noopener" class="flex items-center justify-center gap-2 rounded-lg px-6 py-3 text-purple-300 font-medium transition-all border border-purple-500/30 hover:border-purple-500/50 hover:bg-purple-500/10" data-track="sponsor_click" data-track-placement="pricing_card">
               <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 16 16"><path d="M4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.565 20.565 0 008 13.393a20.561 20.561 0 003.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.75.75 0 01-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5z" /></svg>
               Become a Sponsor
             </a>
-            <p class="text-gray-500 text-sm mt-3 max-w-xs text-center">
-              Supporters get <a href="#premium-demos" class="text-gray-300 underline decoration-white/20 underline-offset-2 hover:text-white hover:decoration-white/50 transition-colors">exclusive demos</a><span class="text-gray-300">, full source &amp; premium guides</span>.
+            <p class="text-gray-500 text-sm mt-3 text-center">
+              Supporters get <a href="#premium-demos" class="!text-gray-300 underline decoration-white/20 underline-offset-2 hover:!text-white hover:decoration-white/50 transition-colors">exclusive demos</a><span class="text-gray-300">, full source &amp; premium guides</span>.
             </p>
-            <a href="/framework" class="mt-4 block group/link text-purple-400 text-center text-sm">
-              Learn more
-              <svg class="inline-block transition-transform ease-out relative group-hover/link:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
+            <a href="/framework" class="group mt-5 flex items-center justify-center gap-2 text-sm text-gray-400 hover:text-white hover:no-underline font-medium transition-colors" data-track="pricing_cta" data-track-target="framework" data-track-placement="plans">
+              Explore the framework <span class="inline-block transition-transform group-hover:translate-x-0.5">→</span>
             </a>
+          </div>
         </div>
 
         <!-- Colyseus Cloud -->
-        <div class="rounded-xl bg-purple-500/[0.05] border-2 border-purple-500/30 p-6">
-            <h3 class="text-2xl font-semibold text-white">Colyseus Cloud</h3>
-            <p class="border-b border-white/5 pb-2 text-purple-400 mb-4">Starting at $15/mo</p>
-            <ul class="mb-4 space-y-3">
-              <!-- <li>
-                <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                Feature 1
-              </li> -->
-              <li class="flex space-x-1">
-                <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                <span>Deploy on Colyseus Cloud servers</span>
-              </li>
-              <li class="flex space-x-1">
-                <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                <span>Managed SSL Certificates</span>
-              </li>
-              <li class="flex space-x-1">
-                <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                <span>No CCU/DAU/MAU limits</span>
-              </li>
-              <li class="flex space-x-1">
-                <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                <span>Unlimited bandwidth</span>
-              </li>
-              <li class="flex space-x-1">
-                <svg class="w-6 text-green-600 inline-block" fill="currentColor" viewBox="0 0 512 512"><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209L241 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L335 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z"/></svg>
-                <span>Support by email</span>
-              </li>
+        <div class="relative">
+          <div class="absolute -inset-4 rounded-[1.75rem] bg-gradient-to-br from-blue-600/25 via-cyan-500/10 to-indigo-500/25 blur-2xl pointer-events-none"></div>
+          <div class="relative h-full flex flex-col rounded-2xl border border-blue-400/30 bg-[#0d0d10]/90 backdrop-blur p-6 lg:p-8 shadow-2xl shadow-blue-500/10">
+            <div class="flex items-center justify-between gap-3 mb-3">
+              <p class="text-sm font-medium text-blue-400 uppercase tracking-widest">Managed hosting</p>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-blue-400/30 bg-blue-400/10 text-blue-200 text-xs font-medium">
+                <span class="w-1.5 h-1.5 rounded-full bg-blue-300"></span>
+                No DevOps
+              </span>
+            </div>
+            <h2 class="text-2xl font-semibold text-white mb-4">Colyseus Cloud</h2>
+            <p class="flex items-baseline gap-2 mb-1">
+              <span class="text-gray-400">from</span>
+              <span class="text-5xl font-bold tracking-tight text-white">$15</span>
+              <span class="text-gray-400">/mo</span>
+            </p>
+            <p class="text-sm text-gray-500 mb-6">Per location, on the plan you pick. No per-player fees.</p>
+
+            <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-3 mb-8">
+              {cloudFeatures.map((feature) => (
+                <li class="flex items-start gap-2.5 text-gray-300">
+                  <svg class="w-4 h-4 mt-1 text-blue-400 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" set:html={check} />
+                  {feature}
+                </li>
+              ))}
             </ul>
-            <a class="block rounded-lg p-3 text-center text-white transition-all bg-purple-600 hover:bg-purple-500" href="https://cloud.colyseus.io">Get Started</a>
-            <a href="/cloud-managed-hosting" class="mt-4 block group/link text-purple-400 text-center text-sm">
-              Learn more
-              <svg class="inline-block transition-transform ease-out relative group-hover/link:translate-x-1" width="24" height="24" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M0 0h24v24H0z"></path><path fill="currentColor" d="M16.707 7.293l-1.414 1.414L17.586 11H2v2h15.586l-2.293 2.293 1.414 1.413L21.414 12z"></path></g></svg>
-            </a>
+
+            <div class="mt-auto">
+              <div class="flex flex-col sm:flex-row gap-3">
+                <a href={SIGNUP_URL} class="pricing-cta-cloud relative flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-white font-semibold whitespace-nowrap overflow-hidden" data-track="pricing_cta" data-track-target="signup" data-track-placement="plans">
+                  Get started
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <a href="#simulator" class="flex-1 inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-white/10 hover:border-white/20 hover:bg-white/5 text-white font-medium whitespace-nowrap transition-all" data-track="pricing_cta" data-track-target="simulator" data-track-placement="plans">
+                  Estimate your cost
+                </a>
+              </div>
+              <a href="/cloud-managed-hosting" class="group mt-5 flex items-center justify-center gap-2 text-sm text-gray-400 hover:text-white font-medium transition-colors" data-track="pricing_cta" data-track-target="cloud" data-track-placement="plans">
+                Explore Colyseus Cloud <span class="inline-block transition-transform group-hover:translate-x-0.5">→</span>
+              </a>
+            </div>
+          </div>
         </div>
 
       </div>
-    </div>
 
-    <div class="border-t border-white/5">
-      <div class="max-w-xl mx-auto bg-white/[0.03] px-8 pt-12 pb-8 rounded-b-xl border border-white/5">
-        <SimulatePriceComponent client:visible title="Simulator" />
+      <p class="mt-10 text-center animate-fade-up animate-delay-4">
+        <a href={FOUNDER_CALL_URL} class="group inline-flex items-center gap-2 !text-gray-400 hover:!text-white hover:!no-underline font-medium transition-colors" data-track="pricing_cta" data-track-target="founder_call" data-track-placement="plans">
+          Need something custom? Talk to the founder <span class="inline-block transition-transform group-hover:translate-x-0.5">→</span>
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== SIMULATOR ===== -->
+  <section id="simulator" class="relative overflow-hidden border-t border-white/5 bg-section-glow-blue-top scroll-mt-16">
+    <div class="max-w-6xl mx-auto px-6 py-20 lg:py-32 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-10 lg:gap-16 items-start">
+      <div class="lg:sticky lg:top-28" data-reveal>
+        <p class="text-sm font-medium text-blue-400 uppercase tracking-widest mb-4">Pricing simulator</p>
+        <h2 class="text-3xl lg:text-5xl font-bold text-white mb-5">Estimate your <span class="gradient-text-blue">monthly cost</span></h2>
+        <p class="text-gray-400 leading-relaxed mb-8">
+          Colyseus Cloud is priced per server, not per player. Pick where your players are and how much
+          CPU and memory each location needs, and the simulator adds it up.
+        </p>
+        <ol class="space-y-5">
+          <li class="flex gap-4">
+            <span class="w-8 h-8 shrink-0 rounded-full border border-blue-400/40 text-blue-200 text-sm font-semibold flex items-center justify-center">1</span>
+            <div>
+              <h3 class="text-white font-semibold">Pick a location</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Each location is billed on its own, so start with one and add regions as your players spread out.</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="w-8 h-8 shrink-0 rounded-full border border-blue-400/40 text-blue-200 text-sm font-semibold flex items-center justify-center">2</span>
+            <div>
+              <h3 class="text-white font-semibold">Choose a plan</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Shared or dedicated vCPUs, sized to your game. The capacity estimate shows roughly how many players it carries.</p>
+            </div>
+          </li>
+          <li class="flex gap-4">
+            <span class="w-8 h-8 shrink-0 rounded-full border border-blue-400/40 text-blue-200 text-sm font-semibold flex items-center justify-center">3</span>
+            <div>
+              <h3 class="text-white font-semibold">Scale up or out</h3>
+              <p class="text-gray-400 text-sm leading-relaxed">Run a single instance and upgrade its plan as you grow, or spread the load across a cluster of instances.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+      <div class="relative" data-reveal="scale">
+        <div class="absolute -inset-4 rounded-[1.75rem] bg-gradient-to-br from-blue-600/20 via-cyan-500/10 to-indigo-500/20 blur-2xl pointer-events-none"></div>
+        <div class="relative rounded-2xl border border-white/10 bg-[#0d0d10]/90 backdrop-blur p-6 lg:p-8 shadow-2xl">
+          <SimulatePriceComponent title="" client:visible />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SELF-HOSTED VS CLOUD ===== -->
+  <section class="border-t border-white/5">
+    <div class="max-w-4xl mx-auto px-6 py-20 lg:py-32">
+      <div class="text-center mb-12" data-reveal>
+        <p class="text-sm font-medium text-purple-400 uppercase tracking-widest mb-4">Compare</p>
+        <h2 class="text-3xl lg:text-5xl font-bold text-white mb-4">Self-hosted or <span class="gradient-text-blue">managed</span></h2>
+        <p class="text-gray-400 max-w-2xl mx-auto">It's the same framework either way. The difference is who runs the servers, and you can move between the two whenever you want.</p>
+      </div>
+
+      <div class="overflow-x-auto rounded-2xl border border-white/10 bg-white/[0.02]" data-reveal="scale">
+        <table class="w-full min-w-[34rem] text-left text-sm sm:text-base">
+          <thead>
+            <tr>
+              <td class="w-[36%]"></td>
+              <th scope="col" class="w-[30%] px-4 sm:px-6 py-4 font-semibold text-white">Self-hosted</th>
+              <th scope="col" class="px-4 sm:px-6 py-4 font-semibold text-white bg-blue-500/[0.07] border-l border-blue-400/20">Colyseus Cloud</th>
+            </tr>
+          </thead>
+          <tbody>
+            {comparison.map((row) => (
+              <tr class="border-t border-white/5">
+                <th scope="row" class="px-4 sm:px-6 py-3.5 font-normal text-gray-400">{row.label}</th>
+                <td class="px-4 sm:px-6 py-3.5 text-gray-300">{row.self ?? <span class="text-gray-600" aria-label="Not included">—</span>}</td>
+                <td class="px-4 sm:px-6 py-3.5 text-white bg-blue-500/[0.07] border-l border-blue-400/20">{row.cloud}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   </section>
 
   <PremiumDemos />
 
+  <Faq items={faqs} heading="Pricing questions">
+    <p class="mt-6 text-center text-sm text-gray-500">
+      Couldn't find your answer? <a href="mailto:support@colyseus.io?subject=Inquiry%2FQuestion%3A%20...&body=Hi" class="text-purple-300 hover:text-purple-200">Contact support</a>.
+    </p>
+  </Faq>
+
   <ColyseusCloudSection />
 
 </MainLayout>
+
+<style is:global>
+  .pricing-cta-cloud {
+    background: linear-gradient(135deg, #1d4ed8, #2563eb 45%, #0891b2);
+    box-shadow: 0 10px 30px -10px rgba(37, 99, 235, 0.75);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .pricing-cta-cloud:hover { box-shadow: 0 14px 40px -10px rgba(37, 99, 235, 0.95); transform: translateY(-1px); }
+  .pricing-cta-cloud::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+    transform: translateX(-120%);
+  }
+  @keyframes pricing-sheen { 0%, 60% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+  @media (prefers-reduced-motion: no-preference) {
+    .pricing-cta-cloud::after { animation: pricing-sheen 4.5s ease-in-out infinite; }
+  }
+</style>
+
+<script is:inline>
+  (function () {
+    document.querySelectorAll('[data-pricing-spotlight]').forEach(function (card) {
+      card.addEventListener('pointermove', function (e) {
+        var r = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+  })();
+</script>
