@@ -43,7 +43,7 @@ const topSponsors = [...platinum, ...gold, ...silver, ...featured];
 
 const tiers = [
   ...(topSponsors.length > 0 ? [{ label: 'Sponsors', sponsors: topSponsors, size: 'lg' as const, rel: 'sponsored noopener' }] : []),
-  ...(backers.length > 0 ? [{ label: 'Backers', sponsors: backers, size: 'sm' as const, rel: 'nofollow noopener' }] : []),
+  ...(backers.length > 0 ? [{ label: 'Backers', sponsors: backers, size: 'sm' as const, rel: 'sponsored noopener' }] : []),
   ...(pastBackers.length > 0 ? [{ label: 'Past Sponsors', sponsors: pastBackers, size: 'xs' as const, rel: 'nofollow noopener' }] : []),
 ];
 
